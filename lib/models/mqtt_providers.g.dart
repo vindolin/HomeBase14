@@ -29,18 +29,19 @@ class _SystemHash {
   }
 }
 
-String _$MqttDevicesHash() => r'893b8202f03fa13690ef64511a5ad7c84bbbe5fd';
+String _$MqttDevicesHash() => r'af12f2dad2de6bc7e6c870be327fe1e7d69c1db8';
 
 /// See also [MqttDevices].
-final mqttDevicesProvider = NotifierProvider<MqttDevices, Map<String, dynamic>>(
+final mqttDevicesProvider =
+    AutoDisposeNotifierProvider<MqttDevices, Map<String, dynamic>>(
   MqttDevices.new,
   name: r'mqttDevicesProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product') ? null : _$MqttDevicesHash,
 );
-typedef MqttDevicesRef = NotifierProviderRef<Map<String, dynamic>>;
+typedef MqttDevicesRef = AutoDisposeNotifierProviderRef<Map<String, dynamic>>;
 
-abstract class _$MqttDevices extends Notifier<Map<String, dynamic>> {
+abstract class _$MqttDevices extends AutoDisposeNotifier<Map<String, dynamic>> {
   @override
   Map<String, dynamic> build();
 }
@@ -62,7 +63,7 @@ abstract class _$DeviceNames extends AutoDisposeNotifier<Map<String, String>> {
   Map<String, String> build();
 }
 
-String _$MqttHash() => r'02edd298a301ec4c6510ff41ff2cb45e47bcee5d';
+String _$MqttHash() => r'9e4d2bc3beaee55f7d325d35b0281c2d88793fc5';
 
 /// See also [Mqtt].
 final mqttProvider = AutoDisposeNotifierProvider<Mqtt, dynamic>(

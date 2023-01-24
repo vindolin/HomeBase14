@@ -15,7 +15,7 @@ final clientIdentifier = 'K${nanoid()}';
 // class MqttDevices {}
 // final mqttDevices = MqttDevices();
 
-@Riverpod(keepAlive: true)
+@riverpod
 class MqttDevices extends _$MqttDevices {
   @override
   Map<String, dynamic> build() {
@@ -109,11 +109,20 @@ class Mqtt extends _$Mqtt {
 
         print(mqttReceivedMessage.topic);
 
-        // look for topics that look like zigbee2mqtt/curtain/i001
+        // look for topics that look like our schema zigbee2mqtt/curtain/i001 for devices and add them to the mqttDevices
         if (RegExp(r'zigbee2mqtt/\w+/i\d+').hasMatch(mqttReceivedMessage.topic)) {
           final parts = mqttReceivedMessage.topic.split('/'); // e.g. zigbee2mqtt/curtain001
-          final deviceId = '${parts[1]}/${parts[2]}';
-          mqttDevices.state = {...mqttDevices.state, deviceId: payloadJson};
+          String deviceType = parts[1]; // e.g. curtain
+          d.log('deviceType: $deviceType');
+          String deviceId = '$deviceType/${parts[2]}'; // e.g. curtain/001
+          mqttDevices.state = {
+            ...mqttDevices.state,
+            deviceId: {'_device_type': deviceType, ...payloadJson},
+          };
+
+          // final parts = mqttReceivedMessage.topic.split('/'); // e.g. zigbee2mqtt/curtain001
+          // final deviceId = '${parts[1]}/${parts[2]}';
+          // mqttDevices.state = {...mqttDevices.state, deviceId: payloadJson};
 
           // we find the device name (description) in the zigbee2mqtt/bridge/devices message
         } else if (mqttReceivedMessage.topic == 'zigbee2mqtt/bridge/devices') {

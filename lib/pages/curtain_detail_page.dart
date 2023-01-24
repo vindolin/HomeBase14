@@ -18,7 +18,7 @@ class CurtainDetailPage extends ConsumerWidget {
         title: const Text('Curtain'),
       ),
       body: Center(
-        child: Text('${deviceNames[deviceId]}'),
+        child: Text('${deviceNames[deviceId]} $deviceId\n${device['_device_type']}'),
       ),
     );
   }

@@ -11,7 +11,24 @@ class CurtainListPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final mqttDevices = ref.watch(mqttDevicesProvider);
     final deviceNames = ref.read(deviceNamesProvider);
-    final curtainDevices = Map.fromEntries(
+    final curtainDevices = {
+      ...Map.fromEntries(
+        // TODO_ refactor this to a separate provider
+        ({...mqttDevices}..removeWhere(
+                (key, value) {
+                  return !key.startsWith('dualCurtain');
+                },
+              ))
+            .entries
+            .toList()
+          ..sort(
+            // first sort by device name
+            (a, b) => deviceNames[a.key]!.compareTo(
+              deviceNames[b.key]!,
+            ),
+          ),
+      ),
+      ...Map.fromEntries(
         // TODO_ refactor this to a separate provider
         ({...mqttDevices}..removeWhere(
                 (key, value) {
@@ -25,7 +42,9 @@ class CurtainListPage extends ConsumerWidget {
             (a, b) => deviceNames[a.key]!.compareTo(
               deviceNames[b.key]!,
             ),
-          ));
+          ),
+      ),
+    };
 
     return Scaffold(
       appBar: AppBar(
@@ -41,27 +60,25 @@ class CurtainListPage extends ConsumerWidget {
             print(key);
 
             return ListTile(
-              leading: Icon(
-                Icons.blinds,
-                color: Colors.red,
-                grade: 0.2,
-              ),
+              leading: value['_device_type'] == 'dualCurtain'
+                  ? const Icon(
+                      Icons.blinds,
+                    )
+                  : const Icon(
+                      Icons.blinds_closed,
+                    ),
               key: Key(key),
               visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
               title: Text(
                 deviceNames[key]!,
               ),
-              // subtitle: Row(
-              //   children: [
-              //     Text(
-              //       'localTemperature°C',
-              //       style: TextStyle(
-              //         fontWeight: FontWeight.bold,
-              //         color: Colors.red,
-              //       ),
-              //     ),
-              //   ],
-              // ),
+              subtitle: Row(
+                children: [
+                  Text(
+                    value['_device_type'],
+                  ),
+                ],
+              ),
               onTap: () {
                 print('tapped $key');
                 Navigator.push(
@@ -69,11 +86,6 @@ class CurtainListPage extends ConsumerWidget {
                   MaterialPageRoute(
                     builder: (context) => CurtainDetailPage(deviceId: key),
                   ),
-                  // PageRouteBuilder(
-                  //   pageBuilder: (_, __, ___) => ThermostatDetailPage(deviceId: key),
-                  //   transitionDuration: Duration(milliseconds: 500),
-                  //   transitionsBuilder: (_, a, __, c) => FadeTransition(opacity: a, child: c),
-                  // ),
                 );
               },
             );

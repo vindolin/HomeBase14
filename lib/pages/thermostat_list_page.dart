@@ -15,6 +15,7 @@ class ThermostatListPage extends ConsumerWidget {
       // TODO_ refactor this to a separate provider
       ({...mqttDevices}..removeWhere(
               (key, value) {
+                // return value['_device_type'] != 'thermostat' ||
                 return !key.startsWith('thermostat') ||
                     value['local_temperature'] == null ||
                     value['current_heating_setpoint'] == null;

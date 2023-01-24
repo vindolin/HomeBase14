@@ -1,0 +1,88 @@
+@riverpod
+class Mqtt extends _$Mqtt {
+  final MqttClient mqtt = MqttClient();
+  @override
+  FutureOr<void> build() {
+    print('building mqtt');
+    mqtt.onConnected = onConnected;
+    mqtt.onDisconnected = onDisconnected;
+  }
+
+  Future<void> connect() async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard<void>(
+      () async {
+        // connecting
+        ref.read(mqttConnectionStateXProvider.notifier).state = MqttConnectionState.connecting;
+        Future.delayed(
+          const Duration(seconds: 2),
+          () {
+            mqtt.connect(config.username, config.password);
+          },
+        );
+      },
+    );
+  }
+
+  void disconnect() {
+    mqtt.disconnect();
+  }
+
+  void onConnected() {
+    print('connected');
+    mqtt.subscribe('homer/#', MqttQos.atMostOnce);
+
+    mqtt.updates?.listen((List<MqttReceivedMessage<MqttMessage?>>? c) {
+      final message = c![0].payload as MqttPublishMessage;
+      final payload = const Utf8Decoder().convert(message.payload.message);
+
+      print(message);
+      print(payload);
+    });
+
+    ref.read(mqttConnectionStateXProvider.notifier).state = MqttConnectionState.connected;
+  }
+
+  void onDisconnected() {
+    print('disconnected');
+    ref.read(mqttConnectionStateXProvider.notifier).state = MqttConnectionState.disconnected;
+  }
+}
+
+
+@riverpod
+class MqttConnectionDataXXX extends _$MqttConnectionDataXXX {
+  // Future<MqttConnectionDataClass> build() async {
+  @override
+  FutureOr<MqttConnectionDataClass> build() {
+    return const MqttConnectionDataClass(
+      username: config.username,
+      password: config.password,
+      address: config.server,
+      port: config.port,
+    );
+  }
+
+  Future<void> save(Map<String, dynamic> data) async {
+    state = const AsyncLoading();
+
+    state = await Future(
+      () => AsyncValue.data(
+        state.value!.copyWith(
+          username: data['username'],
+          password: data['password'],
+          address: data['address'],
+          port: data['port'],
+        ),
+      ),
+    );
+  }
+}
+
+    // final mqttConnectionData = ref.watch(mqttConnectionDataXXXProvider);
+    // Map<String, dynamic> formData = {
+    //   'username': mqttConnectionData.value?.username,
+    //   'password': mqttConnectionData.value?.password,
+    //   'address': mqttConnectionData.value?.address,
+    //   'port': mqttConnectionData.value?.port,
+    // };

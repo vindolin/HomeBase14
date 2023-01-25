@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as d;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nanoid/nanoid.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
@@ -8,12 +10,17 @@ import 'mqtt_connection_data.dart';
 
 part 'mqtt_providers.g.dart';
 
-// typedef Callback = void Function();
-
 final clientIdentifier = 'K${nanoid()}';
 
-// class MqttDevices {}
-// final mqttDevices = MqttDevices();
+// used for the flashing message icon
+StreamController<Map<String, dynamic>> messageController = StreamController<Map<String, dynamic>>.broadcast();
+Stream<Map<String, dynamic>> messageStream = messageController.stream;
+
+final messageProvider = StreamProvider<Map<String, dynamic>>((ref) async* {
+  await for (final message in messageStream) {
+    yield message;
+  }
+});
 
 @riverpod
 class MqttDevices extends _$MqttDevices {
@@ -107,18 +114,31 @@ class Mqtt extends _$Mqtt {
         final String payload = const Utf8Decoder().convert(message.payload.message);
         final payloadJson = jsonDecode(payload);
 
-        print(mqttReceivedMessage.topic);
+        // print(mqttReceivedMessage.topic);
+        // await stdout.write('.');
+        // stdout.flush();
 
         // look for topics that look like our schema zigbee2mqtt/curtain/i001 for devices and add them to the mqttDevices
         if (RegExp(r'zigbee2mqtt/\w+/i\d+').hasMatch(mqttReceivedMessage.topic)) {
           final parts = mqttReceivedMessage.topic.split('/'); // e.g. zigbee2mqtt/curtain001
           String deviceType = parts[1]; // e.g. curtain
-          d.log('deviceType: $deviceType');
           String deviceId = '$deviceType/${parts[2]}'; // e.g. curtain/001
-          mqttDevices.state = {
-            ...mqttDevices.state,
-            deviceId: {'_device_type': deviceType, ...payloadJson},
-          };
+
+          try {
+            mqttDevices.state = {
+              ...mqttDevices.state,
+              deviceId: {'_device_type': deviceType, ...payloadJson},
+            };
+
+            messageController.sink.add({
+              deviceId: {
+                '_device_type': deviceType,
+                ...payloadJson,
+              },
+            });
+          } catch (e) {
+            // print(e);
+          }
 
           // final parts = mqttReceivedMessage.topic.split('/'); // e.g. zigbee2mqtt/curtain001
           // final deviceId = '${parts[1]}/${parts[2]}';

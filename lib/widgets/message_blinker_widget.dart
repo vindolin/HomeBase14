@@ -15,28 +15,23 @@ class _MessageBlinkerState extends ConsumerState<MessageBlinker> {
     super.initState();
   }
 
-  static const int durationMs = 200;
-  late Color targetColor;
-  late Color flashColor;
-
-  Future<void> resetColor() async {
-    targetColor = flashColor;
-    await Future.delayed(const Duration(milliseconds: durationMs));
-    targetColor = Colors.transparent;
-  }
-
   @override
   Widget build(BuildContext context) {
-    flashColor = Colors.orange;
+    const int durationMs = 200;
 
-    ref.watch(messageProvider);
+    Color flashColor = Colors.orange;
+    Color? targetColor;
 
-    targetColor = Theme.of(context).colorScheme.surface;
+    Future<void> setColor() async {
+      targetColor = flashColor; // flash color
+      await Future.delayed(const Duration(milliseconds: durationMs));
+      targetColor = Colors.transparent; // and back to transparent
+    }
 
-    // every time message stream provider fires, the icon will blink
+    ref.watch(messageProvider); // every time message stream provider fires, the icon will blink
 
     return FutureBuilder<void>(
-      future: resetColor(),
+      future: setColor(),
       builder: (context, AsyncSnapshot<void> _) {
         return TweenAnimationBuilder<Color?>(
           tween: ColorTween(

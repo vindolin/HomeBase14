@@ -115,21 +115,24 @@ class Mqtt extends _$Mqtt {
         final payloadJson = jsonDecode(payload);
 
         // print(mqttReceivedMessage.topic);
-        // await stdout.write('.');
-        // stdout.flush();
 
         // look for topics that look like our schema zigbee2mqtt/curtain/i001 for devices and add them to the mqttDevices
-        if (RegExp(r'zigbee2mqtt/\w+/i\d+').hasMatch(mqttReceivedMessage.topic)) {
-          final parts = mqttReceivedMessage.topic.split('/'); // e.g. zigbee2mqtt/curtain001
-          String deviceType = parts[1]; // e.g. curtain
-          String deviceId = '$deviceType/${parts[2]}'; // e.g. curtain/001
+        RegExpMatch? match = RegExp(r'zigbee2mqtt/(?<type>\w+)/(?<id>i\d+)$').firstMatch(mqttReceivedMessage.topic);
+        if (match != null) {
+          String deviceType = match.namedGroup('type')!; // e.g. curtain
+          String deviceId = '$deviceType/${match.namedGroup('id')!}'; // e.g. curtain/001
 
           try {
+            if (deviceId == 'curtain/i006') {
+              print(payloadJson);
+            }
+
             mqttDevices.state = {
               ...mqttDevices.state,
               deviceId: {'_device_type': deviceType, ...payloadJson},
             };
 
+            // send the message to the message stream
             messageController.sink.add({
               deviceId: {
                 '_device_type': deviceType,
@@ -137,12 +140,8 @@ class Mqtt extends _$Mqtt {
               },
             });
           } catch (e) {
-            // print(e);
+            print(e);
           }
-
-          // final parts = mqttReceivedMessage.topic.split('/'); // e.g. zigbee2mqtt/curtain001
-          // final deviceId = '${parts[1]}/${parts[2]}';
-          // mqttDevices.state = {...mqttDevices.state, deviceId: payloadJson};
 
           // we find the device name (description) in the zigbee2mqtt/bridge/devices message
         } else if (mqttReceivedMessage.topic == 'zigbee2mqtt/bridge/devices') {

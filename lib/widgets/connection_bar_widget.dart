@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import '../models/mqtt_providers.dart';
+import '../widgets/message_blinker_widget.dart';
 
 class ConnectionBar extends ConsumerWidget {
   const ConnectionBar({super.key});
@@ -31,6 +32,7 @@ class ConnectionBar extends ConsumerWidget {
             ),
           ),
         ],
+        const MessageBlinker(),
       ],
     );
   }

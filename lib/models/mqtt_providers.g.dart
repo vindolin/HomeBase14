@@ -63,7 +63,7 @@ abstract class _$DeviceNames extends AutoDisposeNotifier<Map<String, String>> {
   Map<String, String> build();
 }
 
-String _$MqttHash() => r'9e4d2bc3beaee55f7d325d35b0281c2d88793fc5';
+String _$MqttHash() => r'77ec54e3ce70763043c99f52ed9e51cfd99a6dc3';
 
 /// See also [Mqtt].
 final mqttProvider = AutoDisposeNotifierProvider<Mqtt, dynamic>(

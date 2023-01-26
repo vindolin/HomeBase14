@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mqtt_client/mqtt_client.dart';
-import '../models/mqtt_providers.dart';
-import '../widgets/message_blinker_widget.dart';
+import '/utils.dart';
+import '/models/mqtt_providers.dart';
+import '/widgets/message_blinker_widget.dart';
 
 class ConnectionBar extends ConsumerWidget {
   const ConnectionBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print('ConnectionBar.build()');
+    log('ConnectionBar.build()');
     final mqttConnectionStateX = ref.watch(mqttConnectionStateXProvider);
     final mqttProviderX = ref.watch(mqttProvider.notifier);
 

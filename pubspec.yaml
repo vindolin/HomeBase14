@@ -47,6 +47,7 @@ dependencies:
   encrypt: ^5.0.1
   shared_preferences: ^2.0.15
   format: ^1.1.1
+  stack_trace: ^1.11.0
 
 dev_dependencies:
   build_runner:

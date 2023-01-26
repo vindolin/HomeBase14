@@ -5,7 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
-
+import '../utils.dart';
 part 'mqtt_connection_data.g.dart';
 part 'mqtt_connection_data.freezed.dart';
 
@@ -16,7 +16,7 @@ final encrypter = encrypt.Encrypter(
   ),
 );
 final iv = encrypt.IV.fromLength(16);
-final prefs = SharedPreferences.getInstance();
+final prefs = SharedPreferences.getInstance(); // where we store the encrypted connection data
 
 @freezed
 class MqttConnectionDataClass with _$MqttConnectionDataClass {
@@ -57,13 +57,13 @@ class MqttConnectionDataX extends _$MqttConnectionDataX {
   }
 
   Future<void> persistConnectionData() async {
-    print('persistConnectionData...');
+    log('persistConnectionData...');
     await Future.delayed(
       const Duration(milliseconds: 500),
     );
 
     String plainText = jsonEncode(state);
-    print('plainText: $plainText');
+    log('plainText: $plainText');
     final encrypted = encrypter.encrypt(plainText, iv: iv);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -72,18 +72,18 @@ class MqttConnectionDataX extends _$MqttConnectionDataX {
   }
 
   Future<void> loadConnectionData() async {
-    print('loadConnectionData...');
+    log('loadConnectionData...');
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     String? userPref = prefs.getString('connectionData');
     String connectionData = encrypter.decrypt64(userPref!, iv: iv);
-    print('pref: $connectionData');
+    // log('pref: $connectionData');
 
     try {
       state = MqttConnectionDataClass.fromJson(jsonDecode(connectionData));
       // state = state.copyWith(username: 'gunk');
     } catch (e) {
-      print('Error: $e');
+      log('Error: $e');
     }
   }
 

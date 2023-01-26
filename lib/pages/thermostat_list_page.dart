@@ -1,41 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../pages/thermostat_detail_page.dart';
-import '../widgets/connection_bar_widget.dart';
-import '../models/mqtt_providers.dart';
+import '/utils.dart';
+import '/models/mqtt_devices.dart';
+import '/pages/thermostat_detail_page.dart';
+import '/widgets/connection_bar_widget.dart';
+import '/models/mqtt_providers.dart';
 
 class ThermostatListPage extends ConsumerWidget {
   const ThermostatListPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mqttDevices = ref.watch(mqttDevicesProvider);
+    // final mqttDevices = ref.watch(mqttDevicesProvider);
+    // final deviceNames = ref.read(deviceNamesProvider);
+    // final thermostatDevices = Map.fromEntries(
+    //   // TODO_ refactor this to a separate provider
+    //   ({...mqttDevices}..removeWhere(
+    //           (key, value) {
+    //             // return value['_device_type'] != 'thermostat' ||
+    //             return !key.startsWith('thermostat') ||
+    //                 value['local_temperature'] == null ||
+    //                 value['current_heating_setpoint'] == null;
+    //           },
+    //         ))
+    //       .entries
+    //       .toList()
+    //     ..sort(
+    //       // first sort by device name
+    //       (a, b) => deviceNames[a.key]!.compareTo(
+    //         deviceNames[b.key]!,
+    //       ),
+    //     )
+    //     ..sort(
+    //       // then sort by local temperature
+    //       (a, b) => b.value['local_temperature'].compareTo(
+    //         a.value['local_temperature'],
+    //       ),
+    //     ),
+    // );
+
+    Map<String, dynamic> mqttDevicesX = ref.watch(mqttDevicesXProvider);
     final deviceNames = ref.read(deviceNamesProvider);
-    final thermostatDevices = Map.fromEntries(
-      // TODO_ refactor this to a separate provider
-      ({...mqttDevices}..removeWhere(
-              (key, value) {
-                // return value['_device_type'] != 'thermostat' ||
-                return !key.startsWith('thermostat') ||
-                    value['local_temperature'] == null ||
-                    value['current_heating_setpoint'] == null;
-              },
-            ))
-          .entries
-          .toList()
-        ..sort(
-          // first sort by device name
-          (a, b) => deviceNames[a.key]!.compareTo(
-            deviceNames[b.key]!,
+
+    final thermostatDevicesProvider = Provider<Map<String, dynamic>>((ref) {
+      return Map.fromEntries(
+        ({...mqttDevicesX}..removeWhere((_, device) => device is! ThermostatDevice)).entries.toList()
+          ..sort(
+            (a, b) => deviceNames[a.key]!.compareTo(
+              deviceNames[b.key]!,
+            ),
+          )
+          ..sort(
+            // then sort by local temperature
+            (a, b) => b.value.localTemperature.compareTo(
+              a.value.localTemperature,
+            ),
           ),
-        )
-        ..sort(
-          // then sort by local temperature
-          (a, b) => b.value['local_temperature'].compareTo(
-            a.value['local_temperature'],
-          ),
-        ),
-    );
+      );
+    });
+
+    final thermostatDevices = ref.watch(thermostatDevicesProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -46,11 +70,11 @@ class ThermostatListPage extends ConsumerWidget {
           itemCount: thermostatDevices.length,
           itemBuilder: (context, index) {
             final key = thermostatDevices.keys.elementAt(index);
-            final value = thermostatDevices.values.elementAt(index);
-            num localTemperature = value['local_temperature'];
-            num heatingSetpoint = value['current_heating_setpoint'];
+            final device = thermostatDevices.values.elementAt(index);
+            num localTemperature = device.localTemperature;
+            num heatingSetpoint = device.currentHeatingSetpoint;
 
-            print(key);
+            // log(key);
             final tempColor = localTemperature == heatingSetpoint
                 ? Colors.green
                 : localTemperature < heatingSetpoint
@@ -86,7 +110,7 @@ class ThermostatListPage extends ConsumerWidget {
                 ],
               ),
               onTap: () {
-                print('tapped $key');
+                log('tapped $key');
                 Navigator.push(
                   context,
                   MaterialPageRoute(

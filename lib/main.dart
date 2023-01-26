@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import '../config.dart' as config;
 import 'package:mqtt_client/mqtt_client.dart';
+import 'utils.dart';
 import 'models/mqtt_connection_data.dart';
 import 'models/mqtt_providers.dart';
 import 'scaffold_messenger.dart';
@@ -34,7 +35,7 @@ class _MyAppState extends ConsumerState<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    print('MyApp.build()');
+    log('MyApp.build()');
 
     return MaterialApp(
       scaffoldMessengerKey: rootScaffoldMessengerKey,

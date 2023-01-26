@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer' as d;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nanoid/nanoid.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../utils.dart';
 import 'mqtt_connection_data.dart';
+import 'mqtt_devices.dart';
 
 part 'mqtt_providers.g.dart';
 
@@ -26,13 +27,53 @@ final messageProvider = StreamProvider<Map<String, dynamic>>((ref) async* {
 class MqttDevices extends _$MqttDevices {
   @override
   Map<String, dynamic> build() {
-    print('building mqttDevices');
+    log('building mqttDevices');
     ref.onDispose(() {
-      print('disposing mqttDevices');
+      log('disposing mqttDevices');
     });
     return {};
   }
 }
+
+@riverpod
+class MqttDevicesX extends _$MqttDevicesX {
+  @override
+  Map<String, AbstractMqttDevice> build() {
+    return {};
+  }
+}
+
+// @riverpod
+// Map<String, AbstractMqttDevice> curtainDevices(CurtainDevicesRef ref) {
+//   final mqttDevices = ref.watch(mqttDevicesXProvider);
+//   return {
+//     ...Map.fromEntries(
+//       ({...mqttDevices}..removeWhere(
+//               (key, value) {
+//                 return value is! CurtainDevice;
+//               },
+//             ))
+//           .entries
+//           .toList(),
+//     ),
+//   };
+// }
+
+// @riverpod
+// Map<String, dynamic> curtainDevices(CurtainDevicesRef ref) {
+//   final curtainDevices = ref.watch(curtainDevicesProvider);
+//   return {
+//     ...Map.fromEntries(
+//       ({...curtainDevices}..removeWhere(
+//               (key, value) {
+//                 return !key.startsWith('dualCurtain');
+//               },
+//             ))
+//           .entries
+//           .toList(),
+//     ),
+//   };
+// }
 
 @riverpod
 class DeviceNames extends _$DeviceNames {
@@ -48,18 +89,20 @@ class DeviceNames extends _$DeviceNames {
 class Mqtt extends _$Mqtt {
   late MqttServerClient mqtt;
   late MqttDevices mqttDevices;
+  late MqttDevicesX mqttDevicesX;
 
   @override
   build() {
     mqttDevices = ref.watch(mqttDevicesProvider.notifier);
-    print('building mqtt');
+    mqttDevicesX = ref.watch(mqttDevicesXProvider.notifier);
+    log('building mqtt');
     ref.onDispose(() {
       disconnect();
     });
   }
 
   FutureOr<MqttConnectionState> connect() async {
-    print('connecting');
+    log('connecting');
 
     final connectionData = ref.watch(mqttConnectionDataXProvider.notifier);
 
@@ -94,37 +137,59 @@ class Mqtt extends _$Mqtt {
     // .connected is set in the onConnected handler
   }
 
+  void publish(String deviceId, String payload) {
+    final builder = MqttClientPayloadBuilder();
+    builder.addString(payload);
+    mqtt.publishMessage('zigbee2mqtt/$deviceId/set', MqttQos.atLeastOnce, builder.payload!);
+  }
+
   void disconnect() {
-    print('disconnected');
+    log('disconnected');
     mqtt.disconnect();
   }
 
   void onConnected() {
-    print('connected');
+    log('connected');
     mqtt.subscribe('zigbee2mqtt/#', MqttQos.atMostOnce);
     // mqtt.subscribe('zigbee2mqtt/curtain/#', MqttQos.atMostOnce);
 
     mqtt.pongCallback = () {
-      print('ping response client callback invoked');
+      log('ping response client callback invoked');
     };
 
     mqtt.updates?.listen((List<MqttReceivedMessage<MqttMessage>> messages) {
       for (MqttReceivedMessage mqttReceivedMessage in messages) {
         final MqttPublishMessage message = mqttReceivedMessage.payload as MqttPublishMessage;
         final String payload = const Utf8Decoder().convert(message.payload.message);
-        final payloadJson = jsonDecode(payload);
+        try {
+          final payloadJson = jsonDecode(payload);
 
-        // print(mqttReceivedMessage.topic);
+          // look for topics that look like our schema zigbee2mqtt/curtain/i001 for devices and add them to the mqttDevices
+          RegExpMatch? match = RegExp(r'zigbee2mqtt/(?<type>\w+)/(?<id>i\d+)$').firstMatch(mqttReceivedMessage.topic);
+          if (match != null) {
+            String deviceType = match.namedGroup('type')!; // e.g. curtain
+            String deviceId = '$deviceType/${match.namedGroup('id')!}'; // e.g. curtain/001
 
-        // look for topics that look like our schema zigbee2mqtt/curtain/i001 for devices and add them to the mqttDevices
-        RegExpMatch? match = RegExp(r'zigbee2mqtt/(?<type>\w+)/(?<id>i\d+)$').firstMatch(mqttReceivedMessage.topic);
-        if (match != null) {
-          String deviceType = match.namedGroup('type')!; // e.g. curtain
-          String deviceId = '$deviceType/${match.namedGroup('id')!}'; // e.g. curtain/001
+            mqttDevices.state = {
+              ...mqttDevices.state,
+              deviceId: {'_device_type': deviceType, ...payloadJson},
+            };
 
-          try {
-            if (deviceId == 'curtain/i006') {
-              print(payloadJson);
+            if (deviceType == 'curtain') {
+              mqttDevicesX.state = {
+                ...mqttDevicesX.state,
+                deviceId: CurtainDevice(deviceId, deviceType, payloadJson, publish),
+              };
+            } else if (deviceType == 'door') {
+              mqttDevicesX.state = {
+                ...mqttDevicesX.state,
+                deviceId: DoorDevice(deviceId, deviceType, payloadJson, publish),
+              };
+            } else if (deviceType == 'thermostat') {
+              mqttDevicesX.state = {
+                ...mqttDevicesX.state,
+                deviceId: ThermostatDevice(deviceId, deviceType, payloadJson, publish),
+              };
             }
 
             mqttDevices.state = {
@@ -139,13 +204,12 @@ class Mqtt extends _$Mqtt {
                 ...payloadJson,
               },
             });
-          } catch (e) {
-            print(e);
+            // we find the device name (description) in the zigbee2mqtt/bridge/devices message
+          } else if (mqttReceivedMessage.topic == 'zigbee2mqtt/bridge/devices') {
+            setDeviceNameMap(payloadJson);
           }
-
-          // we find the device name (description) in the zigbee2mqtt/bridge/devices message
-        } else if (mqttReceivedMessage.topic == 'zigbee2mqtt/bridge/devices') {
-          setDeviceNameMap(payloadJson);
+        } on FormatException catch (e) {
+          e;
         }
       }
     });
@@ -168,7 +232,7 @@ class Mqtt extends _$Mqtt {
         if (description != mqttDescriptions.state[device['friendly_name']]) {
           deviceNames[device['friendly_name']] = description;
         }
-        d.log('${device['friendly_name']}: ${device['description']}');
+        log('${device['friendly_name']}: ${device['description']}');
       } catch (e) {
         //
       }
@@ -177,7 +241,7 @@ class Mqtt extends _$Mqtt {
   }
 
   void onDisconnected() {
-    print('disconnected');
+    log('disconnected');
     ref.read(mqttConnectionStateXProvider.notifier).state = MqttConnectionState.disconnected;
   }
 }

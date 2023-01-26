@@ -1,9 +1,11 @@
+import 'utils.dart';
+
 typedef DataList = List<int>;
 
 void main() {
   DataList data = [50, 60];
   data.add(100);
-  print('length: ${data.length}');
-  print('values: $data');
-  print('type: ${data.runtimeType}');
+  log('length: ${data.length}');
+  log('values: $data');
+  log('type: ${data.runtimeType}');
 }

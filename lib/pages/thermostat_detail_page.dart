@@ -10,7 +10,11 @@ class ThermostatDetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final device = ref.watch(mqttDevicesProvider)[deviceId];
+    final device = ref.watch(
+      mqttDevicesProvider.select(
+        (mqttDevices) => mqttDevices[deviceId],
+      ),
+    );
     final deviceNames = ref.read(deviceNamesProvider);
 
     return Scaffold(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mqtt_client/mqtt_client.dart';
+import '../utils.dart';
 import '../scaffold_messenger.dart';
 import '../widgets/password_input_widget.dart';
 import '../widgets/connection_bar_widget.dart';
@@ -24,7 +25,7 @@ class LoginFormPage extends ConsumerWidget {
       'port': mqttConnectionData.port,
     };
 
-    print('login form build');
+    log('login form build');
 
     final Mqtt mqttProviderX = ref.watch(mqttProvider.notifier);
     final MqttConnectionDataX mqttConnectionDataX = ref.read(mqttConnectionDataXProvider.notifier);
@@ -40,7 +41,7 @@ class LoginFormPage extends ConsumerWidget {
           ),
         );
         _formKey.currentState?.save();
-        print('form submit');
+        log('form submit');
         mqttConnectionDataX.save(formData);
 
         final MqttConnectionState mqttConnectionState = await mqttProviderX.connect();
@@ -48,7 +49,7 @@ class LoginFormPage extends ConsumerWidget {
         // if the connection was successful, persist the connection data
         if (mqttConnectionState == MqttConnectionState.connected) {
           await mqttConnectionDataX.persistConnectionData();
-          print('persisted connection data');
+          log('persisted connection data');
           rootScaffoldMessengerKey.currentState
             ?..hideCurrentSnackBar(
                 reason: SnackBarClosedReason.dismiss) // TODO_ check why this is needed to really hide the snackbar
@@ -88,7 +89,7 @@ class LoginFormPage extends ConsumerWidget {
             inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'\s'))],
             initialValue: mqttConnectionData.username,
             onSaved: (String? value) {
-              print(value);
+              log(value);
               formData['username'] = value;
             },
             validator: (value) {

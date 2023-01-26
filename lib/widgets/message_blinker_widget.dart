@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/mqtt_providers.dart';
 
 class MessageBlinker extends ConsumerStatefulWidget {
+  // symbol that binds to the message stream provider and blinks when a message is received
   const MessageBlinker({super.key});
 
   @override
@@ -17,14 +18,15 @@ class _MessageBlinkerState extends ConsumerState<MessageBlinker> {
 
   @override
   Widget build(BuildContext context) {
-    const int durationMs = 200;
+    const int onDurationMs = 100;
+    const int fadeDurationMs = 100;
 
     Color flashColor = Colors.orange;
     Color? targetColor;
 
     Future<void> setColor() async {
       targetColor = flashColor; // flash color
-      await Future.delayed(const Duration(milliseconds: durationMs));
+      await Future.delayed(const Duration(milliseconds: onDurationMs));
       targetColor = Colors.transparent; // and back to transparent
     }
 
@@ -38,7 +40,7 @@ class _MessageBlinkerState extends ConsumerState<MessageBlinker> {
             begin: null,
             end: targetColor,
           ),
-          duration: const Duration(milliseconds: durationMs),
+          duration: const Duration(milliseconds: fadeDurationMs),
           curve: Curves.easeInOut,
           builder: (
             BuildContext context,

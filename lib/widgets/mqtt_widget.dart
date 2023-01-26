@@ -50,7 +50,7 @@
 //             value: mqttDevices.items[deviceId],
 //             child: Consumer<AbstractMqttDevice>(
 //               builder: (_, device, __) {
-//                 print('change ${device.deviceId}');
+//                 log('change ${device.deviceId}');
 //                 return FlashingCard(
 //                   child: Padding(
 //                     padding: const EdgeInsets.all(4),

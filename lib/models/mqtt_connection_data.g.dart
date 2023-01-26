@@ -54,7 +54,7 @@ class _SystemHash {
 }
 
 String _$MqttConnectionDataXHash() =>
-    r'ada4385a71ce7c54dc7d6df6f763c80597d5de18';
+    r'06fbad1407ac896fd9b9bfe515fa9261aff9b3f1';
 
 /// See also [MqttConnectionDataX].
 final mqttConnectionDataXProvider =

@@ -13,14 +13,6 @@ class ThermostatListPage extends ConsumerWidget {
     final deviceNames = ref.read(deviceNamesProvider);
     final thermostatDevicesUnfiltered = ref.watch(thermostatDevicesProvider);
 
-    // final thermostatDevices = ref.watch(Provider<Map<String, ThermostatDevice>>((ref) {
-    //   return thermostatDevicesUnfiltered.sortByDeviceName(deviceNames);
-    //   // return thermostatDevicesUnfiltered.sortByList([
-    //   //   (a, b) => deviceNames[a.key]!.compareTo(deviceNames[b.key]!),
-    //   //   (a, b) => b.value.localTemperature.compareTo(a.value.localTemperature),
-    //   // ]);
-    // }));
-
     final thermostatDevices = ref.watch(
       Provider<Map<String, ThermostatDevice>>(
         (ref) {
@@ -37,28 +29,6 @@ class ThermostatListPage extends ConsumerWidget {
         },
       ),
     );
-
-    // final xthermostatDevices = ref.watch(
-    //   Provider<Map<String, ThermostatDevice>>(
-    //     (ref) {
-    //       return Map.fromEntries(
-    //         ({...thermostatDevicesUnfiltered}).entries.toList()
-    //           ..sort(
-    //             // first sort by device name
-    //             (a, b) => deviceNames[a.key]!.compareTo(
-    //               deviceNames[b.key]!,
-    //             ),
-    //           )
-    //           ..sort(
-    //             // then sort by local temperature
-    //             (a, b) => b.value.localTemperature.compareTo(
-    //               a.value.localTemperature,
-    //             ),
-    //           ),
-    //       );
-    //     },
-    //   ),
-    // );
 
     return Scaffold(
       appBar: AppBar(
@@ -113,11 +83,6 @@ class ThermostatListPage extends ConsumerWidget {
                   MaterialPageRoute(
                     builder: (context) => ThermostatDetailPage(deviceId: key),
                   ),
-                  // PageRouteBuilder(
-                  //   pageBuilder: (_, __, ___) => ThermostatDetailPage(deviceId: key),
-                  //   transitionDuration: Duration(milliseconds: 500),
-                  //   transitionsBuilder: (_, a, __, c) => FadeTransition(opacity: a, child: c),
-                  // ),
                 );
               },
             );

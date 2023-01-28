@@ -20,9 +20,13 @@ class CurtainDetailPage extends ConsumerWidget {
         (mqttDevices) => mqttDevices[deviceId],
       ),
     );
+
+    // we need this special provider to be able to change the value in realtime
+    final positionProvider = StateProvider<double>((ref) => device!.position);
+    final position = ref.watch(positionProvider);
+
     final deviceNames = ref.read(deviceNamesProvider);
     log('build CurtainDetailPage');
-    // log(device['position']);
 
     return Scaffold(
         appBar: AppBar(
@@ -32,19 +36,20 @@ class CurtainDetailPage extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             VerticalSlider(
-              device!.position.toDouble(),
+              position,
               (double value) {
-                // setState(
-                //   () => device.position = value.round().toDouble(),
-                // );
+                ref.read(positionProvider.notifier).state = value;
+                device?.position = value.round().toDouble();
               },
               (double value) {
-                // device.publishState();
+                device?.publishState();
               },
               invert: true,
             ),
             Center(
-              child: Text('${deviceNames[deviceId]}\n$deviceId\n${device.deviceType}\n${device.position}'),
+              child: Text(
+                '${deviceNames[deviceId]}\n$deviceId\n${device!.deviceType}\n${device.position}',
+              ),
             ),
           ],
         ));

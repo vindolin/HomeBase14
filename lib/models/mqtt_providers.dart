@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:nanoid/nanoid.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../utils.dart';
 import 'mqtt_connection_data.dart';
 import 'mqtt_devices.dart';
@@ -43,37 +43,29 @@ class MqttDevicesX extends _$MqttDevicesX {
   }
 }
 
-// @riverpod
-// Map<String, AbstractMqttDevice> curtainDevices(CurtainDevicesRef ref) {
-//   final mqttDevices = ref.watch(mqttDevicesXProvider);
-//   return {
-//     ...Map.fromEntries(
-//       ({...mqttDevices}..removeWhere(
-//               (key, value) {
-//                 return value is! CurtainDevice;
-//               },
-//             ))
-//           .entries
-//           .toList(),
-//     ),
-//   };
-// }
+@riverpod
+class CurtainDevices extends _$CurtainDevices {
+  @override
+  Map<String, CurtainDevice> build() {
+    return {};
+  }
+}
 
-// @riverpod
-// Map<String, dynamic> curtainDevices(CurtainDevicesRef ref) {
-//   final curtainDevices = ref.watch(curtainDevicesProvider);
-//   return {
-//     ...Map.fromEntries(
-//       ({...curtainDevices}..removeWhere(
-//               (key, value) {
-//                 return !key.startsWith('dualCurtain');
-//               },
-//             ))
-//           .entries
-//           .toList(),
-//     ),
-//   };
-// }
+@riverpod
+class DoorDevices extends _$DoorDevices {
+  @override
+  Map<String, DoorDevice> build() {
+    return {};
+  }
+}
+
+@riverpod
+class ThermostatDevices extends _$ThermostatDevices {
+  @override
+  Map<String, ThermostatDevice> build() {
+    return {};
+  }
+}
 
 @riverpod
 class DeviceNames extends _$DeviceNames {
@@ -88,13 +80,14 @@ class DeviceNames extends _$DeviceNames {
 @riverpod
 class Mqtt extends _$Mqtt {
   late MqttServerClient mqtt;
-  late MqttDevices mqttDevices;
-  late MqttDevicesX mqttDevicesX;
+  late MqttDevices mqttDevices = ref.watch(mqttDevicesProvider.notifier);
+  late MqttDevicesX mqttDevicesX = ref.watch(mqttDevicesXProvider.notifier);
+  late CurtainDevices curtainDevices = ref.watch(curtainDevicesProvider.notifier);
+  late DoorDevices doorDevices = ref.watch(doorDevicesProvider.notifier);
+  late ThermostatDevices thermostatDevices = ref.watch(thermostatDevicesProvider.notifier);
 
   @override
   build() {
-    mqttDevices = ref.watch(mqttDevicesProvider.notifier);
-    mqttDevicesX = ref.watch(mqttDevicesXProvider.notifier);
     log('building mqtt');
     ref.onDispose(() {
       disconnect();
@@ -176,18 +169,18 @@ class Mqtt extends _$Mqtt {
             };
 
             if (deviceType == 'curtain') {
-              mqttDevicesX.state = {
-                ...mqttDevicesX.state,
+              curtainDevices.state = {
+                ...curtainDevices.state,
                 deviceId: CurtainDevice(deviceId, deviceType, payloadJson, publish),
               };
             } else if (deviceType == 'door') {
-              mqttDevicesX.state = {
-                ...mqttDevicesX.state,
+              doorDevices.state = {
+                ...doorDevices.state,
                 deviceId: DoorDevice(deviceId, deviceType, payloadJson, publish),
               };
             } else if (deviceType == 'thermostat') {
-              mqttDevicesX.state = {
-                ...mqttDevicesX.state,
+              thermostatDevices.state = {
+                ...thermostatDevices.state,
                 deviceId: ThermostatDevice(deviceId, deviceType, payloadJson, publish),
               };
             }

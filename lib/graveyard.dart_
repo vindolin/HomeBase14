@@ -86,3 +86,53 @@ class MqttConnectionDataXXX extends _$MqttConnectionDataXXX {
     //   'address': mqttConnectionData.value?.address,
     //   'port': mqttConnectionData.value?.port,
     // };
+
+
+    final thermostatDevicesProvider = Provider<Map<String, dynamic>>((ref) {
+      return Map.fromEntries(
+        ({...mqttDevicesX}..removeWhere((_, device) => device is! ThermostatDevice)).entries.toList()
+          ..sort(
+            (a, b) => deviceNames[a.key]!.compareTo(
+              deviceNames[b.key]!,
+            ),
+          )
+          ..sort(
+            // then sort by local temperature
+            (a, b) => b.value.localTemperature.compareTo(
+              a.value.localTemperature,
+            ),
+          ),
+      );
+    });
+
+// @riverpod
+// Map<String, AbstractMqttDevice> curtainDevices(CurtainDevicesRef ref) {
+//   final mqttDevices = ref.watch(mqttDevicesXProvider);
+//   return {
+//     ...Map.fromEntries(
+//       ({...mqttDevices}..removeWhere(
+//               (key, value) {
+//                 return value is! CurtainDevice;
+//               },
+//             ))
+//           .entries
+//           .toList(),
+//     ),
+//   };
+// }
+
+// @riverpod
+// Map<String, dynamic> curtainDevices(CurtainDevicesRef ref) {
+//   final curtainDevices = ref.watch(curtainDevicesProvider);
+//   return {
+//     ...Map.fromEntries(
+//       ({...curtainDevices}..removeWhere(
+//               (key, value) {
+//                 return !key.startsWith('dualCurtain');
+//               },
+//             ))
+//           .entries
+//           .toList(),
+//     ),
+//   };
+// }

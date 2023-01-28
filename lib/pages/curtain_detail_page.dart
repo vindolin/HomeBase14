@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/utils.dart';
 import '/models/mqtt_providers.dart';
 import '/widgets/vertical_slider_widget.dart';
+import '/models/mqtt_devices.dart';
 
 class CurtainDetailPage extends ConsumerWidget {
   final String deviceId;
@@ -13,8 +14,9 @@ class CurtainDetailPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // final device = ref.watch(mqttDevicesProvider)[deviceId];
+
     final device = ref.watch(
-      mqttDevicesProvider.select(
+      curtainDevicesProvider.select(
         (mqttDevices) => mqttDevices[deviceId],
       ),
     );
@@ -30,8 +32,7 @@ class CurtainDetailPage extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             VerticalSlider(
-              // device['position'].toDouble(), // invert
-              device['position'].toDouble(),
+              device!.position.toDouble(),
               (double value) {
                 // setState(
                 //   () => device.position = value.round().toDouble(),
@@ -43,7 +44,7 @@ class CurtainDetailPage extends ConsumerWidget {
               invert: true,
             ),
             Center(
-              child: Text('${deviceNames[deviceId]}\n$deviceId\n${device['_device_type']}\n${device['position']}'),
+              child: Text('${deviceNames[deviceId]}\n$deviceId\n${device.deviceType}\n${device.position}'),
             ),
           ],
         ));

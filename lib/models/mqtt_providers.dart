@@ -24,54 +24,9 @@ final messageProvider = StreamProvider<Map<String, dynamic>>((ref) async* {
 });
 
 @riverpod
-class MqttDevices extends _$MqttDevices {
-  @override
-  Map<String, dynamic> build() {
-    log('building mqttDevices');
-    ref.onDispose(() {
-      log('disposing mqttDevices');
-    });
-    return {};
-  }
-}
-
-@riverpod
-class MqttDevicesX extends _$MqttDevicesX {
-  @override
-  Map<String, AbstractMqttDevice> build() {
-    return {};
-  }
-}
-
-@riverpod
 class CurtainDevices extends _$CurtainDevices {
   @override
   Map<String, CurtainDevice> build() {
-    return {};
-  }
-}
-
-@riverpod
-class DoorDevices extends _$DoorDevices {
-  @override
-  Map<String, DoorDevice> build() {
-    return {};
-  }
-}
-
-@riverpod
-class ThermostatDevices extends _$ThermostatDevices {
-  @override
-  Map<String, ThermostatDevice> build() {
-    return {};
-  }
-}
-
-@riverpod
-class DeviceNames extends _$DeviceNames {
-  // Mapping of device id to device name
-  @override
-  Map<String, String> build() {
     return {};
   }
 }
@@ -80,8 +35,6 @@ class DeviceNames extends _$DeviceNames {
 @riverpod
 class Mqtt extends _$Mqtt {
   late MqttServerClient mqtt;
-  late MqttDevices mqttDevices = ref.watch(mqttDevicesProvider.notifier);
-  late MqttDevicesX mqttDevicesX = ref.watch(mqttDevicesXProvider.notifier);
   late CurtainDevices curtainDevices = ref.watch(curtainDevicesProvider.notifier);
   late DoorDevices doorDevices = ref.watch(doorDevicesProvider.notifier);
   late ThermostatDevices thermostatDevices = ref.watch(thermostatDevicesProvider.notifier);
@@ -163,11 +116,6 @@ class Mqtt extends _$Mqtt {
             String deviceType = match.namedGroup('type')!; // e.g. curtain
             String deviceId = '$deviceType/${match.namedGroup('id')!}'; // e.g. curtain/001
 
-            mqttDevices.state = {
-              ...mqttDevices.state,
-              deviceId: {'_device_type': deviceType, ...payloadJson},
-            };
-
             if (deviceType == 'curtain') {
               curtainDevices.state = {
                 ...curtainDevices.state,
@@ -184,11 +132,6 @@ class Mqtt extends _$Mqtt {
                 deviceId: ThermostatDevice(deviceId, deviceType, payloadJson, publish),
               };
             }
-
-            mqttDevices.state = {
-              ...mqttDevices.state,
-              deviceId: {'_device_type': deviceType, ...payloadJson},
-            };
 
             // send the message to the message stream
             messageController.sink.add({

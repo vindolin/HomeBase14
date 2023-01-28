@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../models/mqtt_providers.dart';
+import '/models/mqtt_devices.dart';
 
 class ThermostatDetailPage extends ConsumerWidget {
   final String deviceId;
@@ -11,7 +10,7 @@ class ThermostatDetailPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final device = ref.watch(
-      mqttDevicesProvider.select(
+      thermostatDevicesProvider.select(
         (mqttDevices) => mqttDevices[deviceId],
       ),
     );
@@ -22,7 +21,7 @@ class ThermostatDetailPage extends ConsumerWidget {
         title: const Text('Thermostat'),
       ),
       body: Center(
-        child: Text('${deviceNames[deviceId]} - ${device['local_temperature']}°C'),
+        child: Text('${deviceNames[deviceId]} - ${device?.localTemperature}°C'),
       ),
     );
   }

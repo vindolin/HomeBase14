@@ -1,8 +1,45 @@
 import 'dart:convert';
 import 'dart:developer' as d;
 import 'package:flutter/material.dart';
-
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'mqtt_providers.dart';
+
+part 'mqtt_devices.g.dart';
+
+@riverpod
+class DoorDevices extends _$DoorDevices {
+  @override
+  Map<String, DoorDevice> build() {
+    return {};
+  }
+}
+
+@riverpod
+class ThermostatDevices extends _$ThermostatDevices {
+  @override
+  Map<String, ThermostatDevice> build() {
+    return {};
+  }
+}
+
+@riverpod
+class DeviceNames extends _$DeviceNames {
+  // Mapping of device id to device name
+  @override
+  Map<String, String> build() {
+    return {};
+  }
+}
+
+// Map<String, dynamic> mqttDevices = {
+//   'curtain': CurtainDevice,
+
+// };
+final mqttDeviceMap = {
+  'curtain': CurtainDevice,
+  'door': DoorDevice,
+  'thermostat': ThermostatDevice,
+};
 
 typedef F = void Function(String deviceId, String payload);
 
@@ -128,8 +165,8 @@ class DoorDevice extends AbstractMqttDevice {
 }
 
 class ThermostatDevice extends AbstractMqttDevice {
-  double? localTemperature;
-  double? currentHeatingSetpoint;
+  double localTemperature = 0;
+  double currentHeatingSetpoint = 0;
 
   ThermostatDevice(
     super.deviceId,
@@ -157,8 +194,8 @@ class ThermostatDevice extends AbstractMqttDevice {
     super.publishState();
     String json = jsonEncode(
       {
-        'local_temperature': localTemperature?.toDouble(),
-        'current_heating_setpoint': currentHeatingSetpoint?.toDouble(),
+        'local_temperature': localTemperature.toDouble(),
+        'current_heating_setpoint': currentHeatingSetpoint.toDouble(),
       },
     );
     d.log('publish> $deviceId $json');

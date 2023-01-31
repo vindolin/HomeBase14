@@ -68,6 +68,47 @@ abstract class _$ThermostatDevices
   Map<String, ThermostatDevice> build();
 }
 
+String _$CurtainDevicesHash() => r'b33f41e5ba1de1ab0e7209988373e60808988fb2';
+
+/// See also [CurtainDevices].
+final curtainDevicesProvider =
+    AutoDisposeNotifierProvider<CurtainDevices, Map<String, CurtainDevice>>(
+  CurtainDevices.new,
+  name: r'curtainDevicesProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$CurtainDevicesHash,
+);
+typedef CurtainDevicesRef
+    = AutoDisposeNotifierProviderRef<Map<String, CurtainDevice>>;
+
+abstract class _$CurtainDevices
+    extends AutoDisposeNotifier<Map<String, CurtainDevice>> {
+  @override
+  Map<String, CurtainDevice> build();
+}
+
+String _$DualCurtainDevicesHash() =>
+    r'70d5a22040e6a3fecfacb01d1a4f394ef17ce733';
+
+/// See also [DualCurtainDevices].
+final dualCurtainDevicesProvider = AutoDisposeNotifierProvider<
+    DualCurtainDevices, Map<String, DualCurtainDevice>>(
+  DualCurtainDevices.new,
+  name: r'dualCurtainDevicesProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$DualCurtainDevicesHash,
+);
+typedef DualCurtainDevicesRef
+    = AutoDisposeNotifierProviderRef<Map<String, DualCurtainDevice>>;
+
+abstract class _$DualCurtainDevices
+    extends AutoDisposeNotifier<Map<String, DualCurtainDevice>> {
+  @override
+  Map<String, DualCurtainDevice> build();
+}
+
 String _$DeviceNamesHash() => r'58600b4ff41343ac5d7d24d74470b752755f3dab';
 
 /// See also [DeviceNames].

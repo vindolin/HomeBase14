@@ -11,8 +11,8 @@ class ThermostatListPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final deviceNames = ref.read(deviceNamesProvider);
-    final thermostatDevicesUnfiltered = ref.watch(thermostatDevicesProvider);
 
+    final thermostatDevicesUnfiltered = ref.watch(thermostatDevicesProvider);
     final thermostatDevices = ref.watch(
       Provider<Map<String, ThermostatDevice>>(
         (ref) {

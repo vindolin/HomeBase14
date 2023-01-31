@@ -23,6 +23,22 @@ class ThermostatDevices extends _$ThermostatDevices {
 }
 
 @riverpod
+class CurtainDevices extends _$CurtainDevices {
+  @override
+  Map<String, CurtainDevice> build() {
+    return {};
+  }
+}
+
+@riverpod
+class DualCurtainDevices extends _$DualCurtainDevices {
+  @override
+  Map<String, DualCurtainDevice> build() {
+    return {};
+  }
+}
+
+@riverpod
 class DeviceNames extends _$DeviceNames {
   // Mapping of device id to device name
   @override
@@ -118,6 +134,48 @@ class CurtainDevice extends AbstractMqttDevice {
       },
     );
     d.log('publish> $deviceId $json');
+
+    publishCallback(
+      deviceId,
+      json,
+    );
+  }
+}
+
+class DualCurtainDevice extends AbstractMqttDevice {
+  double positionLeft = 0.0;
+  double positionRight = 0.0;
+
+  DualCurtainDevice(
+    super.deviceId,
+    super.deviceType,
+    super.payload,
+    super.publishCallback,
+  );
+
+  @override
+  void readValue(String key, dynamic value) {
+    switch (key) {
+      case 'position_left':
+        positionLeft = value.toDouble();
+        break;
+      case 'position_right':
+        positionRight = value.toDouble();
+        break;
+      default:
+    }
+    super.readValue(key, value);
+  }
+
+  @override
+  void publishState() {
+    super.publishState();
+    String json = jsonEncode(
+      {
+        'position_left': positionLeft.toInt(),
+        'position_right': positionRight.toInt(),
+      },
+    );
 
     publishCallback(
       deviceId,

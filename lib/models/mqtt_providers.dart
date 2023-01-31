@@ -23,19 +23,12 @@ final messageProvider = StreamProvider<Map<String, dynamic>>((ref) async* {
   }
 });
 
-@riverpod
-class CurtainDevices extends _$CurtainDevices {
-  @override
-  Map<String, CurtainDevice> build() {
-    return {};
-  }
-}
-
 // wraps the whole mqtt client and and connection callbacks
 @riverpod
 class Mqtt extends _$Mqtt {
   late MqttServerClient mqtt;
   late CurtainDevices curtainDevices = ref.watch(curtainDevicesProvider.notifier);
+  late DualCurtainDevices dualCurtainDevices = ref.watch(dualCurtainDevicesProvider.notifier);
   late DoorDevices doorDevices = ref.watch(doorDevicesProvider.notifier);
   late ThermostatDevices thermostatDevices = ref.watch(thermostatDevicesProvider.notifier);
 
@@ -120,6 +113,11 @@ class Mqtt extends _$Mqtt {
               curtainDevices.state = {
                 ...curtainDevices.state,
                 deviceId: CurtainDevice(deviceId, deviceType, payloadJson, publish),
+              };
+            } else if (deviceType == 'dualCurtain') {
+              dualCurtainDevices.state = {
+                ...dualCurtainDevices.state,
+                deviceId: DualCurtainDevice(deviceId, deviceType, payloadJson, publish),
               };
             } else if (deviceType == 'door') {
               doorDevices.state = {

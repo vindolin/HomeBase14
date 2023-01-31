@@ -5,40 +5,42 @@ import '/utils.dart';
 import '/widgets/vertical_slider_widget.dart';
 import '/models/mqtt_devices.dart';
 
-class CurtainDetailPage extends ConsumerWidget {
+class DualCurtainDetailPage extends ConsumerWidget {
   final String deviceId;
 
-  const CurtainDetailPage({super.key, required this.deviceId});
+  const DualCurtainDetailPage({super.key, required this.deviceId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // final device = ref.watch(mqttDevicesProvider)[deviceId];
 
     final device = ref.watch(
-      curtainDevicesProvider.select(
+      dualCurtainDevicesProvider.select(
         (mqttDevices) => mqttDevices[deviceId],
       ),
     );
 
     // we need this special provider to be able to change the value in realtime
-    final positionProvider = StateProvider<double>((ref) => device!.position);
-    final position = ref.watch(positionProvider);
+    final positionLeftProvider = StateProvider<double>((ref) => device!.positionLeft);
+    final positionLeft = ref.watch(positionLeftProvider);
+    final positionRightProvider = StateProvider<double>((ref) => device!.positionLeft);
+    final positionRight = ref.watch(positionRightProvider);
 
     final deviceNames = ref.read(deviceNamesProvider);
-    log('build CurtainDetailPage');
+    log('build DualCurtainDetailPage');
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Curtain'),
+          title: const Text('DualCurtain'),
         ),
         body: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             VerticalSlider(
-              position,
+              positionLeft,
               (double value) {
-                ref.read(positionProvider.notifier).state = value;
-                device?.position = value.round().toDouble();
+                ref.read(positionLeftProvider.notifier).state = value;
+                device?.positionLeft = value.round().toDouble();
               },
               (double value) {
                 device?.publishState();
@@ -47,7 +49,7 @@ class CurtainDetailPage extends ConsumerWidget {
             ),
             Center(
               child: Text(
-                '${deviceNames[deviceId]}\n$deviceId\n${device!.deviceType}\n${device.position}',
+                '${deviceNames[deviceId]}\n$deviceId\n${device!.deviceType}\n${device.positionLeft}',
               ),
             ),
           ],

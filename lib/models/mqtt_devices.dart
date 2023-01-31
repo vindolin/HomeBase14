@@ -1,9 +1,8 @@
 import 'dart:convert';
-import 'dart:developer' as d;
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'mqtt_providers.dart';
-
+import '/utils.dart';
 part 'mqtt_devices.g.dart';
 
 @riverpod
@@ -67,7 +66,7 @@ abstract class AbstractMqttDevice {
   Map<String, dynamic> data = {};
   F publishCallback;
   int linkQuality = 0;
-  int? battery;
+  double? battery;
   bool followUpMessage = false; // the first message after a publish always has the old values, ignore
 
   AbstractMqttDevice(this.deviceId, this.deviceType, Map<String, dynamic> payload, this.publishCallback) {
@@ -76,7 +75,7 @@ abstract class AbstractMqttDevice {
 
   @protected
   void readValue(String key, dynamic value) {
-    d.log('$key> $value');
+    // log('$key> $value');
   }
 
   void readValues(Map<String, dynamic> payload) {
@@ -91,7 +90,8 @@ abstract class AbstractMqttDevice {
           linkQuality = value;
           break;
         case 'battery':
-          battery = value;
+          print(value);
+          battery = value.toDouble();
           break;
         default:
           readValue(key, value);
@@ -133,7 +133,7 @@ class CurtainDevice extends AbstractMqttDevice {
         'position': position.toInt(),
       },
     );
-    d.log('publish> $deviceId $json');
+    log('publish> $deviceId $json');
 
     publishCallback(
       deviceId,
@@ -213,7 +213,7 @@ class DoorDevice extends AbstractMqttDevice {
         'position': position.toInt(),
       },
     );
-    d.log('publish> $deviceId $json');
+    log('publish> $deviceId $json');
 
     publishCallback(
       deviceId,
@@ -256,7 +256,7 @@ class ThermostatDevice extends AbstractMqttDevice {
         'current_heating_setpoint': currentHeatingSetpoint.toDouble(),
       },
     );
-    d.log('publish> $deviceId $json');
+    log('publish> $deviceId $json');
 
     publishCallback(
       deviceId,

@@ -1,8 +1,8 @@
 import 'dart:developer' as d;
 import 'package:stack_trace/stack_trace.dart';
 
-const bool debugTrace = false;
-// const bool debugTrace = true;
+// const bool debugTrace = false;
+const bool debugTrace = true;
 
 void log(dynamic message) {
   if (debugTrace) {

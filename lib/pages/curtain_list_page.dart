@@ -1,66 +1,91 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '/utils.dart';
 import '/models/mqtt_devices.dart';
 import '/pages/curtain_detail_page.dart';
 import '/pages/dual_curtain_detail_page.dart';
 import '/widgets/connection_bar_widget.dart';
 
-ListTile mkCurtainDeviceListTile(AbstractMqttDevice device, context, deviceNames, key) {
-  return ListTile(
-    leading: const Icon(
-      Icons.blinds,
-    ),
-    key: Key(key),
-    visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-    title: Text(
-      deviceNames[key]!,
-    ),
-    subtitle: Row(
-      children: [
-        Text(
-          device.deviceType,
-        ),
-      ],
-    ),
-    onTap: () {
-      log('tapped $key');
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => CurtainDetailPage(deviceId: key),
-        ),
-      );
-    },
+const String assetName = 'assets/images/svg/blinds.svg';
+final Widget svg = SvgPicture.asset(
+  assetName,
+  // semanticsLabel: 'blinds',
+  color: Colors.white,
+  width: 24,
+  height: 24,
+);
+
+class CurtainPainter extends CustomPainter {
+  final double position;
+  final topBarHeight = 4.0;
+  final bottomBarHeight = 3.0;
+  final blindsMaxHeight = 0.0;
+  final blindsPadding = 1.0;
+
+  CurtainPainter(this.position);
+
+  @override
+  bool shouldRepaint(CurtainPainter oldDelegate) => oldDelegate.position != position;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final blindsMaxHeight = size.height - (topBarHeight + bottomBarHeight);
+    final blindsClosedHeight = blindsMaxHeight * (100 - position) / 100;
+
+    final blindsPaint = Paint()..color = Colors.white;
+
+    // top bar
+    canvas.drawRect(
+      Rect.fromLTRB(0, 0, size.width, topBarHeight),
+      blindsPaint,
+    );
+    // bottom bar
+    canvas.drawRect(
+      Rect.fromLTRB(0, size.height - bottomBarHeight, size.width, size.height),
+      blindsPaint,
+    );
+
+    for (var i = topBarHeight; i < topBarHeight + blindsClosedHeight; i++) {
+      if (i % 2 == 0) {
+        canvas.drawRect(
+          Rect.fromLTRB(
+            blindsPadding,
+            i.toDouble(),
+            size.width - blindsPadding,
+            i.toDouble() + 1,
+          ),
+          blindsPaint,
+        );
+      }
+    }
+
+    final paint = Paint()..color = Colors.transparent;
+    canvas.drawRect(
+      Rect.fromLTWH(0, 0, size.width, size.height),
+      paint,
+    );
+  }
+}
+
+Widget mkCurtainIcon() {
+  return const Icon(
+    Icons.curtains,
   );
 }
 
-ListTile mkDualCurtainDeviceListTile(AbstractMqttDevice device, context, deviceNames, key) {
-  return ListTile(
-    leading: const Icon(
-      Icons.door_back_door,
-    ),
-    key: Key(key),
-    visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-    title: Text(
-      deviceNames[key]!,
-    ),
-    subtitle: Row(
-      children: [
-        Text(
-          device.deviceType,
-        ),
-      ],
-    ),
-    onTap: () {
-      log('tapped $key');
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => DualCurtainDetailPage(deviceId: key),
-        ),
-      );
-    },
+Widget mkDualCurtainIconx() {
+  return const Icon(
+    Icons.door_front_door,
+  );
+}
+
+dualCurtainIcon(double position) {
+  log(position);
+  return CustomPaint(
+    painter: CurtainPainter(position),
+    size: const Size(24, 24),
   );
 }
 
@@ -69,6 +94,8 @@ class CurtainListPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    log('CurtainListPage.build()');
+
     final deviceNames = ref.read(deviceNamesProvider);
 
     final curtainDevicesUnfiltered = ref.watch(curtainDevicesProvider);
@@ -97,7 +124,10 @@ class CurtainListPage extends ConsumerWidget {
       ),
     );
 
-    Map<String, AbstractMqttDevice> allCurtainDevices = {...dualCurtainDevices, ...curtainDevices};
+    Map<String, AbstractMqttDevice> combinedCurtainDevices = {
+      ...dualCurtainDevices,
+      ...curtainDevices,
+    };
 
     return Scaffold(
       appBar: AppBar(
@@ -105,14 +135,41 @@ class CurtainListPage extends ConsumerWidget {
       ),
       body: ListView.separated(
           separatorBuilder: (context, index) => const Divider(),
-          itemCount: allCurtainDevices.length,
+          itemCount: combinedCurtainDevices.length,
           itemBuilder: (context, index) {
-            final key = allCurtainDevices.keys.elementAt(index);
-            final device = allCurtainDevices.values.elementAt(index);
+            final device = combinedCurtainDevices.values.elementAt(index);
+            bool isDualCurtain = device is DualCurtainDevice;
 
-            return device.deviceType == 'curtain'
-                ? mkCurtainDeviceListTile(device, context, deviceNames, key)
-                : mkDualCurtainDeviceListTile(device, context, deviceNames, key);
+            return ListTile(
+              leading: isDualCurtain ? dualCurtainIcon(device.positionLeft) : mkCurtainIcon(),
+              key: Key(device.deviceId),
+              visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+              title: Text(
+                deviceNames[device.deviceId]!,
+              ),
+              subtitle: Row(
+                children: [
+                  isDualCurtain
+                      // ? Text(
+                      //     '${device.deviceType} ${device.positionLeft} ${device.positionRight}',
+                      //   )
+                      ? Text(
+                          '${device.deviceType}',
+                        )
+                      : Text('${device.deviceType} C'),
+                ],
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => isDualCurtain
+                        ? DualCurtainDetailPage(deviceId: device.deviceId)
+                        : CurtainDetailPage(deviceId: device.deviceId),
+                  ),
+                );
+              },
+            );
           }),
       floatingActionButton: const ConnectionBar(),
     );

@@ -48,6 +48,7 @@ dependencies:
   shared_preferences: ^2.0.15
   format: ^1.1.1
   stack_trace: ^1.11.0
+  flutter_svg: ^1.1.6
 
 dev_dependencies:
   build_runner:
@@ -77,6 +78,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/home_bar.jpg
+    - assets/images/svg/blinds.svg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

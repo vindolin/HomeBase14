@@ -8,7 +8,7 @@ import '/pages/dual_curtain_detail_page.dart';
 import '/widgets/connection_bar_widget.dart';
 import '/widgets/curtain_icons_widget.dart';
 
-class CurtainListPage extends HookConsumerWidget {
+class CurtainListPage extends ConsumerWidget {
   const CurtainListPage({super.key});
 
   @override
@@ -43,6 +43,7 @@ class CurtainListPage extends HookConsumerWidget {
       ),
     );
 
+    // add both curtain types to a single map
     Map<String, AbstractMqttDevice> combinedCurtainDevices = {
       ...dualCurtainDevices,
       ...curtainDevices,
@@ -63,6 +64,7 @@ class CurtainListPage extends HookConsumerWidget {
               icon = dualCurtainIcon(device.positionLeft, device.positionRight);
             } else if (device is CurtainDevice) {
               icon = curtainIcon(device.position);
+              // icon = AnimatedWidget(device.deviceId);
             }
 
             return ListTile(
@@ -91,6 +93,17 @@ class CurtainListPage extends HookConsumerWidget {
               },
             );
           }),
+      // bottomSheet: Column(
+      //   children: [
+      //     const AnimatedWidget(device.deviceId),
+      //     ElevatedButton(
+      //       child: const Text('Increment'),
+      //       onPressed: () {
+      //         notifier.increment();
+      //       },
+      //     ),
+      //   ],
+      // ),
       floatingActionButton: const ConnectionBar(),
     );
   }

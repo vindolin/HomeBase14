@@ -105,37 +105,37 @@ class MqttConnectionDataXXX extends _$MqttConnectionDataXXX {
       );
     });
 
-// @riverpod
-// Map<String, AbstractMqttDevice> curtainDevices(CurtainDevicesRef ref) {
-//   final mqttDevices = ref.watch(mqttDevicesXProvider);
-//   return {
-//     ...Map.fromEntries(
-//       ({...mqttDevices}..removeWhere(
-//               (key, value) {
-//                 return value is! CurtainDevice;
-//               },
-//             ))
-//           .entries
-//           .toList(),
-//     ),
-//   };
-// }
+@riverpod
+Map<String, AbstractMqttDevice> curtainDevices(CurtainDevicesRef ref) {
+  final mqttDevices = ref.watch(mqttDevicesXProvider);
+  return {
+    ...Map.fromEntries(
+      ({...mqttDevices}..removeWhere(
+              (key, value) {
+                return value is! CurtainDevice;
+              },
+            ))
+          .entries
+          .toList(),
+    ),
+  };
+}
 
-// @riverpod
-// Map<String, dynamic> curtainDevices(CurtainDevicesRef ref) {
-//   final curtainDevices = ref.watch(curtainDevicesProvider);
-//   return {
-//     ...Map.fromEntries(
-//       ({...curtainDevices}..removeWhere(
-//               (key, value) {
-//                 return !key.startsWith('dualCurtain');
-//               },
-//             ))
-//           .entries
-//           .toList(),
-//     ),
-//   };
-// }
+@riverpod
+Map<String, dynamic> curtainDevices(CurtainDevicesRef ref) {
+  final curtainDevices = ref.watch(curtainDevicesProvider);
+  return {
+    ...Map.fromEntries(
+      ({...curtainDevices}..removeWhere(
+              (key, value) {
+                return !key.startsWith('dualCurtain');
+              },
+            ))
+          .entries
+          .toList(),
+    ),
+  };
+}
 
 
 class MyFancyPainter extends CustomPainter {
@@ -165,3 +165,15 @@ class MyFancyPainter extends CustomPainter {
     // );
   }
 }
+
+
+import 'package:flutter_svg/flutter_svg.dart';
+
+const String assetName = 'assets/images/svg/blinds.svg';
+final Widget svg = SvgPicture.asset(
+  assetName,
+  // semanticsLabel: 'blinds',
+  color: Colors.white,
+  width: 24,
+  height: 24,
+);

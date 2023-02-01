@@ -1,73 +1,11 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '/utils.dart';
 import '/models/mqtt_devices.dart';
 import '/pages/curtain_detail_page.dart';
 import '/pages/dual_curtain_detail_page.dart';
 import '/widgets/connection_bar_widget.dart';
-
-const String assetName = 'assets/images/svg/blinds.svg';
-final Widget svg = SvgPicture.asset(
-  assetName,
-  // semanticsLabel: 'blinds',
-  color: Colors.white,
-  width: 24,
-  height: 24,
-);
-
-class CurtainPainter extends CustomPainter {
-  final double position;
-  final topBarHeight = 4.0;
-  final bottomBarHeight = 3.0;
-  final blindsMaxHeight = 0.0;
-  final blindsPadding = 1.0;
-
-  CurtainPainter(this.position);
-
-  @override
-  bool shouldRepaint(CurtainPainter oldDelegate) => oldDelegate.position != position;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final blindsMaxHeight = size.height - (topBarHeight + bottomBarHeight);
-    final blindsClosedHeight = blindsMaxHeight * (100 - position) / 100;
-
-    final blindsPaint = Paint()..color = Colors.white;
-
-    // top bar
-    canvas.drawRect(
-      Rect.fromLTRB(0, 0, size.width, topBarHeight),
-      blindsPaint,
-    );
-    // bottom bar
-    canvas.drawRect(
-      Rect.fromLTRB(0, size.height - bottomBarHeight, size.width, size.height),
-      blindsPaint,
-    );
-
-    for (var i = topBarHeight; i < topBarHeight + blindsClosedHeight; i++) {
-      if (i % 2 == 0) {
-        canvas.drawRect(
-          Rect.fromLTRB(
-            blindsPadding,
-            i.toDouble(),
-            size.width - blindsPadding,
-            i.toDouble() + 1,
-          ),
-          blindsPaint,
-        );
-      }
-    }
-
-    final paint = Paint()..color = Colors.transparent;
-    canvas.drawRect(
-      Rect.fromLTWH(0, 0, size.width, size.height),
-      paint,
-    );
-  }
-}
+import '../painters/curtain_icon_painters.dart';
 
 Widget mkCurtainIcon() {
   return const Icon(
@@ -81,8 +19,14 @@ Widget mkDualCurtainIconx() {
   );
 }
 
-dualCurtainIcon(double position) {
-  log(position);
+dualCurtainIcon(double leftPosition, double rightPosition) {
+  return CustomPaint(
+    painter: DualCurtainPainter(leftPosition, rightPosition),
+    size: const Size(24, 24),
+  );
+}
+
+curtainIcon(double position) {
   return CustomPaint(
     painter: CurtainPainter(position),
     size: const Size(24, 24),
@@ -138,10 +82,16 @@ class CurtainListPage extends ConsumerWidget {
           itemCount: combinedCurtainDevices.length,
           itemBuilder: (context, index) {
             final device = combinedCurtainDevices.values.elementAt(index);
-            bool isDualCurtain = device is DualCurtainDevice;
+
+            Widget? icon;
+            if (device is DualCurtainDevice) {
+              icon = dualCurtainIcon(device.positionLeft, device.positionRight);
+            } else if (device is CurtainDevice) {
+              icon = curtainIcon(device.position);
+            }
 
             return ListTile(
-              leading: isDualCurtain ? dualCurtainIcon(device.positionLeft) : mkCurtainIcon(),
+              leading: icon,
               key: Key(device.deviceId),
               visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
               title: Text(
@@ -149,21 +99,16 @@ class CurtainListPage extends ConsumerWidget {
               ),
               subtitle: Row(
                 children: [
-                  isDualCurtain
-                      // ? Text(
-                      //     '${device.deviceType} ${device.positionLeft} ${device.positionRight}',
-                      //   )
-                      ? Text(
-                          '${device.deviceType}',
-                        )
-                      : Text('${device.deviceType} C'),
+                  Text(
+                    device.deviceType,
+                  )
                 ],
               ),
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => isDualCurtain
+                    builder: (context) => device is DualCurtainDevice
                         ? DualCurtainDetailPage(deviceId: device.deviceId)
                         : CurtainDetailPage(deviceId: device.deviceId),
                   ),

@@ -177,3 +177,9 @@ final Widget svg = SvgPicture.asset(
   width: 24,
   height: 24,
 );
+
+final paint = Paint()..color = Colors.transparent;
+canvas.drawRect(
+  Rect.fromLTWH(0, 0, size.width, size.height),
+  paint,
+);

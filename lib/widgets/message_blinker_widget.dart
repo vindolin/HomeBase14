@@ -12,11 +12,6 @@ class MessageBlinker extends ConsumerStatefulWidget {
 
 class _MessageBlinkerState extends ConsumerState<MessageBlinker> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     const int onDurationMs = 100;
     const int fadeDurationMs = 100;

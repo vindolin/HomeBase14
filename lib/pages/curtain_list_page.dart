@@ -1,39 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '/utils.dart';
 import '/models/mqtt_devices.dart';
 import '/pages/curtain_detail_page.dart';
 import '/pages/dual_curtain_detail_page.dart';
 import '/widgets/connection_bar_widget.dart';
-import '../painters/curtain_icon_painters.dart';
+import '/widgets/curtain_icons_widget.dart';
 
-Widget mkCurtainIcon() {
-  return const Icon(
-    Icons.curtains,
-  );
-}
-
-Widget mkDualCurtainIconx() {
-  return const Icon(
-    Icons.door_front_door,
-  );
-}
-
-dualCurtainIcon(double leftPosition, double rightPosition) {
-  return CustomPaint(
-    painter: DualCurtainPainter(leftPosition, rightPosition),
-    size: const Size(24, 24),
-  );
-}
-
-curtainIcon(double position) {
-  return CustomPaint(
-    painter: CurtainPainter(position),
-    size: const Size(24, 24),
-  );
-}
-
-class CurtainListPage extends ConsumerWidget {
+class CurtainListPage extends HookConsumerWidget {
   const CurtainListPage({super.key});
 
   @override
@@ -116,7 +91,7 @@ class CurtainListPage extends ConsumerWidget {
               },
             );
           }),
-      floatingActionButton: const ConnectionBar(),
+      bottomSheet: const ConnectionBar(),
     );
   }
 }

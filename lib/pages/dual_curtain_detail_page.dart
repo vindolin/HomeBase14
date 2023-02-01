@@ -23,8 +23,8 @@ class DualCurtainDetailPage extends ConsumerWidget {
     // we need this special provider to be able to change the value in realtime
     final positionLeftProvider = StateProvider<double>((ref) => device!.positionLeft);
     final positionLeft = ref.watch(positionLeftProvider);
-    final positionRightProvider = StateProvider<double>((ref) => device!.positionLeft);
-    final positionRight = ref.watch(positionRightProvider);
+    // final positionRightProvider = StateProvider<double>((ref) => device!.positionLeft);
+    // final positionRight = ref.watch(positionRightProvider);
 
     final deviceNames = ref.read(deviceNamesProvider);
     log('build DualCurtainDetailPage');

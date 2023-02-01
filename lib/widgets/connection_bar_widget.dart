@@ -18,9 +18,17 @@ class ConnectionBar extends ConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         if (mqttConnectionStateX == MqttConnectionState.connected) ...[
-          TextButton(onPressed: () => mqttProviderX.disconnect(), child: const Icon(Icons.wifi)),
+          TextButton(
+              onPressed: () => mqttProviderX.disconnect(),
+              child: const Icon(
+                Icons.wifi,
+              )),
         ] else if (mqttConnectionStateX == MqttConnectionState.disconnected) ...[
-          TextButton(onPressed: () => mqttProviderX.connect(), child: const Icon(Icons.wifi_off)),
+          TextButton(
+              onPressed: () => mqttProviderX.connect(),
+              child: const Icon(
+                Icons.wifi_off,
+              )),
         ] else if (mqttConnectionStateX == MqttConnectionState.faulted) ...[
           const Icon(Icons.wifi_off, color: Colors.red)
         ] else ...[

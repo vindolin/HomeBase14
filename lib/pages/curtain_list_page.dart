@@ -91,7 +91,7 @@ class CurtainListPage extends HookConsumerWidget {
               },
             );
           }),
-      bottomSheet: const ConnectionBar(),
+      floatingActionButton: const ConnectionBar(),
     );
   }
 }

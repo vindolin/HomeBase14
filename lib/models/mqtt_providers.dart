@@ -109,7 +109,7 @@ class Mqtt extends _$Mqtt {
             String deviceType = match.namedGroup('type')!; // e.g. curtain
             String deviceId = '$deviceType/${match.namedGroup('id')!}'; // e.g. curtain/001
 
-            if (deviceType == 'curtain') {
+            if (deviceType == 'curtain' || deviceType == 'curtainU') {
               curtainDevices.state = {
                 ...curtainDevices.state,
                 deviceId: CurtainDevice(deviceId, deviceType, payloadJson, publish),

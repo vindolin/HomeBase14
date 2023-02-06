@@ -46,7 +46,7 @@ class ThermostatListPage extends ConsumerWidget {
                 ? Colors.green
                 : device.localTemperature < device.currentHeatingSetpoint
                     ? Colors.blue
-                    : Colors.red;
+                    : Colors.orange;
 
             return ListTile(
               leading: Icon(

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/utils.dart';
 import '/models/mqtt_devices.dart';
 import '/pages/curtain_detail_page.dart';
 import '/pages/dual_curtain_detail_page.dart';
 import '/widgets/connection_bar_widget.dart';
-import '/widgets/curtain_icons_widget.dart';
+
+import '/painters/curtain_icon_painters.dart';
 
 class CurtainListPage extends ConsumerWidget {
   const CurtainListPage({super.key});
@@ -21,11 +21,13 @@ class CurtainListPage extends ConsumerWidget {
     final curtainDevices = ref.watch(
       Provider<Map<String, CurtainDevice>>(
         (ref) {
-          return curtainDevicesUnfiltered.sortByList([
-            (a, b) => deviceNames[a.key]!.compareTo(
-                  deviceNames[b.key]!,
-                ),
-          ]);
+          return curtainDevicesUnfiltered.sortByList(
+            [
+              (a, b) => deviceNames[a.key]!.compareTo(
+                    deviceNames[b.key]!,
+                  ),
+            ],
+          );
         },
       ),
     );
@@ -34,11 +36,13 @@ class CurtainListPage extends ConsumerWidget {
     final dualCurtainDevices = ref.watch(
       Provider<Map<String, DualCurtainDevice>>(
         (ref) {
-          return dualCurtainDevicesUnfiltered.sortByList([
-            (a, b) => deviceNames[a.key]!.compareTo(
-                  deviceNames[b.key]!,
-                ),
-          ]);
+          return dualCurtainDevicesUnfiltered.sortByList(
+            [
+              (a, b) => deviceNames[a.key]!.compareTo(
+                    deviceNames[b.key]!,
+                  ),
+            ],
+          );
         },
       ),
     );
@@ -60,11 +64,12 @@ class CurtainListPage extends ConsumerWidget {
             final device = combinedCurtainDevices.values.elementAt(index);
 
             Widget? icon;
+
             if (device is DualCurtainDevice) {
-              icon = dualCurtainIcon(device.positionLeft, device.positionRight);
+              icon = AnimatedDualCurtainItem(device);
             } else if (device is CurtainDevice) {
-              icon = curtainIcon(device.position);
-              // icon = AnimatedWidget(device.deviceId);
+              icon = AnimatedCurtainItem(device);
+              // icon = AnimatedItem(device);
             }
 
             return ListTile(

@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:homer/models/mqtt_devices.dart';
 
 abstract class CurtainPainterBase extends CustomPainter {
   // all sizes are computed relativ to the icon size of 24x24
-  final baseSize = 24.0;
+  final baseSize = 36.0;
 
-  void paintBlinds(double blindsMaxHeight, double topBarHeight, double bottomBarHeight, double blindsPadding,
-      Canvas canvas, Size size);
+  void paintBlinds(
+    double blindsMaxHeight,
+    double topBarHeight,
+    double bottomBarHeight,
+    double blindsPadding,
+    Canvas canvas,
+    Size size,
+  );
   final blindsPaint = Paint()..color = Colors.white;
+  final transPaint = Paint()..color = Colors.transparent;
+  final redPaint = Paint()..color = Colors.red;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -50,14 +60,20 @@ class CurtainPainter extends CurtainPainterBase {
   CurtainPainter(this.position);
 
   @override
-  bool shouldRepaint(CurtainPainter oldDelegate) => oldDelegate.position != position;
+  bool shouldRepaint(covariant CurtainPainter oldDelegate) => oldDelegate.position != position;
 
   @override
-  void paintBlinds(double blindsMaxHeight, double topBarHeight, double bottomBarHeight, double blindsPadding,
-      Canvas canvas, Size size) {
-    final blindsClosedHeight = blindsMaxHeight * (100 - position) / 100;
+  void paintBlinds(
+    double blindsMaxHeight,
+    double topBarHeight,
+    double bottomBarHeight,
+    double blindsPadding,
+    Canvas canvas,
+    Size size,
+  ) {
+    canvas.saveLayer(Rect.largest, Paint()); // will be used to clear the blinds from the bottom bar
 
-    for (var i = topBarHeight; i < topBarHeight + blindsClosedHeight; i++) {
+    for (var i = topBarHeight; i < topBarHeight + blindsMaxHeight; i++) {
       if (i % 2 == 0) {
         canvas.drawRect(
           Rect.fromLTRB(
@@ -70,50 +86,175 @@ class CurtainPainter extends CurtainPainterBase {
         );
       }
     }
+
+    // clear the blinds from the bottom bar
+    canvas.drawRect(
+      Rect.fromLTRB(
+        0,
+        size.height - bottomBarHeight,
+        size.width,
+        size.height - bottomBarHeight - (blindsMaxHeight * position / 100),
+      ),
+      Paint()..blendMode = BlendMode.clear,
+    );
+
+    canvas.restore();
   }
 }
 
 class DualCurtainPainter extends CurtainPainterBase {
-  final double leftPosition;
-  final double rightPosition;
+  final double positionLeft;
+  final double positionRight;
 
-  DualCurtainPainter(this.leftPosition, this.rightPosition);
-
-  @override
-  bool shouldRepaint(DualCurtainPainter oldDelegate) =>
-      oldDelegate.leftPosition != leftPosition || oldDelegate.rightPosition != rightPosition;
+  DualCurtainPainter(this.positionLeft, this.positionRight);
 
   @override
-  void paintBlinds(double blindsMaxHeight, double topBarHeight, double bottomBarHeight, double blindsPadding,
-      Canvas canvas, Size size) {
-    final blindsClosedHeightLeft = blindsMaxHeight * (100 - leftPosition) / 100;
-    final blindsClosedHeightRight = blindsMaxHeight * (100 - rightPosition) / 100;
+  bool shouldRepaint(covariant DualCurtainPainter oldDelegate) =>
+      oldDelegate.positionLeft != positionLeft || oldDelegate.positionRight != positionRight;
 
-    for (var i = topBarHeight; i < topBarHeight + blindsClosedHeightLeft; i++) {
+  @override
+  void paintBlinds(
+    double blindsMaxHeight,
+    double topBarHeight,
+    double bottomBarHeight,
+    double blindsPadding,
+    Canvas canvas,
+    Size size,
+  ) {
+    canvas.saveLayer(Rect.largest, Paint()); // will be used to clear the blinds from the bottom bar
+
+    // the blinds
+    for (var i = topBarHeight; i < topBarHeight + blindsMaxHeight; i += 2) {
       if (i % 2 == 0) {
         canvas.drawRect(
           Rect.fromLTRB(
             blindsPadding,
             i.toDouble(),
-            size.width / 2,
-            i.toDouble() + 1,
-          ),
-          blindsPaint,
-        );
-      }
-    }
-    for (var i = topBarHeight; i < topBarHeight + blindsClosedHeightRight; i++) {
-      if (i % 2 == 0) {
-        canvas.drawRect(
-          Rect.fromLTRB(
             size.width - blindsPadding,
-            i.toDouble(),
-            size.width / 2,
-            i.toDouble() + 1,
+            i.toDouble() + 1.5,
           ),
           blindsPaint,
         );
       }
     }
+
+    // the middle line
+    canvas.drawRect(
+      Rect.fromLTRB(
+        size.width / 2,
+        0,
+        size.width / 2 + 1,
+        size.height,
+      ),
+      blindsPaint,
+    );
+
+    // clear the left blinds from the bottom bar
+    canvas.drawRect(
+      Rect.fromLTRB(
+        0,
+        size.height - bottomBarHeight,
+        size.width / 2,
+        size.height - bottomBarHeight - (blindsMaxHeight * positionLeft / 100),
+      ),
+      Paint()..blendMode = BlendMode.clear,
+    );
+
+    // clear the right blinds from the bottom bar
+    canvas.drawRect(
+      Rect.fromLTRB(
+        size.width / 2 + 1,
+        size.height - bottomBarHeight,
+        size.width,
+        size.height - bottomBarHeight - (blindsMaxHeight * positionRight / 100),
+      ),
+      Paint()..blendMode = BlendMode.clear,
+    );
+
+    canvas.restore();
+  }
+}
+
+class AnimatedCurtainItem extends HookWidget {
+  final CurtainDevice device;
+  final Duration duration = const Duration(milliseconds: 3000);
+
+  const AnimatedCurtainItem(this.device, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    double position = device.position;
+    final animationController = useAnimationController(
+      initialValue: position,
+      duration: duration,
+      lowerBound: 0.0,
+      upperBound: 100.0,
+    );
+    useEffect(() {
+      // print('${position} --- ${animationController.value}');
+      if (position != animationController.value) {
+        animationController.animateTo(position);
+      }
+      return null;
+    }, [position]);
+
+    return AnimatedBuilder(
+      animation: animationController,
+      builder: (context, child) {
+        return CustomPaint(
+          painter: CurtainPainter(animationController.value),
+          size: const Size(36, 36),
+        );
+      },
+    );
+  }
+}
+
+class AnimatedDualCurtainItem extends HookWidget {
+  final DualCurtainDevice device;
+  final Duration duration = const Duration(milliseconds: 3000);
+
+  const AnimatedDualCurtainItem(this.device, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final animationControllerLeft = useAnimationController(
+      initialValue: device.positionLeft,
+      duration: duration,
+      lowerBound: 0.0,
+      upperBound: 100.0,
+    );
+    useEffect(() {
+      if (device.positionLeft != animationControllerLeft.value) {
+        animationControllerLeft.animateTo(device.positionLeft);
+      }
+      return null;
+    }, [device.positionLeft]);
+
+    final animationControllerRight = useAnimationController(
+      initialValue: device.positionRight,
+      duration: duration,
+      lowerBound: 0.0,
+      upperBound: 100.0,
+    );
+    useEffect(() {
+      if (device.positionRight != animationControllerRight.value) {
+        animationControllerRight.animateTo(device.positionRight);
+      }
+      return null;
+    }, [device.positionRight]);
+
+    return AnimatedBuilder(
+      animation: Listenable.merge([
+        animationControllerLeft,
+        animationControllerRight,
+      ]),
+      builder: (context, child) {
+        return CustomPaint(
+          painter: DualCurtainPainter(animationControllerLeft.value, animationControllerRight.value),
+          size: const Size(36, 36),
+        );
+      },
+    );
   }
 }

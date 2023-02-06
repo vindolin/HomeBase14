@@ -41,7 +41,10 @@ class ConnectionBar extends ConsumerWidget {
             ),
           ),
         ],
-        const MessageBlinker(),
+        const IgnorePointer(
+          ignoring: true,
+          child: MessageBlinker(),
+        ),
       ],
     );
   }

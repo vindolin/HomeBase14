@@ -23,7 +23,7 @@ abstract class CurtainPainterBase extends CustomPainter {
     final topBarHeight = size.height / baseSize * 4.0;
     final bottomBarHeight = size.height / baseSize * 3.0;
     final blindsPadding = size.width / baseSize * 1.0;
-    final blindsMaxHeight = size.height - (topBarHeight + bottomBarHeight);
+    final blindsMaxHeight = size.height - topBarHeight - bottomBarHeight;
 
     final blindsPaint = Paint()..color = Colors.white;
     final stripDistance = size.width / baseSize * 3.0;
@@ -54,6 +54,36 @@ abstract class CurtainPainterBase extends CustomPainter {
   }
 }
 
+void drawBlinds(
+  Canvas canvas,
+  double position,
+  Size size,
+  double blindsMaxHeight,
+  double bottomBarHeight,
+  double blindsPadding,
+  double startH,
+  double endH,
+  Paint blindsPaint,
+) {
+  double blindsClosedHeight = blindsMaxHeight / 100 * (100 - position);
+  double offset = (blindsMaxHeight - blindsClosedHeight + bottomBarHeight);
+  double blindHeight = 1.5;
+  double blindSpacing = 1.0;
+  for (var i = 0; i < blindsClosedHeight; i++) {
+    if (i % (blindHeight + blindSpacing).toInt() == 0) {
+      canvas.drawRect(
+        Rect.fromLTRB(
+          startH,
+          size.height - i - blindHeight - offset,
+          endH,
+          size.height - i - offset,
+        ),
+        blindsPaint,
+      );
+    }
+  }
+}
+
 class CurtainPainter extends CurtainPainterBase {
   final double position;
 
@@ -71,34 +101,17 @@ class CurtainPainter extends CurtainPainterBase {
     Canvas canvas,
     Size size,
   ) {
-    canvas.saveLayer(Rect.largest, Paint()); // will be used to clear the blinds from the bottom bar
-
-    for (var i = topBarHeight; i < topBarHeight + blindsMaxHeight; i++) {
-      if (i % 2 == 0) {
-        canvas.drawRect(
-          Rect.fromLTRB(
-            blindsPadding,
-            i.toDouble(),
-            size.width - blindsPadding,
-            i.toDouble() + 1,
-          ),
-          blindsPaint,
-        );
-      }
-    }
-
-    // clear the blinds from the bottom bar
-    canvas.drawRect(
-      Rect.fromLTRB(
-        0,
-        size.height - bottomBarHeight,
-        size.width,
-        size.height - bottomBarHeight - (blindsMaxHeight * position / 100),
-      ),
-      Paint()..blendMode = BlendMode.clear,
+    drawBlinds(
+      canvas,
+      position,
+      size,
+      blindsMaxHeight,
+      bottomBarHeight,
+      blindsPadding,
+      blindsPadding,
+      size.width - blindsPadding,
+      blindsPaint,
     );
-
-    canvas.restore();
   }
 }
 
@@ -121,22 +134,31 @@ class DualCurtainPainter extends CurtainPainterBase {
     Canvas canvas,
     Size size,
   ) {
-    canvas.saveLayer(Rect.largest, Paint()); // will be used to clear the blinds from the bottom bar
+    // left
+    drawBlinds(
+      canvas,
+      positionLeft,
+      size,
+      blindsMaxHeight,
+      bottomBarHeight,
+      blindsPadding,
+      blindsPadding,
+      size.width / 2,
+      blindsPaint,
+    );
 
-    // the blinds
-    for (var i = topBarHeight; i < topBarHeight + blindsMaxHeight; i += 2) {
-      if (i % 2 == 0) {
-        canvas.drawRect(
-          Rect.fromLTRB(
-            blindsPadding,
-            i.toDouble(),
-            size.width - blindsPadding,
-            i.toDouble() + 1.5,
-          ),
-          blindsPaint,
-        );
-      }
-    }
+    // right
+    drawBlinds(
+      canvas,
+      positionRight,
+      size,
+      blindsMaxHeight,
+      bottomBarHeight,
+      blindsPadding,
+      size.width / 2,
+      size.width - blindsPadding,
+      blindsPaint,
+    );
 
     // the middle line
     canvas.drawRect(
@@ -148,30 +170,6 @@ class DualCurtainPainter extends CurtainPainterBase {
       ),
       blindsPaint,
     );
-
-    // clear the left blinds from the bottom bar
-    canvas.drawRect(
-      Rect.fromLTRB(
-        0,
-        size.height - bottomBarHeight,
-        size.width / 2,
-        size.height - bottomBarHeight - (blindsMaxHeight * positionLeft / 100),
-      ),
-      Paint()..blendMode = BlendMode.clear,
-    );
-
-    // clear the right blinds from the bottom bar
-    canvas.drawRect(
-      Rect.fromLTRB(
-        size.width / 2 + 1,
-        size.height - bottomBarHeight,
-        size.width,
-        size.height - bottomBarHeight - (blindsMaxHeight * positionRight / 100),
-      ),
-      Paint()..blendMode = BlendMode.clear,
-    );
-
-    canvas.restore();
   }
 }
 

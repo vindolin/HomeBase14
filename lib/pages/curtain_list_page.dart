@@ -6,7 +6,7 @@ import '/pages/curtain_detail_page.dart';
 import '/pages/dual_curtain_detail_page.dart';
 import '/widgets/connection_bar_widget.dart';
 
-import '/painters/curtain_icon_painters.dart';
+import '/widgets/curtain_icon_widgets.dart';
 
 class CurtainListPage extends ConsumerWidget {
   const CurtainListPage({super.key});

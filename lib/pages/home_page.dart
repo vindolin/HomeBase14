@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'thermostat_list_page.dart';
 import 'curtain_list_page.dart';
+import 'light_list_page.dart';
 import 'other_page.dart';
 import '../widgets/connection_bar_widget.dart';
 
@@ -40,6 +41,19 @@ class HomePage extends ConsumerWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const CurtainListPage(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: Text(translate('device_names.lights')),
+            leading: const Icon(Icons.lightbulb),
+            visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const LightPage(),
                 ),
               );
             },

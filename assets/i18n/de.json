@@ -5,6 +5,7 @@
     "device_names": {
         "thermostats": "Thermostate",
         "curtains": "Rolladen",
+        "lights": "Lampen",
         "other": "Diverses"
     },
 	"plural": {

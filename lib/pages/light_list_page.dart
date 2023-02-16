@@ -4,12 +4,12 @@ import '/utils.dart';
 import '/models/mqtt_devices.dart';
 import '/widgets/connection_bar_widget.dart';
 
-class OtherPage extends ConsumerWidget {
-  const OtherPage({super.key});
+class LightPage extends ConsumerWidget {
+  const LightPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    log('OtherPage.build()');
+    log('LightPage.build()');
 
     final deviceNames = ref.read(deviceNamesProvider);
 

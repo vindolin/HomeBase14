@@ -29,16 +29,17 @@ class CurtainControll extends StatelessWidget {
       Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         FloatingActionButton(
           onPressed: openFunc,
-          heroTag: 'curtainUp',
+          heroTag: null,
           child: const Icon(Icons.arrow_upward),
         ),
         FloatingActionButton(
           onPressed: stopFunc,
+          heroTag: null,
           child: const Icon(Icons.pause),
         ),
         FloatingActionButton(
           onPressed: closeFunc,
-          heroTag: 'curtainDown',
+          heroTag: null,
           child: const Icon(Icons.arrow_downward),
         ),
       ]),

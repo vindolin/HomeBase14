@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 // import '../config.dart' as config;
 import 'package:mqtt_client/mqtt_client.dart';
 import 'utils.dart';
@@ -10,20 +11,24 @@ import 'pages/login_page.dart';
 import 'pages/home_page.dart';
 
 void main() async {
+  var delegate = await LocalizationDelegate.create(
+    fallbackLocale: 'de_DE',
+    supportedLocales: ['en_US', 'de_DE'],
+  );
   runApp(
-    const ProviderScope(
-      child: MyApp(),
+    ProviderScope(
+      child: LocalizedApp(delegate, const HomerApp()),
     ),
   );
 }
 
-class MyApp extends ConsumerStatefulWidget {
-  const MyApp({super.key});
+class HomerApp extends ConsumerStatefulWidget {
+  const HomerApp({super.key});
   @override
-  ConsumerState<MyApp> createState() => _MyAppState();
+  ConsumerState<HomerApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends ConsumerState<MyApp> {
+class _MyAppState extends ConsumerState<HomerApp> {
   // const MyApp({super.key});
   @override
   void initState() {
@@ -39,7 +44,7 @@ class _MyAppState extends ConsumerState<MyApp> {
 
     return MaterialApp(
       scaffoldMessengerKey: rootScaffoldMessengerKey,
-      title: 'Counter App',
+      title: 'Homer',
       debugShowCheckedModeBanner: false,
       home: [
         // show login form only when disconnected/not connecting

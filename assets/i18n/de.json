@@ -1,0 +1,19 @@
+{
+	"app_bar": {
+		"title": "Homebase"
+	},
+    "device_names": {
+        "thermostats": "Thermostate",
+        "curtains": "Rolladen",
+        "other": "Diverses"
+    },
+	"plural": {
+		"demo":
+		{
+			"zero": "Please start pushing the 'plus' button.",
+			"one": "You have pushed the button one time.",
+			"two": "You have pushed the button two times.",
+			"other": "You have pushed the button {{value}} times."
+		}
+	}
+}

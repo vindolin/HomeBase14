@@ -112,7 +112,7 @@ class Mqtt extends _$Mqtt {
             if (deviceType == 'curtain' || deviceType == 'curtainU') {
               curtainDevices.state = {
                 ...curtainDevices.state,
-                deviceId: CurtainDevice(deviceId, deviceType, payloadJson, publish),
+                deviceId: SingleCurtainDevice(deviceId, deviceType, payloadJson, publish),
               };
             } else if (deviceType == 'dualCurtain') {
               dualCurtainDevices.state = {

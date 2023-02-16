@@ -19,7 +19,7 @@ class CurtainListPage extends ConsumerWidget {
 
     final curtainDevicesUnfiltered = ref.watch(curtainDevicesProvider);
     final curtainDevices = ref.watch(
-      Provider<Map<String, CurtainDevice>>(
+      Provider<Map<String, SingleCurtainDevice>>(
         (ref) {
           return curtainDevicesUnfiltered.sortByList(
             [
@@ -67,7 +67,7 @@ class CurtainListPage extends ConsumerWidget {
 
             if (device is DualCurtainDevice) {
               icon = AnimatedDualCurtainItem(device);
-            } else if (device is CurtainDevice) {
+            } else if (device is SingleCurtainDevice) {
               icon = AnimatedCurtainItem(device);
               // icon = AnimatedItem(device);
             }

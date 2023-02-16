@@ -51,6 +51,7 @@ dependencies:
   format: ^1.1.1
   stack_trace: ^1.11.0
   flutter_svg: ^1.1.6
+  tuple: ^2.0.1
 
 dev_dependencies:
   build_runner:

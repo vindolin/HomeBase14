@@ -28,7 +28,7 @@ class ItemPainter extends CustomPainter {
 }
 
 class AnimatedItem extends HookWidget {
-  final CurtainDevice device;
+  final SingleCurtainDevice device;
   final Duration duration = const Duration(milliseconds: 500);
 
   const AnimatedItem(this.device, {super.key});

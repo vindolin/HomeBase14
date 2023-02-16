@@ -65,7 +65,7 @@ void drawBlinds(
   double endH,
   Paint blindsPaint,
 ) {
-  double blindsClosedHeight = blindsMaxHeight / 100 * (100 - position);
+  double blindsClosedHeight = blindsMaxHeight / 100 * position;
   double offset = (blindsMaxHeight - blindsClosedHeight + bottomBarHeight);
   double blindHeight = 1.5;
   double blindSpacing = 1.0;
@@ -174,14 +174,15 @@ class DualCurtainPainter extends CurtainPainterBase {
 }
 
 class AnimatedCurtainItem extends HookWidget {
-  final CurtainDevice device;
+  final SingleCurtainDevice device;
   final Duration duration = const Duration(milliseconds: 3000);
 
   const AnimatedCurtainItem(this.device, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    double position = device.position;
+    double position = 100.0 - device.position;
+
     final animationController = useAnimationController(
       initialValue: position,
       duration: duration,
@@ -216,31 +217,34 @@ class AnimatedDualCurtainItem extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    double positionLeft = 100.0 - device.positionLeft;
+    double positionRight = 100.0 - device.positionRight;
+
     final animationControllerLeft = useAnimationController(
-      initialValue: device.positionLeft,
+      initialValue: positionLeft,
       duration: duration,
       lowerBound: 0.0,
       upperBound: 100.0,
     );
     useEffect(() {
-      if (device.positionLeft != animationControllerLeft.value) {
-        animationControllerLeft.animateTo(device.positionLeft);
+      if (positionLeft != animationControllerLeft.value) {
+        animationControllerLeft.animateTo(positionLeft);
       }
       return null;
-    }, [device.positionLeft]);
+    }, [positionLeft]);
 
     final animationControllerRight = useAnimationController(
-      initialValue: device.positionRight,
+      initialValue: positionRight,
       duration: duration,
       lowerBound: 0.0,
       upperBound: 100.0,
     );
     useEffect(() {
-      if (device.positionRight != animationControllerRight.value) {
-        animationControllerRight.animateTo(device.positionRight);
+      if (positionRight != animationControllerRight.value) {
+        animationControllerRight.animateTo(positionRight);
       }
       return null;
-    }, [device.positionRight]);
+    }, [positionRight]);
 
     return AnimatedBuilder(
       animation: Listenable.merge([

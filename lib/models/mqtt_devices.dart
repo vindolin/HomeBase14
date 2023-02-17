@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tuple/tuple.dart';
-import 'mqtt_providers.dart';
 import '/utils.dart';
 part 'mqtt_devices.g.dart';
 
@@ -49,10 +48,47 @@ class DeviceNames extends _$DeviceNames {
   }
 }
 
-// Map<String, dynamic> mqttDevices = {
-//   'curtain': CurtainDevice,
+Map<String, Map<String, String>> lightDevices = {
+  'kamin': {
+    'name': 'Kamin',
+    'topic_get': 'stat/dose2/POWER',
+    'topic_set': 'cmnd/dose2/POWER',
+    'state': 'OFF',
+  },
+  'sofa': {
+    'name': 'Sofa',
+    'topic_get': 'stat/dose3/POWER',
+    'topic_set': 'cmnd/dose3/POWER',
+    'state': 'OFF',
+  },
+  'esstisch': {
+    'name': 'Esstisch',
+    'topic_get': 'stat/dose4/POWER',
+    'topic_set': 'cmnd/dose4/POWER',
+    'state': 'OFF',
+  },
+};
 
-// };
+@riverpod
+class LightDevices extends _$LightDevices {
+  late Function publishCallback;
+
+  @override
+  Map<String, Map<String, String>> build() {
+    return lightDevices; // figure out why I can't the map directly here...
+  }
+
+  void toggleState(key) {
+    Map<String, String> lightDevice = lightDevices[key]!;
+    print(lightDevice['topic_set']);
+    print(lightDevice['state'] == 'ON' ? 'OFF' : 'ON');
+    publishCallback(
+      lightDevice['topic_set'],
+      lightDevice['state'] == 'ON' ? 'OFF' : 'ON',
+    );
+  }
+}
+
 final mqttDeviceMap = {
   'curtain': SingleCurtainDevice,
   'door': DoorDevice,
@@ -62,8 +98,6 @@ final mqttDeviceMap = {
 typedef F = void Function(String deviceId, String payload);
 
 abstract class AbstractMqttDevice {
-  late Mqtt mqtt;
-
   late List<Tuple3<String, String, dynamic>> dataMapping = [];
   late Map<String, dynamic> data = {};
 
@@ -118,7 +152,6 @@ abstract class AbstractMqttDevice {
           linkQuality = value;
           break;
         case 'battery':
-          print(value);
           battery = value.toDouble();
           break;
         default:

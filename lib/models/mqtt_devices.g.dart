@@ -125,3 +125,22 @@ abstract class _$DeviceNames extends AutoDisposeNotifier<Map<String, String>> {
   @override
   Map<String, String> build();
 }
+
+String _$LightDevicesHash() => r'1b5265946109ad2a6d9cbe2c7114cc3d84d9e55e';
+
+/// See also [LightDevices].
+final lightDevicesProvider =
+    AutoDisposeNotifierProvider<LightDevices, Map<String, Map<String, String>>>(
+  LightDevices.new,
+  name: r'lightDevicesProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$LightDevicesHash,
+);
+typedef LightDevicesRef
+    = AutoDisposeNotifierProviderRef<Map<String, Map<String, String>>>;
+
+abstract class _$LightDevices
+    extends AutoDisposeNotifier<Map<String, Map<String, String>>> {
+  @override
+  Map<String, Map<String, String>> build();
+}

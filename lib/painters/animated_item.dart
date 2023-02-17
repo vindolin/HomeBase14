@@ -10,7 +10,6 @@ class ItemPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    print(value);
     // draw a circle with a size depending on the value
     double radius = size.width / 10 * value / 2;
     canvas.drawCircle(

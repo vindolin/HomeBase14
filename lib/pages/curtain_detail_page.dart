@@ -28,32 +28,36 @@ class CurtainDetailPage extends ConsumerWidget {
     log('build CurtainDetailPage');
 
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Curtain'),
-        ),
-        body: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+      appBar: AppBar(
+        title: Text('${deviceNames[deviceId]}'),
+      ),
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          CurtainControll(
+            position,
+            (double value) {
+              ref.read(positionProvider.notifier).state = value;
+              device.position = value.toDouble();
+            },
+            (double value) {
+              device.publishState();
+            },
+            device!.open,
+            device.close,
+            device.stop,
+            invert: true,
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            CurtainControll(
-              position,
-              (double value) {
-                ref.read(positionProvider.notifier).state = value;
-                device.position = value.round().toDouble();
-              },
-              (double value) {
-                device.publishState();
-              },
-              device!.open,
-              device.close,
-              device.stop,
-              invert: true,
-            ),
-            Center(
-              child: Text(
-                '${deviceNames[deviceId]}\n$deviceId\n${device.deviceType}\n${device.position}',
-              ),
-            ),
+            Text(deviceId, style: const TextStyle(color: Colors.grey)),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }

@@ -30,46 +30,50 @@ class DualCurtainDetailPage extends ConsumerWidget {
     log('build DualCurtainDetailPage');
 
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('DualCurtain'),
-        ),
-        body: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+      appBar: AppBar(
+        title: Text('${deviceNames[deviceId]}'),
+      ),
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          CurtainControll(
+            positionLeft,
+            (double value) {
+              ref.read(positionLeftProvider.notifier).state = value;
+              device.positionLeft = value.toDouble();
+            },
+            (double value) {
+              device.publishState();
+            },
+            device!.openLeft,
+            device.closeLeft,
+            device.stopLeft,
+            invert: true,
+          ),
+          CurtainControll(
+            positionRight,
+            (double value) {
+              ref.read(positionRightProvider.notifier).state = value;
+              device.positionRight = value.toDouble();
+            },
+            (double value) {
+              device.publishState();
+            },
+            device.openRight,
+            device.closeRight,
+            device.stopRight,
+            invert: true,
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            CurtainControll(
-              positionLeft,
-              (double value) {
-                ref.read(positionLeftProvider.notifier).state = value;
-                device.positionLeft = value.round().toDouble();
-              },
-              (double value) {
-                device.publishState();
-              },
-              device!.openLeft,
-              device.closeLeft,
-              device.stopLeft,
-              invert: true,
-            ),
-            CurtainControll(
-              positionRight,
-              (double value) {
-                ref.read(positionRightProvider.notifier).state = value;
-                device.positionRight = value.round().toDouble();
-              },
-              (double value) {
-                device.publishState();
-              },
-              device.openRight,
-              device.closeRight,
-              device.stopRight,
-              invert: true,
-            ),
-            Center(
-              child: Text(
-                '${deviceNames[deviceId]}\n$deviceId\n${device.deviceType}\n${device.positionLeft}',
-              ),
-            ),
+            Text(deviceId, style: const TextStyle(color: Colors.grey)),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }

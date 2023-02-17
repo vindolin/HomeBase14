@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import '/utils.dart';
-import '/models/mqtt_devices.dart';
 import '/widgets/connection_bar_widget.dart';
 
 class OtherPage extends ConsumerWidget {
@@ -11,13 +11,11 @@ class OtherPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     log('OtherPage.build()');
 
-    final deviceNames = ref.read(deviceNamesProvider);
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Curtains'),
+        title: Text(translate('device_names.other')),
       ),
-      body: Text('meep'),
+      body: const Text('meep'),
       floatingActionButton: const ConnectionBar(),
     );
   }

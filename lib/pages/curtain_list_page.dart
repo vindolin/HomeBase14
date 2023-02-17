@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import '/utils.dart';
 import '/models/mqtt_devices.dart';
 import '/pages/curtain_detail_page.dart';
@@ -55,7 +56,7 @@ class CurtainListPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Curtains'),
+        title: Text(translate('device_names.curtains')),
       ),
       body: ListView.separated(
           separatorBuilder: (context, index) => const Divider(),

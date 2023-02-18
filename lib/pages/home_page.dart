@@ -9,6 +9,7 @@ import '../widgets/connection_bar_widget.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
+  final visualDensity = const VisualDensity(horizontal: 0, vertical: -4);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -17,12 +18,12 @@ class HomePage extends ConsumerWidget {
         title: Text(translate('app_bar.title')),
       ),
       body: ListView(
-        padding: const EdgeInsets.all(8),
-        children: <Widget>[
+        padding: const EdgeInsets.all(8.0),
+        children: [
           ListTile(
             title: Text(translate('device_names.thermostats')),
             leading: const Icon(Icons.thermostat),
-            visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+            visualDensity: visualDensity,
             onTap: () {
               Navigator.push(
                 context,
@@ -35,7 +36,7 @@ class HomePage extends ConsumerWidget {
           ListTile(
             title: Text(translate('device_names.curtains')),
             leading: const Icon(Icons.blinds),
-            visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+            visualDensity: visualDensity,
             onTap: () {
               Navigator.push(
                 context,
@@ -48,7 +49,7 @@ class HomePage extends ConsumerWidget {
           ListTile(
             title: Text(translate('device_names.lights')),
             leading: const Icon(Icons.lightbulb),
-            visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+            visualDensity: visualDensity,
             onTap: () {
               Navigator.push(
                 context,
@@ -61,7 +62,7 @@ class HomePage extends ConsumerWidget {
           ListTile(
             title: Text(translate('device_names.other')),
             leading: const Icon(Icons.extension),
-            visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+            visualDensity: visualDensity,
             onTap: () {
               Navigator.push(
                 context,

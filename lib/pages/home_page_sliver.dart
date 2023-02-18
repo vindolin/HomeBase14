@@ -1,0 +1,207 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_translate/flutter_translate.dart';
+import 'thermostat_list_page.dart';
+import 'curtain_list_page.dart';
+import 'light_list_page.dart';
+import 'other_page.dart';
+import '/widgets/connection_bar_widget.dart';
+import '/widgets/armed_switch_widget.dart';
+
+class SliverHeader extends StatelessWidget {
+  final Color backgroundColor;
+  final String _title;
+
+  const SliverHeader(this.backgroundColor, this._title, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPersistentHeader(
+      pinned: true,
+      floating: false,
+      delegate: Delegate(backgroundColor, _title),
+    );
+  }
+}
+
+class Delegate extends SliverPersistentHeaderDelegate {
+  final Color backgroundColor;
+  final String _title;
+
+  Delegate(this.backgroundColor, this._title);
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      color: backgroundColor,
+      child: Center(
+        child: Text(
+          _title,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  double get maxExtent => 80;
+
+  @override
+  double get minExtent => 50;
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
+    return true;
+  }
+}
+
+Widget buildFixedList(Color color, String text) {
+  return Container(
+    color: color,
+    child: Center(
+      child: Text(
+        text,
+        style: const TextStyle(color: Colors.white, fontSize: 25),
+      ),
+    ),
+  );
+}
+
+class HomePageSliver extends ConsumerWidget {
+  const HomePageSliver({super.key});
+  final visualDensity = const VisualDensity(horizontal: 0, vertical: -4);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            title: Text(
+              translate('app_bar.title'),
+              style: const TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                shadows: [
+                  Shadow(
+                    blurRadius: 3.0,
+                    color: Colors.black54,
+                    offset: Offset(2.0, 2.0),
+                  ),
+                ],
+              ),
+            ),
+            floating: true,
+            snap: true,
+            expandedHeight: 80.0,
+            flexibleSpace: const FlexibleSpaceBar(
+              background: Image(
+                image: AssetImage('assets/images/homebase.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          // const SliverHeader(Colors.red, 'SliverPersistentHeader 1'),
+          SliverList(
+            delegate: SliverChildListDelegate([
+              ListTile(
+                title: Text(translate('device_names.thermostats')),
+                leading: const Icon(Icons.thermostat),
+                visualDensity: visualDensity,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ThermostatListPage(),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(translate('device_names.curtains')),
+                leading: const Icon(Icons.blinds),
+                visualDensity: visualDensity,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CurtainListPage(),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(translate('device_names.lights')),
+                leading: const Icon(Icons.lightbulb),
+                visualDensity: visualDensity,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LightPage(),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(translate('device_names.other')),
+                leading: const Icon(Icons.extension),
+                visualDensity: visualDensity,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const OtherPage(),
+                    ),
+                  );
+                },
+              ),
+            ]),
+          ),
+          const SliverPadding(padding: EdgeInsets.all(8.0)),
+          SliverGrid(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisExtent: 64,
+              mainAxisSpacing: 10.0,
+              crossAxisSpacing: 10.0,
+              childAspectRatio: 4.0,
+            ),
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                final buttons = [
+                  const ArmedSwitch('garage'),
+                  const ArmedSwitch('burglar'),
+                  const Icon(
+                    Icons.image_not_supported,
+                    size: 64,
+                  ),
+                  const Icon(
+                    Icons.image_not_supported,
+                    size: 64,
+                  ),
+                  const Icon(
+                    Icons.image_not_supported,
+                    size: 64,
+                  ),
+                  const Icon(
+                    Icons.image_not_supported,
+                    size: 64,
+                  ),
+                ];
+
+                return index >= buttons.length ? null : buttons[index];
+              },
+              childCount: 6,
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: const ConnectionBar(),
+    );
+  }
+}

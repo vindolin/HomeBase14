@@ -8,7 +8,8 @@ import 'models/mqtt_connection_data.dart';
 import 'models/mqtt_providers.dart';
 import 'scaffold_messenger.dart';
 import 'pages/login_page.dart';
-import 'pages/home_page.dart';
+// import 'pages/home_page.dart';
+import 'pages/home_page_sliver.dart';
 
 void main() async {
   var delegate = await LocalizationDelegate.create(
@@ -51,7 +52,8 @@ class _MyAppState extends ConsumerState<HomerApp> {
         MqttConnectionState.connected,
         MqttConnectionState.connecting,
       ].contains(ref.watch(mqttConnectionStateXProvider))
-          ? const HomePage()
+          ? const HomePageSliver()
+          // ? const HomePage()
           : LoginFormPage(),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(

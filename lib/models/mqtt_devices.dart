@@ -1,11 +1,16 @@
 // ignore_for_file: overridden_fields
 
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:tuple/tuple.dart';
+
 import '/utils.dart';
+
 part 'mqtt_devices.g.dart';
+part 'mqtt_devices.freezed.dart';
 
 @riverpod
 class DoorDevices extends _$DoorDevices {
@@ -48,25 +53,95 @@ class DeviceNames extends _$DeviceNames {
   }
 }
 
-Map<String, Map<String, String>> lightDevices = {
-  'kamin': {
-    'name': 'Kamin',
-    'topic_get': 'stat/dose2/POWER',
-    'topic_set': 'cmnd/dose2/POWER',
-    'state': 'OFF',
-  },
-  'sofa': {
-    'name': 'Sofa',
-    'topic_get': 'stat/dose3/POWER',
-    'topic_set': 'cmnd/dose3/POWER',
-    'state': 'OFF',
-  },
-  'esstisch': {
-    'name': 'Esstisch',
-    'topic_get': 'stat/dose4/POWER',
-    'topic_set': 'cmnd/dose4/POWER',
-    'state': 'OFF',
-  },
+@freezed
+class SwitchDevice with _$SwitchDevice {
+  const factory SwitchDevice({
+    required String id,
+    required String name,
+    required String topicGet,
+    required String topicSet,
+    required String on,
+    required String off,
+    required String state,
+    required Color colorOn,
+    required Color colorOff,
+    required IconData iconOn,
+    required IconData iconOff,
+  }) = _SwitchDevice;
+}
+
+Map<String, SwitchDevice> switchDevices = {
+  'garage': const SwitchDevice(
+    id: 'garage',
+    name: 'Garage',
+    topicGet: 'garagedoors/state',
+    topicSet: 'garagedoors/set',
+    on: 'open',
+    off: 'close',
+    state: 'open',
+    colorOn: Colors.pink,
+    colorOff: Colors.green,
+    iconOn: Icons.garage,
+    iconOff: Icons.garage,
+  ),
+  'burglar': const SwitchDevice(
+    id: 'burglar',
+    name: 'Einbruchalarm',
+    topicGet: 'home_burglar_alarm',
+    topicSet: 'home_burglar_alarm',
+    on: '1',
+    off: '0',
+    state: '0',
+    colorOn: Colors.pink,
+    colorOff: Colors.green,
+    iconOn: Icons.camera_outdoor,
+    iconOff: Icons.camera_outdoor,
+  ),
+};
+
+@riverpod
+class SwitchDevices extends _$SwitchDevices {
+  late Function publishCallback; // get's injected by the mqtt class
+
+  @override
+  Map<String, SwitchDevice> build() {
+    return switchDevices; // figure out why I can't the map directly here...
+  }
+}
+
+@freezed
+class LightDevice with _$LightDevice {
+  const factory LightDevice({
+    required String id,
+    required String name,
+    required String topicGet,
+    required String topicSet,
+    required String state,
+  }) = _LightDevice;
+}
+
+Map<String, LightDevice> lightDevices = {
+  'kamin': const LightDevice(
+    id: 'kamin',
+    name: 'Kamin',
+    topicGet: 'stat/dose2/POWER',
+    topicSet: 'cmnd/dose2/POWER',
+    state: 'OFF',
+  ),
+  'sofa': const LightDevice(
+    id: 'sofa',
+    name: 'Sofa',
+    topicGet: 'stat/dose3/POWER',
+    topicSet: 'cmnd/dose3/POWER',
+    state: 'OFF',
+  ),
+  'esstisch': const LightDevice(
+    id: 'esstisch',
+    name: 'Esstisch',
+    topicGet: 'stat/dose4/POWER',
+    topicSet: 'cmnd/dose4/POWER',
+    state: 'OFF',
+  ),
 };
 
 @riverpod
@@ -74,17 +149,16 @@ class LightDevices extends _$LightDevices {
   late Function publishCallback; // get's injected by the mqtt class
 
   @override
-  Map<String, Map<String, String>> build() {
+  Map<String, LightDevice> build() {
     return lightDevices; // figure out why I can't the map directly here...
   }
 
   void toggleState(key) {
-    Map<String, String> lightDevice = lightDevices[key]!;
-    print(lightDevice['topic_set']);
-    print(lightDevice['state'] == 'ON' ? 'OFF' : 'ON');
+    LightDevice lightDevice = state[key]!;
+    String newState = lightDevice.state == 'ON' ? 'OFF' : 'ON';
     publishCallback(
-      lightDevice['topic_set'],
-      lightDevice['state'] == 'ON' ? 'OFF' : 'ON',
+      lightDevice.topicSet,
+      newState,
     );
   }
 }
@@ -139,7 +213,7 @@ abstract class AbstractMqttDevice {
   @protected
   void readValues(Map<String, dynamic> payload) {
     mqttPayload = payload;
-    print(followUpMessage);
+    // print(followUpMessage);
     if (followUpMessage) {
       followUpMessage = false;
       return;
@@ -162,7 +236,7 @@ abstract class AbstractMqttDevice {
   }
 
   void publishState() {
-    print('followUpMessage');
+    // print('followUpMessage');
     followUpMessage = true;
   }
 }

@@ -11,6 +11,13 @@ import 'mqtt_devices.dart';
 
 part 'mqtt_providers.g.dart';
 
+const subscribeTopics = [
+  'zigbee2mqtt/#',
+  'stat/#',
+  'garagedoors/state',
+  'home_burglar_alarm',
+];
+
 final clientIdentifier = 'K${nanoid()}';
 
 // used for the flashing message icon
@@ -26,17 +33,19 @@ final messageProvider = StreamProvider<Map<String, dynamic>>((ref) async* {
 // wraps the whole mqtt client and and connection callbacks
 @riverpod
 class Mqtt extends _$Mqtt {
-  late MqttServerClient mqtt;
+  late MqttServerClient client;
   late CurtainDevices curtainDevices;
   late DualCurtainDevices dualCurtainDevices;
   late DoorDevices doorDevices;
   late ThermostatDevices thermostatDevices;
   late LightDevices lightDevices;
+  late SwitchDevices switchDevices;
 
   @override
   build() {
     log('building mqtt');
     lightDevices = ref.watch(lightDevicesProvider.notifier);
+    switchDevices = ref.watch(switchDevicesProvider.notifier);
     curtainDevices = ref.watch(curtainDevicesProvider.notifier);
     dualCurtainDevices = ref.watch(dualCurtainDevicesProvider.notifier);
     doorDevices = ref.watch(doorDevicesProvider.notifier);
@@ -54,7 +63,7 @@ class Mqtt extends _$Mqtt {
 
     final connectionData = ref.watch(mqttConnectionDataXProvider.notifier);
 
-    mqtt = MqttServerClient.withPort(
+    client = MqttServerClient.withPort(
       connectionData.state.address,
       clientIdentifier,
       connectionData.state.port,
@@ -62,8 +71,8 @@ class Mqtt extends _$Mqtt {
 
     // mqtt.autoReconnect = true;
 
-    mqtt.onConnected = onConnected;
-    mqtt.onDisconnected = onDisconnected;
+    client.onConnected = onConnected;
+    client.onDisconnected = onDisconnected;
 
     ref.read(mqttConnectionStateXProvider.notifier).state = MqttConnectionState.connecting;
 
@@ -72,7 +81,7 @@ class Mqtt extends _$Mqtt {
     );
 
     MqttClientConnectionStatus? mqttConnectionStatus =
-        await mqtt.connect(connectionData.state.username, connectionData.state.password).catchError(
+        await client.connect(connectionData.state.username, connectionData.state.password).catchError(
       (error) {
         ref.read(mqttConnectionDataXProvider.notifier).setValid(false);
         ref.read(mqttConnectionStateXProvider.notifier).state = MqttConnectionState.faulted;
@@ -89,9 +98,10 @@ class Mqtt extends _$Mqtt {
 
   // generic publish function
   void publish(String topic, String payload) {
+    log('publishing $topic: $payload');
     final builder = MqttClientPayloadBuilder();
     builder.addString(payload);
-    mqtt.publishMessage(topic, MqttQos.atLeastOnce, builder.payload!);
+    client.publishMessage(topic, MqttQos.atLeastOnce, builder.payload!);
   }
 
   // zigbee2mqtt publish function
@@ -101,19 +111,21 @@ class Mqtt extends _$Mqtt {
 
   void disconnect() {
     log('disconnected');
-    mqtt.disconnect();
+    client.disconnect();
   }
 
   void onConnected() {
     log('connected');
-    mqtt.subscribe('zigbee2mqtt/#', MqttQos.atMostOnce);
-    mqtt.subscribe('stat/#', MqttQos.atMostOnce);
 
-    mqtt.pongCallback = () {
+    for (var topic in subscribeTopics) {
+      client.subscribe(topic, MqttQos.atLeastOnce);
+    }
+
+    client.pongCallback = () {
       log('ping response client callback invoked');
     };
 
-    mqtt.updates?.listen((List<MqttReceivedMessage<MqttMessage>> messages) {
+    client.updates?.listen((List<MqttReceivedMessage<MqttMessage>> messages) {
       for (MqttReceivedMessage mqttReceivedMessage in messages) {
         final MqttPublishMessage message = mqttReceivedMessage.payload as MqttPublishMessage;
         final String payload = const Utf8Decoder().convert(message.payload.message);
@@ -166,18 +178,22 @@ class Mqtt extends _$Mqtt {
         }
 
         // tasmota switches, plugs, bulps, etc
-        if (mqttReceivedMessage.topic.startsWith('stat/dose')) {
-          lightDevices.state.forEach((key, value) {
-            if (value['topic_get'] == mqttReceivedMessage.topic) {
-              value['state'] = payload;
-
-              lightDevices.state = {
-                ...lightDevices.state,
-                key: value,
-              };
-            }
-          });
-        }
+        lightDevices.state.forEach((key, value) {
+          if (value.topicGet == mqttReceivedMessage.topic) {
+            lightDevices.state = {
+              ...lightDevices.state,
+              key: value.copyWith(state: payload),
+            };
+          }
+        });
+        switchDevices.state.forEach((key, value) {
+          if (value.topicGet == mqttReceivedMessage.topic) {
+            switchDevices.state = {
+              ...switchDevices.state,
+              key: value.copyWith(state: payload),
+            };
+          }
+        });
       }
     });
 

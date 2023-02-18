@@ -27,7 +27,7 @@ class DualCurtainDetailPage extends ConsumerWidget {
     final positionRight = ref.watch(positionRightProvider);
 
     final deviceNames = ref.read(deviceNamesProvider);
-    log('build DualCurtainDetailPage');
+    // log('build DualCurtainDetailPage');
 
     return Scaffold(
       appBar: AppBar(

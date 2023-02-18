@@ -10,7 +10,7 @@ class ConnectionBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    log('ConnectionBar.build()');
+    // log('ConnectionBar.build()');
     final mqttConnectionStateX = ref.watch(mqttConnectionStateXProvider);
     final mqttProviderX = ref.watch(mqttProvider.notifier);
 

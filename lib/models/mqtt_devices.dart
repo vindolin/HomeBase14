@@ -71,7 +71,7 @@ Map<String, Map<String, String>> lightDevices = {
 
 @riverpod
 class LightDevices extends _$LightDevices {
-  late Function publishCallback;
+  late Function publishCallback; // get's injected by the mqtt class
 
   @override
   Map<String, Map<String, String>> build() {
@@ -139,6 +139,7 @@ abstract class AbstractMqttDevice {
   @protected
   void readValues(Map<String, dynamic> payload) {
     mqttPayload = payload;
+    print(followUpMessage);
     if (followUpMessage) {
       followUpMessage = false;
       return;
@@ -161,6 +162,7 @@ abstract class AbstractMqttDevice {
   }
 
   void publishState() {
+    print('followUpMessage');
     followUpMessage = true;
   }
 }

@@ -14,7 +14,7 @@ class CurtainListPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    log('CurtainListPage.build()');
+    // log('CurtainListPage.build()');
 
     final deviceNames = ref.read(deviceNamesProvider);
 

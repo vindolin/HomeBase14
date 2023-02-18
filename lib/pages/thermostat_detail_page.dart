@@ -18,7 +18,7 @@ class ThermostatDetailPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Thermostat'),
+        title: Text('${deviceNames[deviceId]}'),
       ),
       body: Center(
         child: Text('${deviceNames[deviceId]} - ${device?.localTemperature}°C'),

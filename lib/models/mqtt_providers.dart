@@ -42,7 +42,7 @@ class Mqtt extends _$Mqtt {
     doorDevices = ref.watch(doorDevicesProvider.notifier);
     thermostatDevices = ref.watch(thermostatDevicesProvider.notifier);
 
-    ref.read(lightDevicesProvider.notifier).publishCallback = publish;
+    ref.read(lightDevicesProvider.notifier).publishCallback = publish; // inject publish function
 
     ref.onDispose(() {
       disconnect();
@@ -59,6 +59,8 @@ class Mqtt extends _$Mqtt {
       clientIdentifier,
       connectionData.state.port,
     );
+
+    // mqtt.autoReconnect = true;
 
     mqtt.onConnected = onConnected;
     mqtt.onDisconnected = onDisconnected;
@@ -85,16 +87,16 @@ class Mqtt extends _$Mqtt {
     // .connected is set in the onConnected handler
   }
 
-  void publishZ2M(String deviceId, String payload) {
-    final builder = MqttClientPayloadBuilder();
-    builder.addString(payload);
-    mqtt.publishMessage('zigbee2mqtt/$deviceId/set', MqttQos.atLeastOnce, builder.payload!);
-  }
-
+  // generic publish function
   void publish(String topic, String payload) {
     final builder = MqttClientPayloadBuilder();
     builder.addString(payload);
     mqtt.publishMessage(topic, MqttQos.atLeastOnce, builder.payload!);
+  }
+
+  // zigbee2mqtt publish function
+  void publishZ2M(String deviceId, String payload) {
+    publish('zigbee2mqtt/$deviceId/set', payload);
   }
 
   void disconnect() {
@@ -157,7 +159,7 @@ class Mqtt extends _$Mqtt {
             // we find the device name (description) in the zigbee2mqtt/bridge/devices message
             setDeviceNameMap(payloadJson);
           } else {
-            // print(mqttReceivedMessage.topic);
+            print(mqttReceivedMessage.topic);
           }
         } on FormatException catch (e) {
           e;
@@ -165,9 +167,6 @@ class Mqtt extends _$Mqtt {
 
         // tasmota switches, plugs, bulps, etc
         if (mqttReceivedMessage.topic.startsWith('stat/dose')) {
-          // print(mqttReceivedMessage.topic);
-          // print(payload);
-
           lightDevices.state.forEach((key, value) {
             if (value['topic_get'] == mqttReceivedMessage.topic) {
               value['state'] = payload;
@@ -178,9 +177,6 @@ class Mqtt extends _$Mqtt {
               };
             }
           });
-          //   ...switches.state,
-          //   mqttReceivedMessage.topic: switches.state[],
-          // };
         }
       }
     });

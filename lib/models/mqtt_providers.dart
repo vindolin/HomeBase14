@@ -14,8 +14,9 @@ part 'mqtt_providers.g.dart';
 const subscribeTopics = [
   'zigbee2mqtt/#',
   'stat/#',
-  'garagedoors/state',
+  'garagedoor/state',
   'home/burglar_alarm',
+  'arm_test/get',
 ];
 
 final clientIdentifier = 'K${nanoid()}';
@@ -201,7 +202,7 @@ class Mqtt extends _$Mqtt {
           if (value.topicGet == mqttReceivedMessage.topic) {
             switchDevices.state = {
               ...switchDevices.state,
-              key: value.copyWith(state: payload),
+              key: value.copyWith(state: payload, transitioning: false),
             };
           }
         });

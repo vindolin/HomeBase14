@@ -53,42 +53,46 @@ class DeviceNames extends _$DeviceNames {
   }
 }
 
-@freezed
-class SwitchDevice with _$SwitchDevice {
-  const factory SwitchDevice({
-    required String id,
-    required String name,
-    required String topicGet,
-    required String topicSet,
-    required String on,
-    required String off,
-    required String? state,
-    required String textOn,
-    required String textOff,
-    required Color colorOn,
-    required Color colorOff,
-    required IconData iconOn,
-    required IconData iconOff,
+@unfreezed
+class ArmedSwitchDevice with _$ArmedSwitchDevice {
+  factory ArmedSwitchDevice({
+    required final String id,
+    required final String name,
+    required final String topicGet,
+    required final String topicSet,
+    required final String on,
+    required final String off,
+    required final String? state,
+    required final String textOn,
+    required final String textOff,
+    required final Color colorOn,
+    required final Color colorOff,
+    required final IconData iconOn,
+    required final IconData iconOff,
+    required bool transitioning,
   }) = _SwitchDevice;
 }
 
-Map<String, SwitchDevice> switchDevices = {
-  'garage': const SwitchDevice(
+Map<String, ArmedSwitchDevice> switchDevices = {
+  'garage': ArmedSwitchDevice(
     id: 'garage',
     name: 'Garage',
-    topicGet: 'garagedoors/state',
-    topicSet: 'garagedoors/set',
+    topicGet: 'garagedoor/state',
+    topicSet: 'garagedoor/set',
+    // topicGet: 'arm_test/get',
+    // topicSet: 'arm_test/set',
     on: 'open',
     off: 'close',
     state: null,
-    textOn: 'Garage auf',
+    textOn: 'Garage auf', // TODOs translate
     textOff: 'Garage zu',
     colorOn: Colors.pink,
     colorOff: Colors.green,
     iconOn: Icons.garage,
     iconOff: Icons.garage,
+    transitioning: false,
   ),
-  'burglar': const SwitchDevice(
+  'burglar': ArmedSwitchDevice(
     id: 'burglar',
     name: 'Einbruchalarm',
     topicGet: 'home/burglar_alarm',
@@ -102,6 +106,23 @@ Map<String, SwitchDevice> switchDevices = {
     colorOff: Colors.green,
     iconOn: Icons.camera_outdoor,
     iconOff: Icons.camera_outdoor,
+    transitioning: false,
+  ),
+  'pump': ArmedSwitchDevice(
+    id: 'pump',
+    name: 'Tauchpumpe',
+    topicGet: 'garden/cistern_pump/get',
+    topicSet: 'garden/cistern_pump/set',
+    on: '1',
+    off: '0',
+    state: null,
+    textOn: 'Pumpe ein',
+    textOff: 'Pumpe aus',
+    colorOn: Colors.pink,
+    colorOff: Colors.green,
+    iconOn: Icons.camera_outdoor,
+    iconOff: Icons.camera_outdoor,
+    transitioning: false,
   ),
 };
 
@@ -110,12 +131,13 @@ class SwitchDevices extends _$SwitchDevices {
   late Function publishCallback; // get's injected by the mqtt class
 
   @override
-  Map<String, SwitchDevice> build() {
+  Map<String, ArmedSwitchDevice> build() {
     return switchDevices; // figure out why I can't the map directly here...
   }
 
   void toggleState(key) {
-    SwitchDevice switchDevice = state[key]!;
+    ArmedSwitchDevice switchDevice = state[key]!;
+    switchDevice.transitioning = true;
     String newState = switchDevice.state == switchDevice.on ? switchDevice.off : switchDevice.on;
     publishCallback(
       switchDevice.topicSet,

@@ -166,29 +166,16 @@ class HomePageSliver extends ConsumerWidget {
           SliverGrid(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              mainAxisExtent: 90,
+              mainAxisExtent: 110,
               mainAxisSpacing: 8.0,
               crossAxisSpacing: 10.0,
-              childAspectRatio: 1.0,
+              childAspectRatio: 2.0,
             ),
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
                 final buttons = [
                   const ArmedSwitch('garage'),
                   const ArmedSwitch('burglar'),
-                  // ElevatedButton.icon(
-                  //   onPressed: () => {},
-                  //   style: ButtonStyle(
-                  //     backgroundColor: MaterialStateProperty.all<Color>(
-                  //       Theme.of(context).primaryColor,
-                  //     ),
-                  //   ),
-                  //   icon: const Icon(
-                  //     Icons.image_not_supported,
-                  //     size: 64,
-                  //   ),
-                  //   label: const Text('Garage'),
-                  // ),
                   const Icon(
                     Icons.image_not_supported,
                     size: 64,

@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$SwitchDevice {
+mixin _$ArmedSwitchDevice {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get topicGet => throw _privateConstructorUsedError;
@@ -29,17 +29,19 @@ mixin _$SwitchDevice {
   Color get colorOff => throw _privateConstructorUsedError;
   IconData get iconOn => throw _privateConstructorUsedError;
   IconData get iconOff => throw _privateConstructorUsedError;
+  bool get transitioning => throw _privateConstructorUsedError;
+  set transitioning(bool value) => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $SwitchDeviceCopyWith<SwitchDevice> get copyWith =>
+  $ArmedSwitchDeviceCopyWith<ArmedSwitchDevice> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SwitchDeviceCopyWith<$Res> {
-  factory $SwitchDeviceCopyWith(
-          SwitchDevice value, $Res Function(SwitchDevice) then) =
-      _$SwitchDeviceCopyWithImpl<$Res, SwitchDevice>;
+abstract class $ArmedSwitchDeviceCopyWith<$Res> {
+  factory $ArmedSwitchDeviceCopyWith(
+          ArmedSwitchDevice value, $Res Function(ArmedSwitchDevice) then) =
+      _$ArmedSwitchDeviceCopyWithImpl<$Res, ArmedSwitchDevice>;
   @useResult
   $Res call(
       {String id,
@@ -54,13 +56,14 @@ abstract class $SwitchDeviceCopyWith<$Res> {
       Color colorOn,
       Color colorOff,
       IconData iconOn,
-      IconData iconOff});
+      IconData iconOff,
+      bool transitioning});
 }
 
 /// @nodoc
-class _$SwitchDeviceCopyWithImpl<$Res, $Val extends SwitchDevice>
-    implements $SwitchDeviceCopyWith<$Res> {
-  _$SwitchDeviceCopyWithImpl(this._value, this._then);
+class _$ArmedSwitchDeviceCopyWithImpl<$Res, $Val extends ArmedSwitchDevice>
+    implements $ArmedSwitchDeviceCopyWith<$Res> {
+  _$ArmedSwitchDeviceCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -83,6 +86,7 @@ class _$SwitchDeviceCopyWithImpl<$Res, $Val extends SwitchDevice>
     Object? colorOff = null,
     Object? iconOn = null,
     Object? iconOff = null,
+    Object? transitioning = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -137,13 +141,17 @@ class _$SwitchDeviceCopyWithImpl<$Res, $Val extends SwitchDevice>
           ? _value.iconOff
           : iconOff // ignore: cast_nullable_to_non_nullable
               as IconData,
+      transitioning: null == transitioning
+          ? _value.transitioning
+          : transitioning // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
 
 /// @nodoc
 abstract class _$$_SwitchDeviceCopyWith<$Res>
-    implements $SwitchDeviceCopyWith<$Res> {
+    implements $ArmedSwitchDeviceCopyWith<$Res> {
   factory _$$_SwitchDeviceCopyWith(
           _$_SwitchDevice value, $Res Function(_$_SwitchDevice) then) =
       __$$_SwitchDeviceCopyWithImpl<$Res>;
@@ -162,12 +170,13 @@ abstract class _$$_SwitchDeviceCopyWith<$Res>
       Color colorOn,
       Color colorOff,
       IconData iconOn,
-      IconData iconOff});
+      IconData iconOff,
+      bool transitioning});
 }
 
 /// @nodoc
 class __$$_SwitchDeviceCopyWithImpl<$Res>
-    extends _$SwitchDeviceCopyWithImpl<$Res, _$_SwitchDevice>
+    extends _$ArmedSwitchDeviceCopyWithImpl<$Res, _$_SwitchDevice>
     implements _$$_SwitchDeviceCopyWith<$Res> {
   __$$_SwitchDeviceCopyWithImpl(
       _$_SwitchDevice _value, $Res Function(_$_SwitchDevice) _then)
@@ -189,6 +198,7 @@ class __$$_SwitchDeviceCopyWithImpl<$Res>
     Object? colorOff = null,
     Object? iconOn = null,
     Object? iconOff = null,
+    Object? transitioning = null,
   }) {
     return _then(_$_SwitchDevice(
       id: null == id
@@ -243,6 +253,10 @@ class __$$_SwitchDeviceCopyWithImpl<$Res>
           ? _value.iconOff
           : iconOff // ignore: cast_nullable_to_non_nullable
               as IconData,
+      transitioning: null == transitioning
+          ? _value.transitioning
+          : transitioning // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -250,7 +264,7 @@ class __$$_SwitchDeviceCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_SwitchDevice implements _SwitchDevice {
-  const _$_SwitchDevice(
+  _$_SwitchDevice(
       {required this.id,
       required this.name,
       required this.topicGet,
@@ -263,7 +277,8 @@ class _$_SwitchDevice implements _SwitchDevice {
       required this.colorOn,
       required this.colorOff,
       required this.iconOn,
-      required this.iconOff});
+      required this.iconOff,
+      required this.transitioning});
 
   @override
   final String id;
@@ -291,38 +306,13 @@ class _$_SwitchDevice implements _SwitchDevice {
   final IconData iconOn;
   @override
   final IconData iconOff;
+  @override
+  bool transitioning;
 
   @override
   String toString() {
-    return 'SwitchDevice(id: $id, name: $name, topicGet: $topicGet, topicSet: $topicSet, on: $on, off: $off, state: $state, textOn: $textOn, textOff: $textOff, colorOn: $colorOn, colorOff: $colorOff, iconOn: $iconOn, iconOff: $iconOff)';
+    return 'ArmedSwitchDevice(id: $id, name: $name, topicGet: $topicGet, topicSet: $topicSet, on: $on, off: $off, state: $state, textOn: $textOn, textOff: $textOff, colorOn: $colorOn, colorOff: $colorOff, iconOn: $iconOn, iconOff: $iconOff, transitioning: $transitioning)';
   }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_SwitchDevice &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.topicGet, topicGet) ||
-                other.topicGet == topicGet) &&
-            (identical(other.topicSet, topicSet) ||
-                other.topicSet == topicSet) &&
-            (identical(other.on, on) || other.on == on) &&
-            (identical(other.off, off) || other.off == off) &&
-            (identical(other.state, state) || other.state == state) &&
-            (identical(other.textOn, textOn) || other.textOn == textOn) &&
-            (identical(other.textOff, textOff) || other.textOff == textOff) &&
-            (identical(other.colorOn, colorOn) || other.colorOn == colorOn) &&
-            (identical(other.colorOff, colorOff) ||
-                other.colorOff == colorOff) &&
-            (identical(other.iconOn, iconOn) || other.iconOn == iconOn) &&
-            (identical(other.iconOff, iconOff) || other.iconOff == iconOff));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, id, name, topicGet, topicSet, on,
-      off, state, textOn, textOff, colorOn, colorOff, iconOn, iconOff);
 
   @JsonKey(ignore: true)
   @override
@@ -331,8 +321,8 @@ class _$_SwitchDevice implements _SwitchDevice {
       __$$_SwitchDeviceCopyWithImpl<_$_SwitchDevice>(this, _$identity);
 }
 
-abstract class _SwitchDevice implements SwitchDevice {
-  const factory _SwitchDevice(
+abstract class _SwitchDevice implements ArmedSwitchDevice {
+  factory _SwitchDevice(
       {required final String id,
       required final String name,
       required final String topicGet,
@@ -345,7 +335,8 @@ abstract class _SwitchDevice implements SwitchDevice {
       required final Color colorOn,
       required final Color colorOff,
       required final IconData iconOn,
-      required final IconData iconOff}) = _$_SwitchDevice;
+      required final IconData iconOff,
+      required bool transitioning}) = _$_SwitchDevice;
 
   @override
   String get id;
@@ -373,6 +364,9 @@ abstract class _SwitchDevice implements SwitchDevice {
   IconData get iconOn;
   @override
   IconData get iconOff;
+  @override
+  bool get transitioning;
+  set transitioning(bool value);
   @override
   @JsonKey(ignore: true)
   _$$_SwitchDeviceCopyWith<_$_SwitchDevice> get copyWith =>

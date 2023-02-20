@@ -8,13 +8,14 @@ Future<bool> confirmIcon(
   BuildContext context, {
   Widget? title,
   required Widget icon,
+  required double iconSize,
 }) async {
   final bool? isConfirm = await showDialog<bool>(
     context: context,
     builder: (_) => WillPopScope(
       child: AlertDialog(
         title: title,
-        content: IconButton(icon: icon, onPressed: () => Navigator.pop(context, true)),
+        content: IconButton(icon: icon, iconSize: iconSize, onPressed: () => Navigator.pop(context, true)),
       ),
       onWillPop: () async {
         Navigator.pop(context, false);
@@ -27,6 +28,7 @@ Future<bool> confirmIcon(
 }
 
 class ArmedSwitch extends ConsumerStatefulWidget {
+  final iconSize = 60.0;
   final String id;
   const ArmedSwitch(this.id, {super.key});
 
@@ -35,6 +37,8 @@ class ArmedSwitch extends ConsumerStatefulWidget {
 }
 
 class _ArmedSwitchState extends ConsumerState<ArmedSwitch> {
+  bool transitioning = false;
+
   @override
   Widget build(BuildContext context) {
     final switchDevice = ref.watch(
@@ -42,40 +46,50 @@ class _ArmedSwitchState extends ConsumerState<ArmedSwitch> {
     )!;
 
     return Card(
-      child: Column(
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          Text(switchDevice.name),
-          IconButton(
-            iconSize: 40,
-            highlightColor: Colors.red,
-            icon: Icon(
-              switchDevice.state == switchDevice.on ? switchDevice.iconOn : switchDevice.iconOff,
-              color: switchDevice.state == switchDevice.on ? switchDevice.colorOn : switchDevice.colorOff,
-            ),
-            onPressed: () async {
-              if (switchDevice.state == switchDevice.on) {
-                setState(() {
-                  ref.read(switchDevicesProvider.notifier).toggleState(switchDevice.id);
-                });
-                return;
-              }
-
-              final confirmation = await confirmIcon(
-                context,
-                title: const Text('Ganz sicher?'),
+          Column(
+            children: [
+              // Text(switchDevice.name),
+              IconButton(
+                iconSize: widget.iconSize,
                 icon: Icon(
                   switchDevice.state == switchDevice.on ? switchDevice.iconOn : switchDevice.iconOff,
                   color: switchDevice.state == switchDevice.on ? switchDevice.colorOn : switchDevice.colorOff,
-                  size: 40,
                 ),
-              );
-              if (confirmation) {
-                setState(() {
-                  ref.read(switchDevicesProvider.notifier).toggleState(switchDevice.id);
-                });
-              }
-            },
+                onPressed: () async {
+                  // only publish passive state e.g. off/close without confirmation
+                  if (switchDevice.state == switchDevice.on) {
+                    setState(() {
+                      ref.read(switchDevicesProvider.notifier).toggleState(switchDevice.id);
+                    });
+                    return;
+                  }
+
+                  // else open the confirm dialog
+                  final confirmation = await confirmIcon(
+                    context,
+                    title: const Text('Ganz sicher?'),
+                    icon: Icon(
+                      switchDevice.state == switchDevice.on ? switchDevice.iconOn : switchDevice.iconOff,
+                      color: switchDevice.state == switchDevice.on ? switchDevice.colorOn : switchDevice.colorOff,
+                      size: widget.iconSize,
+                    ),
+                    iconSize: widget.iconSize,
+                  );
+                  // and publish the value if confirmed
+                  if (confirmation) {
+                    setState(() {
+                      ref.read(switchDevicesProvider.notifier).toggleState(switchDevice.id);
+                    });
+                  }
+                },
+              ),
+              Text(switchDevice.state == switchDevice.on ? switchDevice.textOn : switchDevice.textOff),
+            ],
           ),
+          switchDevice.transitioning ? const CircularProgressIndicator() : Container()
         ],
       ),
     );

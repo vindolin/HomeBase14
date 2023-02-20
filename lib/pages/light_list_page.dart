@@ -43,7 +43,6 @@ class LightPage extends ConsumerWidget {
               title: Row(
                 children: [
                   Text(device.name),
-                  // Expanded(child: Switch(value: device['state'] == 'ON', onChanged: (value) {}))
                 ],
               ),
               onTap: () {

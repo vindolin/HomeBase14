@@ -22,7 +22,9 @@ mixin _$SwitchDevice {
   String get topicSet => throw _privateConstructorUsedError;
   String get on => throw _privateConstructorUsedError;
   String get off => throw _privateConstructorUsedError;
-  String get state => throw _privateConstructorUsedError;
+  String? get state => throw _privateConstructorUsedError;
+  String get textOn => throw _privateConstructorUsedError;
+  String get textOff => throw _privateConstructorUsedError;
   Color get colorOn => throw _privateConstructorUsedError;
   Color get colorOff => throw _privateConstructorUsedError;
   IconData get iconOn => throw _privateConstructorUsedError;
@@ -46,7 +48,9 @@ abstract class $SwitchDeviceCopyWith<$Res> {
       String topicSet,
       String on,
       String off,
-      String state,
+      String? state,
+      String textOn,
+      String textOff,
       Color colorOn,
       Color colorOff,
       IconData iconOn,
@@ -72,7 +76,9 @@ class _$SwitchDeviceCopyWithImpl<$Res, $Val extends SwitchDevice>
     Object? topicSet = null,
     Object? on = null,
     Object? off = null,
-    Object? state = null,
+    Object? state = freezed,
+    Object? textOn = null,
+    Object? textOff = null,
     Object? colorOn = null,
     Object? colorOff = null,
     Object? iconOn = null,
@@ -103,9 +109,17 @@ class _$SwitchDeviceCopyWithImpl<$Res, $Val extends SwitchDevice>
           ? _value.off
           : off // ignore: cast_nullable_to_non_nullable
               as String,
-      state: null == state
+      state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
+              as String?,
+      textOn: null == textOn
+          ? _value.textOn
+          : textOn // ignore: cast_nullable_to_non_nullable
+              as String,
+      textOff: null == textOff
+          ? _value.textOff
+          : textOff // ignore: cast_nullable_to_non_nullable
               as String,
       colorOn: null == colorOn
           ? _value.colorOn
@@ -142,7 +156,9 @@ abstract class _$$_SwitchDeviceCopyWith<$Res>
       String topicSet,
       String on,
       String off,
-      String state,
+      String? state,
+      String textOn,
+      String textOff,
       Color colorOn,
       Color colorOff,
       IconData iconOn,
@@ -166,7 +182,9 @@ class __$$_SwitchDeviceCopyWithImpl<$Res>
     Object? topicSet = null,
     Object? on = null,
     Object? off = null,
-    Object? state = null,
+    Object? state = freezed,
+    Object? textOn = null,
+    Object? textOff = null,
     Object? colorOn = null,
     Object? colorOff = null,
     Object? iconOn = null,
@@ -197,9 +215,17 @@ class __$$_SwitchDeviceCopyWithImpl<$Res>
           ? _value.off
           : off // ignore: cast_nullable_to_non_nullable
               as String,
-      state: null == state
+      state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
+              as String?,
+      textOn: null == textOn
+          ? _value.textOn
+          : textOn // ignore: cast_nullable_to_non_nullable
+              as String,
+      textOff: null == textOff
+          ? _value.textOff
+          : textOff // ignore: cast_nullable_to_non_nullable
               as String,
       colorOn: null == colorOn
           ? _value.colorOn
@@ -232,6 +258,8 @@ class _$_SwitchDevice implements _SwitchDevice {
       required this.on,
       required this.off,
       required this.state,
+      required this.textOn,
+      required this.textOff,
       required this.colorOn,
       required this.colorOff,
       required this.iconOn,
@@ -250,7 +278,11 @@ class _$_SwitchDevice implements _SwitchDevice {
   @override
   final String off;
   @override
-  final String state;
+  final String? state;
+  @override
+  final String textOn;
+  @override
+  final String textOff;
   @override
   final Color colorOn;
   @override
@@ -262,7 +294,7 @@ class _$_SwitchDevice implements _SwitchDevice {
 
   @override
   String toString() {
-    return 'SwitchDevice(id: $id, name: $name, topicGet: $topicGet, topicSet: $topicSet, on: $on, off: $off, state: $state, colorOn: $colorOn, colorOff: $colorOff, iconOn: $iconOn, iconOff: $iconOff)';
+    return 'SwitchDevice(id: $id, name: $name, topicGet: $topicGet, topicSet: $topicSet, on: $on, off: $off, state: $state, textOn: $textOn, textOff: $textOff, colorOn: $colorOn, colorOff: $colorOff, iconOn: $iconOn, iconOff: $iconOff)';
   }
 
   @override
@@ -279,6 +311,8 @@ class _$_SwitchDevice implements _SwitchDevice {
             (identical(other.on, on) || other.on == on) &&
             (identical(other.off, off) || other.off == off) &&
             (identical(other.state, state) || other.state == state) &&
+            (identical(other.textOn, textOn) || other.textOn == textOn) &&
+            (identical(other.textOff, textOff) || other.textOff == textOff) &&
             (identical(other.colorOn, colorOn) || other.colorOn == colorOn) &&
             (identical(other.colorOff, colorOff) ||
                 other.colorOff == colorOff) &&
@@ -288,7 +322,7 @@ class _$_SwitchDevice implements _SwitchDevice {
 
   @override
   int get hashCode => Object.hash(runtimeType, id, name, topicGet, topicSet, on,
-      off, state, colorOn, colorOff, iconOn, iconOff);
+      off, state, textOn, textOff, colorOn, colorOff, iconOn, iconOff);
 
   @JsonKey(ignore: true)
   @override
@@ -305,7 +339,9 @@ abstract class _SwitchDevice implements SwitchDevice {
       required final String topicSet,
       required final String on,
       required final String off,
-      required final String state,
+      required final String? state,
+      required final String textOn,
+      required final String textOff,
       required final Color colorOn,
       required final Color colorOff,
       required final IconData iconOn,
@@ -324,7 +360,11 @@ abstract class _SwitchDevice implements SwitchDevice {
   @override
   String get off;
   @override
-  String get state;
+  String? get state;
+  @override
+  String get textOn;
+  @override
+  String get textOff;
   @override
   Color get colorOn;
   @override

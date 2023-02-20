@@ -15,7 +15,7 @@ const subscribeTopics = [
   'zigbee2mqtt/#',
   'stat/#',
   'garagedoors/state',
-  'home_burglar_alarm',
+  'home/burglar_alarm',
 ];
 
 final clientIdentifier = 'K${nanoid()}';
@@ -52,6 +52,7 @@ class Mqtt extends _$Mqtt {
     thermostatDevices = ref.watch(thermostatDevicesProvider.notifier);
 
     ref.read(lightDevicesProvider.notifier).publishCallback = publish; // inject publish function
+    ref.read(switchDevicesProvider.notifier).publishCallback = publishRetained; // inject publish function
 
     ref.onDispose(() {
       disconnect();
@@ -102,6 +103,14 @@ class Mqtt extends _$Mqtt {
     final builder = MqttClientPayloadBuilder();
     builder.addString(payload);
     client.publishMessage(topic, MqttQos.atLeastOnce, builder.payload!);
+  }
+
+  // generic publish function
+  void publishRetained(String topic, String payload) {
+    log('publishing $topic: $payload');
+    final builder = MqttClientPayloadBuilder();
+    builder.addString(payload);
+    client.publishMessage(topic, MqttQos.atLeastOnce, builder.payload!, retain: true);
   }
 
   // zigbee2mqtt publish function
@@ -186,6 +195,8 @@ class Mqtt extends _$Mqtt {
             };
           }
         });
+
+        // armed switches like garage door
         switchDevices.state.forEach((key, value) {
           if (value.topicGet == mqttReceivedMessage.topic) {
             switchDevices.state = {

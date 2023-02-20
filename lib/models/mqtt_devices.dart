@@ -62,7 +62,9 @@ class SwitchDevice with _$SwitchDevice {
     required String topicSet,
     required String on,
     required String off,
-    required String state,
+    required String? state,
+    required String textOn,
+    required String textOff,
     required Color colorOn,
     required Color colorOff,
     required IconData iconOn,
@@ -78,7 +80,9 @@ Map<String, SwitchDevice> switchDevices = {
     topicSet: 'garagedoors/set',
     on: 'open',
     off: 'close',
-    state: 'open',
+    state: null,
+    textOn: 'Garage auf',
+    textOff: 'Garage zu',
     colorOn: Colors.pink,
     colorOff: Colors.green,
     iconOn: Icons.garage,
@@ -87,11 +91,13 @@ Map<String, SwitchDevice> switchDevices = {
   'burglar': const SwitchDevice(
     id: 'burglar',
     name: 'Einbruchalarm',
-    topicGet: 'home_burglar_alarm',
-    topicSet: 'home_burglar_alarm',
+    topicGet: 'home/burglar_alarm',
+    topicSet: 'home/burglar_alarm',
     on: '1',
     off: '0',
-    state: '0',
+    state: null,
+    textOn: 'Alarm ein',
+    textOff: 'Alarm aus',
     colorOn: Colors.pink,
     colorOff: Colors.green,
     iconOn: Icons.camera_outdoor,
@@ -106,6 +112,15 @@ class SwitchDevices extends _$SwitchDevices {
   @override
   Map<String, SwitchDevice> build() {
     return switchDevices; // figure out why I can't the map directly here...
+  }
+
+  void toggleState(key) {
+    SwitchDevice switchDevice = state[key]!;
+    String newState = switchDevice.state == switchDevice.on ? switchDevice.off : switchDevice.on;
+    publishCallback(
+      switchDevice.topicSet,
+      newState,
+    );
   }
 }
 

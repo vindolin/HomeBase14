@@ -15,7 +15,7 @@ class OtherPage extends ConsumerWidget {
       appBar: AppBar(
         title: Text(translate('device_names.other')),
       ),
-      body: const Text('meep'),
+      body: const Center(child: Text('implement me')),
       floatingActionButton: const ConnectionBar(),
     );
   }

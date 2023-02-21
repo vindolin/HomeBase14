@@ -17,16 +17,25 @@ const subscribeTopics = [
   'garagedoor/state',
   'home/burglar_alarm',
   'arm_test/get',
+  'instar/10D1DC228582/status/alarm/triggered/object',
 ];
 
 final clientIdentifier = 'K${nanoid()}';
 
 // used for the flashing message icon
 StreamController<Map<String, dynamic>> messageController = StreamController<Map<String, dynamic>>.broadcast();
-Stream<Map<String, dynamic>> messageStream = messageController.stream;
 
 final messageProvider = StreamProvider<Map<String, dynamic>>((ref) async* {
-  await for (final message in messageStream) {
+  await for (final message in messageController.stream) {
+    yield message;
+  }
+});
+
+// used for vibration on door alarm
+StreamController<int> doorAlarmController = StreamController<int>.broadcast();
+
+final doorAlarmProvider = StreamProvider<int>((ref) async* {
+  await for (final message in doorAlarmController.stream) {
     yield message;
   }
 });
@@ -177,6 +186,8 @@ class Mqtt extends _$Mqtt {
                 ...payloadJson,
               },
             });
+          } else if (mqttReceivedMessage.topic == 'instar/10D1DC228582/status/alarm/triggered/object') {
+            doorAlarmController.sink.add(payloadJson['val']);
           } else if (mqttReceivedMessage.topic == 'zigbee2mqtt/bridge/devices') {
             // we find the device name (description) in the zigbee2mqtt/bridge/devices message
             setDeviceNameMap(payloadJson);

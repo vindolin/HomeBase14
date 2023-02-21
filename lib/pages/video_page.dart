@@ -16,7 +16,6 @@ class VideoPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     _controller.initialize().then((_) {
       // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-      ;
     });
     log('VideoPage.build()');
 

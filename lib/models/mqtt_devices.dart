@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:tuple/tuple.dart';
@@ -65,10 +64,6 @@ class ArmedSwitchDevice with _$ArmedSwitchDevice {
     required final String? state,
     required final String textOn,
     required final String textOff,
-    required final Color colorOn,
-    required final Color colorOff,
-    required final IconData iconOn,
-    required final IconData iconOff,
     required bool transitioning,
   }) = _SwitchDevice;
 }
@@ -86,10 +81,6 @@ Map<String, ArmedSwitchDevice> switchDevices = {
     state: null,
     textOn: 'Garage auf', // TODOs translate
     textOff: 'Garage zu',
-    colorOn: Colors.pink,
-    colorOff: Colors.green,
-    iconOn: Icons.garage,
-    iconOff: Icons.garage,
     transitioning: false,
   ),
   'burglar': ArmedSwitchDevice(
@@ -102,10 +93,6 @@ Map<String, ArmedSwitchDevice> switchDevices = {
     state: null,
     textOn: 'Alarm ein',
     textOff: 'Alarm aus',
-    colorOn: Colors.pink,
-    colorOff: Colors.green,
-    iconOn: Icons.camera_outdoor,
-    iconOff: Icons.camera_outdoor,
     transitioning: false,
   ),
   'pump': ArmedSwitchDevice(
@@ -118,10 +105,6 @@ Map<String, ArmedSwitchDevice> switchDevices = {
     state: null,
     textOn: 'Pumpe ein',
     textOff: 'Pumpe aus',
-    colorOn: Colors.pink,
-    colorOff: Colors.green,
-    iconOn: Icons.camera_outdoor,
-    iconOff: Icons.camera_outdoor,
     transitioning: false,
   ),
 };

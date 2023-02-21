@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/mqtt_providers.dart';
+import '/models/mqtt_providers.dart';
 
 class MessageBlinker extends ConsumerStatefulWidget {
   // symbol that binds to the message stream provider and blinks when a message is received

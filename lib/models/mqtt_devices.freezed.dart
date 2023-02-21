@@ -25,10 +25,6 @@ mixin _$ArmedSwitchDevice {
   String? get state => throw _privateConstructorUsedError;
   String get textOn => throw _privateConstructorUsedError;
   String get textOff => throw _privateConstructorUsedError;
-  Color get colorOn => throw _privateConstructorUsedError;
-  Color get colorOff => throw _privateConstructorUsedError;
-  IconData get iconOn => throw _privateConstructorUsedError;
-  IconData get iconOff => throw _privateConstructorUsedError;
   bool get transitioning => throw _privateConstructorUsedError;
   set transitioning(bool value) => throw _privateConstructorUsedError;
 
@@ -53,10 +49,6 @@ abstract class $ArmedSwitchDeviceCopyWith<$Res> {
       String? state,
       String textOn,
       String textOff,
-      Color colorOn,
-      Color colorOff,
-      IconData iconOn,
-      IconData iconOff,
       bool transitioning});
 }
 
@@ -82,10 +74,6 @@ class _$ArmedSwitchDeviceCopyWithImpl<$Res, $Val extends ArmedSwitchDevice>
     Object? state = freezed,
     Object? textOn = null,
     Object? textOff = null,
-    Object? colorOn = null,
-    Object? colorOff = null,
-    Object? iconOn = null,
-    Object? iconOff = null,
     Object? transitioning = null,
   }) {
     return _then(_value.copyWith(
@@ -125,22 +113,6 @@ class _$ArmedSwitchDeviceCopyWithImpl<$Res, $Val extends ArmedSwitchDevice>
           ? _value.textOff
           : textOff // ignore: cast_nullable_to_non_nullable
               as String,
-      colorOn: null == colorOn
-          ? _value.colorOn
-          : colorOn // ignore: cast_nullable_to_non_nullable
-              as Color,
-      colorOff: null == colorOff
-          ? _value.colorOff
-          : colorOff // ignore: cast_nullable_to_non_nullable
-              as Color,
-      iconOn: null == iconOn
-          ? _value.iconOn
-          : iconOn // ignore: cast_nullable_to_non_nullable
-              as IconData,
-      iconOff: null == iconOff
-          ? _value.iconOff
-          : iconOff // ignore: cast_nullable_to_non_nullable
-              as IconData,
       transitioning: null == transitioning
           ? _value.transitioning
           : transitioning // ignore: cast_nullable_to_non_nullable
@@ -167,10 +139,6 @@ abstract class _$$_SwitchDeviceCopyWith<$Res>
       String? state,
       String textOn,
       String textOff,
-      Color colorOn,
-      Color colorOff,
-      IconData iconOn,
-      IconData iconOff,
       bool transitioning});
 }
 
@@ -194,10 +162,6 @@ class __$$_SwitchDeviceCopyWithImpl<$Res>
     Object? state = freezed,
     Object? textOn = null,
     Object? textOff = null,
-    Object? colorOn = null,
-    Object? colorOff = null,
-    Object? iconOn = null,
-    Object? iconOff = null,
     Object? transitioning = null,
   }) {
     return _then(_$_SwitchDevice(
@@ -237,22 +201,6 @@ class __$$_SwitchDeviceCopyWithImpl<$Res>
           ? _value.textOff
           : textOff // ignore: cast_nullable_to_non_nullable
               as String,
-      colorOn: null == colorOn
-          ? _value.colorOn
-          : colorOn // ignore: cast_nullable_to_non_nullable
-              as Color,
-      colorOff: null == colorOff
-          ? _value.colorOff
-          : colorOff // ignore: cast_nullable_to_non_nullable
-              as Color,
-      iconOn: null == iconOn
-          ? _value.iconOn
-          : iconOn // ignore: cast_nullable_to_non_nullable
-              as IconData,
-      iconOff: null == iconOff
-          ? _value.iconOff
-          : iconOff // ignore: cast_nullable_to_non_nullable
-              as IconData,
       transitioning: null == transitioning
           ? _value.transitioning
           : transitioning // ignore: cast_nullable_to_non_nullable
@@ -274,10 +222,6 @@ class _$_SwitchDevice implements _SwitchDevice {
       required this.state,
       required this.textOn,
       required this.textOff,
-      required this.colorOn,
-      required this.colorOff,
-      required this.iconOn,
-      required this.iconOff,
       required this.transitioning});
 
   @override
@@ -299,19 +243,11 @@ class _$_SwitchDevice implements _SwitchDevice {
   @override
   final String textOff;
   @override
-  final Color colorOn;
-  @override
-  final Color colorOff;
-  @override
-  final IconData iconOn;
-  @override
-  final IconData iconOff;
-  @override
   bool transitioning;
 
   @override
   String toString() {
-    return 'ArmedSwitchDevice(id: $id, name: $name, topicGet: $topicGet, topicSet: $topicSet, on: $on, off: $off, state: $state, textOn: $textOn, textOff: $textOff, colorOn: $colorOn, colorOff: $colorOff, iconOn: $iconOn, iconOff: $iconOff, transitioning: $transitioning)';
+    return 'ArmedSwitchDevice(id: $id, name: $name, topicGet: $topicGet, topicSet: $topicSet, on: $on, off: $off, state: $state, textOn: $textOn, textOff: $textOff, transitioning: $transitioning)';
   }
 
   @JsonKey(ignore: true)
@@ -332,10 +268,6 @@ abstract class _SwitchDevice implements ArmedSwitchDevice {
       required final String? state,
       required final String textOn,
       required final String textOff,
-      required final Color colorOn,
-      required final Color colorOff,
-      required final IconData iconOn,
-      required final IconData iconOff,
       required bool transitioning}) = _$_SwitchDevice;
 
   @override
@@ -356,14 +288,6 @@ abstract class _SwitchDevice implements ArmedSwitchDevice {
   String get textOn;
   @override
   String get textOff;
-  @override
-  Color get colorOn;
-  @override
-  Color get colorOff;
-  @override
-  IconData get iconOn;
-  @override
-  IconData get iconOff;
   @override
   bool get transitioning;
   set transitioning(bool value);

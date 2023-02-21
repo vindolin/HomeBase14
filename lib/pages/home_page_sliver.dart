@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'thermostat_list_page.dart';
-import 'curtain_list_page.dart';
-import 'light_list_page.dart';
-import 'other_page.dart';
-import '/widgets/connection_bar_widget.dart';
+
+import '/pages/thermostat_list_page.dart';
+import '/pages/curtain_list_page.dart';
+import '/pages/light_list_page.dart';
+import '/pages/other_page.dart';
+import '/pages/video_page.dart';
+
 import '/widgets/armed_switch_widget.dart';
+import '/widgets/connection_bar_widget.dart';
 
 class SliverHeader extends StatelessWidget {
   final Color backgroundColor;
@@ -70,9 +73,10 @@ Widget buildFixedList(Color color, String text) {
   );
 }
 
+@immutable
 class HomePageSliver extends ConsumerWidget {
   const HomePageSliver({super.key});
-  final visualDensity = const VisualDensity(horizontal: 0, vertical: -4);
+  final visualDensity = const VisualDensity(horizontal: 0, vertical: -3);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -112,6 +116,7 @@ class HomePageSliver extends ConsumerWidget {
                 title: Text(translate('device_names.thermostats')),
                 leading: const Icon(Icons.thermostat),
                 visualDensity: visualDensity,
+                // tileColor: Colors.amber,
                 onTap: () {
                   Navigator.push(
                     context,
@@ -121,6 +126,7 @@ class HomePageSliver extends ConsumerWidget {
                   );
                 },
               ),
+              const Divider(),
               ListTile(
                 title: Text(translate('device_names.curtains')),
                 leading: const Icon(Icons.blinds),
@@ -134,6 +140,7 @@ class HomePageSliver extends ConsumerWidget {
                   );
                 },
               ),
+              const Divider(),
               ListTile(
                 title: Text(translate('device_names.lights')),
                 leading: const Icon(Icons.lightbulb),
@@ -147,6 +154,7 @@ class HomePageSliver extends ConsumerWidget {
                   );
                 },
               ),
+              const Divider(),
               ListTile(
                 title: Text(translate('device_names.other')),
                 leading: const Icon(Icons.extension),
@@ -160,12 +168,26 @@ class HomePageSliver extends ConsumerWidget {
                   );
                 },
               ),
+              const Divider(),
+              ListTile(
+                title: Text(translate('device_names.video')),
+                leading: const Icon(Icons.lightbulb),
+                visualDensity: visualDensity,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => VideoPage(),
+                    ),
+                  );
+                },
+              ),
             ]),
           ),
           const SliverPadding(padding: EdgeInsets.all(8.0)),
           SliverGrid(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
+              crossAxisCount: 3,
               mainAxisExtent: 110,
               mainAxisSpacing: 8.0,
               crossAxisSpacing: 10.0,
@@ -174,11 +196,26 @@ class HomePageSliver extends ConsumerWidget {
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
                 final buttons = [
-                  const ArmedSwitch('garage'),
-                  const ArmedSwitch('burglar'),
-                  const Icon(
-                    Icons.image_not_supported,
-                    size: 64,
+                  const ArmedSwitch(
+                    'garage',
+                    Icons.garage,
+                    Icons.garage,
+                    Colors.pink,
+                    Colors.green,
+                  ),
+                  const ArmedSwitch(
+                    'burglar',
+                    Icons.remove_red_eye,
+                    Icons.remove_red_eye,
+                    Colors.pink,
+                    Colors.green,
+                  ),
+                  const ArmedSwitch(
+                    'pump',
+                    Icons.water_drop_outlined,
+                    Icons.water_drop_outlined,
+                    Colors.pink,
+                    Colors.green,
                   ),
                   const Icon(
                     Icons.image_not_supported,
@@ -209,7 +246,7 @@ class HomePageSliver extends ConsumerWidget {
           ),
         ],
       ),
-      floatingActionButton: const ConnectionBar(),
+      bottomNavigationBar: const ConnectionBar(),
     );
   }
 }

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+
 import '/utils.dart';
+
 import '/models/mqtt_devices.dart';
 import '/pages/curtain_detail_page.dart';
 import '/pages/dual_curtain_detail_page.dart';
-import '/widgets/connection_bar_widget.dart';
 
+import '/widgets/connection_bar_widget.dart';
 import '/widgets/curtain_icon_widgets.dart';
 
 class CurtainListPage extends ConsumerWidget {
@@ -57,60 +60,49 @@ class CurtainListPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(translate('device_names.curtains')),
+        actions: const [ConnectionBar()],
       ),
       body: ListView.separated(
-          separatorBuilder: (context, index) => const Divider(),
-          itemCount: combinedCurtainDevices.length,
-          itemBuilder: (context, index) {
-            final device = combinedCurtainDevices.values.elementAt(index);
+        separatorBuilder: (context, index) => const Divider(),
+        itemCount: combinedCurtainDevices.length,
+        itemBuilder: (context, index) {
+          final device = combinedCurtainDevices.values.elementAt(index);
 
-            Widget? icon;
+          Widget? icon;
 
-            if (device is DualCurtainDevice) {
-              icon = AnimatedDualCurtainItem(device);
-            } else if (device is SingleCurtainDevice) {
-              icon = AnimatedCurtainItem(device);
-              // icon = AnimatedItem(device);
-            }
+          if (device is DualCurtainDevice) {
+            icon = AnimatedDualCurtainItem(device);
+          } else if (device is SingleCurtainDevice) {
+            icon = AnimatedCurtainItem(device);
+          }
 
-            return ListTile(
-              leading: icon,
-              key: Key(device.deviceId),
-              visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-              title: Text(
-                deviceNames[device.deviceId]!,
-              ),
-              subtitle: Row(
-                children: [
-                  Text(
-                    device.deviceType,
-                  )
-                ],
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => device is DualCurtainDevice
-                        ? DualCurtainDetailPage(deviceId: device.deviceId)
-                        : CurtainDetailPage(deviceId: device.deviceId),
-                  ),
-                );
-              },
-            );
-          }),
-      // bottomSheet: Column(
-      //   children: [
-      //     const AnimatedWidget(device.deviceId),
-      //     ElevatedButton(
-      //       child: const Text('Increment'),
-      //       onPressed: () {
-      //         notifier.increment();
-      //       },
-      //     ),
-      //   ],
-      // ),
-      floatingActionButton: const ConnectionBar(),
+          return ListTile(
+            leading: icon,
+            key: Key(device.deviceId),
+            visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+            title: Text(
+              deviceNames[device.deviceId]!,
+            ),
+            subtitle: Row(
+              children: [
+                Text(
+                  device.deviceType,
+                )
+              ],
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => device is DualCurtainDevice
+                      ? DualCurtainDetailPage(deviceId: device.deviceId)
+                      : CurtainDetailPage(deviceId: device.deviceId),
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

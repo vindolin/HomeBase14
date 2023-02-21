@@ -4,10 +4,13 @@
 	},
     "device_names": {
         "thermostats": "Thermostate",
-        "curtains": "Rolladen",
+        "curtains": "Rolläden",
         "lights": "Lampen",
         "other": "Diverses"
     },
+	"questions": {
+		"are_you_sure": "Ganz sicher?"
+	},
 	"plural": {
 		"demo":
 		{

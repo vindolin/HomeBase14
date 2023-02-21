@@ -1,11 +1,35 @@
-// import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import '/widgets/connection_bar_widget.dart';
 
-// AppBar mkAppBar() {
-//   return AppBar(
-//     flexibleSpace: const Image(
-//       image: AssetImage('assets/images/home_bar.jpg'),
-//       colorBlendMode: BlendMode.hue,
-//       fit: BoxFit.cover,
-//     ),
-//   );
-// }
+class AppBarWithIcons extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
+  final double height;
+
+  const AppBarWithIcons({
+    super.key,
+    required this.title,
+    this.height = kToolbarHeight,
+  });
+
+  @override
+  Size get preferredSize => Size.fromHeight(height);
+
+  @override
+  Widget build(BuildContext context) {
+    print(preferredSize);
+    return Container(
+      height: preferredSize.height,
+      alignment: Alignment.center,
+      child: Stack(
+        children: [
+          AppBar(title: Text(title)),
+          const Positioned(
+            right: 8.0,
+            top: 8.0,
+            child: ConnectionBar(),
+          ),
+        ],
+      ),
+    );
+  }
+}

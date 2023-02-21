@@ -10,7 +10,6 @@ class ConnectionBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // log('ConnectionBar.build()');
     final mqttConnectionStateX = ref.watch(mqttConnectionStateXProvider);
     final mqttProviderX = ref.watch(mqttProvider.notifier);
 
@@ -19,16 +18,18 @@ class ConnectionBar extends ConsumerWidget {
       children: [
         if (mqttConnectionStateX == MqttConnectionState.connected) ...[
           TextButton(
-              onPressed: () => mqttProviderX.disconnect(),
-              child: const Icon(
-                Icons.wifi,
-              )),
+            onPressed: () => mqttProviderX.disconnect(),
+            child: const Icon(
+              Icons.wifi,
+            ),
+          ),
         ] else if (mqttConnectionStateX == MqttConnectionState.disconnected) ...[
           TextButton(
-              onPressed: () => mqttProviderX.connect(),
-              child: const Icon(
-                Icons.wifi_off,
-              )),
+            onPressed: () => mqttProviderX.connect(),
+            child: const Icon(
+              Icons.wifi_off,
+            ),
+          ),
         ] else if (mqttConnectionStateX == MqttConnectionState.faulted) ...[
           const Icon(Icons.wifi_off, color: Colors.red)
         ] else ...[
@@ -45,6 +46,9 @@ class ConnectionBar extends ConsumerWidget {
           ignoring: true,
           child: MessageBlinker(),
         ),
+        const SizedBox(
+          width: 8.0,
+        )
       ],
     );
   }

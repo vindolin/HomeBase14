@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'thermostat_list_page.dart';
-import 'curtain_list_page.dart';
-import 'light_list_page.dart';
-import 'other_page.dart';
-import '../widgets/connection_bar_widget.dart';
+
+import '/pages/thermostat_list_page.dart';
+import '/pages/curtain_list_page.dart';
+import '/pages/light_list_page.dart';
+import '/pages/other_page.dart';
+import '/widgets/app_bar_widget.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -14,8 +15,8 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(translate('app_bar.title')),
+      appBar: AppBarWithIcons(
+        title: translate('app_bar.title'),
       ),
       body: ListView(
         padding: const EdgeInsets.all(8.0),
@@ -74,7 +75,6 @@ class HomePage extends ConsumerWidget {
           ),
         ],
       ),
-      floatingActionButton: const ConnectionBar(),
     );
   }
 }

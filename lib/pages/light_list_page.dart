@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
@@ -18,6 +19,7 @@ class LightPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(translate('device_names.lights')),
+        actions: const [ConnectionBar()],
       ),
       body: ListView.separated(
           separatorBuilder: (context, index) => const Divider(),
@@ -50,7 +52,6 @@ class LightPage extends ConsumerWidget {
               },
             );
           }),
-      floatingActionButton: const ConnectionBar(),
     );
   }
 }

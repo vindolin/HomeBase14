@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_translate/flutter_translate.dart';
+
 import '/utils.dart';
 import '/models/mqtt_devices.dart';
 import '/pages/thermostat_detail_page.dart';
@@ -32,7 +35,8 @@ class ThermostatListPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Thermostats'),
+        title: Text(translate('device_names.thermostats')),
+        actions: const [ConnectionBar()],
       ),
       body: ListView.separated(
           separatorBuilder: (context, index) => const Divider(),
@@ -87,7 +91,6 @@ class ThermostatListPage extends ConsumerWidget {
               },
             );
           }),
-      floatingActionButton: const ConnectionBar(),
     );
   }
 }

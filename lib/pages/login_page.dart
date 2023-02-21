@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mqtt_client/mqtt_client.dart';
-import '../utils.dart';
-import '../scaffold_messenger.dart';
-import '../widgets/password_input_widget.dart';
-import '../widgets/connection_bar_widget.dart';
-import '../models/mqtt_connection_data.dart';
-import '../models/mqtt_providers.dart';
+
+import '/utils.dart';
+import '/models/mqtt_connection_data.dart';
+import '/models/mqtt_providers.dart';
+import '/widgets/password_input_widget.dart';
+
+final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
 class LoginFormPage extends ConsumerWidget {
   late final Map<String, dynamic> formData;
@@ -174,7 +175,6 @@ class LoginFormPage extends ConsumerWidget {
           ),
         ]),
       ),
-      floatingActionButton: const ConnectionBar(),
     );
   }
 }

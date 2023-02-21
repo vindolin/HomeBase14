@@ -30,7 +30,12 @@ Future<bool> confirmIcon(
 class ArmedSwitch extends ConsumerStatefulWidget {
   final iconSize = 60.0;
   final String id;
-  const ArmedSwitch(this.id, {super.key});
+  final IconData iconOn;
+  final IconData iconOff;
+  final Color colorOn;
+  final Color colorOff;
+
+  const ArmedSwitch(this.id, this.iconOn, this.iconOff, this.colorOn, this.colorOff, {super.key});
 
   @override
   ConsumerState<ArmedSwitch> createState() => _ArmedSwitchState();
@@ -55,8 +60,8 @@ class _ArmedSwitchState extends ConsumerState<ArmedSwitch> {
               IconButton(
                 iconSize: widget.iconSize,
                 icon: Icon(
-                  switchDevice.state == switchDevice.on ? switchDevice.iconOn : switchDevice.iconOff,
-                  color: switchDevice.state == switchDevice.on ? switchDevice.colorOn : switchDevice.colorOff,
+                  switchDevice.state == switchDevice.on ? widget.iconOn : widget.iconOff,
+                  color: switchDevice.state == switchDevice.on ? widget.colorOn : widget.colorOff,
                 ),
                 onPressed: () async {
                   // only publish passive state e.g. off/close without confirmation
@@ -70,10 +75,10 @@ class _ArmedSwitchState extends ConsumerState<ArmedSwitch> {
                   // else open the confirm dialog
                   final confirmation = await confirmIcon(
                     context,
-                    title: const Text('Ganz sicher?'),
+                    title: Text(translate('questions.are_you_sure')),
                     icon: Icon(
-                      switchDevice.state == switchDevice.on ? switchDevice.iconOn : switchDevice.iconOff,
-                      color: switchDevice.state == switchDevice.on ? switchDevice.colorOn : switchDevice.colorOff,
+                      switchDevice.state == switchDevice.on ? widget.iconOn : widget.iconOff,
+                      color: switchDevice.state == switchDevice.on ? widget.colorOn : widget.colorOff,
                       size: widget.iconSize,
                     ),
                     iconSize: widget.iconSize,
@@ -89,7 +94,7 @@ class _ArmedSwitchState extends ConsumerState<ArmedSwitch> {
               Text(switchDevice.state == switchDevice.on ? switchDevice.textOn : switchDevice.textOff),
             ],
           ),
-          switchDevice.transitioning ? const CircularProgressIndicator() : Container()
+          if (switchDevice.transitioning) const CircularProgressIndicator(),
         ],
       ),
     );

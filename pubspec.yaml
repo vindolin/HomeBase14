@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.19.0-374.1.beta <3.0.0'
+  sdk: '>=2.19.2 <3.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -54,6 +54,7 @@ dependencies:
   tuple: ^2.0.1
   flutter_translate: ^4.0.3
   video_player: ^2.5.1
+  flutter_vlc_player: ^7.2.0
 
 dev_dependencies:
   build_runner:

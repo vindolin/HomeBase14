@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
+import '/models/secrets.dart';
 import '/models/mqtt_providers.dart';
 import '/pages/thermostat_list_page.dart';
 import '/pages/curtain_list_page.dart';
@@ -9,6 +10,8 @@ import '/pages/light_list_page.dart';
 import '/pages/other_page.dart';
 // import '/pages/video_page.dart';
 
+import '/widgets/video_widget.dart';
+import '/widgets/refreshable_image_widget.dart';
 import '/widgets/stream_blinker_widget.dart';
 import '/widgets/armed_switch_widget.dart';
 import '/widgets/connection_bar_widget.dart';
@@ -76,6 +79,7 @@ class HomePage extends ConsumerWidget {
           StreamContainerBlinker(
             doorAlarmProvider,
             vibrate: true,
+            ignoreFirstBuild: true,
           ),
           CustomScrollView(
             slivers: [
@@ -180,51 +184,80 @@ class HomePage extends ConsumerWidget {
                   // ),
                 ]),
               ),
-              const SliverPadding(padding: EdgeInsets.all(8.0)),
-              SliverGrid(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisExtent: 110,
-                  mainAxisSpacing: 8.0,
-                  crossAxisSpacing: 10.0,
-                  childAspectRatio: 2.0,
-                ),
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    final buttons = [
-                      const ArmedSwitch(
-                        'garage',
-                        Icons.garage,
-                        Icons.garage,
-                        Colors.pink,
-                        Colors.green,
-                      ),
-                      const ArmedSwitch(
-                        'burglar',
-                        Icons.remove_red_eye,
-                        Icons.remove_red_eye,
-                        Colors.pink,
-                        Colors.orange,
-                      ),
-                      const ArmedSwitch(
-                        'pump',
-                        Icons.water_drop_outlined,
-                        Icons.water_drop_outlined,
-                        Colors.pink,
-                        Colors.blue,
-                      ),
-                      ...List.generate(
-                        3 * 10,
-                        (index) => const Icon(
-                          Icons.image_not_supported,
-                          size: 64,
+              SliverPadding(
+                padding: const EdgeInsets.all(2.0),
+                sliver: SliverGrid(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    mainAxisExtent: 110,
+                    mainAxisSpacing: 8.0,
+                    crossAxisSpacing: 10.0,
+                    childAspectRatio: 2.0,
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      final buttons = [
+                        const ArmedSwitch(
+                          'garage',
+                          Icons.garage,
+                          Icons.garage,
+                          Colors.pink,
+                          Colors.green,
                         ),
-                      ),
-                    ];
+                        const ArmedSwitch(
+                          'burglar',
+                          Icons.remove_red_eye,
+                          Icons.remove_red_eye,
+                          Colors.pink,
+                          Colors.orange,
+                        ),
+                        const ArmedSwitch(
+                          'pump',
+                          Icons.water_drop_outlined,
+                          Icons.water_drop_outlined,
+                          Colors.pink,
+                          Colors.blue,
+                        ),
+                      ];
 
-                    return index >= buttons.length ? null : buttons[index];
-                  },
-                  childCount: 3 + 3 * 10,
+                      return index >= buttons.length ? null : buttons[index];
+                    },
+                    childCount: 3,
+                  ),
+                ),
+              ),
+              SliverPadding(
+                padding: const EdgeInsets.all(8.0),
+                sliver: SliverGrid(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisExtent: 110,
+                    mainAxisSpacing: 8.0,
+                    crossAxisSpacing: 10.0,
+                    childAspectRatio: 2.0,
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      final buttons = [
+                        Stack(
+                          children: [
+                            RefreshableImage(doorCamUrl),
+                            // const CamWidget(),
+                          ],
+                        ),
+                        ...List.generate(
+                          3 * 10,
+                          (index) => const Icon(
+                            Icons.image_not_supported,
+                            size: 64,
+                          ),
+                        ),
+                      ];
+
+                      return index >= buttons.length ? null : buttons[index];
+                    },
+                    childCount: 2 * 5,
+                  ),
                 ),
               ),
             ],

@@ -187,7 +187,9 @@ class Mqtt extends _$Mqtt {
               },
             });
           } else if (mqttReceivedMessage.topic == 'instar/10D1DC228582/status/alarm/triggered/object') {
-            doorAlarmController.sink.add(payloadJson['val']);
+            doorAlarmController.sink.add(
+              int.parse(payloadJson['val']),
+            );
           } else if (mqttReceivedMessage.topic == 'zigbee2mqtt/bridge/devices') {
             // we find the device name (description) in the zigbee2mqtt/bridge/devices message
             setDeviceNameMap(payloadJson);

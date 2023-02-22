@@ -10,7 +10,7 @@ import '/pages/light_list_page.dart';
 import '/pages/other_page.dart';
 // import '/pages/video_page.dart';
 
-import '/widgets/video_widget.dart';
+// import '/widgets/video_widget.dart';
 import '/widgets/refreshable_image_widget.dart';
 import '/widgets/stream_blinker_widget.dart';
 import '/widgets/armed_switch_widget.dart';
@@ -242,7 +242,7 @@ class HomePage extends ConsumerWidget {
                       final buttons = [
                         Stack(
                           children: [
-                            RefreshableImage(doorCamUrl),
+                            RefreshableImage(doorCamUrl, streamProvider: doorAlarmProvider),
                             // const CamWidget(),
                           ],
                         ),

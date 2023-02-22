@@ -106,6 +106,7 @@ class HomePage extends ConsumerWidget {
                   background: Image(
                     image: AssetImage('assets/images/homebase.jpg'),
                     fit: BoxFit.cover,
+                    filterQuality: FilterQuality.medium,
                   ),
                 ),
               ),

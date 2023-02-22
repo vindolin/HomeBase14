@@ -13,7 +13,8 @@ class _RefreshableImageState extends State<RefreshableImage> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => setState(() {}),
-      child: Image.network('${widget.imageUrl}&${DateTime.now().millisecondsSinceEpoch}'),
+      child: Image.network('${widget.imageUrl}&${DateTime.now().millisecondsSinceEpoch}',
+          filterQuality: FilterQuality.medium),
     );
   }
 }

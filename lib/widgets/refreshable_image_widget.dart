@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class RefreshableImage extends ConsumerStatefulWidget {
   final String imageUrl;
-  final StreamProvider? streamProvider;
+  final StreamProvider? streamProvider; // refreshes the image when the stream emits
 
   const RefreshableImage(this.imageUrl, {this.streamProvider, super.key});
 

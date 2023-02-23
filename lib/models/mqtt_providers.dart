@@ -31,7 +31,16 @@ final messageProvider = StreamProvider<Map<String, dynamic>>((ref) async* {
   }
 });
 
-// used for vibration on door alarm
+// used for vibration on door movement
+StreamController<int> doorMovementController = StreamController<int>.broadcast();
+
+final doorMovementProvider = StreamProvider<int>((ref) async* {
+  await for (final message in doorMovementController.stream) {
+    yield message;
+  }
+});
+
+// used for refreshing the preview image
 StreamController<int> doorAlarmController = StreamController<int>.broadcast();
 
 final doorAlarmProvider = StreamProvider<int>((ref) async* {
@@ -187,9 +196,14 @@ class Mqtt extends _$Mqtt {
               },
             });
           } else if (mqttReceivedMessage.topic == 'instar/10D1DC228582/status/alarm/triggered/object') {
-            doorAlarmController.sink.add(
+            doorMovementController.sink.add(
               int.parse(payloadJson['val']),
             );
+
+            var objectValue = int.parse(payloadJson['val']);
+            if (objectValue != 0) {
+              doorAlarmController.sink.add(objectValue);
+            }
           } else if (mqttReceivedMessage.topic == 'zigbee2mqtt/bridge/devices') {
             // we find the device name (description) in the zigbee2mqtt/bridge/devices message
             setDeviceNameMap(payloadJson);

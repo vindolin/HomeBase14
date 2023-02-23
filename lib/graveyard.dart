@@ -183,3 +183,12 @@
 //   Rect.fromLTWH(0, 0, size.width, size.height),
 //   paint,
 // );
+
+
+// if (widget.streamProvider != null) {
+//   ref.watch(widget.streamProvider!.selectAsync((value) {
+//     // select works by watching a changing value, so this workaround is needed
+//     if (value != 0) triggerVal = !triggerVal;
+//     return triggerVal;
+//   }));
+// }

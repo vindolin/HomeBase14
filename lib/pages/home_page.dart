@@ -77,7 +77,7 @@ class HomePage extends ConsumerWidget {
       body: Stack(
         children: [
           StreamContainerBlinker(
-            doorAlarmProvider,
+            doorMovementProvider,
             vibrate: true,
             ignoreFirstBuild: true,
           ),
@@ -242,7 +242,19 @@ class HomePage extends ConsumerWidget {
                       final buttons = [
                         Stack(
                           children: [
-                            RefreshableImage(doorCamUrl, streamProvider: doorAlarmProvider),
+                            Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.2),
+                                      spreadRadius: 1,
+                                      blurRadius: 2,
+                                      offset: const Offset(3, 3), // changes position of shadow
+                                    ),
+                                  ],
+                                ),
+                                child: RefreshableImage(doorCamUrl, streamProvider: doorAlarmProvider)),
                             // const CamWidget(),
                           ],
                         ),

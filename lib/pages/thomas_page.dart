@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:homer/models/mqtt_devices.dart';
 
-import '/models/mqtt_providers.dart';
 import '/utils.dart';
 import '/widgets/connection_bar_widget.dart';
 

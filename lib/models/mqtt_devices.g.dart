@@ -29,6 +29,43 @@ class _SystemHash {
   }
 }
 
+String _$SimpleMqttMessagesHash() =>
+    r'cb23740b9629c1cd6944867878306158a24dd075';
+
+/// See also [SimpleMqttMessages].
+final simpleMqttMessagesProvider = AutoDisposeNotifierProvider<
+    SimpleMqttMessages, Map<String, SimpleMqttMessage>>(
+  SimpleMqttMessages.new,
+  name: r'simpleMqttMessagesProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$SimpleMqttMessagesHash,
+);
+typedef SimpleMqttMessagesRef
+    = AutoDisposeNotifierProviderRef<Map<String, SimpleMqttMessage>>;
+
+abstract class _$SimpleMqttMessages
+    extends AutoDisposeNotifier<Map<String, SimpleMqttMessage>> {
+  @override
+  Map<String, SimpleMqttMessage> build();
+}
+
+String _$LeechHash() => r'44384d3e1b8a1fb231473db7b09436eef154ecb0';
+
+/// See also [Leech].
+final leechProvider = AutoDisposeNotifierProvider<Leech, Map<String, String>>(
+  Leech.new,
+  name: r'leechProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$LeechHash,
+);
+typedef LeechRef = AutoDisposeNotifierProviderRef<Map<String, String>>;
+
+abstract class _$Leech extends AutoDisposeNotifier<Map<String, String>> {
+  @override
+  Map<String, String> build();
+}
+
 String _$DoorDevicesHash() => r'4d735033fc9bd89705d7f7939eff7df253b750ed';
 
 /// See also [DoorDevices].

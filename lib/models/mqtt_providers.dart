@@ -5,21 +5,23 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:nanoid/nanoid.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
-import '../utils.dart';
+
+import '/utils.dart';
 import 'mqtt_connection_data.dart';
 import 'mqtt_devices.dart';
 
 part 'mqtt_providers.g.dart';
 
 const subscribeTopics = [
-  'zigbee2mqtt/#',
-  'stat/#',
-  'garagedoor/state',
-  'home/burglar_alarm',
-  'garden/cistern_pump/get',
-  'kittycam/privacy',
-  'instar/10D1DC228582/status/alarm/triggered/object',
-  'leech/sleep_',
+  'zigbee2mqtt/#', // all the zigbee devices registered in zigbee2mqtt
+  'stat/#', // all the tasmota devices
+  'garagedoor/state', // an esp32 controlling the garage door
+  'home/burglar_alarm', // node-red controlling the burglar alarm
+  'garden/cistern_pump/get', // node-red controlling the cistern pump
+  'kittycam/privacy', // node-red controlling the privacy mode of the cat cam
+  'instar/10D1DC228582/status/alarm/triggered/object', // motion detection of the door cam
+  'leech/sleepy', // a node red flow controlling a python/mqtt daemon running on leech, setting the sleep mode to sleep or hibernate
+  'gunk/gunk', // for testing purposes
 ];
 
 final clientIdentifier = 'K${nanoid()}';
@@ -63,6 +65,8 @@ class Mqtt extends _$Mqtt {
   late ThermostatDevices thermostatDevices;
   late LightDevices lightDevices;
   late SwitchDevices switchDevices;
+  late Leech leech;
+  late SimpleMqttMessages simpleMqttMessages;
 
   @override
   build() {
@@ -73,9 +77,14 @@ class Mqtt extends _$Mqtt {
     dualCurtainDevices = ref.watch(dualCurtainDevicesProvider.notifier);
     doorDevices = ref.watch(doorDevicesProvider.notifier);
     thermostatDevices = ref.watch(thermostatDevicesProvider.notifier);
+    leech = ref.watch(leechProvider.notifier);
 
-    ref.read(lightDevicesProvider.notifier).publishCallback = publish; // inject publish function
-    ref.read(switchDevicesProvider.notifier).publishCallback = publishRetained; // inject publish function
+    simpleMqttMessages = ref.watch(simpleMqttMessagesProvider.notifier);
+
+    // inject publish function
+    lightDevices.publishCallback = publish;
+    switchDevices.publishCallback = publishRetained;
+    simpleMqttMessages.publishCallback = publish;
 
     ref.onDispose(() {
       disconnect();
@@ -121,11 +130,11 @@ class Mqtt extends _$Mqtt {
   }
 
   // generic publish function
-  void publish(String topic, String payload) {
+  void publish(String topic, String payload, {bool retain = false}) {
     log('publishing $topic: $payload');
     final builder = MqttClientPayloadBuilder();
     builder.addString(payload);
-    client.publishMessage(topic, MqttQos.atLeastOnce, builder.payload!);
+    client.publishMessage(topic, MqttQos.atLeastOnce, builder.payload!, retain: retain);
   }
 
   // generic publish function
@@ -211,13 +220,25 @@ class Mqtt extends _$Mqtt {
           } else if (mqttReceivedMessage.topic == 'zigbee2mqtt/bridge/devices') {
             // we find the device name (description) in the zigbee2mqtt/bridge/devices message
             setDeviceNameMap(payloadJson);
-          } else if (mqttReceivedMessage.topic == 'leech/sleep_') {
-            print('sleep_');
           } else {
             print(mqttReceivedMessage.topic);
           }
-        } on FormatException catch (e) {
-          e;
+
+          // if the payload is not json, it's probably a string
+        } on FormatException catch (_) {
+          if (mqttReceivedMessage.topic == 'xleech/sleepy') {
+            print(payload);
+            leech.state = {
+              ...leech.state,
+              'sleep_state': payload,
+            };
+          } else {
+            simpleMqttMessages.state = {
+              ...simpleMqttMessages.state,
+              mqttReceivedMessage.topic: SimpleMqttMessage(topic: mqttReceivedMessage.topic, payload: payload)
+            };
+          }
+          print(mqttReceivedMessage.topic);
         }
 
         // tasmota switches, plugs, bulps, etc
@@ -261,7 +282,7 @@ class Mqtt extends _$Mqtt {
           deviceNames[device['friendly_name']] = description;
         }
         log('${device['friendly_name']}: ${device['description']}');
-      } catch (e) {
+      } catch (_) {
         //
       }
     }

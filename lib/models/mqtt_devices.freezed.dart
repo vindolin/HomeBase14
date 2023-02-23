@@ -15,6 +15,142 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
+mixin _$SimpleMqttMessage {
+  String get topic => throw _privateConstructorUsedError;
+  String get payload => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $SimpleMqttMessageCopyWith<SimpleMqttMessage> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SimpleMqttMessageCopyWith<$Res> {
+  factory $SimpleMqttMessageCopyWith(
+          SimpleMqttMessage value, $Res Function(SimpleMqttMessage) then) =
+      _$SimpleMqttMessageCopyWithImpl<$Res, SimpleMqttMessage>;
+  @useResult
+  $Res call({String topic, String payload});
+}
+
+/// @nodoc
+class _$SimpleMqttMessageCopyWithImpl<$Res, $Val extends SimpleMqttMessage>
+    implements $SimpleMqttMessageCopyWith<$Res> {
+  _$SimpleMqttMessageCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? topic = null,
+    Object? payload = null,
+  }) {
+    return _then(_value.copyWith(
+      topic: null == topic
+          ? _value.topic
+          : topic // ignore: cast_nullable_to_non_nullable
+              as String,
+      payload: null == payload
+          ? _value.payload
+          : payload // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_SimpleMqttMessageCopyWith<$Res>
+    implements $SimpleMqttMessageCopyWith<$Res> {
+  factory _$$_SimpleMqttMessageCopyWith(_$_SimpleMqttMessage value,
+          $Res Function(_$_SimpleMqttMessage) then) =
+      __$$_SimpleMqttMessageCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String topic, String payload});
+}
+
+/// @nodoc
+class __$$_SimpleMqttMessageCopyWithImpl<$Res>
+    extends _$SimpleMqttMessageCopyWithImpl<$Res, _$_SimpleMqttMessage>
+    implements _$$_SimpleMqttMessageCopyWith<$Res> {
+  __$$_SimpleMqttMessageCopyWithImpl(
+      _$_SimpleMqttMessage _value, $Res Function(_$_SimpleMqttMessage) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? topic = null,
+    Object? payload = null,
+  }) {
+    return _then(_$_SimpleMqttMessage(
+      topic: null == topic
+          ? _value.topic
+          : topic // ignore: cast_nullable_to_non_nullable
+              as String,
+      payload: null == payload
+          ? _value.payload
+          : payload // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_SimpleMqttMessage implements _SimpleMqttMessage {
+  const _$_SimpleMqttMessage({required this.topic, required this.payload});
+
+  @override
+  final String topic;
+  @override
+  final String payload;
+
+  @override
+  String toString() {
+    return 'SimpleMqttMessage(topic: $topic, payload: $payload)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_SimpleMqttMessage &&
+            (identical(other.topic, topic) || other.topic == topic) &&
+            (identical(other.payload, payload) || other.payload == payload));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, topic, payload);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_SimpleMqttMessageCopyWith<_$_SimpleMqttMessage> get copyWith =>
+      __$$_SimpleMqttMessageCopyWithImpl<_$_SimpleMqttMessage>(
+          this, _$identity);
+}
+
+abstract class _SimpleMqttMessage implements SimpleMqttMessage {
+  const factory _SimpleMqttMessage(
+      {required final String topic,
+      required final String payload}) = _$_SimpleMqttMessage;
+
+  @override
+  String get topic;
+  @override
+  String get payload;
+  @override
+  @JsonKey(ignore: true)
+  _$$_SimpleMqttMessageCopyWith<_$_SimpleMqttMessage> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$ArmedSwitchDevice {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;

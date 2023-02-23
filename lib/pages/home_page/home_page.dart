@@ -2,15 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
-import '/models/mqtt_providers.dart';
-
 import 'armed_buttons.dart';
 import 'device_group_slivers.dart';
 import 'cameras.dart';
 
-// import '/pages/video_page.dart';
-
-// import '/widgets/video_widget.dart';
+import '/models/mqtt_providers.dart';
 import '/widgets/stream_blinker_widget.dart';
 import '/widgets/connection_bar_widget.dart';
 

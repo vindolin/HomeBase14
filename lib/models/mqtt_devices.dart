@@ -12,6 +12,33 @@ import '/utils.dart';
 part 'mqtt_devices.g.dart';
 part 'mqtt_devices.freezed.dart';
 
+@freezed
+class SimpleMqttMessage with _$SimpleMqttMessage {
+  const factory SimpleMqttMessage({
+    required String topic,
+    required String payload,
+  }) = _SimpleMqttMessage;
+}
+
+@riverpod
+class SimpleMqttMessages extends _$SimpleMqttMessages {
+  late Function publishCallback; // get's injected by the mqtt class
+  @override
+  Map<String, SimpleMqttMessage> build() {
+    return {};
+  }
+}
+
+@riverpod
+class Leech extends _$Leech {
+  late Function publishCallback; // get's injected by the mqtt class
+
+  @override
+  Map<String, String> build() {
+    return {'sleep_state': 'none'};
+  }
+}
+
 @riverpod
 class DoorDevices extends _$DoorDevices {
   @override
@@ -126,7 +153,7 @@ class SwitchDevices extends _$SwitchDevices {
 
   @override
   Map<String, ArmedSwitchDevice> build() {
-    return switchDevices; // figure out why I can't the map directly here...
+    return switchDevices; // figure out why I can't use the map directly here...
   }
 
   void toggleState(key) {

@@ -14,7 +14,7 @@ import '/pages/thomas_page.dart';
 // import '/widgets/video_widget.dart';
 import '/widgets/refreshable_image_widget.dart';
 import '/widgets/stream_blinker_widget.dart';
-import '/widgets/armed_switch_widget.dart';
+import '/widgets/armed_switch_button_widget.dart';
 import '/widgets/connection_bar_widget.dart';
 
 class Delegate extends SliverPersistentHeaderDelegate {
@@ -213,28 +213,28 @@ class HomePage extends ConsumerWidget {
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
                       final buttons = [
-                        const ArmedSwitch(
+                        const ArmedSwitchButton(
                           'garage',
                           Icons.garage,
                           Icons.garage,
                           Colors.pink,
                           Colors.green,
                         ),
-                        const ArmedSwitch(
+                        const ArmedSwitchButton(
                           'burglar',
                           Icons.local_police_outlined,
                           Icons.local_police_outlined,
                           Colors.pink,
                           Colors.orange,
                         ),
-                        const ArmedSwitch(
+                        const ArmedSwitchButton(
                           'camera',
                           Icons.remove_red_eye,
                           Icons.remove_red_eye,
                           Colors.pink,
                           Colors.lime,
                         ),
-                        const ArmedSwitch(
+                        const ArmedSwitchButton(
                           'pump',
                           Icons.water_drop_outlined,
                           Icons.water_drop_outlined,

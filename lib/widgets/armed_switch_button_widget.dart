@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import '../models/mqtt_providers.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import '/models/mqtt_devices.dart';
+import '/widgets/pulsating_container_widget.dart';
 
 Future<bool> confirmIcon(
   BuildContext context, {
@@ -27,7 +28,7 @@ Future<bool> confirmIcon(
   return isConfirm ?? false;
 }
 
-class ArmedSwitch extends ConsumerStatefulWidget {
+class ArmedSwitchButton extends ConsumerStatefulWidget {
   final iconSize = 60.0;
   final String id;
   final IconData iconOn;
@@ -35,13 +36,13 @@ class ArmedSwitch extends ConsumerStatefulWidget {
   final Color colorOn;
   final Color colorOff;
 
-  const ArmedSwitch(this.id, this.iconOn, this.iconOff, this.colorOn, this.colorOff, {super.key});
+  const ArmedSwitchButton(this.id, this.iconOn, this.iconOff, this.colorOn, this.colorOff, {super.key});
 
   @override
-  ConsumerState<ArmedSwitch> createState() => _ArmedSwitchState();
+  ConsumerState<ArmedSwitchButton> createState() => _ArmedSwitchState();
 }
 
-class _ArmedSwitchState extends ConsumerState<ArmedSwitch> {
+class _ArmedSwitchState extends ConsumerState<ArmedSwitchButton> {
   bool transitioning = false;
 
   @override
@@ -54,6 +55,10 @@ class _ArmedSwitchState extends ConsumerState<ArmedSwitch> {
       child: Stack(
         alignment: Alignment.center,
         children: [
+          if (switchDevice.state == switchDevice.on)
+            const PulsatingContainer(
+                // color: Colors.grey.shade900,
+                ),
           Column(
             children: [
               // Text(switchDevice.name),

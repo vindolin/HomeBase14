@@ -18,14 +18,19 @@ class PulsatingContainerState extends State<PulsatingContainer> with SingleTicke
   @override
   initState() {
     super.initState();
+
     controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1500),
     )..repeat(reverse: true);
+
     animation = Tween(
       begin: 0.0,
       end: 0.2,
-    ).animate(CurvedAnimation(parent: controller, curve: Curves.easeInOut));
+    ).animate(CurvedAnimation(
+      parent: controller,
+      curve: Curves.easeInOut,
+    ));
   }
 
   @override

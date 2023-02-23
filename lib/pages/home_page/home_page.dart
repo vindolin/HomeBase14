@@ -79,39 +79,61 @@ class HomePage extends ConsumerWidget {
             vibrate: true,
             ignoreFirstBuild: true,
           ),
-          CustomScrollView(slivers: [
-            SliverAppBar(
-              title: Text(
-                translate('app_bar.title'),
-                style: const TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  shadows: [
-                    Shadow(
-                      blurRadius: 3.0,
-                      color: Colors.black54,
-                      offset: Offset(2.0, 2.0),
-                    ),
-                  ],
+          CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                title: Text(
+                  translate('app_bar.title'),
+                  style: const TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        blurRadius: 3.0,
+                        color: Colors.black54,
+                        offset: Offset(2.0, 2.0),
+                      ),
+                    ],
+                  ),
+                ),
+                floating: true,
+                snap: true,
+                expandedHeight: 80.0,
+                flexibleSpace: const FlexibleSpaceBar(
+                  background: Image(
+                    image: AssetImage('assets/images/homebase.jpg'),
+                    fit: BoxFit.cover,
+                    filterQuality: FilterQuality.medium,
+                  ),
                 ),
               ),
-              floating: true,
-              snap: true,
-              expandedHeight: 80.0,
-              flexibleSpace: const FlexibleSpaceBar(
-                background: Image(
-                  image: AssetImage('assets/images/homebase.jpg'),
-                  fit: BoxFit.cover,
-                  filterQuality: FilterQuality.medium,
-                ),
-              ),
-            ),
-            // const SliverHeader(Colors.red, 'SliverPersistentHeader 1'),
-            deviceGroupSlivers(context, visualDensity),
-            armedButtons(),
-            cameras(),
-          ]),
+              // const SliverHeader(Colors.red, 'SliverPersistentHeader 1'),
+              deviceGroups(context, visualDensity),
+              armedButtons(),
+              // SliverPadding(
+              //   padding: const EdgeInsets.all(2.0),
+              //   sliver: SliverGrid(
+              //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              //       crossAxisCount: 4,
+              //       mainAxisExtent: 110,
+              //       mainAxisSpacing: 8.0,
+              //       crossAxisSpacing: 10.0,
+              //       childAspectRatio: 2.0,
+              //     ),
+              //     delegate: SliverChildBuilderDelegate(
+              //       (BuildContext context, int index) {
+              //         final buttons = [Container(child:Text('meep')),];
+
+              //         return index >= buttons.length ? null : buttons[index];
+              //       },
+              //       childCount: 4,
+              //     ),
+              //   ),
+              // ),
+              cameras(),
+            ],
+          ),
         ],
       ),
       bottomNavigationBar: const ConnectionBar(),

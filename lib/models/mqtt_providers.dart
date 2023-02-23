@@ -24,6 +24,8 @@ const subscribeTopics = [
 
 final clientIdentifier = 'K${nanoid()}';
 
+// @riverpod
+
 // used for the flashing message icon
 StreamController<Map<String, dynamic>> messageController = StreamController<Map<String, dynamic>>.broadcast();
 

@@ -7,7 +7,7 @@ import '/pages/light_list_page.dart';
 import '/pages/other_page.dart';
 import '/pages/thomas_page.dart';
 
-Widget deviceGroupSlivers(BuildContext context, VisualDensity visualDensity) {
+Widget deviceGroups(BuildContext context, VisualDensity visualDensity) {
   return SliverList(
     delegate: SliverChildListDelegate([
       ListTile(

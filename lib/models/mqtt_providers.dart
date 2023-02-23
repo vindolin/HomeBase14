@@ -16,8 +16,10 @@ const subscribeTopics = [
   'stat/#',
   'garagedoor/state',
   'home/burglar_alarm',
-  'arm_test/get',
+  'garden/cistern_pump/get',
+  'kittycam/privacy',
   'instar/10D1DC228582/status/alarm/triggered/object',
+  'leech/sleep_',
 ];
 
 final clientIdentifier = 'K${nanoid()}';
@@ -207,6 +209,8 @@ class Mqtt extends _$Mqtt {
           } else if (mqttReceivedMessage.topic == 'zigbee2mqtt/bridge/devices') {
             // we find the device name (description) in the zigbee2mqtt/bridge/devices message
             setDeviceNameMap(payloadJson);
+          } else if (mqttReceivedMessage.topic == 'leech/sleep_') {
+            print('sleep_');
           } else {
             print(mqttReceivedMessage.topic);
           }

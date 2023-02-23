@@ -8,6 +8,7 @@ import '/pages/thermostat_list_page.dart';
 import '/pages/curtain_list_page.dart';
 import '/pages/light_list_page.dart';
 import '/pages/other_page.dart';
+import '/pages/thomas_page.dart';
 // import '/pages/video_page.dart';
 
 // import '/widgets/video_widget.dart';
@@ -169,6 +170,20 @@ class HomePage extends ConsumerWidget {
                       );
                     },
                   ),
+                  const Divider(),
+                  ListTile(
+                    title: const Text('Thomas'),
+                    leading: const Icon(Icons.pest_control),
+                    visualDensity: visualDensity,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ThomasPage(),
+                        ),
+                      );
+                    },
+                  ),
                   // const Divider(),
                   // ListTile(
                   //   title: Text(translate('device_names.video')),
@@ -189,7 +204,7 @@ class HomePage extends ConsumerWidget {
                 padding: const EdgeInsets.all(2.0),
                 sliver: SliverGrid(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
+                    crossAxisCount: 4,
                     mainAxisExtent: 110,
                     mainAxisSpacing: 8.0,
                     crossAxisSpacing: 10.0,
@@ -207,10 +222,17 @@ class HomePage extends ConsumerWidget {
                         ),
                         const ArmedSwitch(
                           'burglar',
+                          Icons.local_police_outlined,
+                          Icons.local_police_outlined,
+                          Colors.pink,
+                          Colors.orange,
+                        ),
+                        const ArmedSwitch(
+                          'camera',
                           Icons.remove_red_eye,
                           Icons.remove_red_eye,
                           Colors.pink,
-                          Colors.orange,
+                          Colors.lime,
                         ),
                         const ArmedSwitch(
                           'pump',
@@ -223,7 +245,7 @@ class HomePage extends ConsumerWidget {
 
                       return index >= buttons.length ? null : buttons[index];
                     },
-                    childCount: 3,
+                    childCount: 4,
                   ),
                 ),
               ),

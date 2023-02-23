@@ -91,7 +91,12 @@ class _ArmedSwitchState extends ConsumerState<ArmedSwitch> {
                   }
                 },
               ),
-              Text(switchDevice.state == switchDevice.on ? switchDevice.textOn : switchDevice.textOff),
+              Flexible(
+                child: Text(
+                  switchDevice.state == switchDevice.on ? switchDevice.textOn : switchDevice.textOff,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ],
           ),
           if (switchDevice.transitioning) const CircularProgressIndicator(),

@@ -8,7 +8,7 @@ import '/models/mqtt_connection_data.dart';
 import '/models/mqtt_providers.dart';
 import '/pages/login_page.dart';
 // import 'pages/home_page.dart';
-import 'pages/home_page.dart';
+import 'pages/home_page/home_page.dart';
 
 void main() async {
   var delegate = await LocalizationDelegate.create(

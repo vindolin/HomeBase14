@@ -55,10 +55,7 @@ class _ArmedSwitchState extends ConsumerState<ArmedSwitchButton> {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          if (switchDevice.state == switchDevice.on)
-            const PulsatingContainer(
-                // color: Colors.grey.shade900,
-                ),
+          if (switchDevice.state == switchDevice.on) const PulsatingContainer(),
           Column(
             children: [
               // Text(switchDevice.name),
@@ -100,6 +97,9 @@ class _ArmedSwitchState extends ConsumerState<ArmedSwitchButton> {
                 child: Text(
                   switchDevice.state == switchDevice.on ? switchDevice.textOn : switchDevice.textOff,
                   overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 13,
+                  ),
                 ),
               ),
             ],

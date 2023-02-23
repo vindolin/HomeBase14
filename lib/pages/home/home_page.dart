@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
-import 'armed_buttons.dart';
+import '/pages/home/armed_switch_buttons/armed_switch_buttons_page.dart';
 import 'device_group_slivers.dart';
 import 'cameras.dart';
 

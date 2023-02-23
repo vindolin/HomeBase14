@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '/widgets/armed_switch_button_widget.dart';
+import 'armed_switch_button_widget.dart';
 
 Widget armedButtons() {
   return SliverPadding(

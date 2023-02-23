@@ -5,7 +5,7 @@ import '/pages/thermostat_list_page.dart';
 import '/pages/curtain_list_page.dart';
 import '/pages/light_list_page.dart';
 import '/pages/other_page.dart';
-import '/pages/thomas_page.dart';
+import '/pages/thomas/thomas_page.dart';
 
 Widget deviceGroups(BuildContext context, VisualDensity visualDensity) {
   return SliverList(

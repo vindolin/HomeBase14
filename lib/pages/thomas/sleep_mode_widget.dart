@@ -1,35 +1,12 @@
 import 'package:flutter/material.dart';
-
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:homer/models/mqtt_devices.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '/utils.dart';
-import '/widgets/connection_bar_widget.dart';
-
-class ThomasPage extends ConsumerWidget {
-  const ThomasPage({super.key});
+class SleepModeDropdown extends ConsumerStatefulWidget {
+  const SleepModeDropdown({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    log('ThomasPage.build()');
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Thomas'),
-        actions: const [ConnectionBar()],
-      ),
-      body: const Center(
-        child: DropdownButtonExample(),
-      ),
-    );
-  }
-}
-
-class DropdownButtonExample extends ConsumerStatefulWidget {
-  const DropdownButtonExample({super.key});
-
-  @override
-  ConsumerState<DropdownButtonExample> createState() => _DropdownButtonExampleState();
+  ConsumerState<SleepModeDropdown> createState() => _SleepModeDropdownState();
 }
 
 const Map<String, String> options = {
@@ -39,7 +16,7 @@ const Map<String, String> options = {
   'hibernate': '🐻 - hibernate',
 };
 
-class _DropdownButtonExampleState extends ConsumerState<DropdownButtonExample> {
+class _SleepModeDropdownState extends ConsumerState<SleepModeDropdown> {
   String dropdownValue = options.keys.first;
 
   @override

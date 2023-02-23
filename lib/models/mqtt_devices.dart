@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:tuple/tuple.dart';
 
 import '/utils.dart';
@@ -74,13 +75,11 @@ Map<String, ArmedSwitchDevice> switchDevices = {
     name: 'Garage',
     topicGet: 'garagedoor/state',
     topicSet: 'garagedoor/set',
-    // topicGet: 'arm_test/get',
-    // topicSet: 'arm_test/set',
     on: 'open',
     off: 'close',
     state: null,
-    textOn: 'Garage auf', // TODOs translate
-    textOff: 'Garage zu',
+    textOn: translate('armed_buttons.garage.text_on'),
+    textOff: translate('armed_buttons.garage.text_off'),
     transitioning: false,
   ),
   'burglar': ArmedSwitchDevice(
@@ -91,8 +90,20 @@ Map<String, ArmedSwitchDevice> switchDevices = {
     on: '1',
     off: '0',
     state: null,
-    textOn: 'Alarm ein',
-    textOff: 'Alarm aus',
+    textOn: translate('armed_buttons.burglar.text_on'),
+    textOff: translate('armed_buttons.burglar.text_off'),
+    transitioning: false,
+  ),
+  'camera': ArmedSwitchDevice(
+    id: 'camera',
+    name: 'Kamera',
+    topicGet: 'kittycam/privacy',
+    topicSet: 'kittycam/privacy',
+    on: 'ON',
+    off: 'OFF',
+    state: null,
+    textOn: translate('armed_buttons.camera.text_on'),
+    textOff: translate('armed_buttons.camera.text_off'),
     transitioning: false,
   ),
   'pump': ArmedSwitchDevice(
@@ -103,8 +114,8 @@ Map<String, ArmedSwitchDevice> switchDevices = {
     on: '1',
     off: '0',
     state: null,
-    textOn: 'Pumpe ein',
-    textOff: 'Pumpe aus',
+    textOn: translate('armed_buttons.pump.text_on'),
+    textOff: translate('armed_buttons.pump.text_off'),
     transitioning: false,
   ),
 };

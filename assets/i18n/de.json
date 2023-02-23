@@ -19,5 +19,27 @@
 			"two": "You have pushed the button two times.",
 			"other": "You have pushed the button {{value}} times."
 		}
+	},
+	"armed_buttons": {
+		"garage": {
+			"label": "Garage",
+			"text_on": "Garage offen",
+			"text_off": "Garage zu"
+		},
+		"burglar": {
+			"label": "Einbruchalarm",
+			"text_on": "Alarm ein",
+			"text_off": "Alarm aus"
+		},
+		"camera": {
+			"label": "Kamera",
+			"text_on": "Kamera ein",
+			"text_off": "Kamera aus"
+		},
+		"pump": {
+			"label": "Tauchpumpe",
+			"text_on": "Pumpe ein",
+			"text_off": "Pumpe aus"
+		}
 	}
 }

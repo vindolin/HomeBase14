@@ -100,7 +100,7 @@ class Mqtt extends _$Mqtt {
       connectionData.state.port,
     );
 
-    // mqtt.autoReconnect = true;
+    client.autoReconnect = true;
 
     client.onConnected = onConnected;
     client.onDisconnected = onDisconnected;

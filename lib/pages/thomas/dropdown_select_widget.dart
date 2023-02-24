@@ -2,41 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:homer/models/mqtt_devices.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SleepModeDropdown extends ConsumerStatefulWidget {
-  const SleepModeDropdown({super.key});
+import '/styles/text_styles.dart';
+
+class DropdownSelect extends ConsumerStatefulWidget {
+  final String subTopic;
+  final String pubTopic;
+  final Map<String, String> options;
+  const DropdownSelect({required this.options, required this.subTopic, required this.pubTopic, super.key});
 
   @override
-  ConsumerState<SleepModeDropdown> createState() => _SleepModeDropdownState();
+  ConsumerState<DropdownSelect> createState() => _DropdownStateSelect();
 }
 
-const Map<String, String> options = {
-  // 'none': '',
-  'wake': '☕️ - wake up',
-  'sleep': '😴 - sleep',
-  'hibernate': '🐻 - hibernate',
-};
-
-class _SleepModeDropdownState extends ConsumerState<SleepModeDropdown> {
-  String dropdownValue = options.keys.first;
+class _DropdownStateSelect extends ConsumerState<DropdownSelect> {
+  late String dropdownValue = widget.options.keys.first;
 
   @override
   Widget build(BuildContext context) {
     final simpleMqttMessage = ref.watch(
       simpleMqttMessagesProvider.select(
         (simpleMqttMessages) {
-          return simpleMqttMessages['leech/sleepy'];
+          return simpleMqttMessages[widget.subTopic];
         },
       ),
     );
 
     if (simpleMqttMessage?.payload != null) {
+      print(simpleMqttMessage?.payload);
       dropdownValue = simpleMqttMessage!.payload;
     }
 
     return DropdownButton<String>(
       value: dropdownValue,
       onChanged: (String? value) {
-        ref.read(simpleMqttMessagesProvider.notifier).publishCallback('leech/sleepy', value!, retain: true);
+        ref.read(simpleMqttMessagesProvider.notifier).publishCallback(widget.pubTopic, value!, retain: true);
         setState(
           () {
             print(value);
@@ -44,7 +43,7 @@ class _SleepModeDropdownState extends ConsumerState<SleepModeDropdown> {
           },
         );
       },
-      items: options
+      items: widget.options
           .map(
             (key, value) {
               return MapEntry(
@@ -53,7 +52,7 @@ class _SleepModeDropdownState extends ConsumerState<SleepModeDropdown> {
                   value: key,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(value),
+                    child: Text(value, style: textStyleShadowOne),
                   ),
                 ),
               );

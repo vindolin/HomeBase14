@@ -58,6 +58,7 @@ class _MyAppState extends ConsumerState<HomerApp> {
           brightness: MediaQueryData.fromWindow(WidgetsBinding.instance.window).platformBrightness,
           surface: const Color.fromARGB(255, 153, 4, 145),
         ),
+        // textTheme: TextTheme(),
       ),
     );
   }

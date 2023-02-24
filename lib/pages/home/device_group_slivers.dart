@@ -7,11 +7,17 @@ import '/pages/light_list_page.dart';
 import '/pages/other_page.dart';
 import '/pages/thomas/thomas_page.dart';
 
+import '/styles/text_styles.dart';
+
 Widget deviceGroups(BuildContext context, VisualDensity visualDensity) {
   return SliverList(
     delegate: SliverChildListDelegate([
       ListTile(
-        title: Text(translate('device_names.thermostats')),
+        // iconColor: Colors.purpleAccent,
+        title: Text(
+          translate('device_names.thermostats'),
+          style: textStyleShadowOne,
+        ),
         leading: const Icon(Icons.thermostat),
         visualDensity: visualDensity,
         // tileColor: Colors.amber,
@@ -26,7 +32,10 @@ Widget deviceGroups(BuildContext context, VisualDensity visualDensity) {
       ),
       const Divider(),
       ListTile(
-        title: Text(translate('device_names.curtains')),
+        title: Text(
+          translate('device_names.curtains'),
+          style: textStyleShadowOne,
+        ),
         leading: const Icon(Icons.blinds),
         visualDensity: visualDensity,
         onTap: () {
@@ -40,7 +49,10 @@ Widget deviceGroups(BuildContext context, VisualDensity visualDensity) {
       ),
       const Divider(),
       ListTile(
-        title: Text(translate('device_names.lights')),
+        title: Text(
+          translate('device_names.lights'),
+          style: textStyleShadowOne,
+        ),
         leading: const Icon(Icons.lightbulb),
         visualDensity: visualDensity,
         onTap: () {
@@ -54,7 +66,10 @@ Widget deviceGroups(BuildContext context, VisualDensity visualDensity) {
       ),
       const Divider(),
       ListTile(
-        title: Text(translate('device_names.other')),
+        title: Text(
+          translate('device_names.other'),
+          style: textStyleShadowOne,
+        ),
         leading: const Icon(Icons.extension),
         visualDensity: visualDensity,
         onTap: () {
@@ -68,7 +83,11 @@ Widget deviceGroups(BuildContext context, VisualDensity visualDensity) {
       ),
       const Divider(),
       ListTile(
-        title: const Text('Thomas'),
+        // tileColor: Colors.purple.shade800,
+        title: const Text(
+          'Thomas',
+          style: textStyleShadowOne,
+        ),
         leading: const Icon(Icons.pest_control),
         visualDensity: visualDensity,
         onTap: () {

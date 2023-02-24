@@ -5,6 +5,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 
 import '/utils.dart';
 
+import '/models/mqtt_providers.dart';
 import '/models/mqtt_devices.dart';
 import '/pages/curtain_detail_page.dart';
 import '/pages/dual_curtain_detail_page.dart';
@@ -60,7 +61,21 @@ class CurtainListPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(translate('device_names.curtains')),
-        actions: const [ConnectionBar()],
+        actions: [
+          IconButton(
+            onPressed: () => ref.read(mqttProvider.notifier).publish('home/curtains', 'open'),
+            icon: const Icon(Icons.arrow_circle_up),
+          ),
+          IconButton(
+            onPressed: () => ref.read(mqttProvider.notifier).publish('home/curtains', 'stop'),
+            icon: const Icon(Icons.pause_circle_outline),
+          ),
+          IconButton(
+            onPressed: () => ref.read(mqttProvider.notifier).publish('home/curtains', 'close'),
+            icon: const Icon(Icons.arrow_circle_down),
+          ),
+          const ConnectionBar(),
+        ],
       ),
       body: ListView.separated(
         separatorBuilder: (context, index) => const Divider(),

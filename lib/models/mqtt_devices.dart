@@ -88,6 +88,7 @@ class ArmedSwitchDevice with _$ArmedSwitchDevice {
     required final String offState,
     @Default(null) final String? state,
     @Default(false) bool transitioning,
+    @Default(null) final String? stateKey,
   }) = _SwitchDevice;
 }
 
@@ -119,8 +120,9 @@ Map<String, ArmedSwitchDevice> switchDevices = {
   'tv': ArmedSwitchDevice(
     topicGet: 'zigbee2mqtt/plug/i002',
     topicSet: 'zigbee2mqtt/plug/i002/set',
-    onState: '1',
-    offState: '0',
+    onState: 'ON',
+    offState: 'OFF',
+    stateKey: 'state',
   ),
 };
 

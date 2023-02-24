@@ -165,15 +165,19 @@ class Mqtt extends _$Mqtt {
     };
 
     client.updates?.listen((List<MqttReceivedMessage<MqttMessage>> messages) {
+      // iterate over all new messages
       for (MqttReceivedMessage mqttReceivedMessage in messages) {
         final MqttPublishMessage message = mqttReceivedMessage.payload as MqttPublishMessage;
         final String payload = const Utf8Decoder().convert(message.payload.message);
+        dynamic payloadJson;
+        // try to parse the payload as json
         try {
-          final payloadJson = jsonDecode(payload);
+          payloadJson = jsonDecode(payload);
 
           // look for topics that look like our schema zigbee2mqtt/curtain/i001 for devices and add them to the mqttDevices
           RegExpMatch? match = RegExp(r'zigbee2mqtt/(?<type>\w+)/(?<id>i\d+)$').firstMatch(mqttReceivedMessage.topic);
           if (match != null) {
+            // it's a zigbee2mqtt message
             String deviceType = match.namedGroup('type')!; // e.g. curtain
             String deviceId = '$deviceType/${match.namedGroup('id')!}'; // e.g. curtain/001
 
@@ -244,21 +248,28 @@ class Mqtt extends _$Mqtt {
         }
 
         // tasmota switches, plugs, bulps, etc
-        lightDevices.state.forEach((key, value) {
-          if (value.topicGet == mqttReceivedMessage.topic) {
+        lightDevices.state.forEach((key, lightDevice) {
+          if (lightDevice.topicGet == mqttReceivedMessage.topic) {
             lightDevices.state = {
               ...lightDevices.state,
-              key: value.copyWith(state: payload),
+              key: lightDevice.copyWith(state: payload),
             };
           }
         });
 
         // armed switches like garage door
-        switchDevices.state.forEach((key, value) {
-          if (value.topicGet == mqttReceivedMessage.topic) {
+        switchDevices.state.forEach((key, switchDevice) {
+          if (switchDevice.topicGet == mqttReceivedMessage.topic) {
+            dynamic devicePayload = payload;
+
+            // if the device has a stateKey, we need to parse the json and set the payload to that key's value (e.g. zigbee2mqtt plugs)
+            if (switchDevice.stateKey != null) {
+              payloadJson = jsonDecode(payload);
+              devicePayload = payloadJson[switchDevice.stateKey!];
+            }
             switchDevices.state = {
               ...switchDevices.state,
-              key: value.copyWith(state: payload, transitioning: false),
+              key: switchDevice.copyWith(state: devicePayload, transitioning: false),
             };
           }
         });

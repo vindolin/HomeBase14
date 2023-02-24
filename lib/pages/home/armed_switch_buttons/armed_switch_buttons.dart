@@ -64,18 +64,18 @@ Widget armedButtons() {
               id: 'tv',
               label: translate('armed_buttons.tv.label'),
               iconOn: Icons.tv,
-              iconOff: Icons.tv,
+              iconOff: Icons.tv_off,
               colorOn: Colors.pink,
               colorOff: Colors.lime,
               textOn: translate('armed_buttons.tv.text_on'),
               textOff: translate('armed_buttons.tv.text_off'),
-              confirm: true,
+              confirm: false,
             ),
           ];
 
           return index >= buttons.length ? null : buttons[index];
         },
-        childCount: 4,
+        childCount: 5,
       ),
     ),
   );

@@ -159,6 +159,7 @@ mixin _$ArmedSwitchDevice {
   String? get state => throw _privateConstructorUsedError;
   bool get transitioning => throw _privateConstructorUsedError;
   set transitioning(bool value) => throw _privateConstructorUsedError;
+  String? get stateKey => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ArmedSwitchDeviceCopyWith<ArmedSwitchDevice> get copyWith =>
@@ -177,7 +178,8 @@ abstract class $ArmedSwitchDeviceCopyWith<$Res> {
       String onState,
       String offState,
       String? state,
-      bool transitioning});
+      bool transitioning,
+      String? stateKey});
 }
 
 /// @nodoc
@@ -199,6 +201,7 @@ class _$ArmedSwitchDeviceCopyWithImpl<$Res, $Val extends ArmedSwitchDevice>
     Object? offState = null,
     Object? state = freezed,
     Object? transitioning = null,
+    Object? stateKey = freezed,
   }) {
     return _then(_value.copyWith(
       topicGet: null == topicGet
@@ -225,6 +228,10 @@ class _$ArmedSwitchDeviceCopyWithImpl<$Res, $Val extends ArmedSwitchDevice>
           ? _value.transitioning
           : transitioning // ignore: cast_nullable_to_non_nullable
               as bool,
+      stateKey: freezed == stateKey
+          ? _value.stateKey
+          : stateKey // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -243,7 +250,8 @@ abstract class _$$_SwitchDeviceCopyWith<$Res>
       String onState,
       String offState,
       String? state,
-      bool transitioning});
+      bool transitioning,
+      String? stateKey});
 }
 
 /// @nodoc
@@ -263,6 +271,7 @@ class __$$_SwitchDeviceCopyWithImpl<$Res>
     Object? offState = null,
     Object? state = freezed,
     Object? transitioning = null,
+    Object? stateKey = freezed,
   }) {
     return _then(_$_SwitchDevice(
       topicGet: null == topicGet
@@ -289,6 +298,10 @@ class __$$_SwitchDeviceCopyWithImpl<$Res>
           ? _value.transitioning
           : transitioning // ignore: cast_nullable_to_non_nullable
               as bool,
+      stateKey: freezed == stateKey
+          ? _value.stateKey
+          : stateKey // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -302,7 +315,8 @@ class _$_SwitchDevice implements _SwitchDevice {
       required this.onState,
       required this.offState,
       this.state = null,
-      this.transitioning = false});
+      this.transitioning = false,
+      this.stateKey = null});
 
   @override
   final String topicGet;
@@ -318,10 +332,13 @@ class _$_SwitchDevice implements _SwitchDevice {
   @override
   @JsonKey()
   bool transitioning;
+  @override
+  @JsonKey()
+  final String? stateKey;
 
   @override
   String toString() {
-    return 'ArmedSwitchDevice(topicGet: $topicGet, topicSet: $topicSet, onState: $onState, offState: $offState, state: $state, transitioning: $transitioning)';
+    return 'ArmedSwitchDevice(topicGet: $topicGet, topicSet: $topicSet, onState: $onState, offState: $offState, state: $state, transitioning: $transitioning, stateKey: $stateKey)';
   }
 
   @JsonKey(ignore: true)
@@ -338,7 +355,8 @@ abstract class _SwitchDevice implements ArmedSwitchDevice {
       required final String onState,
       required final String offState,
       final String? state,
-      bool transitioning}) = _$_SwitchDevice;
+      bool transitioning,
+      final String? stateKey}) = _$_SwitchDevice;
 
   @override
   String get topicGet;
@@ -353,6 +371,8 @@ abstract class _SwitchDevice implements ArmedSwitchDevice {
   @override
   bool get transitioning;
   set transitioning(bool value);
+  @override
+  String? get stateKey;
   @override
   @JsonKey(ignore: true)
   _$$_SwitchDeviceCopyWith<_$_SwitchDevice> get copyWith =>

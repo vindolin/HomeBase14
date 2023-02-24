@@ -152,15 +152,11 @@ abstract class _SimpleMqttMessage implements SimpleMqttMessage {
 
 /// @nodoc
 mixin _$ArmedSwitchDevice {
-  String get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
   String get topicGet => throw _privateConstructorUsedError;
   String get topicSet => throw _privateConstructorUsedError;
-  String get on => throw _privateConstructorUsedError;
-  String get off => throw _privateConstructorUsedError;
+  String get onState => throw _privateConstructorUsedError;
+  String get offState => throw _privateConstructorUsedError;
   String? get state => throw _privateConstructorUsedError;
-  String get textOn => throw _privateConstructorUsedError;
-  String get textOff => throw _privateConstructorUsedError;
   bool get transitioning => throw _privateConstructorUsedError;
   set transitioning(bool value) => throw _privateConstructorUsedError;
 
@@ -176,15 +172,11 @@ abstract class $ArmedSwitchDeviceCopyWith<$Res> {
       _$ArmedSwitchDeviceCopyWithImpl<$Res, ArmedSwitchDevice>;
   @useResult
   $Res call(
-      {String id,
-      String name,
-      String topicGet,
+      {String topicGet,
       String topicSet,
-      String on,
-      String off,
+      String onState,
+      String offState,
       String? state,
-      String textOn,
-      String textOff,
       bool transitioning});
 }
 
@@ -201,26 +193,14 @@ class _$ArmedSwitchDeviceCopyWithImpl<$Res, $Val extends ArmedSwitchDevice>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? name = null,
     Object? topicGet = null,
     Object? topicSet = null,
-    Object? on = null,
-    Object? off = null,
+    Object? onState = null,
+    Object? offState = null,
     Object? state = freezed,
-    Object? textOn = null,
-    Object? textOff = null,
     Object? transitioning = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
       topicGet: null == topicGet
           ? _value.topicGet
           : topicGet // ignore: cast_nullable_to_non_nullable
@@ -229,26 +209,18 @@ class _$ArmedSwitchDeviceCopyWithImpl<$Res, $Val extends ArmedSwitchDevice>
           ? _value.topicSet
           : topicSet // ignore: cast_nullable_to_non_nullable
               as String,
-      on: null == on
-          ? _value.on
-          : on // ignore: cast_nullable_to_non_nullable
+      onState: null == onState
+          ? _value.onState
+          : onState // ignore: cast_nullable_to_non_nullable
               as String,
-      off: null == off
-          ? _value.off
-          : off // ignore: cast_nullable_to_non_nullable
+      offState: null == offState
+          ? _value.offState
+          : offState // ignore: cast_nullable_to_non_nullable
               as String,
       state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
-      textOn: null == textOn
-          ? _value.textOn
-          : textOn // ignore: cast_nullable_to_non_nullable
-              as String,
-      textOff: null == textOff
-          ? _value.textOff
-          : textOff // ignore: cast_nullable_to_non_nullable
-              as String,
       transitioning: null == transitioning
           ? _value.transitioning
           : transitioning // ignore: cast_nullable_to_non_nullable
@@ -266,15 +238,11 @@ abstract class _$$_SwitchDeviceCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
-      String name,
-      String topicGet,
+      {String topicGet,
       String topicSet,
-      String on,
-      String off,
+      String onState,
+      String offState,
       String? state,
-      String textOn,
-      String textOff,
       bool transitioning});
 }
 
@@ -289,26 +257,14 @@ class __$$_SwitchDeviceCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? name = null,
     Object? topicGet = null,
     Object? topicSet = null,
-    Object? on = null,
-    Object? off = null,
+    Object? onState = null,
+    Object? offState = null,
     Object? state = freezed,
-    Object? textOn = null,
-    Object? textOff = null,
     Object? transitioning = null,
   }) {
     return _then(_$_SwitchDevice(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
       topicGet: null == topicGet
           ? _value.topicGet
           : topicGet // ignore: cast_nullable_to_non_nullable
@@ -317,26 +273,18 @@ class __$$_SwitchDeviceCopyWithImpl<$Res>
           ? _value.topicSet
           : topicSet // ignore: cast_nullable_to_non_nullable
               as String,
-      on: null == on
-          ? _value.on
-          : on // ignore: cast_nullable_to_non_nullable
+      onState: null == onState
+          ? _value.onState
+          : onState // ignore: cast_nullable_to_non_nullable
               as String,
-      off: null == off
-          ? _value.off
-          : off // ignore: cast_nullable_to_non_nullable
+      offState: null == offState
+          ? _value.offState
+          : offState // ignore: cast_nullable_to_non_nullable
               as String,
       state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
-      textOn: null == textOn
-          ? _value.textOn
-          : textOn // ignore: cast_nullable_to_non_nullable
-              as String,
-      textOff: null == textOff
-          ? _value.textOff
-          : textOff // ignore: cast_nullable_to_non_nullable
-              as String,
       transitioning: null == transitioning
           ? _value.transitioning
           : transitioning // ignore: cast_nullable_to_non_nullable
@@ -349,41 +297,31 @@ class __$$_SwitchDeviceCopyWithImpl<$Res>
 
 class _$_SwitchDevice implements _SwitchDevice {
   _$_SwitchDevice(
-      {required this.id,
-      required this.name,
-      required this.topicGet,
+      {required this.topicGet,
       required this.topicSet,
-      required this.on,
-      required this.off,
-      required this.state,
-      required this.textOn,
-      required this.textOff,
-      required this.transitioning});
+      required this.onState,
+      required this.offState,
+      this.state = null,
+      this.transitioning = false});
 
-  @override
-  final String id;
-  @override
-  final String name;
   @override
   final String topicGet;
   @override
   final String topicSet;
   @override
-  final String on;
+  final String onState;
   @override
-  final String off;
+  final String offState;
   @override
+  @JsonKey()
   final String? state;
   @override
-  final String textOn;
-  @override
-  final String textOff;
-  @override
+  @JsonKey()
   bool transitioning;
 
   @override
   String toString() {
-    return 'ArmedSwitchDevice(id: $id, name: $name, topicGet: $topicGet, topicSet: $topicSet, on: $on, off: $off, state: $state, textOn: $textOn, textOff: $textOff, transitioning: $transitioning)';
+    return 'ArmedSwitchDevice(topicGet: $topicGet, topicSet: $topicSet, onState: $onState, offState: $offState, state: $state, transitioning: $transitioning)';
   }
 
   @JsonKey(ignore: true)
@@ -395,35 +333,23 @@ class _$_SwitchDevice implements _SwitchDevice {
 
 abstract class _SwitchDevice implements ArmedSwitchDevice {
   factory _SwitchDevice(
-      {required final String id,
-      required final String name,
-      required final String topicGet,
+      {required final String topicGet,
       required final String topicSet,
-      required final String on,
-      required final String off,
-      required final String? state,
-      required final String textOn,
-      required final String textOff,
-      required bool transitioning}) = _$_SwitchDevice;
+      required final String onState,
+      required final String offState,
+      final String? state,
+      bool transitioning}) = _$_SwitchDevice;
 
-  @override
-  String get id;
-  @override
-  String get name;
   @override
   String get topicGet;
   @override
   String get topicSet;
   @override
-  String get on;
+  String get onState;
   @override
-  String get off;
+  String get offState;
   @override
   String? get state;
-  @override
-  String get textOn;
-  @override
-  String get textOff;
   @override
   bool get transitioning;
   set transitioning(bool value);

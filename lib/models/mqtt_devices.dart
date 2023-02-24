@@ -4,7 +4,6 @@ import 'dart:convert';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:tuple/tuple.dart';
 
 import '/utils.dart';
@@ -83,67 +82,45 @@ class DeviceNames extends _$DeviceNames {
 @unfreezed
 class ArmedSwitchDevice with _$ArmedSwitchDevice {
   factory ArmedSwitchDevice({
-    required final String id,
-    required final String name,
     required final String topicGet,
     required final String topicSet,
-    required final String on,
-    required final String off,
-    required final String? state,
-    required final String textOn,
-    required final String textOff,
-    required bool transitioning,
+    required final String onState,
+    required final String offState,
+    @Default(null) final String? state,
+    @Default(false) bool transitioning,
   }) = _SwitchDevice;
 }
 
 Map<String, ArmedSwitchDevice> switchDevices = {
   'garage': ArmedSwitchDevice(
-    id: 'garage',
-    name: 'Garage',
     topicGet: 'garagedoor/state',
     topicSet: 'garagedoor/set',
-    on: 'open',
-    off: 'close',
-    state: null,
-    textOn: translate('armed_buttons.garage.text_on'),
-    textOff: translate('armed_buttons.garage.text_off'),
-    transitioning: false,
+    onState: 'open',
+    offState: 'close',
   ),
   'burglar': ArmedSwitchDevice(
-    id: 'burglar',
-    name: 'Einbruchalarm',
     topicGet: 'home/burglar_alarm',
     topicSet: 'home/burglar_alarm',
-    on: '1',
-    off: '0',
-    state: null,
-    textOn: translate('armed_buttons.burglar.text_on'),
-    textOff: translate('armed_buttons.burglar.text_off'),
-    transitioning: false,
+    onState: '1',
+    offState: '0',
   ),
   'camera': ArmedSwitchDevice(
-    id: 'camera',
-    name: 'Kamera',
     topicGet: 'kittycam/privacy',
     topicSet: 'kittycam/privacy',
-    on: 'ON',
-    off: 'OFF',
-    state: null,
-    textOn: translate('armed_buttons.camera.text_on'),
-    textOff: translate('armed_buttons.camera.text_off'),
-    transitioning: false,
+    onState: 'ON',
+    offState: 'OFF',
   ),
   'pump': ArmedSwitchDevice(
-    id: 'pump',
-    name: 'Tauchpumpe',
     topicGet: 'garden/cistern_pump/get',
     topicSet: 'garden/cistern_pump/set',
-    on: '1',
-    off: '0',
-    state: null,
-    textOn: translate('armed_buttons.pump.text_on'),
-    textOff: translate('armed_buttons.pump.text_off'),
-    transitioning: false,
+    onState: '1',
+    offState: '0',
+  ),
+  'tv': ArmedSwitchDevice(
+    topicGet: 'zigbee2mqtt/plug/i002',
+    topicSet: 'zigbee2mqtt/plug/i002/set',
+    onState: '1',
+    offState: '0',
   ),
 };
 
@@ -159,7 +136,7 @@ class SwitchDevices extends _$SwitchDevices {
   void toggleState(key) {
     ArmedSwitchDevice switchDevice = state[key]!;
     switchDevice.transitioning = true;
-    String newState = switchDevice.state == switchDevice.on ? switchDevice.off : switchDevice.on;
+    String newState = switchDevice.state == switchDevice.onState ? switchDevice.offState : switchDevice.onState;
     publishCallback(
       switchDevice.topicSet,
       newState,

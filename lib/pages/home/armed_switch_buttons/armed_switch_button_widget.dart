@@ -30,12 +30,27 @@ Future<bool> confirmIcon(
 class ArmedSwitchButton extends ConsumerStatefulWidget {
   final iconSize = 60.0;
   final String id;
+  final String label;
   final IconData iconOn;
   final IconData iconOff;
   final Color colorOn;
   final Color colorOff;
+  final String textOn;
+  final String textOff;
+  final bool confirm;
 
-  const ArmedSwitchButton(this.id, this.iconOn, this.iconOff, this.colorOn, this.colorOff, {super.key});
+  const ArmedSwitchButton({
+    required this.id,
+    required this.label,
+    required this.iconOn,
+    required this.iconOff,
+    required this.colorOn,
+    required this.colorOff,
+    required this.textOn,
+    required this.textOff,
+    this.confirm = false,
+    super.key,
+  });
 
   @override
   ConsumerState<ArmedSwitchButton> createState() => _ArmedSwitchState();
@@ -54,21 +69,21 @@ class _ArmedSwitchState extends ConsumerState<ArmedSwitchButton> {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          if (switchDevice.state == switchDevice.on) const PulsatingContainer(),
+          if (switchDevice.state == switchDevice.onState) PulsatingContainer(color: widget.colorOn),
           Column(
             children: [
               // Text(switchDevice.name),
               IconButton(
                 iconSize: widget.iconSize,
                 icon: Icon(
-                  switchDevice.state == switchDevice.on ? widget.iconOn : widget.iconOff,
-                  color: switchDevice.state == switchDevice.on ? widget.colorOn : widget.colorOff,
+                  switchDevice.state == switchDevice.onState ? widget.iconOn : widget.iconOff,
+                  color: switchDevice.state == switchDevice.onState ? widget.colorOn : widget.colorOff,
                 ),
                 onPressed: () async {
                   // only publish passive state e.g. off/close without confirmation
-                  if (switchDevice.state == switchDevice.on) {
+                  if (widget.confirm == false || switchDevice.state == switchDevice.onState) {
                     setState(() {
-                      ref.read(switchDevicesProvider.notifier).toggleState(switchDevice.id);
+                      ref.read(switchDevicesProvider.notifier).toggleState(widget.id);
                     });
                     return;
                   }
@@ -78,8 +93,8 @@ class _ArmedSwitchState extends ConsumerState<ArmedSwitchButton> {
                     context,
                     title: Text(translate('questions.are_you_sure')),
                     icon: Icon(
-                      switchDevice.state == switchDevice.on ? widget.iconOn : widget.iconOff,
-                      color: switchDevice.state == switchDevice.on ? widget.colorOn : widget.colorOff,
+                      switchDevice.state == switchDevice.onState ? widget.iconOn : widget.iconOff,
+                      color: switchDevice.state == switchDevice.onState ? widget.colorOn : widget.colorOff,
                       size: widget.iconSize,
                     ),
                     iconSize: widget.iconSize,
@@ -87,14 +102,14 @@ class _ArmedSwitchState extends ConsumerState<ArmedSwitchButton> {
                   // and publish the value if confirmed
                   if (confirmation) {
                     setState(() {
-                      ref.read(switchDevicesProvider.notifier).toggleState(switchDevice.id);
+                      ref.read(switchDevicesProvider.notifier).toggleState(widget.id);
                     });
                   }
                 },
               ),
               Flexible(
                 child: Text(
-                  switchDevice.state == switchDevice.on ? switchDevice.textOn : switchDevice.textOff,
+                  switchDevice.state == switchDevice.onState ? widget.textOn : widget.textOff,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 13,

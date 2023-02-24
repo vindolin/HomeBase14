@@ -163,7 +163,7 @@ abstract class _$DeviceNames extends AutoDisposeNotifier<Map<String, String>> {
   Map<String, String> build();
 }
 
-String _$SwitchDevicesHash() => r'caf51f8ca3089166b0268793cae763acb21ce225';
+String _$SwitchDevicesHash() => r'65c18d1edd09bf19c8275c75bf4858629754ec2f';
 
 /// See also [SwitchDevices].
 final switchDevicesProvider =

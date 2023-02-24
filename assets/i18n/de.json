@@ -40,6 +40,11 @@
 			"label": "Tauchpumpe",
 			"text_on": "Pumpe ein",
 			"text_off": "Pumpe aus"
+		},
+		"tv": {
+			"label": "TV Wohnzimmer",
+			"text_on": "TV ein",
+			"text_off": "TV aus"
 		}
 	}
 }

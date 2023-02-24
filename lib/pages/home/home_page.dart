@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
-import '/pages/home/armed_switch_buttons/armed_switch_buttons_page.dart';
+import '/pages/home/armed_switch_buttons/armed_switch_buttons.dart';
 import 'device_group_slivers.dart';
 import 'cameras.dart';
 
@@ -81,7 +81,7 @@ class HomePage extends ConsumerWidget {
                 title: Text(
                   translate('app_bar.title'),
                   style: const TextStyle(
-                    fontSize: 25,
+                    fontSize: 30,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                     shadows: [
@@ -93,8 +93,8 @@ class HomePage extends ConsumerWidget {
                     ],
                   ),
                 ),
+                // actions: [],
                 floating: true,
-                snap: true,
                 expandedHeight: 80.0,
                 flexibleSpace: const FlexibleSpaceBar(
                   background: Image(
@@ -107,26 +107,6 @@ class HomePage extends ConsumerWidget {
               // const SliverHeader(Colors.red, 'SliverPersistentHeader 1'),
               deviceGroups(context, visualDensity),
               armedButtons(),
-              // SliverPadding(
-              //   padding: const EdgeInsets.all(2.0),
-              //   sliver: SliverGrid(
-              //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              //       crossAxisCount: 4,
-              //       mainAxisExtent: 110,
-              //       mainAxisSpacing: 8.0,
-              //       crossAxisSpacing: 10.0,
-              //       childAspectRatio: 2.0,
-              //     ),
-              //     delegate: SliverChildBuilderDelegate(
-              //       (BuildContext context, int index) {
-              //         final buttons = [Container(child:Text('meep')),];
-
-              //         return index >= buttons.length ? null : buttons[index];
-              //       },
-              //       childCount: 4,
-              //     ),
-              //   ),
-              // ),
               cameras(),
             ],
           ),

@@ -26,8 +26,6 @@ const subscribeTopics = [
 
 final clientIdentifier = 'K${nanoid()}';
 
-// @riverpod
-
 // used for the flashing message icon
 StreamController<Map<String, dynamic>> messageController = StreamController<Map<String, dynamic>>.broadcast();
 
@@ -180,21 +178,25 @@ class Mqtt extends _$Mqtt {
             String deviceId = '$deviceType/${match.namedGroup('id')!}'; // e.g. curtain/001
 
             if (deviceType == 'curtain' || deviceType == 'curtainU') {
+              // underwall curtain switch
               curtainDevices.state = {
                 ...curtainDevices.state,
                 deviceId: SingleCurtainDevice(deviceId, deviceType, payloadJson, publishZ2M),
               };
             } else if (deviceType == 'dualCurtain') {
+              // dual curtain switch
               dualCurtainDevices.state = {
                 ...dualCurtainDevices.state,
                 deviceId: DualCurtainDevice(deviceId, deviceType, payloadJson, publishZ2M),
               };
             } else if (deviceType == 'door') {
+              // door contact
               doorDevices.state = {
                 ...doorDevices.state,
                 deviceId: DoorDevice(deviceId, deviceType, payloadJson, publishZ2M),
               };
             } else if (deviceType == 'thermostat') {
+              // thermostat
               thermostatDevices.state = {
                 ...thermostatDevices.state,
                 deviceId: ThermostatDevice(deviceId, deviceType, payloadJson, publishZ2M),

@@ -15,11 +15,25 @@ class LightPage extends ConsumerWidget {
     log('LightPage.build()');
 
     final lightDevices = ref.watch(lightDevicesProvider);
+    int onLightCount = lightDevices.values.where((lightDevice) => lightDevice.state == 'ON').length;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(translate('device_names.lights')),
-        actions: const [ConnectionBar()],
+        actions: [
+          if (onLightCount > 0)
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  color: onLightCount > 0 ? Colors.amber : null,
+                  onPressed: () => ref.read(lightDevicesProvider.notifier).allOff(),
+                  icon: const Icon(Icons.lightbulb),
+                )
+              ],
+            ),
+          const ConnectionBar()
+        ],
       ),
       body: ListView.separated(
           separatorBuilder: (context, index) => const Divider(),

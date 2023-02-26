@@ -1,4 +1,5 @@
 // import 'package:wakelock/wakelock.dart';
+import 'dart:io' show Platform;
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
@@ -14,7 +15,6 @@ import '/pages/login_page.dart';
 import '/pages/home/home_page.dart';
 
 void main() async {
-  KeepScreenOn.turnOn();
   var delegate = await LocalizationDelegate.create(
     fallbackLocale: 'de_DE',
     supportedLocales: ['en_US', 'de_DE'],
@@ -22,15 +22,25 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]).then(
-    (value) => runApp(
+  if (Platform.isAndroid) {
+    KeepScreenOn.turnOn();
+
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]).then(
+      (value) => runApp(
+        ProviderScope(
+          child: LocalizedApp(delegate, const HomerApp()),
+        ),
+      ),
+    );
+  } else {
+    runApp(
       ProviderScope(
         child: LocalizedApp(delegate, const HomerApp()),
       ),
-    ),
-  );
+    );
+  }
 }
 
 class HomerApp extends ConsumerStatefulWidget {

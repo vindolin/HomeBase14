@@ -5,7 +5,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
-import '../utils.dart';
+
+import '/utils.dart';
+
 part 'mqtt_connection_data.g.dart';
 part 'mqtt_connection_data.freezed.dart';
 

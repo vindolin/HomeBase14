@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'vertical_slider_widget.dart';
+import '/widgets/vertical_slider_widget.dart';
 
 class CurtainControll extends StatelessWidget {
   final double percentage;

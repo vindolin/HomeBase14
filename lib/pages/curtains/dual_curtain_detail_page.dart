@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '/utils.dart';
-import '/widgets/curtain_controll_widget.dart';
+import 'widgets/curtain_controll_widget.dart';
 import '/models/mqtt_devices.dart';
 
 class DualCurtainDetailPage extends ConsumerWidget {

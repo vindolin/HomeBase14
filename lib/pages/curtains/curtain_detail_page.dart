@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '/utils.dart';
 import '/models/mqtt_devices.dart';
-import '/widgets/curtain_controll_widget.dart';
+import 'widgets/curtain_controll_widget.dart';
 
 class CurtainDetailPage extends ConsumerWidget {
   final String deviceId;

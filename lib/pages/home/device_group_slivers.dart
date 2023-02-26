@@ -5,8 +5,9 @@ import 'package:homer/models/app_settings.dart';
 
 import '/models/mqtt_devices.dart';
 import '/pages/thermostat_list_page.dart';
-import '/pages/curtain_list_page.dart';
+import '/pages/curtains/curtain_list_page.dart';
 import '/pages/light_list_page.dart';
+// import '/pages/curtains/widgets/curtain_actions.dart';
 import '/pages/other_page.dart';
 import '/pages/thomas/thomas_page.dart';
 import '/styles/text_styles.dart';
@@ -52,6 +53,10 @@ class DeviceGroups extends ConsumerWidget {
           ),
           leading: const Icon(Icons.blinds),
           visualDensity: visualDensity,
+          // trailing: Row(
+          //   mainAxisSize: MainAxisSize.min,
+          //   children: curtainActions(context, ref),
+          // ),
           onTap: () {
             Navigator.push(
               context,

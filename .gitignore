@@ -45,3 +45,4 @@ app.*.map.json
 # lib/models/GitHub Copilot.txt
 
 lib/models/secrets.dart
+lib/models/*.freezed.dart

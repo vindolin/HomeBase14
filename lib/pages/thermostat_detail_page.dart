@@ -21,7 +21,13 @@ class ThermostatDetailPage extends ConsumerWidget {
         title: Text('${deviceNames[deviceId]}'),
       ),
       body: Center(
-        child: Text('${deviceNames[deviceId]} - ${device?.localTemperature}°C'),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('${deviceNames[deviceId]} - ${device?.localTemperature}°C'),
+            const Icon(Icons.construction),
+          ],
+        ),
       ),
     );
   }

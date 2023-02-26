@@ -19,7 +19,7 @@ Widget armedButtons() {
             ArmedSwitchButton(
               id: 'garage',
               label: translate('armed_buttons.garage.label'),
-              iconOn: Icons.garage,
+              iconOn: Icons.garage_outlined,
               iconOff: Icons.garage,
               colorOn: Colors.pink,
               colorOff: Colors.green,
@@ -31,7 +31,7 @@ Widget armedButtons() {
               id: 'burglar',
               label: translate('armed_buttons.burglar.label'),
               iconOn: Icons.local_police_outlined,
-              iconOff: Icons.local_police_outlined,
+              iconOff: Icons.local_police,
               colorOn: Colors.pink,
               colorOff: Colors.orange,
               textOn: translate('armed_buttons.burglar.text_on'),
@@ -41,7 +41,7 @@ Widget armedButtons() {
             ArmedSwitchButton(
               id: 'camera',
               label: translate('armed_buttons.camera.label'),
-              iconOn: Icons.remove_red_eye,
+              iconOn: Icons.remove_red_eye_outlined,
               iconOff: Icons.remove_red_eye,
               colorOn: Colors.pink,
               colorOff: Colors.purple,
@@ -53,7 +53,7 @@ Widget armedButtons() {
               id: 'pump',
               label: translate('armed_buttons.pump.label'),
               iconOn: Icons.water_drop_outlined,
-              iconOff: Icons.water_drop_outlined,
+              iconOff: Icons.water_drop,
               colorOn: Colors.pink,
               colorOff: Colors.blue,
               textOn: translate('armed_buttons.pump.text_on'),
@@ -71,11 +71,12 @@ Widget armedButtons() {
               textOff: translate('armed_buttons.tv.text_off'),
               confirm: false,
             ),
+            Card(child: Text('BUMP')),
           ];
 
           return index >= buttons.length ? null : buttons[index];
         },
-        childCount: 5,
+        childCount: 8,
       ),
     ),
   );

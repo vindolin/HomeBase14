@@ -151,6 +151,7 @@ class LightDevice with _$LightDevice {
   const factory LightDevice({
     required String id,
     required String name,
+    // TODOs add ON/OFF state
     required String topicGet,
     required String topicSet,
     required String state,

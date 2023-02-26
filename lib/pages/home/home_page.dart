@@ -81,6 +81,7 @@ class HomePage extends ConsumerWidget {
                 title: Text(
                   translate('app_bar.title'),
                   style: const TextStyle(
+                    // fontFamily: FontFa,
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
@@ -105,8 +106,8 @@ class HomePage extends ConsumerWidget {
                 ),
               ),
               // const SliverHeader(Colors.red, 'SliverPersistentHeader 1'),
-              deviceGroups(context, visualDensity),
               armedButtons(),
+              deviceGroups(context, visualDensity),
               cameras(),
             ],
           ),

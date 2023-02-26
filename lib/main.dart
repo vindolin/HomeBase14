@@ -1,21 +1,34 @@
+// import 'package:wakelock/wakelock.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:keep_screen_on/keep_screen_on.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mqtt_client/mqtt_client.dart';
-import 'utils.dart';
+
+import '/utils.dart';
+
 import '/models/mqtt_connection_data.dart';
 import '/models/mqtt_providers.dart';
 import '/pages/login_page.dart';
-import 'pages/home/home_page.dart';
+import '/pages/home/home_page.dart';
 
 void main() async {
+  KeepScreenOn.turnOn();
   var delegate = await LocalizationDelegate.create(
     fallbackLocale: 'de_DE',
     supportedLocales: ['en_US', 'de_DE'],
   );
-  runApp(
-    ProviderScope(
-      child: LocalizedApp(delegate, const HomerApp()),
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]).then(
+    (value) => runApp(
+      ProviderScope(
+        child: LocalizedApp(delegate, const HomerApp()),
+      ),
     ),
   );
 }

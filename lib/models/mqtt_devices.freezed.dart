@@ -382,7 +382,8 @@ abstract class _SwitchDevice implements ArmedSwitchDevice {
 /// @nodoc
 mixin _$LightDevice {
   String get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
+  String get name =>
+      throw _privateConstructorUsedError; // TODOs add ON/OFF state
   String get topicGet => throw _privateConstructorUsedError;
   String get topicSet => throw _privateConstructorUsedError;
   String get state => throw _privateConstructorUsedError;
@@ -514,6 +515,7 @@ class _$_LightDevice implements _LightDevice {
   final String id;
   @override
   final String name;
+// TODOs add ON/OFF state
   @override
   final String topicGet;
   @override
@@ -563,7 +565,7 @@ abstract class _LightDevice implements LightDevice {
   String get id;
   @override
   String get name;
-  @override
+  @override // TODOs add ON/OFF state
   String get topicGet;
   @override
   String get topicSet;

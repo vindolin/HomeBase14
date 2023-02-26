@@ -12,6 +12,7 @@ import '/styles/text_styles.dart';
 Widget deviceGroups(BuildContext context, VisualDensity visualDensity) {
   return SliverList(
     delegate: SliverChildListDelegate([
+      const Divider(),
       ListTile(
         // iconColor: Colors.purpleAccent,
         title: Text(
@@ -99,6 +100,7 @@ Widget deviceGroups(BuildContext context, VisualDensity visualDensity) {
           );
         },
       ),
+      const Divider(),
       // const Divider(),
       // ListTile(
       //   title: Text(translate('device_names.video')),

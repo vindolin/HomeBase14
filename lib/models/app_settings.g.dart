@@ -1,30 +1,35 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'mqtt_connection_data.dart';
+part of 'app_settings.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_MqttConnectionData _$$_MqttConnectionDataFromJson(
-        Map<String, dynamic> json) =>
-    _$_MqttConnectionData(
+_$_AppSettingsCls _$$_AppSettingsClsFromJson(Map<String, dynamic> json) =>
+    _$_AppSettingsCls(
       mqttUsername: json['mqttUsername'] as String,
       mqttPassword: json['mqttPassword'] as String,
       mqttAddress: json['mqttAddress'] as String,
       mqttPort: json['mqttPort'] as int,
+      user: $enumDecode(_$UserEnumMap, json['user']),
       valid: json['valid'] as bool,
     );
 
-Map<String, dynamic> _$$_MqttConnectionDataToJson(
-        _$_MqttConnectionData instance) =>
+Map<String, dynamic> _$$_AppSettingsClsToJson(_$_AppSettingsCls instance) =>
     <String, dynamic>{
       'mqttUsername': instance.mqttUsername,
       'mqttPassword': instance.mqttPassword,
       'mqttAddress': instance.mqttAddress,
       'mqttPort': instance.mqttPort,
+      'user': _$UserEnumMap[instance.user]!,
       'valid': instance.valid,
     };
+
+const _$UserEnumMap = {
+  User.thomas: 'thomas',
+  User.mona: 'mona',
+};
 
 // **************************************************************************
 // RiverpodGenerator
@@ -53,23 +58,19 @@ class _SystemHash {
   }
 }
 
-String _$MqttConnectionDataXHash() =>
-    r'9eb020c4ee057a9216bb74070d4dd1e49949436c';
+String _$AppSettingsHash() => r'23e5cd910860b5116178d66abfa77bc128b611d2';
 
-/// See also [MqttConnectionDataX].
-final mqttConnectionDataXProvider =
-    AutoDisposeNotifierProvider<MqttConnectionDataX, MqttConnectionDataClass>(
-  MqttConnectionDataX.new,
-  name: r'mqttConnectionDataXProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$MqttConnectionDataXHash,
+/// See also [AppSettings].
+final appSettingsProvider =
+    AutoDisposeNotifierProvider<AppSettings, AppSettingsCls>(
+  AppSettings.new,
+  name: r'appSettingsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$AppSettingsHash,
 );
-typedef MqttConnectionDataXRef
-    = AutoDisposeNotifierProviderRef<MqttConnectionDataClass>;
+typedef AppSettingsRef = AutoDisposeNotifierProviderRef<AppSettingsCls>;
 
-abstract class _$MqttConnectionDataX
-    extends AutoDisposeNotifier<MqttConnectionDataClass> {
+abstract class _$AppSettings extends AutoDisposeNotifier<AppSettingsCls> {
   @override
-  MqttConnectionDataClass build();
+  AppSettingsCls build();
 }

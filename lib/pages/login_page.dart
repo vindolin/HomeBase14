@@ -4,32 +4,31 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 
 import '/utils.dart';
-import '/models/mqtt_connection_data.dart';
+import '/models/app_settings.dart';
 import '/models/mqtt_providers.dart';
 import '/widgets/password_input_widget.dart';
 
 final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
 class LoginFormPage extends ConsumerWidget {
-  late final Map<String, dynamic> formData;
   LoginFormPage({super.key});
 
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final MqttConnectionDataClass mqttConnectionData = ref.watch(mqttConnectionDataXProvider);
-    Map<String, dynamic> formData = {
-      'mqttUsername': mqttConnectionData.mqttUsername,
-      'mqttPassword': mqttConnectionData.mqttPassword,
-      'mqttAddress': mqttConnectionData.mqttAddress,
-      'mqttPort': mqttConnectionData.mqttPort,
+    final AppSettingsCls appSettingsCls = ref.watch(appSettingsProvider);
+    final Map<String, dynamic> formData = {
+      'mqttUsername': appSettingsCls.mqttUsername,
+      'mqttPassword': appSettingsCls.mqttPassword,
+      'mqttAddress': appSettingsCls.mqttAddress,
+      'mqttPort': appSettingsCls.mqttPort,
     };
 
     log('login form build');
 
     final Mqtt mqttProviderX = ref.watch(mqttProvider.notifier);
-    final MqttConnectionDataX mqttConnectionDataX = ref.read(mqttConnectionDataXProvider.notifier);
+    final AppSettings appSettings = ref.read(appSettingsProvider.notifier);
 
     void submitForm() async {
       // I'm not sure why, but the snackbar doesn't hide on the first press without this and the hideCurrentSnackBar()'s below
@@ -43,13 +42,13 @@ class LoginFormPage extends ConsumerWidget {
         );
         _formKey.currentState?.save();
         log('form submit');
-        mqttConnectionDataX.save(formData);
+        appSettings.saveMqttLoginForm(formData);
 
         final MqttConnectionState mqttConnectionState = await mqttProviderX.connect();
 
         // if the connection was successful, persist the connection data
         if (mqttConnectionState == MqttConnectionState.connected) {
-          await mqttConnectionDataX.persistConnectionData();
+          await appSettings.persistConnectionData();
           log('persisted connection data');
           rootScaffoldMessengerKey.currentState
             ?..hideCurrentSnackBar(
@@ -88,7 +87,7 @@ class LoginFormPage extends ConsumerWidget {
               hintText: 'Enter your username',
             ),
             inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'\s'))],
-            initialValue: mqttConnectionData.mqttUsername,
+            initialValue: appSettingsCls.mqttUsername,
             onSaved: (String? value) {
               log(value);
               formData['mqttUsername'] = value;
@@ -105,7 +104,7 @@ class LoginFormPage extends ConsumerWidget {
             key: UniqueKey(),
             labelText: 'Password',
             maxLength: 20,
-            initialValue: mqttConnectionData.mqttPassword,
+            initialValue: appSettingsCls.mqttPassword,
             onSaved: (String? value) {
               formData['mqttPassword'] = value;
             },
@@ -124,7 +123,7 @@ class LoginFormPage extends ConsumerWidget {
               labelText: 'Server Address',
               hintText: 'Enter your MQTT server address',
             ),
-            initialValue: mqttConnectionData.mqttAddress,
+            initialValue: appSettingsCls.mqttAddress,
             onSaved: (String? value) {
               formData['mqttAddress'] = value;
             },
@@ -144,7 +143,7 @@ class LoginFormPage extends ConsumerWidget {
               hintText: 'Enter your MQTT server port',
             ),
             inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))],
-            initialValue: mqttConnectionData.mqttPort.toString(),
+            initialValue: appSettingsCls.mqttPort.toString(),
             onSaved: (String? value) {
               formData['mqttPort'] = int.parse(value!);
             },

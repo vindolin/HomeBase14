@@ -8,7 +8,7 @@ import 'package:mqtt_client/mqtt_client.dart';
 
 import '/utils.dart';
 
-import '/models/mqtt_connection_data.dart';
+import '/models/app_settings.dart';
 import '/models/mqtt_providers.dart';
 import '/pages/login_page.dart';
 import '/pages/home/home_page.dart';
@@ -40,18 +40,17 @@ class HomerApp extends ConsumerStatefulWidget {
 }
 
 class _MyAppState extends ConsumerState<HomerApp> {
-  // const MyApp({super.key});
   @override
   void initState() {
     super.initState();
-    ref.read(mqttConnectionDataXProvider.notifier).loadConnectionData().then(
+    ref.read(appSettingsProvider.notifier).loadConnectionData().then(
           (_) => ref.watch(mqttProvider.notifier).connect(),
         );
   }
 
   @override
   Widget build(BuildContext context) {
-    log('MyApp.build()');
+    log('HomerApp.build()');
 
     return MaterialApp(
       scaffoldMessengerKey: rootScaffoldMessengerKey,

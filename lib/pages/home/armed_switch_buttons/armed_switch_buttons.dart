@@ -71,7 +71,7 @@ Widget armedButtons() {
               textOff: translate('armed_buttons.tv.text_off'),
               confirm: false,
             ),
-            Card(child: Text('BUMP')),
+            const Card(child: Text('BUMP')),
           ];
 
           return index >= buttons.length ? null : buttons[index];

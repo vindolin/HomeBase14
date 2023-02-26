@@ -9,6 +9,7 @@ import 'cameras.dart';
 import '/models/mqtt_providers.dart';
 import '/widgets/stream_blinker_widget.dart';
 import '/widgets/connection_bar_widget.dart';
+import 'user_select_widget.dart';
 
 class Delegate extends SliverPersistentHeaderDelegate {
   final Color backgroundColor;
@@ -63,38 +64,12 @@ class SliverHeader extends StatelessWidget {
 @immutable
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
-  final visualDensity = const VisualDensity(horizontal: 0, vertical: -3);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      endDrawer: Drawer(
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                image: DecorationImage(image: AssetImage('assets/images/rivig.jpg'), fit: BoxFit.fitWidth),
-              ),
-              child: Text('Settings'),
-            ),
-            ListTile(
-              title: const Text('Item 1'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
-            ),
-            ListTile(
-              title: const Text('Item 2'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
-            ),
-          ],
-        ),
+      endDrawer: const Drawer(
+        child: UserSelect(),
       ),
       body: Stack(
         children: [
@@ -135,7 +110,7 @@ class HomePage extends ConsumerWidget {
               ),
               // const SliverHeader(Colors.red, 'SliverPersistentHeader 1'),
               armedButtons(),
-              deviceGroups(context, visualDensity),
+              const DeviceGroups(),
               cameras(),
             ],
           ),

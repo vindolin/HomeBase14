@@ -7,40 +7,48 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 
 import '/utils.dart';
+import 'secrets.dart';
 
-part 'mqtt_connection_data.g.dart';
-part 'mqtt_connection_data.freezed.dart';
+part 'app_settings.g.dart';
+part 'app_settings.freezed.dart';
 
-const key = 'CBoaDQIQDBEOECEZCxgMBiAUFQwKFhg=';
+enum User {
+  thomas,
+  mona,
+}
+
 final encrypter = encrypt.Encrypter(
   encrypt.AES(
-    encrypt.Key.fromUtf8(key),
+    encrypt.Key.fromUtf8(encryptionKey),
   ),
 );
+
 final iv = encrypt.IV.fromLength(16);
 final prefs = SharedPreferences.getInstance(); // where we store the encrypted connection data
 
 @freezed
-class MqttConnectionDataClass with _$MqttConnectionDataClass {
-  const factory MqttConnectionDataClass({
+class AppSettingsCls with _$AppSettingsCls {
+  const factory AppSettingsCls({
     required String mqttUsername,
     required String mqttPassword,
     required String mqttAddress,
     required int mqttPort,
+    required User user,
     required bool valid,
-  }) = _MqttConnectionData;
-  factory MqttConnectionDataClass.fromJson(Map<String, dynamic> json) => _$MqttConnectionDataClassFromJson(json);
+  }) = _AppSettingsCls;
+  factory AppSettingsCls.fromJson(Map<String, dynamic> json) => _$AppSettingsClsFromJson(json);
 }
 
 @riverpod
-class MqttConnectionDataX extends _$MqttConnectionDataX {
+class AppSettings extends _$AppSettings {
   @override
-  MqttConnectionDataClass build() {
-    return const MqttConnectionDataClass(
+  AppSettingsCls build() {
+    return const AppSettingsCls(
       mqttUsername: '',
       mqttPassword: '',
       mqttAddress: '',
       mqttPort: 1883,
+      user: User.thomas,
       valid: false,
     );
   }
@@ -49,7 +57,13 @@ class MqttConnectionDataX extends _$MqttConnectionDataX {
     state = state.copyWith(valid: valid);
   }
 
-  void save(Map<String, dynamic> data) {
+  void saveUser(User user) {
+    state = state.copyWith(
+      user: user,
+    );
+  }
+
+  void saveMqttLoginForm(Map<String, dynamic> data) {
     state = state.copyWith(
       mqttUsername: data['mqttUsername'],
       mqttPassword: data['mqttPassword'],
@@ -82,16 +96,10 @@ class MqttConnectionDataX extends _$MqttConnectionDataX {
     // log('pref: $connectionData');
 
     try {
-      state = MqttConnectionDataClass.fromJson(jsonDecode(connectionData));
+      state = AppSettingsCls.fromJson(jsonDecode(connectionData));
       // state = state.copyWith(mqttUsername: 'gunk');
     } catch (e) {
       log('Error: $e');
     }
-  }
-
-  void gunk() {
-    state = state.copyWith(
-      mqttUsername: 'gunk!',
-    );
   }
 }

@@ -68,12 +68,23 @@ class DeviceGroups extends ConsumerWidget {
         ),
         const Divider(),
         ListTile(
-          iconColor: onLightCount > 0 ? Colors.amber : null,
           title: Text(
             translate('device_names.lights'),
             style: textStyleShadowOne,
           ),
           leading: const Icon(Icons.lightbulb),
+          trailing: onLightCount > 0
+              ? Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      color: onLightCount > 0 ? Colors.amber : null,
+                      onPressed: () => ref.read(lightDevicesProvider.notifier).allOff(),
+                      icon: const Icon(Icons.lightbulb),
+                    )
+                  ],
+                )
+              : null,
           visualDensity: visualDensity,
           onTap: () {
             Navigator.push(

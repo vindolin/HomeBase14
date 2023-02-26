@@ -191,6 +191,14 @@ class LightDevices extends _$LightDevices {
     return lightDevices; // figure out why I can't the map directly here...
   }
 
+  void allOff() {
+    state.forEach((key, value) {
+      if (value.state == 'ON') {
+        toggleState(key);
+      }
+    });
+  }
+
   void toggleState(key) {
     LightDevice lightDevice = state[key]!;
     String newState = lightDevice.state == 'ON' ? 'OFF' : 'ON';

@@ -5,13 +5,13 @@ import 'package:flutter_translate/flutter_translate.dart';
 
 import '/utils.dart';
 
-import '/models/mqtt_providers.dart';
 import '/models/mqtt_devices.dart';
-import '/pages/curtain_detail_page.dart';
-import '/pages/dual_curtain_detail_page.dart';
+import '/pages/curtains/curtain_detail_page.dart';
+import '/pages/curtains/dual_curtain_detail_page.dart';
 
+import 'widgets/curtain_actions.dart';
+import 'widgets/curtain_icon_widgets.dart';
 import '/widgets/connection_bar_widget.dart';
-import '/widgets/curtain_icon_widgets.dart';
 
 class CurtainListPage extends ConsumerWidget {
   const CurtainListPage({super.key});
@@ -60,23 +60,8 @@ class CurtainListPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(translate('device_names.curtains')),
-        actions: [
-          IconButton(
-            onPressed: () => ref.read(mqttProvider.notifier).publish('home/curtains', 'open'),
-            icon: const Icon(Icons.arrow_circle_up),
-          ),
-          IconButton(
-            onPressed: () => ref.read(mqttProvider.notifier).publish('home/curtains', 'stop'),
-            icon: const Icon(Icons.pause_circle_outline),
-          ),
-          IconButton(
-            onPressed: () => ref.read(mqttProvider.notifier).publish('home/curtains', 'close'),
-            icon: const Icon(Icons.arrow_circle_down),
-          ),
-          const ConnectionBar(),
-        ],
-      ),
+          title: Text(translate('device_names.curtains')),
+          actions: [...curtainActions(context, ref), const ConnectionBar()]),
       body: ListView.separated(
         separatorBuilder: (context, index) => const Divider(),
         itemCount: combinedCurtainDevices.length,

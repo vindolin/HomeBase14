@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:homer/models/app_settings.dart';
 
+import '/models/mqtt_devices.dart';
 import '/pages/thermostat_list_page.dart';
 import '/pages/curtain_list_page.dart';
 import '/pages/light_list_page.dart';
@@ -17,6 +18,10 @@ class DeviceGroups extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appSettings = ref.watch(appSettingsProvider);
+    final lightDevices = ref.watch(lightDevicesProvider);
+
+    // color the icon yellow if any lights are on
+    int onLightCount = lightDevices.values.where((lightDevice) => lightDevice.state == 'ON').length;
 
     return SliverList(
       delegate: SliverChildListDelegate([
@@ -58,6 +63,7 @@ class DeviceGroups extends ConsumerWidget {
         ),
         const Divider(),
         ListTile(
+          iconColor: onLightCount > 0 ? Colors.amber : null,
           title: Text(
             translate('device_names.lights'),
             style: textStyleShadowOne,

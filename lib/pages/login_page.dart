@@ -21,9 +21,9 @@ class LoginFormPage extends ConsumerWidget {
     final MqttConnectionDataClass mqttConnectionData = ref.watch(mqttConnectionDataXProvider);
     Map<String, dynamic> formData = {
       'mqttUsername': mqttConnectionData.mqttUsername,
-      'password': mqttConnectionData.mqttPassword,
-      'address': mqttConnectionData.mqttAddress,
-      'port': mqttConnectionData.mqttPort,
+      'mqttPassword': mqttConnectionData.mqttPassword,
+      'mqttAddress': mqttConnectionData.mqttAddress,
+      'mqttPort': mqttConnectionData.mqttPort,
     };
 
     log('login form build');
@@ -107,7 +107,7 @@ class LoginFormPage extends ConsumerWidget {
             maxLength: 20,
             initialValue: mqttConnectionData.mqttPassword,
             onSaved: (String? value) {
-              formData['password'] = value;
+              formData['mqttPassword'] = value;
             },
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -126,7 +126,7 @@ class LoginFormPage extends ConsumerWidget {
             ),
             initialValue: mqttConnectionData.mqttAddress,
             onSaved: (String? value) {
-              formData['address'] = value;
+              formData['mqttAddress'] = value;
             },
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -146,7 +146,7 @@ class LoginFormPage extends ConsumerWidget {
             inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))],
             initialValue: mqttConnectionData.mqttPort.toString(),
             onSaved: (String? value) {
-              formData['port'] = int.parse(value!);
+              formData['mqttPort'] = int.parse(value!);
             },
             validator: (value) {
               if (value == null || value.isEmpty || value == '0' || int.parse(value) > 65535) {

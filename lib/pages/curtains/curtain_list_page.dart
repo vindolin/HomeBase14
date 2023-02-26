@@ -60,8 +60,9 @@ class CurtainListPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-          title: Text(translate('device_names.curtains')),
-          actions: [...curtainActions(context, ref), const ConnectionBar()]),
+        title: Text(translate('device_names.curtains')),
+        actions: [...curtainActions(context, ref), const ConnectionBar()],
+      ),
       body: ListView.separated(
         separatorBuilder: (context, index) => const Divider(),
         itemCount: combinedCurtainDevices.length,

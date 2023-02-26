@@ -5,6 +5,7 @@ import '/models/mqtt_providers.dart';
 
 List<Widget> curtainActions(BuildContext context, WidgetRef ref) {
   return [
+    // TODOs move publish to mqtt_devices.dart
     IconButton(
       onPressed: () => ref.read(mqttProvider.notifier).publish('home/curtains', 'open'),
       icon: const Icon(Icons.arrow_circle_up),

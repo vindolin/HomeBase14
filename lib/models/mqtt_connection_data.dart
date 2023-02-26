@@ -21,10 +21,10 @@ final prefs = SharedPreferences.getInstance(); // where we store the encrypted c
 @freezed
 class MqttConnectionDataClass with _$MqttConnectionDataClass {
   const factory MqttConnectionDataClass({
-    required String username,
-    required String password,
-    required String address,
-    required int port,
+    required String mqttUsername,
+    required String mqttPassword,
+    required String mqttAddress,
+    required int mqttPort,
     required bool valid,
   }) = _MqttConnectionData;
   factory MqttConnectionDataClass.fromJson(Map<String, dynamic> json) => _$MqttConnectionDataClassFromJson(json);
@@ -35,10 +35,10 @@ class MqttConnectionDataX extends _$MqttConnectionDataX {
   @override
   MqttConnectionDataClass build() {
     return const MqttConnectionDataClass(
-      username: '',
-      password: '',
-      address: '',
-      port: 1883,
+      mqttUsername: '',
+      mqttPassword: '',
+      mqttAddress: '',
+      mqttPort: 1883,
       valid: false,
     );
   }
@@ -49,10 +49,10 @@ class MqttConnectionDataX extends _$MqttConnectionDataX {
 
   void save(Map<String, dynamic> data) {
     state = state.copyWith(
-      username: data['username'],
-      password: data['password'],
-      address: data['address'],
-      port: data['port'],
+      mqttUsername: data['mqttUsername'],
+      mqttPassword: data['mqttPassword'],
+      mqttAddress: data['mqttAddress'],
+      mqttPort: data['mqttPort'],
     );
   }
 
@@ -81,7 +81,7 @@ class MqttConnectionDataX extends _$MqttConnectionDataX {
 
     try {
       state = MqttConnectionDataClass.fromJson(jsonDecode(connectionData));
-      // state = state.copyWith(username: 'gunk');
+      // state = state.copyWith(mqttUsername: 'gunk');
     } catch (e) {
       log('Error: $e');
     }
@@ -89,7 +89,7 @@ class MqttConnectionDataX extends _$MqttConnectionDataX {
 
   void gunk() {
     state = state.copyWith(
-      username: 'gunk!',
+      mqttUsername: 'gunk!',
     );
   }
 }

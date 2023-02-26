@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String _$MqttHash() => r'46fa651570aa4806a0b4f43540226bda501c7aeb';
+String _$MqttHash() => r'392a24c454a91981339cfc42c9ac1f0b7546ecc6';
 
 /// See also [Mqtt].
 final mqttProvider = AutoDisposeNotifierProvider<Mqtt, dynamic>(

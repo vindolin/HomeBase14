@@ -9,20 +9,20 @@ part of 'mqtt_connection_data.dart';
 _$_MqttConnectionData _$$_MqttConnectionDataFromJson(
         Map<String, dynamic> json) =>
     _$_MqttConnectionData(
-      username: json['username'] as String,
-      password: json['password'] as String,
-      address: json['address'] as String,
-      port: json['port'] as int,
+      mqttUsername: json['mqttUsername'] as String,
+      mqttPassword: json['mqttPassword'] as String,
+      mqttAddress: json['mqttAddress'] as String,
+      mqttPort: json['mqttPort'] as int,
       valid: json['valid'] as bool,
     );
 
 Map<String, dynamic> _$$_MqttConnectionDataToJson(
         _$_MqttConnectionData instance) =>
     <String, dynamic>{
-      'username': instance.username,
-      'password': instance.password,
-      'address': instance.address,
-      'port': instance.port,
+      'mqttUsername': instance.mqttUsername,
+      'mqttPassword': instance.mqttPassword,
+      'mqttAddress': instance.mqttAddress,
+      'mqttPort': instance.mqttPort,
       'valid': instance.valid,
     };
 
@@ -54,7 +54,7 @@ class _SystemHash {
 }
 
 String _$MqttConnectionDataXHash() =>
-    r'06fbad1407ac896fd9b9bfe515fa9261aff9b3f1';
+    r'9eb020c4ee057a9216bb74070d4dd1e49949436c';
 
 /// See also [MqttConnectionDataX].
 final mqttConnectionDataXProvider =

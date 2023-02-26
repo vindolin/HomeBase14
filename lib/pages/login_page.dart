@@ -20,10 +20,10 @@ class LoginFormPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final MqttConnectionDataClass mqttConnectionData = ref.watch(mqttConnectionDataXProvider);
     Map<String, dynamic> formData = {
-      'username': mqttConnectionData.username,
-      'password': mqttConnectionData.password,
-      'address': mqttConnectionData.address,
-      'port': mqttConnectionData.port,
+      'mqttUsername': mqttConnectionData.mqttUsername,
+      'password': mqttConnectionData.mqttPassword,
+      'address': mqttConnectionData.mqttAddress,
+      'port': mqttConnectionData.mqttPort,
     };
 
     log('login form build');
@@ -88,10 +88,10 @@ class LoginFormPage extends ConsumerWidget {
               hintText: 'Enter your username',
             ),
             inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'\s'))],
-            initialValue: mqttConnectionData.username,
+            initialValue: mqttConnectionData.mqttUsername,
             onSaved: (String? value) {
               log(value);
-              formData['username'] = value;
+              formData['mqttUsername'] = value;
             },
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -105,7 +105,7 @@ class LoginFormPage extends ConsumerWidget {
             key: UniqueKey(),
             labelText: 'Password',
             maxLength: 20,
-            initialValue: mqttConnectionData.password,
+            initialValue: mqttConnectionData.mqttPassword,
             onSaved: (String? value) {
               formData['password'] = value;
             },
@@ -124,7 +124,7 @@ class LoginFormPage extends ConsumerWidget {
               labelText: 'Server Address',
               hintText: 'Enter your MQTT server address',
             ),
-            initialValue: mqttConnectionData.address,
+            initialValue: mqttConnectionData.mqttAddress,
             onSaved: (String? value) {
               formData['address'] = value;
             },
@@ -144,7 +144,7 @@ class LoginFormPage extends ConsumerWidget {
               hintText: 'Enter your MQTT server port',
             ),
             inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))],
-            initialValue: mqttConnectionData.port.toString(),
+            initialValue: mqttConnectionData.mqttPort.toString(),
             onSaved: (String? value) {
               formData['port'] = int.parse(value!);
             },

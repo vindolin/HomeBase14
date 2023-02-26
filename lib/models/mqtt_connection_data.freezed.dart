@@ -21,10 +21,10 @@ MqttConnectionDataClass _$MqttConnectionDataClassFromJson(
 
 /// @nodoc
 mixin _$MqttConnectionDataClass {
-  String get username => throw _privateConstructorUsedError;
-  String get password => throw _privateConstructorUsedError;
-  String get address => throw _privateConstructorUsedError;
-  int get port => throw _privateConstructorUsedError;
+  String get mqttUsername => throw _privateConstructorUsedError;
+  String get mqttPassword => throw _privateConstructorUsedError;
+  String get mqttAddress => throw _privateConstructorUsedError;
+  int get mqttPort => throw _privateConstructorUsedError;
   bool get valid => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,7 +40,11 @@ abstract class $MqttConnectionDataClassCopyWith<$Res> {
       _$MqttConnectionDataClassCopyWithImpl<$Res, MqttConnectionDataClass>;
   @useResult
   $Res call(
-      {String username, String password, String address, int port, bool valid});
+      {String mqttUsername,
+      String mqttPassword,
+      String mqttAddress,
+      int mqttPort,
+      bool valid});
 }
 
 /// @nodoc
@@ -57,28 +61,28 @@ class _$MqttConnectionDataClassCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? username = null,
-    Object? password = null,
-    Object? address = null,
-    Object? port = null,
+    Object? mqttUsername = null,
+    Object? mqttPassword = null,
+    Object? mqttAddress = null,
+    Object? mqttPort = null,
     Object? valid = null,
   }) {
     return _then(_value.copyWith(
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
+      mqttUsername: null == mqttUsername
+          ? _value.mqttUsername
+          : mqttUsername // ignore: cast_nullable_to_non_nullable
               as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
+      mqttPassword: null == mqttPassword
+          ? _value.mqttPassword
+          : mqttPassword // ignore: cast_nullable_to_non_nullable
               as String,
-      address: null == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
+      mqttAddress: null == mqttAddress
+          ? _value.mqttAddress
+          : mqttAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      port: null == port
-          ? _value.port
-          : port // ignore: cast_nullable_to_non_nullable
+      mqttPort: null == mqttPort
+          ? _value.mqttPort
+          : mqttPort // ignore: cast_nullable_to_non_nullable
               as int,
       valid: null == valid
           ? _value.valid
@@ -97,7 +101,11 @@ abstract class _$$_MqttConnectionDataCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String username, String password, String address, int port, bool valid});
+      {String mqttUsername,
+      String mqttPassword,
+      String mqttAddress,
+      int mqttPort,
+      bool valid});
 }
 
 /// @nodoc
@@ -111,28 +119,28 @@ class __$$_MqttConnectionDataCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? username = null,
-    Object? password = null,
-    Object? address = null,
-    Object? port = null,
+    Object? mqttUsername = null,
+    Object? mqttPassword = null,
+    Object? mqttAddress = null,
+    Object? mqttPort = null,
     Object? valid = null,
   }) {
     return _then(_$_MqttConnectionData(
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
+      mqttUsername: null == mqttUsername
+          ? _value.mqttUsername
+          : mqttUsername // ignore: cast_nullable_to_non_nullable
               as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
+      mqttPassword: null == mqttPassword
+          ? _value.mqttPassword
+          : mqttPassword // ignore: cast_nullable_to_non_nullable
               as String,
-      address: null == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
+      mqttAddress: null == mqttAddress
+          ? _value.mqttAddress
+          : mqttAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      port: null == port
-          ? _value.port
-          : port // ignore: cast_nullable_to_non_nullable
+      mqttPort: null == mqttPort
+          ? _value.mqttPort
+          : mqttPort // ignore: cast_nullable_to_non_nullable
               as int,
       valid: null == valid
           ? _value.valid
@@ -148,29 +156,29 @@ class _$_MqttConnectionData
     with DiagnosticableTreeMixin
     implements _MqttConnectionData {
   const _$_MqttConnectionData(
-      {required this.username,
-      required this.password,
-      required this.address,
-      required this.port,
+      {required this.mqttUsername,
+      required this.mqttPassword,
+      required this.mqttAddress,
+      required this.mqttPort,
       required this.valid});
 
   factory _$_MqttConnectionData.fromJson(Map<String, dynamic> json) =>
       _$$_MqttConnectionDataFromJson(json);
 
   @override
-  final String username;
+  final String mqttUsername;
   @override
-  final String password;
+  final String mqttPassword;
   @override
-  final String address;
+  final String mqttAddress;
   @override
-  final int port;
+  final int mqttPort;
   @override
   final bool valid;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'MqttConnectionDataClass(username: $username, password: $password, address: $address, port: $port, valid: $valid)';
+    return 'MqttConnectionDataClass(mqttUsername: $mqttUsername, mqttPassword: $mqttPassword, mqttAddress: $mqttAddress, mqttPort: $mqttPort, valid: $valid)';
   }
 
   @override
@@ -178,10 +186,10 @@ class _$_MqttConnectionData
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'MqttConnectionDataClass'))
-      ..add(DiagnosticsProperty('username', username))
-      ..add(DiagnosticsProperty('password', password))
-      ..add(DiagnosticsProperty('address', address))
-      ..add(DiagnosticsProperty('port', port))
+      ..add(DiagnosticsProperty('mqttUsername', mqttUsername))
+      ..add(DiagnosticsProperty('mqttPassword', mqttPassword))
+      ..add(DiagnosticsProperty('mqttAddress', mqttAddress))
+      ..add(DiagnosticsProperty('mqttPort', mqttPort))
       ..add(DiagnosticsProperty('valid', valid));
   }
 
@@ -190,19 +198,21 @@ class _$_MqttConnectionData
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MqttConnectionData &&
-            (identical(other.username, username) ||
-                other.username == username) &&
-            (identical(other.password, password) ||
-                other.password == password) &&
-            (identical(other.address, address) || other.address == address) &&
-            (identical(other.port, port) || other.port == port) &&
+            (identical(other.mqttUsername, mqttUsername) ||
+                other.mqttUsername == mqttUsername) &&
+            (identical(other.mqttPassword, mqttPassword) ||
+                other.mqttPassword == mqttPassword) &&
+            (identical(other.mqttAddress, mqttAddress) ||
+                other.mqttAddress == mqttAddress) &&
+            (identical(other.mqttPort, mqttPort) ||
+                other.mqttPort == mqttPort) &&
             (identical(other.valid, valid) || other.valid == valid));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, username, password, address, port, valid);
+  int get hashCode => Object.hash(
+      runtimeType, mqttUsername, mqttPassword, mqttAddress, mqttPort, valid);
 
   @JsonKey(ignore: true)
   @override
@@ -221,23 +231,23 @@ class _$_MqttConnectionData
 
 abstract class _MqttConnectionData implements MqttConnectionDataClass {
   const factory _MqttConnectionData(
-      {required final String username,
-      required final String password,
-      required final String address,
-      required final int port,
+      {required final String mqttUsername,
+      required final String mqttPassword,
+      required final String mqttAddress,
+      required final int mqttPort,
       required final bool valid}) = _$_MqttConnectionData;
 
   factory _MqttConnectionData.fromJson(Map<String, dynamic> json) =
       _$_MqttConnectionData.fromJson;
 
   @override
-  String get username;
+  String get mqttUsername;
   @override
-  String get password;
+  String get mqttPassword;
   @override
-  String get address;
+  String get mqttAddress;
   @override
-  int get port;
+  int get mqttPort;
   @override
   bool get valid;
   @override

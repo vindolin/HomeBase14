@@ -96,9 +96,9 @@ class Mqtt extends _$Mqtt {
     final connectionData = ref.watch(mqttConnectionDataXProvider.notifier);
 
     client = MqttServerClient.withPort(
-      connectionData.state.address,
+      connectionData.state.mqttAddress,
       clientIdentifier,
-      connectionData.state.port,
+      connectionData.state.mqttPort,
     );
 
     client.autoReconnect = true;
@@ -113,7 +113,7 @@ class Mqtt extends _$Mqtt {
     );
 
     MqttClientConnectionStatus? mqttConnectionStatus =
-        await client.connect(connectionData.state.username, connectionData.state.password).catchError(
+        await client.connect(connectionData.state.mqttUsername, connectionData.state.mqttPassword).catchError(
       (error) {
         ref.read(mqttConnectionDataXProvider.notifier).setValid(false);
         ref.read(mqttConnectionStateXProvider.notifier).state = MqttConnectionState.faulted;

@@ -21,8 +21,7 @@ const subscribeTopics = [
   'kittycam/privacy', // node-red controlling the privacy mode of the cat cam
   'instar/10D1DC228582/status/alarm/triggered/object', // motion detection of the door cam
   'leech/sleepy', // a node red flow controlling a python/mqtt daemon running on leech, setting the sleep mode to sleep or hibernate
-  'gunk/gunk', // for testing purposes
-  'gunk/gunk', // for testing purposes
+  'greenhouse/#',
 ];
 
 final clientIdentifier = 'K${nanoid()}';

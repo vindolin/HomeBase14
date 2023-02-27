@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:mqtt_client/mqtt_client.dart';
 
 import '/utils.dart';
 
@@ -71,7 +70,7 @@ class _MyAppState extends ConsumerState<HomerApp> {
         // show login form only when disconnected/not connecting
         MqttConnectionState.connected,
         MqttConnectionState.connecting,
-      ].contains(ref.watch(mqttConnectionStateXProvider))
+      ].contains(ref.watch(mqttConnectionStateProvider))
           ? const HomePage()
           // ? const HomePage()
           : LoginFormPage(),

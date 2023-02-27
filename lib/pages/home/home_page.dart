@@ -101,7 +101,7 @@ class HomePage extends ConsumerWidget {
                       ),
                     ),
                     const Spacer(),
-                    Temperatures(),
+                    const Temperatures(),
                   ],
                 ),
                 // actions: const [Text('1')],

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mqtt_client/mqtt_client.dart';
 // import '/utils.dart';
 import '/models/mqtt_providers.dart';
 import '/models/mqtt_connection_state_provider.dart';
@@ -11,27 +10,27 @@ class ConnectionBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mqttConnectionStateX = ref.watch(mqttConnectionStateXProvider);
-    final mqttProviderX = ref.watch(mqttProvider.notifier);
+    final mqttConnectionState = ref.watch(mqttConnectionStateProvider);
+    final mqttProviderNotifier = ref.watch(mqttProvider.notifier);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        if (mqttConnectionStateX == MqttConnectionState.connected) ...[
+        if (mqttConnectionState == MqttConnectionState.connected) ...[
           TextButton(
-            onPressed: () => mqttProviderX.disconnect(),
+            onPressed: () => mqttProviderNotifier.disconnect(),
             child: const Icon(
               Icons.wifi,
             ),
           ),
-        ] else if (mqttConnectionStateX == MqttConnectionState.disconnected) ...[
+        ] else if (mqttConnectionState == MqttConnectionState.disconnected) ...[
           TextButton(
-            onPressed: () => mqttProviderX.connect(),
+            onPressed: () => mqttProviderNotifier.connect(),
             child: const Icon(
               Icons.wifi_off,
             ),
           ),
-        ] else if (mqttConnectionStateX == MqttConnectionState.faulted) ...[
+        ] else if (mqttConnectionState == MqttConnectionState.faulted) ...[
           const Icon(Icons.wifi_off, color: Colors.red)
         ] else ...[
           const TextButton(

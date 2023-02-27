@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:nanoid/nanoid.dart';
-import 'package:mqtt_client/mqtt_client.dart';
+import 'package:mqtt_client/mqtt_client.dart' as mqtt;
 import 'package:mqtt_client/mqtt_server_client.dart';
 
 import '/utils.dart';
@@ -92,7 +92,7 @@ class Mqtt extends _$Mqtt {
     });
   }
 
-  FutureOr<MqttConnectionState> connect() async {
+  FutureOr<mqtt.MqttConnectionState> connect() async {
     log('connecting');
 
     final connectionData = ref.watch(appSettingsProvider.notifier);
@@ -108,40 +108,40 @@ class Mqtt extends _$Mqtt {
     client.onConnected = onConnected;
     client.onDisconnected = onDisconnected;
 
-    ref.read(mqttConnectionStateXProvider.notifier).state = MqttConnectionState.connecting;
+    ref.read(mqttConnectionStateProvider.notifier).state = mqtt.MqttConnectionState.connecting;
 
     await Future.delayed(
       const Duration(milliseconds: 500),
     );
 
-    MqttClientConnectionStatus? mqttConnectionStatus =
+    mqtt.MqttClientConnectionStatus? mqttConnectionStatus =
         await client.connect(connectionData.state.mqttUsername, connectionData.state.mqttPassword).catchError(
       (error) {
         ref.read(appSettingsProvider.notifier).setValid(false);
-        ref.read(mqttConnectionStateXProvider.notifier).state = MqttConnectionState.faulted;
+        ref.read(mqttConnectionStateProvider.notifier).state = mqtt.MqttConnectionState.faulted;
         return null;
       },
     );
-    ref.read(appSettingsProvider.notifier).setValid(mqttConnectionStatus?.state == MqttConnectionState.connected);
+    ref.read(appSettingsProvider.notifier).setValid(mqttConnectionStatus?.state == mqtt.MqttConnectionState.connected);
 
-    return mqttConnectionStatus?.state ?? MqttConnectionState.faulted;
+    return mqttConnectionStatus?.state ?? mqtt.MqttConnectionState.faulted;
     // .connected is set in the onConnected handler
   }
 
   // generic publish function
   void publish(String topic, String payload, {bool retain = false}) {
     log('publishing $topic: $payload');
-    final builder = MqttClientPayloadBuilder();
+    final builder = mqtt.MqttClientPayloadBuilder();
     builder.addString(payload);
-    client.publishMessage(topic, MqttQos.atLeastOnce, builder.payload!, retain: retain);
+    client.publishMessage(topic, mqtt.MqttQos.atLeastOnce, builder.payload!, retain: retain);
   }
 
   // generic publish function
   void publishRetained(String topic, String payload) {
     log('publishing $topic: $payload');
-    final builder = MqttClientPayloadBuilder();
+    final builder = mqtt.MqttClientPayloadBuilder();
     builder.addString(payload);
-    client.publishMessage(topic, MqttQos.atLeastOnce, builder.payload!, retain: true);
+    client.publishMessage(topic, mqtt.MqttQos.atLeastOnce, builder.payload!, retain: true);
   }
 
   // zigbee2mqtt publish function
@@ -158,17 +158,17 @@ class Mqtt extends _$Mqtt {
     log('connected');
 
     for (var topic in subscribeTopics) {
-      client.subscribe(topic, MqttQos.atLeastOnce);
+      client.subscribe(topic, mqtt.MqttQos.atLeastOnce);
     }
 
     client.pongCallback = () {
       log('ping response client callback invoked');
     };
 
-    client.updates?.listen((List<MqttReceivedMessage<MqttMessage>> messages) {
+    client.updates?.listen((List<mqtt.MqttReceivedMessage<mqtt.MqttMessage>> messages) {
       // iterate over all new messages
-      for (MqttReceivedMessage mqttReceivedMessage in messages) {
-        final MqttPublishMessage message = mqttReceivedMessage.payload as MqttPublishMessage;
+      for (mqtt.MqttReceivedMessage mqttReceivedMessage in messages) {
+        final mqtt.MqttPublishMessage message = mqttReceivedMessage.payload as mqtt.MqttPublishMessage;
         final String payload = const Utf8Decoder().convert(message.payload.message);
         dynamic payloadJson;
         // try to parse the payload as json
@@ -277,7 +277,7 @@ class Mqtt extends _$Mqtt {
       }
     });
 
-    ref.read(mqttConnectionStateXProvider.notifier).state = MqttConnectionState.connected;
+    ref.read(mqttConnectionStateProvider.notifier).state = mqtt.MqttConnectionState.connected;
   }
 
   void setDeviceNameMap(List devices) {
@@ -305,6 +305,6 @@ class Mqtt extends _$Mqtt {
 
   void onDisconnected() {
     log('disconnected');
-    ref.read(mqttConnectionStateXProvider.notifier).state = MqttConnectionState.disconnected;
+    ref.read(mqttConnectionStateProvider.notifier).state = mqtt.MqttConnectionState.disconnected;
   }
 }

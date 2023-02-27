@@ -10,7 +10,7 @@ Widget armedButtons() {
         crossAxisCount: 4,
         mainAxisExtent: 110,
         mainAxisSpacing: 8.0,
-        crossAxisSpacing: 10.0,
+        crossAxisSpacing: 0.0,
         childAspectRatio: 2.0,
       ),
       delegate: SliverChildBuilderDelegate(

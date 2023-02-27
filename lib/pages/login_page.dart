@@ -27,7 +27,7 @@ class LoginFormPage extends ConsumerWidget {
 
     log('login form build');
 
-    final Mqtt mqttProviderX = ref.watch(mqttProvider.notifier);
+    final Mqtt mqttProviderNotifier = ref.watch(mqttProvider.notifier);
     final AppSettings appSettings = ref.read(appSettingsProvider.notifier);
 
     void submitForm() async {
@@ -44,7 +44,7 @@ class LoginFormPage extends ConsumerWidget {
         log('form submit');
         appSettings.saveMqttLoginForm(formData);
 
-        final MqttConnectionState mqttConnectionState = await mqttProviderX.connect();
+        final MqttConnectionState mqttConnectionState = await mqttProviderNotifier.connect();
 
         // if the connection was successful, persist the connection data
         if (mqttConnectionState == MqttConnectionState.connected) {

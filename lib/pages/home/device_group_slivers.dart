@@ -6,7 +6,8 @@ import 'package:homer/models/app_settings.dart';
 import '/models/mqtt_devices.dart';
 import '/pages/thermostat_list_page.dart';
 import '/pages/curtains/curtain_list_page.dart';
-import '/pages/light_list_page.dart';
+import '/pages/lights/light_list_page.dart';
+import '/pages/lights/widgets/lights_off_button_widget.dart';
 import '/pages/curtains/widgets/curtain_actions.dart';
 import '/pages/other_page.dart';
 import '/pages/thomas/thomas_page.dart';
@@ -76,13 +77,7 @@ class DeviceGroups extends ConsumerWidget {
           trailing: onLightCount > 0
               ? Row(
                   mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      color: onLightCount > 0 ? Colors.amber : null,
-                      onPressed: () => ref.read(lightDevicesProvider.notifier).allOff(),
-                      icon: const Icon(Icons.lightbulb),
-                    )
-                  ],
+                  children: const [LightsOffButton()],
                 )
               : null,
           visualDensity: visualDensity,

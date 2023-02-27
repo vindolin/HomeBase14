@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
 import '/utils.dart';
+import 'widgets/lights_off_button_widget.dart';
 import '/models/mqtt_devices.dart';
 import '/widgets/connection_bar_widget.dart';
 
@@ -24,13 +25,7 @@ class LightPage extends ConsumerWidget {
           if (onLightCount > 0)
             Row(
               mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  color: onLightCount > 0 ? Colors.amber : null,
-                  onPressed: () => ref.read(lightDevicesProvider.notifier).allOff(),
-                  icon: const Icon(Icons.lightbulb),
-                )
-              ],
+              children: const [LightsOffButton()],
             ),
           const ConnectionBar()
         ],
@@ -51,7 +46,7 @@ class LightPage extends ConsumerWidget {
                     )
                   : const Icon(
                       Icons.lightbulb_outline,
-                      color: Colors.amber,
+                      color: Colors.white,
                       grade: 0.2,
                     ),
               key: Key(key),

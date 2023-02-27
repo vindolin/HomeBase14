@@ -81,23 +81,31 @@ class HomePage extends ConsumerWidget {
           CustomScrollView(
             slivers: [
               SliverAppBar(
-                title: Text(
-                  translate('app_bar.title'),
-                  style: const TextStyle(
-                    // fontFamily: FontFa,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    shadows: [
-                      Shadow(
-                        blurRadius: 3.0,
-                        color: Colors.black54,
-                        offset: Offset(2.0, 2.0),
+                title: Row(
+                  children: [
+                    Text(
+                      translate('app_bar.title'),
+                      style: const TextStyle(
+                        // fontFamily: FontFa,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        shadows: [
+                          Shadow(
+                            blurRadius: 3.0,
+                            color: Colors.black54,
+                            offset: Offset(2.0, 2.0),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    Spacer(),
+                    Icon(Icons.home_filled),
+                  ],
                 ),
-                // actions: [],
+                // actions: const [Text('1')],
+                forceElevated: true,
+                pinned: true,
                 floating: true,
                 expandedHeight: 80.0,
                 flexibleSpace: const FlexibleSpaceBar(

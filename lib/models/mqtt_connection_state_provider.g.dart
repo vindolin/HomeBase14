@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'mqtt_providers.dart';
+part of 'mqtt_connection_state_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -29,18 +29,23 @@ class _SystemHash {
   }
 }
 
-String _$MqttHash() => r'8d9ecb470f110ddac8c4df700059a2af0e90c9bc';
+String _$MqttConnectionStateXHash() =>
+    r'c35210d0c89190d352fa5ff9473e19784faf7261';
 
-/// See also [Mqtt].
-final mqttProvider = AutoDisposeNotifierProvider<Mqtt, dynamic>(
-  Mqtt.new,
-  name: r'mqttProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$MqttHash,
+/// See also [MqttConnectionStateX].
+final mqttConnectionStateXProvider =
+    AutoDisposeNotifierProvider<MqttConnectionStateX, MqttConnectionState>(
+  MqttConnectionStateX.new,
+  name: r'mqttConnectionStateXProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$MqttConnectionStateXHash,
 );
-typedef MqttRef = AutoDisposeNotifierProviderRef<dynamic>;
+typedef MqttConnectionStateXRef
+    = AutoDisposeNotifierProviderRef<MqttConnectionState>;
 
-abstract class _$Mqtt extends AutoDisposeNotifier<dynamic> {
+abstract class _$MqttConnectionStateX
+    extends AutoDisposeNotifier<MqttConnectionState> {
   @override
-  dynamic build();
+  MqttConnectionState build();
 }

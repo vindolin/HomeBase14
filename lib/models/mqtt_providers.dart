@@ -7,21 +7,24 @@ import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 
 import '/utils.dart';
+import 'mqtt_connection_state_provider.dart';
 import 'app_settings.dart';
 import 'mqtt_devices.dart';
 
 part 'mqtt_providers.g.dart';
 
 const subscribeTopics = [
-  'zigbee2mqtt/#', // all the zigbee devices registered in zigbee2mqtt
-  'stat/#', // all the tasmota devices
-  'garagedoor/state', // an esp32 controlling the garage door
-  'home/burglar_alarm', // node-red controlling the burglar alarm
-  'garden/cistern_pump/get', // node-red controlling the cistern pump
-  'kittycam/privacy', // node-red controlling the privacy mode of the cat cam
-  'instar/10D1DC228582/status/alarm/triggered/object', // motion detection of the door cam
+  // 'zigbee2mqtt/#', // all the zigbee devices registered in zigbee2mqtt
+  // 'stat/#', // all the tasmota devices
+  // 'garagedoor/state', // an esp32 controlling the garage door
+  // 'home/burglar_alarm', // node-red controlling the burglar alarm
+  // 'garden/cistern_pump/get', // node-red controlling the cistern pump
+  // 'kittycam/privacy', // node-red controlling the privacy mode of the cat cam
+  // 'instar/10D1DC228582/status/alarm/triggered/object', // motion detection of the door cam
   'leech/sleepy', // a node red flow controlling a python/mqtt daemon running on leech, setting the sleep mode to sleep or hibernate
-  'greenhouse/#',
+  'greenhouse/temp_inside',
+  'greenhouse/temp_outside',
+  'greenhouse/temp_humidity',
 ];
 
 final clientIdentifier = 'K${nanoid()}';
@@ -303,14 +306,5 @@ class Mqtt extends _$Mqtt {
   void onDisconnected() {
     log('disconnected');
     ref.read(mqttConnectionStateXProvider.notifier).state = MqttConnectionState.disconnected;
-  }
-}
-
-@riverpod
-class MqttConnectionStateX extends _$MqttConnectionStateX {
-  // The X at the end of the class name is to avoid a conflict with the MqttConnectionState enum
-  @override
-  MqttConnectionState build() {
-    return MqttConnectionState.disconnected;
   }
 }

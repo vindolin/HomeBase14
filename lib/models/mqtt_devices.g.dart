@@ -183,7 +183,7 @@ abstract class _$SwitchDevices
   Map<String, ArmedSwitchDevice> build();
 }
 
-String _$LightDevicesHash() => r'b68f29cf919ac652f6090e9e421b31b79235a98b';
+String _$LightDevicesHash() => r'7806a40b3377d46e15e1855a9b0f81574e9e6ebe';
 
 /// See also [LightDevices].
 final lightDevicesProvider =

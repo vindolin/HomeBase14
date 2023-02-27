@@ -97,6 +97,7 @@ flutter:
   assets:
     - assets/images/homebase.jpg
     - assets/images/rivig.jpg
+    - assets/images/lina.jpg
     - assets/images/svg/blinds.svg
     - assets/images/bg_pattern.png
     - assets/i18n/

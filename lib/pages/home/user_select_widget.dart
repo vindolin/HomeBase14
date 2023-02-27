@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_translate/flutter_translate.dart';
+
 import '/models/app_settings.dart';
 
 class UserSelect extends ConsumerWidget {
@@ -15,16 +17,23 @@ class UserSelect extends ConsumerWidget {
     }
 
     return ListView(children: [
-      const DrawerHeader(
+      DrawerHeader(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/rivig.jpg'),
+            filterQuality: FilterQuality.medium,
+            image: appSettings.user == User.thomas
+                ? const AssetImage('assets/images/rivig.jpg')
+                : const AssetImage('assets/images/lina.jpg'),
             fit: BoxFit.fitWidth,
           ),
         ),
-        child: Text('Settings'),
+        child: Text(translate('settings')),
+      ),
+      ListTile(
+        title: Text(translate('user')),
       ),
       RadioListTile<User>(
+        dense: true,
         title: const Text('Thomas'),
         value: User.thomas,
         selected: appSettings.user == User.thomas,
@@ -32,6 +41,7 @@ class UserSelect extends ConsumerWidget {
         onChanged: submitForm,
       ),
       RadioListTile<User>(
+        dense: true,
         title: const Text('Mona'),
         value: User.mona,
         selected: appSettings.user == User.mona,

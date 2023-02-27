@@ -75,11 +75,13 @@ class HomePage extends ConsumerWidget {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
+            stops: [0.0, 0.6, 1.0],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color.fromARGB(20, 0, 0, 0),
+              Color.fromARGB(150, 0, 0, 0),
               Color.fromARGB(10, 0, 0, 0),
+              Color.fromARGB(150, 0, 0, 0),
             ],
           ),
           image: DecorationImage(
@@ -93,6 +95,7 @@ class HomePage extends ConsumerWidget {
               doorMovementProvider,
               vibrate: true,
               ignoreFirstBuild: true,
+              color: Colors.pink.withOpacity(0.1),
             ),
             CustomScrollView(
               slivers: [

@@ -54,6 +54,7 @@ class Temperatures extends ConsumerWidget {
           children: [
             const Icon(Icons.thermostat),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 temperature('', tempInside, Colors.blue),
                 temperature('', tempOutside, Colors.green),

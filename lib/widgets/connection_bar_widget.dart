@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 // import '/utils.dart';
 import '/models/mqtt_providers.dart';
+import '/models/mqtt_connection_state_provider.dart';
 import '/widgets/message_blinker_widget.dart';
 
 class ConnectionBar extends ConsumerWidget {

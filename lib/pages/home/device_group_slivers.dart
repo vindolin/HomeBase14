@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:homer/models/app_settings.dart';
 
+import '/styles/text_styles.dart';
 import '/models/mqtt_devices.dart';
 import '/pages/thermostat_list_page.dart';
 import '/pages/curtains/curtain_list_page.dart';
@@ -11,7 +12,6 @@ import '/pages/lights/widgets/lights_off_button_widget.dart';
 import '/pages/curtains/widgets/curtain_actions.dart';
 import '/pages/other_page.dart';
 import '/pages/thomas/thomas_page.dart';
-import '/styles/text_styles.dart';
 
 class DeviceGroups extends ConsumerWidget {
   const DeviceGroups({super.key});
@@ -29,7 +29,6 @@ class DeviceGroups extends ConsumerWidget {
       delegate: SliverChildListDelegate([
         const Divider(),
         ListTile(
-          // iconColor: Colors.purpleAccent,
           title: Text(
             translate('device_names.thermostats'),
             style: textStyleShadowOne,
@@ -74,12 +73,7 @@ class DeviceGroups extends ConsumerWidget {
             style: textStyleShadowOne,
           ),
           leading: const Icon(Icons.lightbulb),
-          trailing: onLightCount > 0
-              ? Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: const [LightsOffButton()],
-                )
-              : null,
+          trailing: onLightCount > 0 ? const LightsOffButton() : null,
           visualDensity: visualDensity,
           onTap: () {
             Navigator.push(

@@ -29,25 +29,23 @@ class _SystemHash {
   }
 }
 
-String _$SimpleMqttMessagesHash() =>
-    r'cb23740b9629c1cd6944867878306158a24dd075';
+String _$MqttMessagesHash() => r'b6db741f8cd631e70ef9606d901804b8887434cd';
 
-/// See also [SimpleMqttMessages].
-final simpleMqttMessagesProvider = AutoDisposeNotifierProvider<
-    SimpleMqttMessages, Map<String, SimpleMqttMessage>>(
-  SimpleMqttMessages.new,
-  name: r'simpleMqttMessagesProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$SimpleMqttMessagesHash,
+/// See also [MqttMessages].
+final mqttMessagesProvider =
+    AutoDisposeNotifierProvider<MqttMessages, Map<String, MqttMessage>>(
+  MqttMessages.new,
+  name: r'mqttMessagesProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$MqttMessagesHash,
 );
-typedef SimpleMqttMessagesRef
-    = AutoDisposeNotifierProviderRef<Map<String, SimpleMqttMessage>>;
+typedef MqttMessagesRef
+    = AutoDisposeNotifierProviderRef<Map<String, MqttMessage>>;
 
-abstract class _$SimpleMqttMessages
-    extends AutoDisposeNotifier<Map<String, SimpleMqttMessage>> {
+abstract class _$MqttMessages
+    extends AutoDisposeNotifier<Map<String, MqttMessage>> {
   @override
-  Map<String, SimpleMqttMessage> build();
+  Map<String, MqttMessage> build();
 }
 
 String _$LeechHash() => r'44384d3e1b8a1fb231473db7b09436eef154ecb0';

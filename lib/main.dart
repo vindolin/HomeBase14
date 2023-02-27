@@ -72,7 +72,6 @@ class _MyAppState extends ConsumerState<HomerApp> {
         MqttConnectionState.connecting,
       ].contains(ref.watch(mqttConnectionStateProvider))
           ? const HomePage()
-          // ? const HomePage()
           : LoginFormPage(),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(

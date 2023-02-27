@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:homer/models/mqtt_devices.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '/utils.dart';
+
 import '/styles/text_styles.dart';
 
 class DropdownSelect extends ConsumerStatefulWidget {
@@ -19,23 +21,22 @@ class _DropdownStateSelect extends ConsumerState<DropdownSelect> {
 
   @override
   Widget build(BuildContext context) {
-    final simpleMqttMessage = ref.watch(
-      simpleMqttMessagesProvider.select(
-        (simpleMqttMessages) {
-          return simpleMqttMessages[widget.subTopic];
+    final mqttMessage = ref.watch(
+      mqttMessagesProvider.select(
+        (mqttMessages) {
+          return mqttMessages[widget.subTopic];
         },
       ),
     );
 
-    if (simpleMqttMessage?.payload != null) {
-      print(simpleMqttMessage?.payload);
-      dropdownValue = simpleMqttMessage!.payload;
+    if (mqttMessage?.payload != null) {
+      dropdownValue = mqttMessage!.payload;
     }
 
     return DropdownButton<String>(
       value: dropdownValue,
       onChanged: (String? value) {
-        ref.read(simpleMqttMessagesProvider.notifier).publishCallback(widget.pubTopic, value!, retain: true);
+        ref.read(mqttMessagesProvider.notifier).publishCallback(widget.pubTopic, value!, retain: true);
         setState(
           () {
             print(value);

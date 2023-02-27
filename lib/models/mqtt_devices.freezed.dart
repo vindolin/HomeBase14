@@ -15,28 +15,28 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$SimpleMqttMessage {
+mixin _$MqttMessage {
   String get topic => throw _privateConstructorUsedError;
   String get payload => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $SimpleMqttMessageCopyWith<SimpleMqttMessage> get copyWith =>
+  $MqttMessageCopyWith<MqttMessage> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SimpleMqttMessageCopyWith<$Res> {
-  factory $SimpleMqttMessageCopyWith(
-          SimpleMqttMessage value, $Res Function(SimpleMqttMessage) then) =
-      _$SimpleMqttMessageCopyWithImpl<$Res, SimpleMqttMessage>;
+abstract class $MqttMessageCopyWith<$Res> {
+  factory $MqttMessageCopyWith(
+          MqttMessage value, $Res Function(MqttMessage) then) =
+      _$MqttMessageCopyWithImpl<$Res, MqttMessage>;
   @useResult
   $Res call({String topic, String payload});
 }
 
 /// @nodoc
-class _$SimpleMqttMessageCopyWithImpl<$Res, $Val extends SimpleMqttMessage>
-    implements $SimpleMqttMessageCopyWith<$Res> {
-  _$SimpleMqttMessageCopyWithImpl(this._value, this._then);
+class _$MqttMessageCopyWithImpl<$Res, $Val extends MqttMessage>
+    implements $MqttMessageCopyWith<$Res> {
+  _$MqttMessageCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -63,22 +63,22 @@ class _$SimpleMqttMessageCopyWithImpl<$Res, $Val extends SimpleMqttMessage>
 }
 
 /// @nodoc
-abstract class _$$_SimpleMqttMessageCopyWith<$Res>
-    implements $SimpleMqttMessageCopyWith<$Res> {
-  factory _$$_SimpleMqttMessageCopyWith(_$_SimpleMqttMessage value,
-          $Res Function(_$_SimpleMqttMessage) then) =
-      __$$_SimpleMqttMessageCopyWithImpl<$Res>;
+abstract class _$$_MqttMessageCopyWith<$Res>
+    implements $MqttMessageCopyWith<$Res> {
+  factory _$$_MqttMessageCopyWith(
+          _$_MqttMessage value, $Res Function(_$_MqttMessage) then) =
+      __$$_MqttMessageCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String topic, String payload});
 }
 
 /// @nodoc
-class __$$_SimpleMqttMessageCopyWithImpl<$Res>
-    extends _$SimpleMqttMessageCopyWithImpl<$Res, _$_SimpleMqttMessage>
-    implements _$$_SimpleMqttMessageCopyWith<$Res> {
-  __$$_SimpleMqttMessageCopyWithImpl(
-      _$_SimpleMqttMessage _value, $Res Function(_$_SimpleMqttMessage) _then)
+class __$$_MqttMessageCopyWithImpl<$Res>
+    extends _$MqttMessageCopyWithImpl<$Res, _$_MqttMessage>
+    implements _$$_MqttMessageCopyWith<$Res> {
+  __$$_MqttMessageCopyWithImpl(
+      _$_MqttMessage _value, $Res Function(_$_MqttMessage) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -87,7 +87,7 @@ class __$$_SimpleMqttMessageCopyWithImpl<$Res>
     Object? topic = null,
     Object? payload = null,
   }) {
-    return _then(_$_SimpleMqttMessage(
+    return _then(_$_MqttMessage(
       topic: null == topic
           ? _value.topic
           : topic // ignore: cast_nullable_to_non_nullable
@@ -102,8 +102,8 @@ class __$$_SimpleMqttMessageCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SimpleMqttMessage implements _SimpleMqttMessage {
-  const _$_SimpleMqttMessage({required this.topic, required this.payload});
+class _$_MqttMessage implements _MqttMessage {
+  const _$_MqttMessage({required this.topic, required this.payload});
 
   @override
   final String topic;
@@ -112,14 +112,14 @@ class _$_SimpleMqttMessage implements _SimpleMqttMessage {
 
   @override
   String toString() {
-    return 'SimpleMqttMessage(topic: $topic, payload: $payload)';
+    return 'MqttMessage(topic: $topic, payload: $payload)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SimpleMqttMessage &&
+            other is _$_MqttMessage &&
             (identical(other.topic, topic) || other.topic == topic) &&
             (identical(other.payload, payload) || other.payload == payload));
   }
@@ -130,15 +130,14 @@ class _$_SimpleMqttMessage implements _SimpleMqttMessage {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SimpleMqttMessageCopyWith<_$_SimpleMqttMessage> get copyWith =>
-      __$$_SimpleMqttMessageCopyWithImpl<_$_SimpleMqttMessage>(
-          this, _$identity);
+  _$$_MqttMessageCopyWith<_$_MqttMessage> get copyWith =>
+      __$$_MqttMessageCopyWithImpl<_$_MqttMessage>(this, _$identity);
 }
 
-abstract class _SimpleMqttMessage implements SimpleMqttMessage {
-  const factory _SimpleMqttMessage(
+abstract class _MqttMessage implements MqttMessage {
+  const factory _MqttMessage(
       {required final String topic,
-      required final String payload}) = _$_SimpleMqttMessage;
+      required final String payload}) = _$_MqttMessage;
 
   @override
   String get topic;
@@ -146,7 +145,7 @@ abstract class _SimpleMqttMessage implements SimpleMqttMessage {
   String get payload;
   @override
   @JsonKey(ignore: true)
-  _$$_SimpleMqttMessageCopyWith<_$_SimpleMqttMessage> get copyWith =>
+  _$$_MqttMessageCopyWith<_$_MqttMessage> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

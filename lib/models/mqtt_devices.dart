@@ -12,18 +12,18 @@ part 'mqtt_devices.g.dart';
 part 'mqtt_devices.freezed.dart';
 
 @freezed
-class SimpleMqttMessage with _$SimpleMqttMessage {
-  const factory SimpleMqttMessage({
+class MqttMessage with _$MqttMessage {
+  const factory MqttMessage({
     required String topic,
     required String payload,
-  }) = _SimpleMqttMessage;
+  }) = _MqttMessage;
 }
 
 @riverpod
-class SimpleMqttMessages extends _$SimpleMqttMessages {
+class MqttMessages extends _$MqttMessages {
   late Function publishCallback; // get's injected by the mqtt class
   @override
-  Map<String, SimpleMqttMessage> build() {
+  Map<String, MqttMessage> build() {
     return {};
   }
 }

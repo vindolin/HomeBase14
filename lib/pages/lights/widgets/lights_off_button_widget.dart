@@ -13,7 +13,12 @@ class LightsOffButton extends ConsumerWidget {
     return IconButton(
       color: onLightCount > 0 ? Colors.amber : null,
       onPressed: () => ref.read(lightDevicesProvider.notifier).allOff(),
-      icon: const Icon(Icons.lightbulb),
+      icon: Badge(
+        label: Text(onLightCount.toString()),
+        backgroundColor: Colors.amber[800],
+        textColor: Colors.black,
+        child: const Icon(Icons.lightbulb),
+      ),
     );
   }
 }

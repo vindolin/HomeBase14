@@ -21,3 +21,7 @@ abstract class _$MqttConnectionState extends AutoDisposeNotifier<mqtt.MqttConnec
   @override
   mqtt.MqttConnectionState build();
 }
+
+
+// TODOs file a bug report:
+// Code generation fails when the return value type is imported with the "as" keyword.

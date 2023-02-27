@@ -72,58 +72,76 @@ class HomePage extends ConsumerWidget {
       endDrawer: const Drawer(
         child: UserSelect(),
       ),
-      body: Stack(
-        children: [
-          StreamContainerBlinker(
-            doorMovementProvider,
-            vibrate: true,
-            ignoreFirstBuild: true,
-          ),
-          CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                title: Row(
-                  children: [
-                    Text(
-                      translate('app_bar.title'),
-                      style: const TextStyle(
-                        // fontFamily: FontFa,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        shadows: [
-                          Shadow(
-                            blurRadius: 3.0,
-                            color: Colors.black54,
-                            offset: Offset(2.0, 2.0),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Spacer(),
-                    const Temperatures(),
-                  ],
-                ),
-                // actions: const [Text('1')],
-                forceElevated: true,
-                pinned: true,
-                floating: true,
-                expandedHeight: 80.0,
-                flexibleSpace: const FlexibleSpaceBar(
-                  background: Image(
-                    image: AssetImage('assets/images/homebase.jpg'),
-                    fit: BoxFit.cover,
-                    filterQuality: FilterQuality.medium,
-                  ),
-                ),
-              ),
-              // const SliverHeader(Colors.red, 'SliverPersistentHeader 1'),
-              armedButtons(),
-              const DeviceGroups(),
-              cameras(),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color.fromARGB(20, 0, 0, 0),
+              Color.fromARGB(10, 0, 0, 0),
             ],
           ),
-        ],
+          image: DecorationImage(
+            image: AssetImage('assets/images/bg_pattern.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Stack(
+          children: [
+            StreamContainerBlinker(
+              doorMovementProvider,
+              vibrate: true,
+              ignoreFirstBuild: true,
+            ),
+            CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  titleSpacing: 0.0,
+                  leadingWidth: 10.0,
+                  leading: Container(),
+                  title: Row(
+                    children: [
+                      Text(
+                        translate('app_bar.title'),
+                        style: const TextStyle(
+                          // fontFamily: FontFa,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 3.0,
+                              color: Colors.black54,
+                              offset: Offset(2.0, 2.0),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Spacer(),
+                      const Temperatures(),
+                    ],
+                  ),
+                  forceElevated: true,
+                  pinned: true,
+                  floating: true,
+                  expandedHeight: 80.0,
+                  flexibleSpace: const FlexibleSpaceBar(
+                    background: Image(
+                      image: AssetImage('assets/images/homebase.jpg'),
+                      fit: BoxFit.cover,
+                      filterQuality: FilterQuality.medium,
+                    ),
+                  ),
+                ),
+                // const SliverHeader(Colors.red, 'SliverPersistentHeader 1'),
+                armedButtons(),
+                const DeviceGroups(),
+                cameras(),
+              ],
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: const ConnectionBar(),
     );

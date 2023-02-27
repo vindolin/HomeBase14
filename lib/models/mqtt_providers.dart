@@ -14,17 +14,17 @@ import 'mqtt_devices.dart';
 part 'mqtt_providers.g.dart';
 
 const subscribeTopics = [
-  // 'zigbee2mqtt/#', // all the zigbee devices registered in zigbee2mqtt
-  // 'stat/#', // all the tasmota devices
-  // 'garagedoor/state', // an esp32 controlling the garage door
-  // 'home/burglar_alarm', // node-red controlling the burglar alarm
-  // 'garden/cistern_pump/get', // node-red controlling the cistern pump
-  // 'kittycam/privacy', // node-red controlling the privacy mode of the cat cam
-  // 'instar/10D1DC228582/status/alarm/triggered/object', // motion detection of the door cam
-  'leech/sleepy', // a node red flow controlling a python/mqtt daemon running on leech, setting the sleep mode to sleep or hibernate
+  'zigbee2mqtt/#', // all the zigbee devices registered in zigbee2mqtt
+  'stat/#', // all the tasmota devices
+  'garagedoor/state', // an esp32 controlling the garage door
+  'home/burglar_alarm', // node-red controlling the burglar alarm
+  'garden/cistern_pump/get', // node-red controlling the cistern pump
+  'kittycam/privacy', // node-red controlling the privacy mode of the cat cam
+  'instar/10D1DC228582/status/alarm/triggered/object', // motion detection of the door cam
+  'leech/#', // a node red flow controlling a python/mqtt daemon running on leech, setting the sleep mode to sleep or hibernate, or selects the display
   'greenhouse/temp_inside',
   'greenhouse/temp_outside',
-  'greenhouse/temp_humidity',
+  'greenhouse/humidity',
 ];
 
 final clientIdentifier = 'K${nanoid()}';
@@ -67,7 +67,7 @@ class Mqtt extends _$Mqtt {
   late LightDevices lightDevices;
   late SwitchDevices switchDevices;
   late Leech leech;
-  late SimpleMqttMessages simpleMqttMessages;
+  late MqttMessages mqttMessages;
 
   @override
   build() {
@@ -80,12 +80,12 @@ class Mqtt extends _$Mqtt {
     thermostatDevices = ref.watch(thermostatDevicesProvider.notifier);
     leech = ref.watch(leechProvider.notifier);
 
-    simpleMqttMessages = ref.watch(simpleMqttMessagesProvider.notifier);
+    mqttMessages = ref.watch(mqttMessagesProvider.notifier);
 
     // inject publish function
     lightDevices.publishCallback = publish;
     switchDevices.publishCallback = publishRetained;
-    simpleMqttMessages.publishCallback = publish;
+    mqttMessages.publishCallback = publish;
 
     ref.onDispose(() {
       disconnect();
@@ -170,81 +170,72 @@ class Mqtt extends _$Mqtt {
       for (mqtt.MqttReceivedMessage mqttReceivedMessage in messages) {
         final mqtt.MqttPublishMessage message = mqttReceivedMessage.payload as mqtt.MqttPublishMessage;
         final String payload = const Utf8Decoder().convert(message.payload.message);
-        dynamic payloadJson;
+        dynamic payloadDecoded;
         // try to parse the payload as json
         try {
-          payloadJson = jsonDecode(payload);
-
-          // look for topics that look like our schema zigbee2mqtt/curtain/i001 for devices and add them to the mqttDevices
-          RegExpMatch? match = RegExp(r'zigbee2mqtt/(?<type>\w+)/(?<id>i\d+)$').firstMatch(mqttReceivedMessage.topic);
-          if (match != null) {
-            // it's a zigbee2mqtt message
-            String deviceType = match.namedGroup('type')!; // e.g. curtain
-            String deviceId = '$deviceType/${match.namedGroup('id')!}'; // e.g. curtain/001
-
-            if (deviceType == 'curtain' || deviceType == 'curtainU') {
-              // underwall curtain switch
-              curtainDevices.state = {
-                ...curtainDevices.state,
-                deviceId: SingleCurtainDevice(deviceId, deviceType, payloadJson, publishZ2M),
-              };
-            } else if (deviceType == 'dualCurtain') {
-              // dual curtain switch
-              dualCurtainDevices.state = {
-                ...dualCurtainDevices.state,
-                deviceId: DualCurtainDevice(deviceId, deviceType, payloadJson, publishZ2M),
-              };
-            } else if (deviceType == 'door') {
-              // door contact
-              doorDevices.state = {
-                ...doorDevices.state,
-                deviceId: DoorDevice(deviceId, deviceType, payloadJson, publishZ2M),
-              };
-            } else if (deviceType == 'thermostat') {
-              // thermostat
-              thermostatDevices.state = {
-                ...thermostatDevices.state,
-                deviceId: ThermostatDevice(deviceId, deviceType, payloadJson, publishZ2M),
-              };
-            }
-
-            // send the message to the message stream
-            messageController.sink.add({
-              deviceId: {
-                '_device_type': deviceType,
-                ...payloadJson,
-              },
-            });
-          } else if (mqttReceivedMessage.topic == 'instar/10D1DC228582/status/alarm/triggered/object') {
-            doorMovementController.sink.add(
-              int.parse(payloadJson['val']),
-            );
-
-            var objectValue = int.parse(payloadJson['val']);
-            if (objectValue != 0) {
-              doorAlarmController.sink.add(objectValue);
-            }
-          } else if (mqttReceivedMessage.topic == 'zigbee2mqtt/bridge/devices') {
-            // we find the device name (description) in the zigbee2mqtt/bridge/devices message
-            setDeviceNameMap(payloadJson);
-          } else {
-            print(mqttReceivedMessage.topic);
-          }
-
+          payloadDecoded = jsonDecode(payload);
           // if the payload is not json, it's probably a string
         } on FormatException catch (_) {
-          if (mqttReceivedMessage.topic == 'xleech/sleepy') {
-            print(payload);
-            leech.state = {
-              ...leech.state,
-              'sleep_state': payload,
+          payloadDecoded = payload;
+        }
+        mqttMessages.state = {
+          ...mqttMessages.state,
+          mqttReceivedMessage.topic: MqttMessage(topic: mqttReceivedMessage.topic, payload: payload)
+        };
+
+        // look for topics that look like our schema zigbee2mqtt/curtain/i001 for devices and add them to the mqttDevices
+        RegExpMatch? match = RegExp(r'zigbee2mqtt/(?<type>\w+)/(?<id>i\d+)$').firstMatch(mqttReceivedMessage.topic);
+        if (match != null) {
+          // it's a zigbee2mqtt message
+          String deviceType = match.namedGroup('type')!; // e.g. curtain
+          String deviceId = '$deviceType/${match.namedGroup('id')!}'; // e.g. curtain/001
+
+          if (deviceType == 'curtain' || deviceType == 'curtainU') {
+            // underwall curtain switch
+            curtainDevices.state = {
+              ...curtainDevices.state,
+              deviceId: SingleCurtainDevice(deviceId, deviceType, payloadDecoded, publishZ2M),
             };
-          } else {
-            simpleMqttMessages.state = {
-              ...simpleMqttMessages.state,
-              mqttReceivedMessage.topic: SimpleMqttMessage(topic: mqttReceivedMessage.topic, payload: payload)
+          } else if (deviceType == 'dualCurtain') {
+            // dual curtain switch
+            dualCurtainDevices.state = {
+              ...dualCurtainDevices.state,
+              deviceId: DualCurtainDevice(deviceId, deviceType, payloadDecoded, publishZ2M),
+            };
+          } else if (deviceType == 'door') {
+            // door contact
+            doorDevices.state = {
+              ...doorDevices.state,
+              deviceId: DoorDevice(deviceId, deviceType, payloadDecoded, publishZ2M),
+            };
+          } else if (deviceType == 'thermostat') {
+            // thermostat
+            thermostatDevices.state = {
+              ...thermostatDevices.state,
+              deviceId: ThermostatDevice(deviceId, deviceType, payloadDecoded, publishZ2M),
             };
           }
+
+          // send the message to the message stream
+          messageController.sink.add({
+            deviceId: {
+              '_device_type': deviceType,
+              ...payloadDecoded,
+            },
+          });
+        } else if (mqttReceivedMessage.topic == 'instar/10D1DC228582/status/alarm/triggered/object') {
+          doorMovementController.sink.add(
+            int.parse(payloadDecoded['val']),
+          );
+
+          var objectValue = int.parse(payloadDecoded['val']);
+          if (objectValue != 0) {
+            doorAlarmController.sink.add(objectValue);
+          }
+        } else if (mqttReceivedMessage.topic == 'zigbee2mqtt/bridge/devices') {
+          // we find the device name (description) in the zigbee2mqtt/bridge/devices message
+          setDeviceNameMap(payloadDecoded);
+        } else {
           print(mqttReceivedMessage.topic);
         }
 
@@ -265,8 +256,8 @@ class Mqtt extends _$Mqtt {
 
             // if the device has a stateKey, we need to parse the json and set the payload to that key's value (e.g. zigbee2mqtt plugs)
             if (switchDevice.stateKey != null) {
-              payloadJson = jsonDecode(payload);
-              devicePayload = payloadJson[switchDevice.stateKey!];
+              payloadDecoded = jsonDecode(payload);
+              devicePayload = payloadDecoded[switchDevice.stateKey!];
             }
             switchDevices.state = {
               ...switchDevices.state,

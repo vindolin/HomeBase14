@@ -27,10 +27,25 @@ class _RefreshableImageState extends ConsumerState<RefreshableImage> {
 
     return InkWell(
       onTap: widget.onTap,
-      onDoubleTap: () => setState(() {}),
-      child: Image.network(
-        '${widget.imageUrl}&${DateTime.now().millisecondsSinceEpoch}',
-        filterQuality: FilterQuality.medium,
+      onDoubleTap: () => setState(() {}), // just refresh image
+      child: Container(
+        color: Colors.grey[800],
+        child: Image.network(
+          '${widget.imageUrl}&${DateTime.now().millisecondsSinceEpoch}',
+          filterQuality: FilterQuality.medium,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return const Center(
+              child: SizedBox(
+                width: 32,
+                height: 32,
+                child: CircularProgressIndicator(
+                  strokeWidth: 6,
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

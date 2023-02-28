@@ -74,6 +74,7 @@ class PrusaProgress extends ConsumerWidget {
                 const Spacer(),
                 Text(
                   fileName,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(fontSize: 11),
                 ),
               ],

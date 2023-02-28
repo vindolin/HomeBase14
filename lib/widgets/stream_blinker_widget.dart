@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
 
 // container that binds to the message stream provider and blinks when a message is received
-class StreamContainerBlinker extends ConsumerStatefulWidget {
+class StreamContainerBlinker extends ConsumerWidget {
   final StreamProvider streamProvider;
   final bool vibrate;
   final bool ignoreFirstBuild;
@@ -21,27 +21,22 @@ class StreamContainerBlinker extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<StreamContainerBlinker> createState() => _StreamContainerBlinkerState();
-}
-
-class _StreamContainerBlinkerState extends ConsumerState<StreamContainerBlinker> {
-  @override
-  Widget build(BuildContext context) {
-    ref.watch(widget.streamProvider); // every time message stream provider fires, the icon will blink
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(streamProvider); // every time message stream provider fires, the icon will blink
 
     // the future is needed to move the provider state change to the next frame
-    if (widget.ignoreFirstBuild && ref.read(widget.firstBuildProvider)) {
-      Future(() => ref.read(widget.firstBuildProvider.notifier).state = false);
+    if (ignoreFirstBuild && ref.read(firstBuildProvider)) {
+      Future(() => ref.read(firstBuildProvider.notifier).state = false);
       return Container();
     }
 
-    if (widget.vibrate) {
+    if (vibrate) {
       HapticFeedback.vibrate();
     }
     const int onDurationMs = 100;
     const int fadeDurationMs = 100;
 
-    Color flashColor = widget.color;
+    Color flashColor = color;
     Color? targetColor;
 
     Future<void> setColor() async {

@@ -2,17 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/models/mqtt_providers.dart';
 
-class MessageBlinker extends ConsumerStatefulWidget {
+class MessageBlinker extends ConsumerWidget {
   // symbol that binds to the message stream provider and blinks when a message is received
   const MessageBlinker({super.key});
 
   @override
-  ConsumerState<MessageBlinker> createState() => _MessageBlinkerState();
-}
-
-class _MessageBlinkerState extends ConsumerState<MessageBlinker> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     const int onDurationMs = 100;
     const int fadeDurationMs = 100;
 

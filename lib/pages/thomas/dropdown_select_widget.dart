@@ -37,7 +37,6 @@ class _DropdownStateSelect extends ConsumerState<DropdownSelect> {
         ref.read(mqttMessagesProvider.notifier).publishCallback(widget.pubTopic, value!, retain: true);
         setState(
           () {
-            print(value);
             dropdownValue = value;
           },
         );

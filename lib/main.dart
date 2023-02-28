@@ -53,9 +53,9 @@ class _MyAppState extends ConsumerState<HomerApp> {
   @override
   void initState() {
     super.initState();
-    ref.read(appSettingsProvider.notifier).loadConnectionData().then(
-          (_) => ref.watch(mqttProvider.notifier).connect(),
-        );
+    ref.read(appSettingsProvider.notifier).loadConnectionData().then((_) {
+      return ref.watch(mqttProvider.notifier).connect();
+    });
   }
 
   @override

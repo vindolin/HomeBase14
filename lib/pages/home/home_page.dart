@@ -97,8 +97,8 @@ class HomePage extends ConsumerWidget {
               ],
             ),
             image: DecorationImage(
+              repeat: ImageRepeat.repeat,
               image: AssetImage('assets/images/bg_pattern.png'),
-              fit: BoxFit.cover,
             ),
           ),
           child: Stack(

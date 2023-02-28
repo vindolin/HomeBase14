@@ -74,6 +74,7 @@ class HomePage extends ConsumerWidget {
         child: UserSelect(),
       ),
       body: RefreshIndicator(
+        // reload home page on pull down
         onRefresh: () async {
           Navigator.push(
             context,

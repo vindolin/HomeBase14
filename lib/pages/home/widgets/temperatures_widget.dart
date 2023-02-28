@@ -24,16 +24,18 @@ dynamic getMessage(ProviderBase provider, WidgetRef ref, String topic) {
 Widget temperature(String prefix, double? value, Color? color) {
   String tempValue = value != null ? value.toStringAsFixed(1) : '-.-';
   return BorderedText(
-    strokeWidth: 1.8,
-    strokeColor: Colors.black87,
+    strokeWidth: 3,
+    strokeColor: Colors.black,
     child: Text(
       '$prefix$tempValue°C',
       style: GoogleFonts.robotoCondensed(
-        textStyle: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 14,
-          color: color,
-        ),
+        textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: color, shadows: const [
+          Shadow(
+            offset: Offset(1.0, 1.0),
+            blurRadius: 1.0,
+            color: Colors.black,
+          ),
+        ]),
       ),
     ),
   );
@@ -53,6 +55,7 @@ class Temperatures extends ConsumerWidget {
     // final humidity = checkMessage(mqttMessagesProvider, ref, 'greenhouse/humidity') ?? '-.-';
 
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         temperature('', tempInside, Colors.blue),

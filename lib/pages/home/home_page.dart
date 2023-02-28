@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:homer/pages/home/widgets/temperatures_widget.dart';
 
 import '/pages/home/armed_switch_buttons/armed_switch_buttons.dart';
 import 'device_group_slivers.dart';
@@ -104,28 +103,22 @@ class HomePage extends ConsumerWidget {
                   titleSpacing: 0.0,
                   leadingWidth: 10.0,
                   leading: Container(),
-                  title: Row(
-                    children: [
-                      Text(
-                        translate('app_bar.title'),
-                        style: GoogleFonts.robotoCondensed(
-                          textStyle: const TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            shadows: [
-                              Shadow(
-                                blurRadius: 3.0,
-                                color: Colors.black54,
-                                offset: Offset(2.0, 2.0),
-                              ),
-                            ],
+                  title: Text(
+                    translate('app_bar.title'),
+                    style: GoogleFonts.robotoCondensed(
+                      textStyle: const TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        shadows: [
+                          Shadow(
+                            blurRadius: 3.0,
+                            color: Colors.black54,
+                            offset: Offset(2.0, 2.0),
                           ),
-                        ),
+                        ],
                       ),
-                      const Spacer(),
-                      const Temperatures(),
-                    ],
+                    ),
                   ),
                   forceElevated: true,
                   pinned: true,

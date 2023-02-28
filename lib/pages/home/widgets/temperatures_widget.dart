@@ -52,26 +52,13 @@ class Temperatures extends ConsumerWidget {
     );
     // final humidity = checkMessage(mqttMessagesProvider, ref, 'greenhouse/humidity') ?? '-.-';
 
-    return Card(
-      elevation: 5,
-      color: Colors.black.withAlpha(10),
-      shadowColor: Colors.black45,
-      child: Padding(
-        padding: const EdgeInsets.all(3.0),
-        child: Row(
-          children: [
-            const Icon(Icons.thermostat, color: Colors.white54),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                temperature('', tempInside, Colors.blue),
-                temperature('', tempOutside, Colors.green),
-                // Text(humidity),
-              ],
-            ),
-          ],
-        ),
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        temperature('', tempInside, Colors.blue),
+        temperature('', tempOutside, Colors.green),
+        // Text(humidity),
+      ],
     );
   }
 }

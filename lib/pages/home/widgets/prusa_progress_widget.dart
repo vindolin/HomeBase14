@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:bordered_text/bordered_text.dart';
 
+import 'prusa_nozzle_widget.dart';
 import '/models/mqtt_devices.dart';
 import '/models/watch_mqtt_message.dart';
 
@@ -78,7 +79,12 @@ class PrusaProgress extends ConsumerWidget {
                   style: const TextStyle(fontSize: 11),
                 ),
               ],
-            )
+            ),
+            const Positioned(
+              top: 0,
+              left: 0,
+              child: PrusaNozzle(),
+            ),
           ],
         );
       }),

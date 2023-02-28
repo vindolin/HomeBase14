@@ -101,6 +101,7 @@ flutter:
     - assets/images/rivig.jpg
     - assets/images/lina.jpg
     - assets/images/svg/blinds.svg
+    - assets/images/svg/nozzle.svg
     - assets/images/benchy.png
     - assets/images/bg_pattern.png
     - assets/i18n/

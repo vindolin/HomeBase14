@@ -25,6 +25,8 @@ const subscribeTopics = [
   'greenhouse/temp_inside',
   'greenhouse/temp_outside',
   'greenhouse/humidity',
+  'prusa/progress',
+  'prusa/file',
 ];
 
 final clientIdentifier = 'K${nanoid()}';

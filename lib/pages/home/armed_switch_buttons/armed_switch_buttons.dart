@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+
 import 'armed_switch_button_widget.dart';
+import '../widgets/prusa_progress_widget.dart';
 
 Widget armedButtons() {
   return SliverPadding(
@@ -71,6 +73,9 @@ Widget armedButtons() {
               textOff: translate('armed_buttons.tv.text_off'),
               confirm: false,
             ),
+            const Card(),
+            const Card(),
+            const PrusaProgress(),
             // const Card(child: Text('BUMP')),
           ];
 

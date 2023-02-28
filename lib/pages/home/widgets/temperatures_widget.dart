@@ -70,8 +70,8 @@ class Temperatures extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            temperature('', tempInside, Colors.blue),
-            temperature('', tempOutside, Colors.green),
+            temperature('', tempOutside, Colors.blue),
+            temperature('', tempInside, Colors.green),
             // Text(humidity),
           ],
         ),

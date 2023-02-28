@@ -4,7 +4,7 @@
 	},
     "device_names": {
         "thermostats": "Thermostate",
-        "curtains": "Rolläden",
+        "curtains": "Rollläden",
         "lights": "Lampen",
         "other": "Diverses"
     },

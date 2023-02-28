@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class RefreshableImage extends ConsumerStatefulWidget {
+  // this needs to be a ConsumerStatefulWidget because it needs to rebuild when tapped
   final String imageUrl;
   final StreamProvider? streamProvider; // refreshes the image when the stream emits
+  final VoidCallback? onTap;
 
   const RefreshableImage(
     this.imageUrl, {
     this.streamProvider,
+    this.onTap,
     super.key,
   });
 
@@ -16,8 +19,6 @@ class RefreshableImage extends ConsumerStatefulWidget {
 }
 
 class _RefreshableImageState extends ConsumerState<RefreshableImage> {
-  bool triggerVal = false;
-
   @override
   Widget build(BuildContext context) {
     if (widget.streamProvider != null) {
@@ -25,7 +26,8 @@ class _RefreshableImageState extends ConsumerState<RefreshableImage> {
     }
 
     return InkWell(
-      onTap: () => setState(() {}),
+      onTap: widget.onTap,
+      onDoubleTap: () => setState(() {}),
       child: Image.network(
         '${widget.imageUrl}&${DateTime.now().millisecondsSinceEpoch}',
         filterQuality: FilterQuality.medium,

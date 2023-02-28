@@ -139,7 +139,7 @@ class Mqtt extends _$Mqtt {
     client.publishMessage(topic, mqtt.MqttQos.atLeastOnce, builder.payload!, retain: retain);
   }
 
-  // generic publish function
+  // generic publish function with retain (for dependency injection)
   void publishRetained(String topic, String payload) {
     log('publishing $topic: $payload');
     final builder = mqtt.MqttClientPayloadBuilder();

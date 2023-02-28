@@ -93,7 +93,7 @@ class HomePage extends ConsumerWidget {
         child: Stack(
           children: [
             StreamContainerBlinker(
-              doorMovementProvider,
+              doorMovementProvider, // flash background on object detection on front door cam
               vibrate: true,
               ignoreFirstBuild: true,
               color: Colors.pink.withOpacity(0.1),

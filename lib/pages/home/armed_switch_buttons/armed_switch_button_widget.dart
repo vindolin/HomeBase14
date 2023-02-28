@@ -113,7 +113,7 @@ class _ArmedSwitchState extends ConsumerState<ArmedSwitchButton> {
                   switchDevice.state == switchDevice.onState ? widget.textOn : widget.textOff,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    fontSize: 13,
+                    fontSize: 12,
                   ),
                 ),
               ),

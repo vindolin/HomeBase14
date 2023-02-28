@@ -23,28 +23,28 @@
 	"armed_buttons": {
 		"garage": {
 			"label": "Garage",
-			"text_on": "Garage offen",
-			"text_off": "Garage zu"
+			"text_on": "Garage ist offen",
+			"text_off": "Garage ist zu"
 		},
 		"burglar": {
 			"label": "Einbruchalarm",
-			"text_on": "Alarm ein",
-			"text_off": "Alarm aus"
+			"text_on": "Alarm ist ein",
+			"text_off": "Alarm ist aus"
 		},
 		"camera": {
 			"label": "Kamera",
-			"text_on": "Kamera ein",
-			"text_off": "Kamera aus"
+			"text_on": "Kamera ist aus",
+			"text_off": "Kamera ist an"
 		},
 		"pump": {
 			"label": "Tauchpumpe",
-			"text_on": "Pumpe ein",
-			"text_off": "Pumpe aus"
+			"text_on": "Pumpe ist an",
+			"text_off": "Pumpe ist aus"
 		},
 		"tv": {
 			"label": "TV Wohnzimmer",
-			"text_on": "TV ein",
-			"text_off": "TV aus"
+			"text_on": "TV ist an",
+			"text_off": "TV ist aus"
 		}
 	},
 	"user": "Benutzer",

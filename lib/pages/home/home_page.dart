@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '/pages/home/widgets/temperatures_widget.dart';
 import '/pages/home/armed_switch_buttons/armed_switch_buttons.dart';
 import 'device_group_slivers.dart';
 import 'cameras.dart';
@@ -141,7 +142,13 @@ class HomePage extends ConsumerWidget {
           ],
         ),
       ),
-      bottomNavigationBar: const ConnectionBar(),
+      bottomNavigationBar: const ConnectionBar(
+        children: [
+          SizedBox(width: 8.0),
+          Temperatures(),
+          Spacer(),
+        ],
+      ),
     );
   }
 }

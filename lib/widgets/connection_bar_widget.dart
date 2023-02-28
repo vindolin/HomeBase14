@@ -3,11 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '/models/mqtt_providers.dart';
 import '/models/mqtt_connection_state_provider.dart';
-import '/pages/home/widgets/temperatures_widget.dart';
 import '/widgets/message_blinker_widget.dart';
 
 class ConnectionBar extends ConsumerWidget {
-  const ConnectionBar({super.key});
+  final List<Widget>? children;
+  const ConnectionBar({this.children, super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -17,9 +17,7 @@ class ConnectionBar extends ConsumerWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        const SizedBox(width: 8.0),
-        const Temperatures(),
-        const Spacer(),
+        ...?children,
         if (mqttConnectionState == MqttConnectionState.connected) ...[
           TextButton(
             onPressed: () => mqttProviderNotifier.disconnect(),

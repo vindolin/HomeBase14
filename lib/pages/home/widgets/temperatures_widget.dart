@@ -5,6 +5,12 @@ import 'package:bordered_text/bordered_text.dart';
 
 import '/models/mqtt_devices.dart';
 
+const shadow = Shadow(
+  offset: Offset(1.0, 1.0),
+  blurRadius: 2.0,
+  color: Colors.black,
+);
+
 dynamic getMessage(ProviderBase provider, WidgetRef ref, String topic) {
   dynamic payload;
   final mqttMessage = ref.watch(
@@ -29,13 +35,12 @@ Widget temperature(String prefix, double? value, Color? color) {
     child: Text(
       '$prefix$tempValue°C',
       style: GoogleFonts.robotoCondensed(
-        textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: color, shadows: const [
-          Shadow(
-            offset: Offset(1.0, 1.0),
-            blurRadius: 1.0,
-            color: Colors.black,
-          ),
-        ]),
+        textStyle: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 14,
+          color: color,
+          shadows: const [shadow],
+        ),
       ),
     ),
   );
@@ -54,13 +59,22 @@ class Temperatures extends ConsumerWidget {
     );
     // final humidity = checkMessage(mqttMessagesProvider, ref, 'greenhouse/humidity') ?? '-.-';
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.end,
+    return Row(
       children: [
-        temperature('', tempInside, Colors.blue),
-        temperature('', tempOutside, Colors.green),
-        // Text(humidity),
+        const Icon(
+          Icons.thermostat,
+          color: Colors.white,
+          shadows: [shadow],
+        ),
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            temperature('', tempInside, Colors.blue),
+            temperature('', tempOutside, Colors.green),
+            // Text(humidity),
+          ],
+        ),
       ],
     );
   }

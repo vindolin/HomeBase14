@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:bordered_text/bordered_text.dart';
 
-import '/styles/text_styles.dart';
 import '/models/mqtt_devices.dart';
-import '/utils.dart';
 
 dynamic getMessage(ProviderBase provider, WidgetRef ref, String topic) {
   dynamic payload;
@@ -23,12 +23,18 @@ dynamic getMessage(ProviderBase provider, WidgetRef ref, String topic) {
 
 Widget temperature(String prefix, double? value, Color? color) {
   String tempValue = value != null ? value.toStringAsFixed(1) : '-.-';
-  return Text(
-    '$prefix$tempValue °C',
-    style: textStyleShadowOne.copyWith(
-      fontWeight: FontWeight.bold,
-      fontSize: 16,
-      color: color,
+  return BorderedText(
+    strokeWidth: 1.8,
+    strokeColor: Colors.black87,
+    child: Text(
+      '$prefix$tempValue°C',
+      style: GoogleFonts.robotoCondensed(
+        textStyle: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 14,
+          color: color,
+        ),
+      ),
     ),
   );
 }
@@ -47,12 +53,14 @@ class Temperatures extends ConsumerWidget {
     // final humidity = checkMessage(mqttMessagesProvider, ref, 'greenhouse/humidity') ?? '-.-';
 
     return Card(
-      color: Colors.black12,
+      elevation: 5,
+      color: Colors.black.withAlpha(10),
+      shadowColor: Colors.black45,
       child: Padding(
         padding: const EdgeInsets.all(3.0),
         child: Row(
           children: [
-            const Icon(Icons.thermostat),
+            const Icon(Icons.thermostat, color: Colors.white54),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [

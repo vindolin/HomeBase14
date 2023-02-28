@@ -67,6 +67,8 @@ dependencies:
       url: https://github.com/vindolin/flutter_keep_screen_on.git
       path: keep_screen_on
       ref: master
+  bordered_text: ^2.0.0
+  google_fonts: ^4.0.3
 
 dev_dependencies:
   build_runner:
@@ -99,6 +101,7 @@ flutter:
     - assets/images/rivig.jpg
     - assets/images/lina.jpg
     - assets/images/svg/blinds.svg
+    - assets/images/benchy.png
     - assets/images/bg_pattern.png
     - assets/i18n/
 

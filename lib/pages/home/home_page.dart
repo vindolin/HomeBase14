@@ -73,73 +73,84 @@ class HomePage extends ConsumerWidget {
       endDrawer: const Drawer(
         child: UserSelect(),
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            stops: [0.0, 0.6, 1.0],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color.fromARGB(150, 0, 0, 0),
-              Color.fromARGB(10, 0, 0, 0),
-              Color.fromARGB(150, 0, 0, 0),
-            ],
-          ),
-          image: DecorationImage(
-            image: AssetImage('assets/images/bg_pattern.png'),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Stack(
-          children: [
-            StreamContainerBlinker(
-              doorMovementProvider, // flash background on object detection on front door cam
-              vibrate: true,
-              ignoreFirstBuild: true,
-              color: Colors.pink.withOpacity(0.1),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomePage(),
             ),
-            CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  titleSpacing: 0.0,
-                  leadingWidth: 10.0,
-                  leading: Container(),
-                  title: Text(
-                    translate('app_bar.title'),
-                    style: GoogleFonts.robotoCondensed(
-                      textStyle: const TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        shadows: [
-                          Shadow(
-                            blurRadius: 3.0,
-                            color: Colors.black54,
-                            offset: Offset(2.0, 2.0),
-                          ),
-                        ],
+          );
+        },
+        child: Container(
+          // glance effect of background
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              stops: [0.0, 0.6, 1.0],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color.fromARGB(150, 0, 0, 0),
+                Color.fromARGB(10, 0, 0, 0),
+                Color.fromARGB(150, 0, 0, 0),
+              ],
+            ),
+            image: DecorationImage(
+              image: AssetImage('assets/images/bg_pattern.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Stack(
+            children: [
+              StreamContainerBlinker(
+                doorMovementProvider, // flash background on object detection on front door cam
+                vibrate: true,
+                ignoreFirstBuild: true,
+                color: Colors.pink.withOpacity(0.1),
+              ),
+              CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    titleSpacing: 0.0,
+                    leadingWidth: 10.0,
+                    leading: Container(),
+                    title: Text(
+                      translate('app_bar.title'),
+                      style: GoogleFonts.robotoCondensed(
+                        textStyle: const TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 3.0,
+                              color: Colors.black54,
+                              offset: Offset(2.0, 2.0),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    forceElevated: true,
+                    pinned: true,
+                    floating: true,
+                    expandedHeight: 80.0,
+                    flexibleSpace: const FlexibleSpaceBar(
+                      background: Image(
+                        image: AssetImage('assets/images/homebase.jpg'),
+                        fit: BoxFit.cover,
+                        filterQuality: FilterQuality.medium,
                       ),
                     ),
                   ),
-                  forceElevated: true,
-                  pinned: true,
-                  floating: true,
-                  expandedHeight: 80.0,
-                  flexibleSpace: const FlexibleSpaceBar(
-                    background: Image(
-                      image: AssetImage('assets/images/homebase.jpg'),
-                      fit: BoxFit.cover,
-                      filterQuality: FilterQuality.medium,
-                    ),
-                  ),
-                ),
-                // const SliverHeader(Colors.red, 'SliverPersistentHeader 1'),
-                armedButtons(),
-                const DeviceGroups(),
-                cameras(),
-              ],
-            ),
-          ],
+                  // const SliverHeader(Colors.red, 'SliverPersistentHeader 1'),
+                  armedButtons(),
+                  const DeviceGroups(),
+                  cameras(),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: const ConnectionBar(

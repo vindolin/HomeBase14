@@ -100,10 +100,12 @@ flutter:
     - assets/images/homebase.jpg
     - assets/images/rivig.jpg
     - assets/images/lina.jpg
+    - assets/images/benchy.png
+    - assets/images/broken.jpg
+    - assets/images/gif/searching_eye.gif
+    - assets/images/bg_pattern.png
     - assets/images/svg/blinds.svg
     - assets/images/svg/nozzle.svg
-    - assets/images/benchy.png
-    - assets/images/bg_pattern.png
     - assets/i18n/
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -31,6 +31,13 @@ class _RefreshableImageState extends ConsumerState<RefreshableImage> {
       child: Container(
         color: Colors.grey[800],
         child: Image.network(
+          errorBuilder: (context, error, stackTrace) => const Center(
+            heightFactor: 1,
+            child: Image(
+              filterQuality: FilterQuality.medium,
+              image: AssetImage('assets/images/gif/searching_eye.gif'),
+            ),
+          ),
           '${widget.imageUrl}&${DateTime.now().millisecondsSinceEpoch}',
           filterQuality: FilterQuality.medium,
           loadingBuilder: (context, child, loadingProgress) {

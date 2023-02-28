@@ -44,6 +44,7 @@ class PrusaProgress extends ConsumerWidget {
           alignment: Alignment.center,
           children: [
             const Image(
+              filterQuality: FilterQuality.medium,
               image: AssetImage('assets/images/benchy.png'),
             ),
             Positioned(

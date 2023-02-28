@@ -115,22 +115,26 @@ class HomePage extends ConsumerWidget {
                     titleSpacing: 0.0,
                     leadingWidth: 10.0,
                     leading: Container(),
-                    title: Text(
-                      translate('app_bar.title'),
-                      style: GoogleFonts.robotoCondensed(
-                        textStyle: const TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          shadows: [
-                            Shadow(
-                              blurRadius: 3.0,
-                              color: Colors.black54,
-                              offset: Offset(2.0, 2.0),
+                    title: Stack(
+                      children: [
+                        Text(
+                          translate('app_bar.title'),
+                          style: GoogleFonts.robotoCondensed(
+                            textStyle: const TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              shadows: [
+                                Shadow(
+                                  blurRadius: 3.0,
+                                  color: Colors.black54,
+                                  offset: Offset(2.0, 2.0),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                     forceElevated: true,
                     pinned: true,

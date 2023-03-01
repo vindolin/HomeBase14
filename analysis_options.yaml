@@ -32,3 +32,4 @@ linter:
 analyzer:
   exclude:
     - "lib/graveyard.dart"
+    - "**/*.g.dart"

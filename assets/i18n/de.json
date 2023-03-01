@@ -47,6 +47,10 @@
 			"text_off": "TV ist aus"
 		}
 	},
+	"cams": {
+		"garden" : "Garten",
+		"door" : "Haustüre"
+	},
 	"user": "Benutzer",
 	"settings": "Einstellungen"
 }

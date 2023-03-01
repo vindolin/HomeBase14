@@ -20,17 +20,17 @@ class CamWidgetState extends ConsumerState<CamWidget> {
   @override
   void initState() {
     super.initState();
-    print(secrets.camData[widget.camId]!['videoUrl']!);
-
+    print(secrets.camData[widget.camId]!);
     _videoPlayerController = VlcPlayerController.network(
       secrets.camData[widget.camId]!['videoUrl']!,
-      hwAcc: HwAcc.auto,
-      autoPlay: false,
       options: VlcPlayerOptions(
         video: VlcVideoOptions(
           [
-            '--network-caching=10000',
-            '--live-caching=10000',
+            // '--network-caching=1000',
+            // '--live-caching=1000',
+            '--clock-jitter=500',
+            '--udp-caching=0',
+            '--http-caching=0',
           ],
         ),
       ),
@@ -47,10 +47,13 @@ class CamWidgetState extends ConsumerState<CamWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      child: VlcPlayer(
-        controller: _videoPlayerController,
-        aspectRatio: 16 / 9,
-        placeholder: const Center(child: CircularProgressIndicator()),
+      child: RotatedBox(
+        quarterTurns: 1,
+        child: VlcPlayer(
+          controller: _videoPlayerController,
+          aspectRatio: 16 / 9,
+          placeholder: const Center(child: CircularProgressIndicator()),
+        ),
       ),
       onTap: () async {
         final isPlaying = await _videoPlayerController.isPlaying();

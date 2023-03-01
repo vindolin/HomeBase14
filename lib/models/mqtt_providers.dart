@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:nanoid/nanoid.dart';
 import 'package:mqtt_client/mqtt_client.dart' as mqtt;

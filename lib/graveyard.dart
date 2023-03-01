@@ -214,3 +214,11 @@
 //     ),
 //   ),
 // );
+
+// /// blocks rotation; sets orientation to: portrait
+// void _portraitModeOnly() {
+//   SystemChrome.setPreferredOrientations([
+//     DeviceOrientation.landscapeLeft,
+//     DeviceOrientation.landscapeRight,
+//   ]);
+// }

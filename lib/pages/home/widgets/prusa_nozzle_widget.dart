@@ -44,7 +44,8 @@ class PrusaNozzle extends ConsumerWidget {
     const String assetName = 'assets/images/svg/nozzle.svg';
     final Widget svg = SvgPicture.asset(
       assetName,
-      color: nozzleColor,
+      colorFilter: ColorFilter.mode(nozzleColor, BlendMode.srcIn),
+      // color: nozzleColor,
       width: 16,
       height: 16,
     );

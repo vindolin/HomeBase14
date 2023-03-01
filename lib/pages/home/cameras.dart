@@ -54,29 +54,29 @@ Widget cameras() {
             Stack(
               children: [
                 Container(
-                    // decoration: BoxDecoration(
-                    //   color: Colors.white,
-                    //   boxShadow: [
-                    //     BoxShadow(
-                    //       color: Colors.black.withOpacity(0.2),
-                    //       spreadRadius: 1,
-                    //       blurRadius: 2,
-                    //       offset: const Offset(3, 3),
-                    //     ),
-                    //   ],
-                    // ),
-                    // child: RefreshableImage(
-                    //   secrets.camData['garden']!['snapshotUrl']!,
-                    //   onTap: () {
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //         builder: (context) => const CamDetailPage(camId: 'garden'),
-                    //       ),
-                    //     );
-                    //   },
-                    // ),
-                    ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        spreadRadius: 1,
+                        blurRadius: 2,
+                        offset: const Offset(3, 3),
+                      ),
+                    ],
+                  ),
+                  child: RefreshableImage(
+                    secrets.camData['garden']!['snapshotUrl']!,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CamDetailPage(camId: 'garden'),
+                        ),
+                      );
+                    },
+                  ),
+                ),
                 // const CamWidget(),
               ],
             ),

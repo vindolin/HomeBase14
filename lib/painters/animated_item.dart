@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:homer/models/mqtt_devices.dart';
+
+import '/models/mqtt_devices.dart';
 
 class ItemPainter extends CustomPainter {
   final double value;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:homer/models/app_settings.dart';
 
-import '/styles/text_styles.dart';
+import '/models/app_settings.dart';
 import '/models/mqtt_devices.dart';
+import '/styles/text_styles.dart';
 import '/pages/thermostat_list_page.dart';
 import '/pages/curtains/curtain_list_page.dart';
 import '/pages/lights/light_list_page.dart';

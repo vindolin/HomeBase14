@@ -121,20 +121,7 @@ class DeviceGroups extends ConsumerWidget {
             },
           ),
         const Divider(),
-        // const Divider(),
-        // ListTile(
-        //   title: Text(translate('device_names.video')),
-        //   leading: const Icon(Icons.lightbulb),
-        //   visualDensity: visualDensity,
-        //   onTap: () {
-        //     Navigator.push(
-        //       context,
-        //       MaterialPageRoute(
-        //         builder: (context) => VideoPage(),
-        //       ),
-        //     );
-        //   },
-        // ),
+        const Divider(),
       ]),
     );
   }

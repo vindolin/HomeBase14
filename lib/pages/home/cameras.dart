@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '/models/secrets.dart';
+import '/models/secrets.dart' as secrets;
 import '/widgets/refreshable_image_widget.dart';
 
 import '/pages/cams/cam_details_page.dart';
@@ -36,7 +36,7 @@ Widget cameras() {
                     ],
                   ),
                   child: RefreshableImage(
-                    doorCamUrl,
+                    secrets.camData['door']!['snapshotUrl']!,
                     streamProvider: doorAlarmProvider,
                     onTap: () {
                       Navigator.push(
@@ -54,29 +54,29 @@ Widget cameras() {
             Stack(
               children: [
                 Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        spreadRadius: 1,
-                        blurRadius: 2,
-                        offset: const Offset(3, 3),
-                      ),
-                    ],
-                  ),
-                  child: RefreshableImage(
-                    gardenCamUrl,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const CamDetailPage(camId: 'garden'),
-                        ),
-                      );
-                    },
-                  ),
-                ),
+                    // decoration: BoxDecoration(
+                    //   color: Colors.white,
+                    //   boxShadow: [
+                    //     BoxShadow(
+                    //       color: Colors.black.withOpacity(0.2),
+                    //       spreadRadius: 1,
+                    //       blurRadius: 2,
+                    //       offset: const Offset(3, 3),
+                    //     ),
+                    //   ],
+                    // ),
+                    // child: RefreshableImage(
+                    //   secrets.camData['garden']!['snapshotUrl']!,
+                    //   onTap: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //         builder: (context) => const CamDetailPage(camId: 'garden'),
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
+                    ),
                 // const CamWidget(),
               ],
             ),

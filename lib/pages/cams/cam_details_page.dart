@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '/widgets/video_widget.dart';
+
 class CamDetailPage extends ConsumerWidget {
   final String camId;
 
@@ -12,7 +14,7 @@ class CamDetailPage extends ConsumerWidget {
       appBar: AppBar(
         title: Text('Cam: $camId'),
       ),
-      body: Center(child: Text('Cam: $camId\n\nTODO: implement this page.')),
+      body: Center(child: CamWidget(camId)),
     );
   }
 }

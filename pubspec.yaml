@@ -56,7 +56,7 @@ dependencies:
   flutter_launcher_icons: ^0.12.0
   fl_chart: ^0.61.0
   # video_player: ^2.5.1
-  # flutter_vlc_player: ^7.2.0
+  flutter_vlc_player: ^7.2.0
 
   # keep_screen_on:
   #   path: "plugins/keep_screen_on-2.1.0"

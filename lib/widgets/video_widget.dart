@@ -1,61 +1,65 @@
-// import 'package:flutter/material.dart';
-// import '/models/secrets.dart';
-// import 'package:flutter_vlc_player/flutter_vlc_player.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 
-// class CamWidget extends StatefulWidget {
-//   const CamWidget({super.key});
+import '/models/secrets.dart' as secrets;
 
-//   @override
-//   State<CamWidget> createState() => CamWidgetState();
-// }
+class CamWidget extends ConsumerStatefulWidget {
+  final String camId;
+  const CamWidget(this.camId, {super.key});
 
-// class CamWidgetState extends State<CamWidget> {
-//   late VlcPlayerController _videoPlayerController;
+  @override
+  ConsumerState<CamWidget> createState() => CamWidgetState();
+}
 
-//   Future<void> initializePlayer() async {}
+class CamWidgetState extends ConsumerState<CamWidget> {
+  late VlcPlayerController _videoPlayerController;
 
-//   @override
-//   void initState() {
-//     super.initState();
+  Future<void> initializePlayer() async {}
 
-//     _videoPlayerController = VlcPlayerController.network(
-//       'rtsp://$doorCamUser:$doorCamPassword@$doorCamIp:554/livestream/11',
-//       hwAcc: HwAcc.auto,
-//       autoPlay: false,
-//       options: VlcPlayerOptions(
-//         video: VlcVideoOptions(
-//           [
-//             '--network-caching=10000',
-//             '--live-caching=10000',
-//           ],
-//         ),
-//       ),
-//     );
-//   }
+  @override
+  void initState() {
+    super.initState();
+    print(secrets.camData[widget.camId]!['videoUrl']!);
 
-//   @override
-//   void dispose() async {
-//     super.dispose();
-//     await _videoPlayerController.stopRendererScanning();
-//     await _videoPlayerController.dispose();
-//   }
+    _videoPlayerController = VlcPlayerController.network(
+      secrets.camData[widget.camId]!['videoUrl']!,
+      hwAcc: HwAcc.auto,
+      autoPlay: false,
+      options: VlcPlayerOptions(
+        video: VlcVideoOptions(
+          [
+            '--network-caching=10000',
+            '--live-caching=10000',
+          ],
+        ),
+      ),
+    );
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return InkWell(
-//       child: VlcPlayer(
-//         controller: _videoPlayerController,
-//         aspectRatio: 16 / 9,
-//         placeholder: const Center(child: CircularProgressIndicator()),
-//       ),
-//       onTap: () async {
-//         final isPlaying = await _videoPlayerController.isPlaying();
-//         if (isPlaying!) {
-//           await _videoPlayerController.pause();
-//         } else {
-//           await _videoPlayerController.play();
-//         }
-//       },
-//     );
-//   }
-// }
+  @override
+  void dispose() async {
+    super.dispose();
+    await _videoPlayerController.stopRendererScanning();
+    await _videoPlayerController.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      child: VlcPlayer(
+        controller: _videoPlayerController,
+        aspectRatio: 16 / 9,
+        placeholder: const Center(child: CircularProgressIndicator()),
+      ),
+      onTap: () async {
+        final isPlaying = await _videoPlayerController.isPlaying();
+        if (isPlaying!) {
+          await _videoPlayerController.pause();
+        } else {
+          await _videoPlayerController.play();
+        }
+      },
+    );
+  }
+}

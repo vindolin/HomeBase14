@@ -1,4 +1,4 @@
-package com.example.homer
+package com.example.homebase
 
 import io.flutter.embedding.android.FlutterActivity
 

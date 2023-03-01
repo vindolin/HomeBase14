@@ -30,26 +30,26 @@ void main() async {
     ]).then(
       (value) => runApp(
         ProviderScope(
-          child: LocalizedApp(delegate, const HomerApp()),
+          child: LocalizedApp(delegate, const HomeBaseApp()),
         ),
       ),
     );
   } else {
     runApp(
       ProviderScope(
-        child: LocalizedApp(delegate, const HomerApp()),
+        child: LocalizedApp(delegate, const HomeBaseApp()),
       ),
     );
   }
 }
 
-class HomerApp extends ConsumerStatefulWidget {
-  const HomerApp({super.key});
+class HomeBaseApp extends ConsumerStatefulWidget {
+  const HomeBaseApp({super.key});
   @override
-  ConsumerState<HomerApp> createState() => _MyAppState();
+  ConsumerState<HomeBaseApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends ConsumerState<HomerApp> {
+class _MyAppState extends ConsumerState<HomeBaseApp> {
   @override
   void initState() {
     super.initState();
@@ -60,11 +60,11 @@ class _MyAppState extends ConsumerState<HomerApp> {
 
   @override
   Widget build(BuildContext context) {
-    log('HomerApp.build()');
+    log('HomeBaseApp.build()');
 
     return MaterialApp(
       scaffoldMessengerKey: rootScaffoldMessengerKey,
-      title: 'Homer',
+      title: 'HomeBase',
       debugShowCheckedModeBanner: false,
       home: [
         // show login form only when disconnected/not connecting

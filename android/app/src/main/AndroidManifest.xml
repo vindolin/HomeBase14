@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.homebase">
+    package="com.example.homebase14">
    <application
         android:label="HomeBase14"
         android:name="${applicationName}"

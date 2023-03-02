@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:simple_shadow/simple_shadow.dart';
 
 import '/pages/home/widgets/temperatures_widget.dart';
 import '/pages/home/armed_switch_buttons/armed_switch_buttons.dart';
@@ -131,6 +133,20 @@ class HomePage extends ConsumerWidget {
                                   offset: Offset(2.0, 2.0),
                                 ),
                               ],
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          right: 0,
+                          top: -5,
+                          child: SimpleShadow(
+                            opacity: 1.0,
+                            offset: const Offset(2, 2),
+                            child: SvgPicture.asset(
+                              'assets/images/svg/14.svg',
+                              colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                              width: 42,
+                              height: 42,
                             ),
                           ),
                         ),

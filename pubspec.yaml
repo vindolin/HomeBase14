@@ -69,6 +69,7 @@ dependencies:
       ref: master
   bordered_text: ^2.0.0
   google_fonts: ^4.0.3
+  simple_shadow: ^0.3.1
 
 dev_dependencies:
   build_runner:
@@ -104,6 +105,7 @@ flutter:
     - assets/images/gif/searching_eye.gif
     - assets/images/bg_pattern.png
     - assets/images/bar_pattern.jpg
+    - assets/images/svg/14.svg
     - assets/images/svg/blinds.svg
     - assets/images/svg/nozzle.svg
     - assets/i18n/

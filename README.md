@@ -1,21 +1,7 @@
-# homebase
+# HomeBase14
 
-A new Flutter project.
+To learn darts/flutter I needed a project that I could safely sharpen my claws on.
 
-## Getting Started
+As a fan of open source home automation, this was a good opportunity to replace all the generic control programs with a program tailored to me.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-
-TODO
-
-Feuchtesensoren
+In hindsight, I would do certain parts differently, but that's how it works when you're familiarizing yourself with a new technology.

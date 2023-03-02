@@ -121,7 +121,6 @@ class DeviceGroups extends ConsumerWidget {
             },
           ),
         const Divider(),
-        const Divider(),
       ]),
     );
   }

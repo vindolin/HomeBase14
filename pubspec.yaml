@@ -103,6 +103,7 @@ flutter:
     - assets/images/benchy.png
     - assets/images/gif/searching_eye.gif
     - assets/images/bg_pattern.png
+    - assets/images/bar_pattern.jpg
     - assets/images/svg/blinds.svg
     - assets/images/svg/nozzle.svg
     - assets/i18n/

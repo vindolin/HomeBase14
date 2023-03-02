@@ -158,12 +158,30 @@ class HomePage extends ConsumerWidget {
           ),
         ),
       ),
-      bottomNavigationBar: const ConnectionBar(
-        children: [
-          SizedBox(width: 8.0),
-          Temperatures(),
-          Spacer(),
-        ],
+      bottomNavigationBar: Container(
+        // decoration: const BoxDecoration(
+        //   image: DecorationImage(
+        //     fit: BoxFit.fitWidth,
+        //     image: AssetImage('assets/images/bar_pattern.jpg'),
+        //     filterQuality: FilterQuality.high,
+        //   ),
+        // ),
+        decoration: const BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              color: Colors.black87,
+              width: 1.0,
+            ),
+          ),
+        ),
+        // color: Colors.black26,
+        child: const ConnectionBar(
+          children: [
+            SizedBox(width: 8.0),
+            Temperatures(),
+            Spacer(),
+          ],
+        ),
       ),
     );
   }

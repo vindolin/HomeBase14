@@ -139,14 +139,17 @@ class HomePage extends ConsumerWidget {
                         Positioned(
                           right: 0,
                           top: -5,
-                          child: SimpleShadow(
-                            opacity: 1.0,
-                            offset: const Offset(2, 2),
-                            child: SvgPicture.asset(
-                              'assets/images/svg/14.svg',
-                              colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                              width: 42,
-                              height: 42,
+                          child: Transform.rotate(
+                            angle: 0.4,
+                            child: SimpleShadow(
+                              opacity: 1.0,
+                              offset: const Offset(2, 2),
+                              child: SvgPicture.asset(
+                                'assets/images/svg/14.svg',
+                                colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                                width: 42,
+                                height: 42,
+                              ),
                             ),
                           ),
                         ),

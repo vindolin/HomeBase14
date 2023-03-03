@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:nanoid/nanoid.dart';
 import 'package:mqtt_client/mqtt_client.dart' as mqtt;
@@ -105,19 +107,44 @@ class Mqtt extends _$Mqtt {
       connectionData.state.mqttPort,
     );
 
-    client.autoReconnect = true;
+    // client = MqttServerClient.withPort(
+    //   '***REMOVED***',
+    //   'tulpe',
+    //   1886,
+    // );
+
+    // ignore: dead_code
+    if (false) {
+      final context = SecurityContext.defaultContext;
+
+      final caCrt = await rootBundle.load('assets/pem/ca.crt');
+      final clientCrt = await rootBundle.load('assets/pem/client.crt');
+
+      context.setTrustedCertificatesBytes(caCrt.buffer.asInt8List());
+      context.setClientAuthoritiesBytes(clientCrt.buffer.asInt8List());
+      // context.useCertificateChainBytes(clientCrt.buffer.asInt8List());
+
+      final clientKey = await rootBundle.load('assets/pem/client.key');
+      context.usePrivateKeyBytes(clientKey.buffer.asInt8List());
+
+      client.securityContext = context;
+
+      client.secure = true;
+    }
+    // client.autoReconnect = true;
 
     client.onConnected = onConnected;
     client.onDisconnected = onDisconnected;
 
     ref.read(mqttConnectionStateProvider.notifier).state = mqtt.MqttConnectionState.connecting;
 
-    await Future.delayed(
-      const Duration(milliseconds: 500),
-    );
+    // await Future.delayed(
+    //   const Duration(milliseconds: 500),
+    // );
 
     mqtt.MqttClientConnectionStatus? mqttConnectionStatus =
         await client.connect(connectionData.state.mqttUsername, connectionData.state.mqttPassword).catchError(
+      // await client.connect().catchError(
       (error) {
         ref.read(appSettingsProvider.notifier).setValid(false);
         ref.read(mqttConnectionStateProvider.notifier).state = mqtt.MqttConnectionState.faulted;

@@ -289,6 +289,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.1"
+  fast_immutable_collections:
+    dependency: "direct main"
+    description:
+      name: fast_immutable_collections
+      sha256: "60d68b272a33f919da05cd5f6dddcc69f62ace6a81b29f87a23b54a9126c971e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.0.0"
   ffi:
     dependency: transitive
     description:
@@ -358,6 +366,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
+  flutter_shaders:
+    dependency: "direct main"
+    description:
+      name: flutter_shaders
+      sha256: "1cf98f699701b520ed029c144f22c478c1f37f5784a4789b61d4fdbe95350a56"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.6"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -809,6 +825,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
+  shader:
+    dependency: "direct main"
+    description:
+      name: shader
+      sha256: df26fe9abc9b51889676df6aa0bac59629fdf38fea58995700719557ea03c1db
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -958,6 +982,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  stringr:
+    dependency: transitive
+    description:
+      name: stringr
+      sha256: "2846b6811c3cbb34c8937a35e623986e3fbf7203b3bb33ffe7f80e496ea3eff2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   term_glyph:
     dependency: transitive
     description:
@@ -974,6 +1006,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.16"
+  timer_builder:
+    dependency: "direct main"
+    description:
+      name: timer_builder
+      sha256: "67c5653a8d9f6ce62fe9121e520736e9da74418a919fe1c0e181b5d2627dbc4a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   timing:
     dependency: transitive
     description:
@@ -1136,4 +1176,4 @@ packages:
     version: "3.1.1"
 sdks:
   dart: ">=2.19.2 <3.0.0"
-  flutter: ">=3.7.0-0"
+  flutter: ">=3.7.0-0.0"

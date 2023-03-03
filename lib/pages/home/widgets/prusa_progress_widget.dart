@@ -58,12 +58,15 @@ class PrusaProgress extends ConsumerWidget {
               ),
             ),
             if (progressData['percent_done'] != null)
-              BorderedText(
-                strokeWidth: 4,
-                strokeColor: Colors.black87,
-                child: Text(
-                  '${progressData['percent_done']}%',
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
+              Transform.rotate(
+                angle: -0.6,
+                child: BorderedText(
+                  strokeWidth: 4,
+                  strokeColor: Colors.black87,
+                  child: Text(
+                    '${progressData['percent_done']}%',
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
+                  ),
                 ),
               ),
             Column(

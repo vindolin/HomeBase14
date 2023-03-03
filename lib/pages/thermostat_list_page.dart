@@ -21,9 +21,11 @@ class ThermostatListPage extends ConsumerWidget {
         (ref) {
           return thermostatDevicesUnfiltered.sortByList(
             [
+              // sort by names
               (a, b) => deviceNames[a.key]!.compareTo(
                     deviceNames[b.key]!,
                   ),
+              // then sort by temperature
               (a, b) => b.value.localTemperature.compareTo(
                     a.value.localTemperature,
                   ),

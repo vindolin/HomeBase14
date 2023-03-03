@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 import '/utils.dart';
 
@@ -24,7 +25,7 @@ class CurtainListPage extends ConsumerWidget {
 
     final curtainDevicesUnfiltered = ref.watch(curtainDevicesProvider);
     final curtainDevices = ref.watch(
-      Provider<Map<String, SingleCurtainDevice>>(
+      Provider<IMap<String, SingleCurtainDevice>>(
         (ref) {
           return curtainDevicesUnfiltered.sortByList(
             [
@@ -39,7 +40,7 @@ class CurtainListPage extends ConsumerWidget {
 
     final dualCurtainDevicesUnfiltered = ref.watch(dualCurtainDevicesProvider);
     final dualCurtainDevices = ref.watch(
-      Provider<Map<String, DualCurtainDevice>>(
+      Provider<IMap<String, DualCurtainDevice>>(
         (ref) {
           return dualCurtainDevicesUnfiltered.sortByList(
             [
@@ -53,10 +54,10 @@ class CurtainListPage extends ConsumerWidget {
     );
 
     // add both curtain types to a single map
-    Map<String, AbstractMqttDevice> combinedCurtainDevices = {
-      ...dualCurtainDevices,
-      ...curtainDevices,
-    };
+    IMap<String, AbstractMqttDevice> combinedCurtainDevices = IMap({
+      ...dualCurtainDevices.unlock,
+      ...curtainDevices.unlock,
+    });
 
     return Scaffold(
       appBar: AppBar(

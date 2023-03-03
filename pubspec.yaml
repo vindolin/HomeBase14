@@ -73,6 +73,7 @@ dependencies:
   shader: ^1.0.1
   flutter_shaders: ^0.0.6
   timer_builder: ^2.0.0
+  fast_immutable_collections: ^9.0.0
 
 dev_dependencies:
   build_runner:

@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:tuple/tuple.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 import '/utils.dart';
 
@@ -23,8 +24,8 @@ class MqttMessage with _$MqttMessage {
 class MqttMessages extends _$MqttMessages {
   late Function publishCallback; // get's injected by the mqtt class
   @override
-  Map<String, MqttMessage> build() {
-    return {};
+  IMap<String, MqttMessage> build() {
+    return IMap();
   }
 }
 
@@ -33,40 +34,40 @@ class Leech extends _$Leech {
   late Function publishCallback; // get's injected by the mqtt class
 
   @override
-  Map<String, String> build() {
-    return {'sleep_state': 'none'};
+  IMap<String, String> build() {
+    return IMap(const {'sleep_state': 'none'});
   }
 }
 
 @riverpod
 class DoorDevices extends _$DoorDevices {
   @override
-  Map<String, DoorDevice> build() {
-    return {};
+  IMap<String, DoorDevice> build() {
+    return IMap();
   }
 }
 
 @riverpod
 class ThermostatDevices extends _$ThermostatDevices {
   @override
-  Map<String, ThermostatDevice> build() {
-    return {};
+  IMap<String, ThermostatDevice> build() {
+    return IMap();
   }
 }
 
 @riverpod
 class CurtainDevices extends _$CurtainDevices {
   @override
-  Map<String, SingleCurtainDevice> build() {
-    return {};
+  IMap<String, SingleCurtainDevice> build() {
+    return IMap();
   }
 }
 
 @riverpod
 class DualCurtainDevices extends _$DualCurtainDevices {
   @override
-  Map<String, DualCurtainDevice> build() {
-    return {};
+  IMap<String, DualCurtainDevice> build() {
+    return IMap();
   }
 }
 
@@ -74,8 +75,8 @@ class DualCurtainDevices extends _$DualCurtainDevices {
 class DeviceNames extends _$DeviceNames {
   // Mapping of device id to device name
   @override
-  Map<String, String> build() {
-    return {};
+  IMap<String, String> build() {
+    return IMap();
   }
 }
 
@@ -92,7 +93,7 @@ class ArmedSwitchDevice with _$ArmedSwitchDevice {
   }) = _SwitchDevice;
 }
 
-Map<String, ArmedSwitchDevice> switchDevices = {
+IMap<String, ArmedSwitchDevice> switchDevices = IMap({
   'garage': ArmedSwitchDevice(
     topicGet: 'garagedoor/state',
     topicSet: 'garagedoor/set',
@@ -124,14 +125,14 @@ Map<String, ArmedSwitchDevice> switchDevices = {
     offState: 'OFF',
     stateKey: 'state',
   ),
-};
+});
 
 @riverpod
 class SwitchDevices extends _$SwitchDevices {
   late Function publishCallback; // get's injected by the mqtt class
 
   @override
-  Map<String, ArmedSwitchDevice> build() {
+  IMap<String, ArmedSwitchDevice> build() {
     return switchDevices; // figure out why I can't use the map directly here...
   }
 
@@ -158,36 +159,36 @@ class LightDevice with _$LightDevice {
   }) = _LightDevice;
 }
 
-Map<String, LightDevice> lightDevices = {
-  'kamin': const LightDevice(
+IMap<String, LightDevice> lightDevices = IMap(const {
+  'kamin': LightDevice(
     id: 'kamin',
     name: 'Kamin',
     topicGet: 'stat/dose2/POWER',
     topicSet: 'cmnd/dose2/POWER',
     state: 'OFF',
   ),
-  'sofa': const LightDevice(
+  'sofa': LightDevice(
     id: 'sofa',
     name: 'Sofa',
     topicGet: 'stat/dose3/POWER',
     topicSet: 'cmnd/dose3/POWER',
     state: 'OFF',
   ),
-  'esstisch': const LightDevice(
+  'esstisch': LightDevice(
     id: 'esstisch',
     name: 'Esstisch',
     topicGet: 'stat/dose4/POWER',
     topicSet: 'cmnd/dose4/POWER',
     state: 'OFF',
   ),
-};
+});
 
 @riverpod
 class LightDevices extends _$LightDevices {
   late Function publishCallback; // get's injected by the mqtt class
 
   @override
-  Map<String, LightDevice> build() {
+  IMap<String, LightDevice> build() {
     return lightDevices; // figure out why I can't the map directly here...
   }
 
@@ -209,11 +210,11 @@ class LightDevices extends _$LightDevices {
   }
 }
 
-final mqttDeviceMap = {
+final mqttDeviceMap = IMap(const {
   'curtain': SingleCurtainDevice,
   'door': DoorDevice,
   'thermostat': ThermostatDevice,
-};
+});
 
 typedef F = void Function(String deviceId, String payload);
 

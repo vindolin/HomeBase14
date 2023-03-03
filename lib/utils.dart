@@ -1,5 +1,6 @@
 import 'dart:developer' as d;
 import 'package:stack_trace/stack_trace.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 // const bool debugTrace = false;
 const bool debugTrace = true;
@@ -66,9 +67,9 @@ extension ListMultipleSort<T> on List<T> {
   }
 }
 
-extension MapMultipleSort<K, V> on Map<K, V> {
-  Map<K, V> sortByList(List<CompareFn> compareFns) {
-    return Map.fromEntries((this).entries.toList()..sortByList(compareFns));
+extension MapMultipleSort<K, V> on IMap<K, V> {
+  IMap<K, V> sortByList(List<CompareFn> compareFns) {
+    return IMap.fromEntries(entries.toList()..sortByList(compareFns));
   }
 }
 

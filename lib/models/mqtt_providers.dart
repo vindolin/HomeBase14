@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/services.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:nanoid/nanoid.dart';
@@ -207,10 +208,13 @@ class Mqtt extends _$Mqtt {
         } on FormatException catch (_) {
           payloadDecoded = payload;
         }
-        mqttMessages.state = {
-          ...mqttMessages.state,
-          mqttReceivedMessage.topic: MqttMessage(topic: mqttReceivedMessage.topic, payload: payload)
-        };
+        mqttMessages.state = mqttMessages.state.add(
+          mqttReceivedMessage.topic,
+          MqttMessage(
+            topic: mqttReceivedMessage.topic,
+            payload: payload,
+          ),
+        );
 
         // look for topics that look like our schema zigbee2mqtt/curtain/i001 for devices and add them to the mqttDevices
         RegExpMatch? match = RegExp(r'zigbee2mqtt/(?<type>\w+)/(?<id>i\d+)$').firstMatch(mqttReceivedMessage.topic);
@@ -221,28 +225,38 @@ class Mqtt extends _$Mqtt {
 
           if (deviceType == 'curtain' || deviceType == 'curtainU') {
             // underwall curtain switch
-            curtainDevices.state = {
-              ...curtainDevices.state,
-              deviceId: SingleCurtainDevice(deviceId, deviceType, payloadDecoded, publishZ2M),
-            };
+            curtainDevices.state = curtainDevices.state.add(
+              deviceId,
+              SingleCurtainDevice(
+                deviceId,
+                deviceType,
+                payloadDecoded,
+                publishZ2M,
+              ),
+            );
           } else if (deviceType == 'dualCurtain') {
             // dual curtain switch
-            dualCurtainDevices.state = {
-              ...dualCurtainDevices.state,
-              deviceId: DualCurtainDevice(deviceId, deviceType, payloadDecoded, publishZ2M),
-            };
+            dualCurtainDevices.state = dualCurtainDevices.state.add(
+              deviceId,
+              DualCurtainDevice(deviceId, deviceType, payloadDecoded, publishZ2M),
+            );
           } else if (deviceType == 'door') {
             // door contact
-            doorDevices.state = {
-              ...doorDevices.state,
-              deviceId: DoorDevice(deviceId, deviceType, payloadDecoded, publishZ2M),
-            };
+            doorDevices.state = doorDevices.state.add(
+              deviceId,
+              DoorDevice(
+                deviceId,
+                deviceType,
+                payloadDecoded,
+                publishZ2M,
+              ),
+            );
           } else if (deviceType == 'thermostat') {
             // thermostat
-            thermostatDevices.state = {
-              ...thermostatDevices.state,
-              deviceId: ThermostatDevice(deviceId, deviceType, payloadDecoded, publishZ2M),
-            };
+            thermostatDevices.state = thermostatDevices.state.add(
+              deviceId,
+              ThermostatDevice(deviceId, deviceType, payloadDecoded, publishZ2M),
+            );
           }
 
           // send the message to the message stream
@@ -271,10 +285,11 @@ class Mqtt extends _$Mqtt {
         // tasmota switches, plugs, bulps, etc
         lightDevices.state.forEach((key, lightDevice) {
           if (lightDevice.topicGet == mqttReceivedMessage.topic) {
-            lightDevices.state = {
-              ...lightDevices.state,
-              key: lightDevice.copyWith(state: payload),
-            };
+            lightDevices.state = lightDevices.state.add(key, lightDevice.copyWith(state: payload));
+            // lightDevices.state = {
+            //   ...lightDevices.state,
+            //   key: lightDevice.copyWith(state: payload),
+            // };
           }
         });
 
@@ -288,10 +303,10 @@ class Mqtt extends _$Mqtt {
               payloadDecoded = jsonDecode(payload);
               devicePayload = payloadDecoded[switchDevice.stateKey!];
             }
-            switchDevices.state = {
-              ...switchDevices.state,
-              key: switchDevice.copyWith(state: devicePayload, transitioning: false),
-            };
+            switchDevices.state = switchDevices.state.add(
+              key,
+              switchDevice.copyWith(state: devicePayload, transitioning: false),
+            );
           }
         });
       }
@@ -320,7 +335,7 @@ class Mqtt extends _$Mqtt {
         //
       }
     }
-    mqttDescriptions.state = {...mqttDescriptions.state, ...deviceNames};
+    mqttDescriptions.state = IMap({...mqttDescriptions.state.unlock, ...deviceNames});
   }
 
   void onDisconnected() {

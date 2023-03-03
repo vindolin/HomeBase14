@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 import '/utils.dart';
 import '/models/mqtt_devices.dart';
@@ -17,7 +18,7 @@ class ThermostatListPage extends ConsumerWidget {
 
     final thermostatDevicesUnfiltered = ref.watch(thermostatDevicesProvider);
     final thermostatDevices = ref.watch(
-      Provider<Map<String, ThermostatDevice>>(
+      Provider<IMap<String, ThermostatDevice>>(
         (ref) {
           return thermostatDevicesUnfiltered.sortByList(
             [

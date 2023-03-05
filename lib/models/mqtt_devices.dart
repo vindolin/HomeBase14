@@ -520,11 +520,12 @@ class ThermostatDevices extends _$ThermostatDevices {
   }
 }
 
-class IkeaBulbDevice extends AbstractMqttDevice {
+class SmartBulbDevice extends AbstractMqttDevice {
+  String state = 'OFF';
   double brightness = 0;
   double colorTemp = 0;
 
-  IkeaBulbDevice(
+  SmartBulbDevice(
     super.deviceId,
     super.deviceType,
     super.payload,
@@ -534,6 +535,9 @@ class IkeaBulbDevice extends AbstractMqttDevice {
   @override
   void readValue(String key, dynamic value) {
     switch (key) {
+      case 'state':
+        state = value;
+        break;
       case 'brightness':
         brightness = value.toDouble();
         break;
@@ -549,6 +553,7 @@ class IkeaBulbDevice extends AbstractMqttDevice {
     super.publishState();
     String json = jsonEncode(
       {
+        'state': state,
         'brightness': brightness.toDouble(),
         'color_temp': colorTemp.toDouble(),
       },
@@ -563,9 +568,9 @@ class IkeaBulbDevice extends AbstractMqttDevice {
 }
 
 @riverpod
-class IkeaBulbDevices extends _$IkeaBulbDevices {
+class SmartBulbDevices extends _$SmartBulbDevices {
   @override
-  IMap<String, IkeaBulbDevice> build() {
+  IMap<String, SmartBulbDevice> build() {
     return IMap();
   }
 }

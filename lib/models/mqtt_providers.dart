@@ -1,3 +1,5 @@
+// ignore_for_file: dead_code
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -74,11 +76,12 @@ final doorAlarmProvider = StreamProvider<int>((ref) async* {
 @riverpod
 class Mqtt extends _$Mqtt {
   late MqttServerClient client;
-  late CurtainDevices curtainDevices;
+  late SingleCurtainDevices curtainDevices;
   late DualCurtainDevices dualCurtainDevices;
   late DoorDevices doorDevices;
   late ThermostatDevices thermostatDevices;
   late LightDevices lightDevices;
+  late SmartBulbDevices ikeaBulbDevices;
   late SwitchDevices switchDevices;
   late Leech leech;
   late MqttMessages mqttMessages;
@@ -87,8 +90,9 @@ class Mqtt extends _$Mqtt {
   build() {
     log('building mqtt');
     lightDevices = ref.watch(lightDevicesProvider.notifier);
+    ikeaBulbDevices = ref.watch(smartBulbDevicesProvider.notifier);
     switchDevices = ref.watch(switchDevicesProvider.notifier);
-    curtainDevices = ref.watch(curtainDevicesProvider.notifier);
+    curtainDevices = ref.watch(singleCurtainDevicesProvider.notifier);
     dualCurtainDevices = ref.watch(dualCurtainDevicesProvider.notifier);
     doorDevices = ref.watch(doorDevicesProvider.notifier);
     thermostatDevices = ref.watch(thermostatDevicesProvider.notifier);
@@ -111,37 +115,38 @@ class Mqtt extends _$Mqtt {
 
     final connectionData = ref.watch(appSettingsProvider.notifier);
 
-    client = MqttServerClient.withPort(
-      connectionData.state.mqttAddress,
-      clientIdentifier,
-      connectionData.state.mqttPort,
-    );
+    bool useCerts = false;
 
-    // client = MqttServerClient.withPort(
-    //   '***REMOVED***',
-    //   'tulpe',
-    //   1886,
-    // );
+    if (useCerts) {
+      client = MqttServerClient.withPort(
+        ***REMOVED***,
+        clientIdentifier,
+        8882,
+      );
 
-    // ignore: dead_code
-    if (false) {
       final context = SecurityContext.defaultContext;
 
-      final caCrt = await rootBundle.load('assets/pem/ca.crt');
-      final clientCrt = await rootBundle.load('assets/pem/client.crt');
+      final cert = await rootBundle.load('assets/pem/cert.pem');
+      // final fullchain = await rootBundle.load('assets/pem/fullchain.pem');
+      // final chain = await rootBundle.load('assets/pem/chain.pem');
 
-      context.setTrustedCertificatesBytes(caCrt.buffer.asInt8List());
-      context.setClientAuthoritiesBytes(clientCrt.buffer.asInt8List());
-      // context.useCertificateChainBytes(clientCrt.buffer.asInt8List());
+      context.setClientAuthoritiesBytes(cert.buffer.asInt8List());
+      // context.setTrustedCertificatesBytes(xxx.buffer.asInt8List());
+      // context.useCertificateChainBytes(xxx.buffer.asInt8List());
 
-      final clientKey = await rootBundle.load('assets/pem/client.key');
-      context.usePrivateKeyBytes(clientKey.buffer.asInt8List());
+      final privkey = await rootBundle.load('assets/pem/privkey.pem');
+      context.usePrivateKeyBytes(privkey.buffer.asInt8List());
 
       client.securityContext = context;
-
       client.secure = true;
+    } else {
+      client = MqttServerClient.withPort(
+        connectionData.state.mqttAddress,
+        clientIdentifier,
+        connectionData.state.mqttPort,
+      );
     }
-    // client.autoReconnect = true;
+    client.autoReconnect = true;
 
     client.onConnected = onConnected;
     client.onDisconnected = onDisconnected;
@@ -231,6 +236,7 @@ class Mqtt extends _$Mqtt {
           // it's a zigbee2mqtt message
           String deviceType = match.namedGroup('type')!; // e.g. curtain
           String deviceId = '$deviceType/${match.namedGroup('id')!}'; // e.g. curtain/001
+          // log(deviceId);
 
           if (deviceType == 'curtain' || deviceType == 'curtainU') {
             // underwall curtain switch
@@ -248,6 +254,12 @@ class Mqtt extends _$Mqtt {
             dualCurtainDevices.state = dualCurtainDevices.state.add(
               deviceId,
               DualCurtainDevice(deviceId, deviceType, payloadDecoded, publishZ2M),
+            );
+          } else if (deviceType == 'bulb') {
+            // dual curtain switch
+            ikeaBulbDevices.state = ikeaBulbDevices.state.add(
+              deviceId,
+              SmartBulbDevice(deviceId, deviceType, payloadDecoded, publishZ2M),
             );
           } else if (deviceType == 'door') {
             // door contact

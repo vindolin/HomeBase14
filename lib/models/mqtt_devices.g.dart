@@ -150,20 +150,20 @@ final thermostatDevicesProvider = AutoDisposeNotifierProvider<ThermostatDevices,
 
 typedef _$ThermostatDevices
     = AutoDisposeNotifier<IMap<String, ThermostatDevice>>;
-String _$ikeaBulbDevicesHash() => r'eb7684e123af559cb7662978aa6042b907ee2a4b';
+String _$smartBulbDevicesHash() => r'390d2e9d1be6840f4bdd4cb02fc19d4be3e3bf5c';
 
-/// See also [IkeaBulbDevices].
-@ProviderFor(IkeaBulbDevices)
-final ikeaBulbDevicesProvider = AutoDisposeNotifierProvider<IkeaBulbDevices,
-    IMap<String, IkeaBulbDevice>>.internal(
-  IkeaBulbDevices.new,
-  name: r'ikeaBulbDevicesProvider',
+/// See also [SmartBulbDevices].
+@ProviderFor(SmartBulbDevices)
+final smartBulbDevicesProvider = AutoDisposeNotifierProvider<SmartBulbDevices,
+    IMap<String, SmartBulbDevice>>.internal(
+  SmartBulbDevices.new,
+  name: r'smartBulbDevicesProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$ikeaBulbDevicesHash,
+      : _$smartBulbDevicesHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$IkeaBulbDevices = AutoDisposeNotifier<IMap<String, IkeaBulbDevice>>;
+typedef _$SmartBulbDevices = AutoDisposeNotifier<IMap<String, SmartBulbDevice>>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

@@ -39,22 +39,21 @@
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <circle
-       style="fill:none;stroke-width:15;stroke:#ffffff;stroke-opacity:1;stroke-dasharray:none;fill-opacity:1"
+    <path
        id="path173"
-       cx="105.84421"
-       cy="124.06329"
-       r="59.284321" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:84.2542px;line-height:1.25;font-family:'Alfa Slab One';-inkscape-font-specification:'Alfa Slab One';letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.10635"
-       x="54.786186"
-       y="156.83818"
-       id="text1590"><tspan
-         sodipodi:role="line"
-         id="tspan1588"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Alfa Slab One';-inkscape-font-specification:'Alfa Slab One';fill:#ffffff;stroke-width:2.10635"
-         x="54.786186"
-         y="156.83818">14</tspan></text>
+       style="fill:none;stroke:#ffffff;stroke-width:15"
+       d="M 165.12853,124.06329 A 59.284321,59.284321 0 0 1 105.84421,183.34761 59.284321,59.284321 0 0 1 46.559887,124.06329 59.284321,59.284321 0 0 1 105.84421,64.778973 59.284321,59.284321 0 0 1 165.12853,124.06329 Z" />
+    <g
+       aria-label="14"
+       id="text1590"
+       style="font-size:84.2542px;line-height:1.25;font-family:'Alfa Slab One';-inkscape-font-specification:'Alfa Slab One';letter-spacing:0px;word-spacing:0px;fill:#ffffff;stroke-width:2.10635"
+       transform="matrix(0.84925383,0,0,0.84925383,15.955609,18.702067)">
+      <path
+         d="m 58.493371,156.83818 v -13.81769 h 8.088404 V 105.1061 H 55.965745 V 95.585374 L 74.670178,91.28841 h 14.154707 v 51.73208 h 7.077353 v 13.81769 z"
+         id="path1737" />
+      <path
+         d="M 127.66602,156.83818 V 146.30641 H 100.2834 v -13.81769 l 29.0677,-41.20031 h 20.55803 v 42.21136 h 5.81354 v 12.80664 h -5.81354 v 10.53177 z m -11.79559,-23.33841 h 11.79559 v -16.59808 z"
+         id="path1739" />
+    </g>
   </g>
 </svg>

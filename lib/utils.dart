@@ -67,9 +67,18 @@ extension ListMultipleSort<T> on List<T> {
   }
 }
 
-extension MapMultipleSort<K, V> on IMap<K, V> {
+// compare by multiple compare functions
+extension MapMultipleSort<K, V> on Map<K, V> {
+  Map<K, V> sortByList(List<CompareFn> compareFns) {
+    return Map.fromEntries(entries.toList()..sortByList(compareFns));
+  }
+}
+
+extension IMapMultipleSort<K, V> on IMap<K, V> {
   IMap<K, V> sortByList(List<CompareFn> compareFns) {
-    return IMap.fromEntries(entries.toList()..sortByList(compareFns));
+    return IMap.fromEntries(
+      entries.toList()..sortByList(compareFns),
+    );
   }
 }
 

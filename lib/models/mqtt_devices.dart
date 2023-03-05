@@ -30,6 +30,15 @@ class MqttMessages extends _$MqttMessages {
 }
 
 @riverpod
+class DeviceNames extends _$DeviceNames {
+  // Mapping of device id to device name
+  @override
+  IMap<String, String> build() {
+    return IMap();
+  }
+}
+
+@riverpod
 class Leech extends _$Leech {
   late Function publishCallback; // get's injected by the mqtt class
 
@@ -39,43 +48,67 @@ class Leech extends _$Leech {
   }
 }
 
-@riverpod
-class DoorDevices extends _$DoorDevices {
+class SingleCurtainDevice extends CurtainDevice {
+  double position = 0.0;
+
+  // @override
+  // final dataMapping = [
+  //   const Tuple3('position', 'position', double),
+  // ];
+
+  SingleCurtainDevice(
+    super.deviceId,
+    super.deviceType,
+    super.payload,
+    super.publishCallback,
+  );
+
   @override
-  IMap<String, DoorDevice> build() {
-    return IMap();
+  void readValue(String key, dynamic value) {
+    switch (key) {
+      case 'position':
+        position = value.toDouble();
+        break;
+      case 'motor_reversal':
+        motorReversal = value == 'ON';
+        break;
+    }
+    super.readValue(key, value);
+  }
+
+  @override
+  void publishState() {
+    super.publishState();
+    String json = jsonEncode(
+      {
+        'position': position.toInt(),
+      },
+    );
+    log('publish> $deviceId $json');
+
+    publishCallback(
+      deviceId,
+      json,
+    );
+  }
+
+  void open() {
+    publishCallback(deviceId, jsonEncode({'state': 'OPEN'}));
+  }
+
+  void close() {
+    publishCallback(deviceId, jsonEncode({'state': 'CLOSE'}));
+  }
+
+  void stop() {
+    publishCallback(deviceId, jsonEncode({'state': 'STOP'}));
   }
 }
 
 @riverpod
-class ThermostatDevices extends _$ThermostatDevices {
-  @override
-  IMap<String, ThermostatDevice> build() {
-    return IMap();
-  }
-}
-
-@riverpod
-class CurtainDevices extends _$CurtainDevices {
+class SingleCurtainDevices extends _$SingleCurtainDevices {
   @override
   IMap<String, SingleCurtainDevice> build() {
-    return IMap();
-  }
-}
-
-@riverpod
-class DualCurtainDevices extends _$DualCurtainDevices {
-  @override
-  IMap<String, DualCurtainDevice> build() {
-    return IMap();
-  }
-}
-
-@riverpod
-class DeviceNames extends _$DeviceNames {
-  // Mapping of device id to device name
-  @override
-  IMap<String, String> build() {
     return IMap();
   }
 }
@@ -152,7 +185,6 @@ class LightDevice with _$LightDevice {
   const factory LightDevice({
     required String id,
     required String name,
-    // TODOs add ON/OFF state
     required String topicGet,
     required String topicSet,
     required String state,
@@ -216,6 +248,7 @@ final mqttDeviceMap = IMap(const {
   'thermostat': ThermostatDevice,
 });
 
+// publish callback typedef
 typedef F = void Function(String deviceId, String payload);
 
 abstract class AbstractMqttDevice {
@@ -299,63 +332,6 @@ abstract class CurtainDevice extends AbstractMqttDevice {
   );
 }
 
-class SingleCurtainDevice extends CurtainDevice {
-  double position = 0.0;
-
-  // @override
-  // final dataMapping = [
-  //   const Tuple3('position', 'position', double),
-  // ];
-
-  SingleCurtainDevice(
-    super.deviceId,
-    super.deviceType,
-    super.payload,
-    super.publishCallback,
-  );
-
-  @override
-  void readValue(String key, dynamic value) {
-    switch (key) {
-      case 'position':
-        position = value.toDouble();
-        break;
-      case 'motor_reversal':
-        motorReversal = value == 'ON';
-        break;
-    }
-    super.readValue(key, value);
-  }
-
-  @override
-  void publishState() {
-    super.publishState();
-    String json = jsonEncode(
-      {
-        'position': position.toInt(),
-      },
-    );
-    log('publish> $deviceId $json');
-
-    publishCallback(
-      deviceId,
-      json,
-    );
-  }
-
-  void open() {
-    publishCallback(deviceId, jsonEncode({'state': 'OPEN'}));
-  }
-
-  void close() {
-    publishCallback(deviceId, jsonEncode({'state': 'CLOSE'}));
-  }
-
-  void stop() {
-    publishCallback(deviceId, jsonEncode({'state': 'STOP'}));
-  }
-}
-
 class DualCurtainDevice extends CurtainDevice {
   double positionLeft = 0.0;
   double positionRight = 0.0;
@@ -430,6 +406,14 @@ class DualCurtainDevice extends CurtainDevice {
   }
 }
 
+@riverpod
+class DualCurtainDevices extends _$DualCurtainDevices {
+  @override
+  IMap<String, DualCurtainDevice> build() {
+    return IMap();
+  }
+}
+
 class DoorDevice extends AbstractMqttDevice {
   double position = 0.0;
 
@@ -469,6 +453,14 @@ class DoorDevice extends AbstractMqttDevice {
       deviceId,
       json,
     );
+  }
+}
+
+@riverpod
+class DoorDevices extends _$DoorDevices {
+  @override
+  IMap<String, DoorDevice> build() {
+    return IMap();
   }
 }
 
@@ -517,5 +509,63 @@ class ThermostatDevice extends AbstractMqttDevice {
       deviceId,
       json,
     );
+  }
+}
+
+@riverpod
+class ThermostatDevices extends _$ThermostatDevices {
+  @override
+  IMap<String, ThermostatDevice> build() {
+    return IMap();
+  }
+}
+
+class IkeaBulbDevice extends AbstractMqttDevice {
+  double brightness = 0;
+  double colorTemp = 0;
+
+  IkeaBulbDevice(
+    super.deviceId,
+    super.deviceType,
+    super.payload,
+    super.publishCallback,
+  );
+
+  @override
+  void readValue(String key, dynamic value) {
+    switch (key) {
+      case 'brightness':
+        brightness = value.toDouble();
+        break;
+      case 'color_temp':
+        colorTemp = value.toDouble();
+        break;
+    }
+    super.readValue(key, value);
+  }
+
+  @override
+  void publishState() {
+    super.publishState();
+    String json = jsonEncode(
+      {
+        'brightness': brightness.toDouble(),
+        'color_temp': colorTemp.toDouble(),
+      },
+    );
+    log('publish> $deviceId $json');
+
+    publishCallback(
+      deviceId,
+      json,
+    );
+  }
+}
+
+@riverpod
+class IkeaBulbDevices extends _$IkeaBulbDevices {
+  @override
+  IMap<String, IkeaBulbDevice> build() {
+    return IMap();
   }
 }

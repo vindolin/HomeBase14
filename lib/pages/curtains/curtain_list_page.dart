@@ -23,7 +23,7 @@ class CurtainListPage extends ConsumerWidget {
 
     final deviceNames = ref.read(deviceNamesProvider);
 
-    final curtainDevicesUnfiltered = ref.watch(curtainDevicesProvider);
+    final curtainDevicesUnfiltered = ref.watch(singleCurtainDevicesProvider);
     final curtainDevices = ref.watch(
       Provider<IMap<String, SingleCurtainDevice>>(
         (ref) {
@@ -83,7 +83,7 @@ class CurtainListPage extends ConsumerWidget {
             key: Key(device.deviceId),
             visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
             title: Text(
-              deviceNames[device.deviceId]!,
+              deviceNames[device.deviceId] ?? device.deviceId,
             ),
             subtitle: Row(
               children: [

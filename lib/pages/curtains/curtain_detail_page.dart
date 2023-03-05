@@ -15,7 +15,7 @@ class CurtainDetailPage extends ConsumerWidget {
     // final device = ref.watch(mqttDevicesProvider)[deviceId];
 
     final device = ref.watch(
-      curtainDevicesProvider.select(
+      singleCurtainDevicesProvider.select(
         (mqttDevices) => mqttDevices[deviceId],
       ),
     );

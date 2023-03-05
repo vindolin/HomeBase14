@@ -21,6 +21,21 @@ final mqttMessagesProvider = AutoDisposeNotifierProvider<MqttMessages,
 );
 
 typedef _$MqttMessages = AutoDisposeNotifier<IMap<String, MqttMessage>>;
+String _$deviceNamesHash() => r'4a792cd0be469feeaebdd13356b3f2f392817001';
+
+/// See also [DeviceNames].
+@ProviderFor(DeviceNames)
+final deviceNamesProvider =
+    AutoDisposeNotifierProvider<DeviceNames, IMap<String, String>>.internal(
+  DeviceNames.new,
+  name: r'deviceNamesProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$deviceNamesHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$DeviceNames = AutoDisposeNotifier<IMap<String, String>>;
 String _$leechHash() => r'0a413e597e33be80f44f8237aced20a66183a16f';
 
 /// See also [Leech].
@@ -36,6 +51,73 @@ final leechProvider =
 );
 
 typedef _$Leech = AutoDisposeNotifier<IMap<String, String>>;
+String _$singleCurtainDevicesHash() =>
+    r'4de6d46b069d920055290f613ef4b3f2efeebc7d';
+
+/// See also [SingleCurtainDevices].
+@ProviderFor(SingleCurtainDevices)
+final singleCurtainDevicesProvider = AutoDisposeNotifierProvider<
+    SingleCurtainDevices, IMap<String, SingleCurtainDevice>>.internal(
+  SingleCurtainDevices.new,
+  name: r'singleCurtainDevicesProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$singleCurtainDevicesHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$SingleCurtainDevices
+    = AutoDisposeNotifier<IMap<String, SingleCurtainDevice>>;
+String _$switchDevicesHash() => r'4c6c178ba9d67434f7d3437234e7eb467c52c1ab';
+
+/// See also [SwitchDevices].
+@ProviderFor(SwitchDevices)
+final switchDevicesProvider = AutoDisposeNotifierProvider<SwitchDevices,
+    IMap<String, ArmedSwitchDevice>>.internal(
+  SwitchDevices.new,
+  name: r'switchDevicesProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$switchDevicesHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$SwitchDevices = AutoDisposeNotifier<IMap<String, ArmedSwitchDevice>>;
+String _$lightDevicesHash() => r'99f8ff5cfea3d7809238e66e6856bf3b5218d252';
+
+/// See also [LightDevices].
+@ProviderFor(LightDevices)
+final lightDevicesProvider = AutoDisposeNotifierProvider<LightDevices,
+    IMap<String, LightDevice>>.internal(
+  LightDevices.new,
+  name: r'lightDevicesProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$lightDevicesHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$LightDevices = AutoDisposeNotifier<IMap<String, LightDevice>>;
+String _$dualCurtainDevicesHash() =>
+    r'b2594191eecaa4f08ced15324cb469de6feeafce';
+
+/// See also [DualCurtainDevices].
+@ProviderFor(DualCurtainDevices)
+final dualCurtainDevicesProvider = AutoDisposeNotifierProvider<
+    DualCurtainDevices, IMap<String, DualCurtainDevice>>.internal(
+  DualCurtainDevices.new,
+  name: r'dualCurtainDevicesProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$dualCurtainDevicesHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$DualCurtainDevices
+    = AutoDisposeNotifier<IMap<String, DualCurtainDevice>>;
 String _$doorDevicesHash() => r'a85789b5d0a0e6e5cff59e51d57c31b0e6b8431b';
 
 /// See also [DoorDevices].
@@ -68,85 +150,20 @@ final thermostatDevicesProvider = AutoDisposeNotifierProvider<ThermostatDevices,
 
 typedef _$ThermostatDevices
     = AutoDisposeNotifier<IMap<String, ThermostatDevice>>;
-String _$curtainDevicesHash() => r'def393e1b2aa934ef70e0bfd286370d4ff6affad';
+String _$ikeaBulbDevicesHash() => r'eb7684e123af559cb7662978aa6042b907ee2a4b';
 
-/// See also [CurtainDevices].
-@ProviderFor(CurtainDevices)
-final curtainDevicesProvider = AutoDisposeNotifierProvider<CurtainDevices,
-    IMap<String, SingleCurtainDevice>>.internal(
-  CurtainDevices.new,
-  name: r'curtainDevicesProvider',
+/// See also [IkeaBulbDevices].
+@ProviderFor(IkeaBulbDevices)
+final ikeaBulbDevicesProvider = AutoDisposeNotifierProvider<IkeaBulbDevices,
+    IMap<String, IkeaBulbDevice>>.internal(
+  IkeaBulbDevices.new,
+  name: r'ikeaBulbDevicesProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$curtainDevicesHash,
+      : _$ikeaBulbDevicesHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$CurtainDevices
-    = AutoDisposeNotifier<IMap<String, SingleCurtainDevice>>;
-String _$dualCurtainDevicesHash() =>
-    r'b2594191eecaa4f08ced15324cb469de6feeafce';
-
-/// See also [DualCurtainDevices].
-@ProviderFor(DualCurtainDevices)
-final dualCurtainDevicesProvider = AutoDisposeNotifierProvider<
-    DualCurtainDevices, IMap<String, DualCurtainDevice>>.internal(
-  DualCurtainDevices.new,
-  name: r'dualCurtainDevicesProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$dualCurtainDevicesHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$DualCurtainDevices
-    = AutoDisposeNotifier<IMap<String, DualCurtainDevice>>;
-String _$deviceNamesHash() => r'4a792cd0be469feeaebdd13356b3f2f392817001';
-
-/// See also [DeviceNames].
-@ProviderFor(DeviceNames)
-final deviceNamesProvider =
-    AutoDisposeNotifierProvider<DeviceNames, IMap<String, String>>.internal(
-  DeviceNames.new,
-  name: r'deviceNamesProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$deviceNamesHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$DeviceNames = AutoDisposeNotifier<IMap<String, String>>;
-String _$switchDevicesHash() => r'4c6c178ba9d67434f7d3437234e7eb467c52c1ab';
-
-/// See also [SwitchDevices].
-@ProviderFor(SwitchDevices)
-final switchDevicesProvider = AutoDisposeNotifierProvider<SwitchDevices,
-    IMap<String, ArmedSwitchDevice>>.internal(
-  SwitchDevices.new,
-  name: r'switchDevicesProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$switchDevicesHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$SwitchDevices = AutoDisposeNotifier<IMap<String, ArmedSwitchDevice>>;
-String _$lightDevicesHash() => r'99f8ff5cfea3d7809238e66e6856bf3b5218d252';
-
-/// See also [LightDevices].
-@ProviderFor(LightDevices)
-final lightDevicesProvider = AutoDisposeNotifierProvider<LightDevices,
-    IMap<String, LightDevice>>.internal(
-  LightDevices.new,
-  name: r'lightDevicesProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$lightDevicesHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$LightDevices = AutoDisposeNotifier<IMap<String, LightDevice>>;
+typedef _$IkeaBulbDevices = AutoDisposeNotifier<IMap<String, IkeaBulbDevice>>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

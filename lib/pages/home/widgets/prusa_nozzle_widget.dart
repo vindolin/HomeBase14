@@ -27,7 +27,7 @@ class PrusaNozzle extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    const int onDurationMs = 2000;
+    const int onDurationMs = 2500;
     const int fadeDurationMs = 500;
 
     final progressData = getTempData(ref);

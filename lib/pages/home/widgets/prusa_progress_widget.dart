@@ -65,7 +65,13 @@ class PrusaProgress extends ConsumerWidget {
                   strokeColor: Colors.black87,
                   child: Text(
                     '${progressData['percent_done']}%',
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 26, shadows: [
+                      Shadow(
+                        blurRadius: 3.0,
+                        color: Colors.black54,
+                        offset: Offset(2.0, 2.0),
+                      ),
+                    ]),
                   ),
                 ),
               ),

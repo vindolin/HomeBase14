@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '/models/mqtt_providers.dart';
 import '/models/mqtt_devices.dart';
 import '/models/watch_mqtt_message.dart';
 
@@ -26,6 +27,9 @@ class PrusaNozzle extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    const int onDurationMs = 2000;
+    const int fadeDurationMs = 500;
+
     final progressData = getTempData(ref);
     // final progressData = {'extruder_actual': 170.0, 'extruder_target': 200.0};
     Color nozzleColor = Colors.transparent;
@@ -40,15 +44,43 @@ class PrusaNozzle extends ConsumerWidget {
       );
     }
 
+    Color? targetColor;
+
+    Future<void> setColor() async {
+      targetColor = nozzleColor; // flash color
+      await Future.delayed(const Duration(milliseconds: onDurationMs));
+      targetColor = Colors.transparent; // and back to transparent
+    }
+
+    ref.watch(nozzleBlinkProvider); // every time message stream provider fires, the icon will blink
+
     // nozzleColor = Colors.white;
     const String assetName = 'assets/images/svg/nozzle.svg';
-    final Widget svg = SvgPicture.asset(
-      assetName,
-      colorFilter: ColorFilter.mode(nozzleColor, BlendMode.srcIn),
-      // color: nozzleColor,
-      width: 16,
-      height: 16,
+
+    return FutureBuilder<void>(
+      future: setColor(),
+      builder: (context, AsyncSnapshot<void> _) {
+        return TweenAnimationBuilder<Color?>(
+          tween: ColorTween(
+            begin: null,
+            end: targetColor,
+          ),
+          duration: const Duration(milliseconds: fadeDurationMs),
+          curve: Curves.easeInOut,
+          builder: (
+            BuildContext context,
+            Color? nozzleColor,
+            Widget? child,
+          ) {
+            return SvgPicture.asset(
+              assetName,
+              colorFilter: ColorFilter.mode(nozzleColor!, BlendMode.srcIn),
+              width: 16,
+              height: 16,
+            );
+          },
+        );
+      },
     );
-    return svg;
   }
 }

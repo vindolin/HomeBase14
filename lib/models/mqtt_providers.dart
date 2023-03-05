@@ -43,6 +43,15 @@ final messageProvider = StreamProvider<Map<String, dynamic>>((ref) async* {
   }
 });
 
+// used for the flashing 3d printer icon
+StreamController<String> nozzleBlinkController = StreamController<String>.broadcast();
+
+final nozzleBlinkProvider = StreamProvider<String>((ref) async* {
+  await for (final message in nozzleBlinkController.stream) {
+    yield message;
+  }
+});
+
 // used for vibration on door movement
 StreamController<int> doorMovementController = StreamController<int>.broadcast();
 
@@ -278,8 +287,10 @@ class Mqtt extends _$Mqtt {
         } else if (mqttReceivedMessage.topic == 'zigbee2mqtt/bridge/devices') {
           // we find the device name (description) in the zigbee2mqtt/bridge/devices message
           setDeviceNameMap(payloadDecoded);
+        } else if (mqttReceivedMessage.topic == 'prusa/progress') {
+          nozzleBlinkController.sink.add(payloadDecoded['percent_done']);
         } else {
-          print(mqttReceivedMessage.topic);
+          // print(mqttReceivedMessage.topic);
         }
 
         // tasmota switches, plugs, bulps, etc

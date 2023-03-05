@@ -7,8 +7,9 @@ import '/styles/text_styles.dart';
 class DropdownSelect extends ConsumerStatefulWidget {
   final String subTopic;
   final String pubTopic;
+  final bool retain;
   final Map<String, String> options;
-  const DropdownSelect({required this.options, required this.subTopic, required this.pubTopic, super.key});
+  const DropdownSelect({required this.options, required this.subTopic, required this.pubTopic, this.retain = false, super.key});
 
   @override
   ConsumerState<DropdownSelect> createState() => _DropdownStateSelect();
@@ -34,7 +35,7 @@ class _DropdownStateSelect extends ConsumerState<DropdownSelect> {
     return DropdownButton<String>(
       value: dropdownValue,
       onChanged: (String? value) {
-        ref.read(mqttMessagesProvider.notifier).publishCallback(widget.pubTopic, value!, retain: true);
+        ref.read(mqttMessagesProvider.notifier).publishCallback(widget.pubTopic, value!, retain: widget.retain);
         setState(
           () {
             dropdownValue = value;

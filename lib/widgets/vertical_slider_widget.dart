@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:format/format.dart';
 
+import '/widgets/river_slider_widget.dart';
+
 class VerticalSlider extends StatelessWidget {
   final double percentage;
-  final Function setValueChanged;
   final Function setValueEnd;
   final bool invert;
-  const VerticalSlider(this.percentage, this.setValueChanged, this.setValueEnd, {this.invert = false, super.key});
+  final int? divisions;
+
+  const VerticalSlider(
+    this.percentage,
+    this.setValueEnd, {
+    this.invert = false,
+    this.divisions,
+    super.key,
+  });
 
   double inverted(double value) {
     return invert ? 100.0 - value : value;
@@ -21,12 +30,11 @@ class VerticalSlider extends StatelessWidget {
           Expanded(
             child: RotatedBox(
               quarterTurns: 1,
-              child: Slider(
+              child: RiverSlider(
                 value: inverted(percentage),
                 max: 100,
-                divisions: 20,
+                divisions: divisions,
                 label: percentage.round().toString(),
-                onChanged: (double value) => setValueChanged(inverted(value)),
                 onChangeEnd: (double value) => setValueEnd(inverted(value)),
               ),
             ),

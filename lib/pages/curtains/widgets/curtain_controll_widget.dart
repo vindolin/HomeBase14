@@ -3,15 +3,20 @@ import '/widgets/vertical_slider_widget.dart';
 
 class CurtainControll extends StatelessWidget {
   final double percentage;
-  final Function setValueChangedFunc;
   final Function setValueEndFunc;
   final VoidCallback openFunc;
   final VoidCallback closeFunc;
   final VoidCallback stopFunc;
   final bool invert;
   const CurtainControll(
-      this.percentage, this.setValueChangedFunc, this.setValueEndFunc, this.openFunc, this.closeFunc, this.stopFunc,
-      {this.invert = false, super.key});
+    this.percentage,
+    this.setValueEndFunc,
+    this.openFunc,
+    this.closeFunc,
+    this.stopFunc, {
+    this.invert = false,
+    super.key,
+  });
 
   double inverted(double value) {
     return invert ? 100.0 - value : value;
@@ -22,9 +27,9 @@ class CurtainControll extends StatelessWidget {
     return Row(children: [
       VerticalSlider(
         percentage,
-        setValueChangedFunc,
         setValueEndFunc,
         invert: true,
+        divisions: 10,
       ),
       Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         FloatingActionButton(

@@ -12,19 +12,11 @@ class DualCurtainDetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final device = ref.watch(mqttDevicesProvider)[deviceId];
-
     final device = ref.watch(
       dualCurtainDevicesProvider.select(
         (mqttDevices) => mqttDevices[deviceId],
       ),
     );
-
-    // we need this special provider to be able to change the value in realtime
-    final positionLeftProvider = StateProvider<double>((ref) => device!.positionLeft);
-    final positionRightProvider = StateProvider<double>((ref) => device!.positionRight);
-    final positionLeft = ref.watch(positionLeftProvider);
-    final positionRight = ref.watch(positionRightProvider);
 
     final deviceNames = ref.read(deviceNamesProvider);
     log('build DualCurtainDetailPage $deviceId');
@@ -37,26 +29,20 @@ class DualCurtainDetailPage extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           CurtainControll(
-            positionLeft,
+            device!.positionLeft,
             (double value) {
-              ref.read(positionLeftProvider.notifier).state = value;
               device.positionLeft = value.toDouble();
-            },
-            (double value) {
               device.publishState();
             },
-            device!.openLeft,
+            device.openLeft,
             device.closeLeft,
             device.stopLeft,
             invert: true,
           ),
           CurtainControll(
-            positionRight,
+            device.positionRight,
             (double value) {
-              ref.read(positionRightProvider.notifier).state = value;
               device.positionRight = value.toDouble();
-            },
-            (double value) {
               device.publishState();
             },
             device.openRight,

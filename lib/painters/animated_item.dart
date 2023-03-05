@@ -36,7 +36,6 @@ class AnimatedItem extends HookWidget {
   @override
   Widget build(BuildContext context) {
     double value = device.position / 10;
-    print('value: $value');
     final animationController = useAnimationController(
       initialValue: value,
       duration: const Duration(milliseconds: 500),

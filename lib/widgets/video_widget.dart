@@ -20,7 +20,7 @@ class CamWidgetState extends ConsumerState<CamWidget> {
   @override
   void initState() {
     super.initState();
-    print(secrets.camData[widget.camId]!);
+    // print(secrets.camData[widget.camId]!);
     _videoPlayerController = VlcPlayerController.network(
       secrets.camData[widget.camId]!['videoUrl']!,
       options: VlcPlayerOptions(

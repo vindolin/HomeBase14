@@ -16,7 +16,6 @@ class AppBarWithIcons extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(preferredSize);
     return Container(
       height: preferredSize.height,
       alignment: Alignment.center,

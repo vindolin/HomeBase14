@@ -1,10 +1,13 @@
 #version 320 es
 precision mediump float;
 layout(location=0) out vec4 fragColor;
-layout(location=0) uniform float time;
-layout(location=1) uniform vec2 resolution;
+layout(location=0) uniform float iTime;
+layout(location=1) uniform vec2 iResolution;
 layout(location=2) uniform vec3 light1;
 layout(location=3) uniform vec3 light2;
+
+vec2 fragCoord = gl_FragCoord.xy;
+
 /// bigger iterations = blob sharpness, can't be passed as uniform, Skia requires
 /// a const for loops.
 //#define ITERATIONS 13.0
@@ -14,13 +17,13 @@ mat2 m(float a) {
   return mat2(c,-s,s,c);
 }
 float map(vec3 p){
-    p.xz *= m( time * 3.9 );
-    p.xy *= m( time * 2.8 );
-    vec3 q = p * 2.5 + time;
-    return length( p + vec3( sin(time*0.7)))*log(length(p)+1.) + sin(q.x+sin(q.z+sin(q.y)))*0.5 - 1.;
+    p.xz *= m( iTime * 3.9 );
+    p.xy *= m( iTime * 2.8 );
+    vec3 q = p * 2.5 + iTime;
+    return length( p + vec3( sin(iTime*0.7)))*log(length(p)+1.) + sin(q.x+sin(q.z+sin(q.y)))*0.5 - 1.;
 }
 void main() {
-    vec2 p = gl_FragCoord.xy / resolution.y - vec2(.5,.5);
+    vec2 p = gl_FragCoord.xy / iResolution.y - vec2(.5,.5);
     vec3 cl = vec3(0.);
     float d = .1;
     for(float i=0.0; i<=ITERATIONS; i++)	{

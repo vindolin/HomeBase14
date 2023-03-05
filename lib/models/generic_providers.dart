@@ -5,6 +5,7 @@ part 'generic_providers.g.dart';
 @riverpod
 class Toggler extends _$Toggler {
   @override
-  bool build() => false;
+  bool build(String key) => false;
+
   void toggle() => state = !state;
 }

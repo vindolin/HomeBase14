@@ -40,22 +40,22 @@ class ShaderPainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) => true;
 }
 
-class Blob extends ConsumerWidget {
-  const Blob({super.key});
+class Plasma extends ConsumerWidget {
+  const Plasma({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    bool showBlob = ref.watch(togglerProvider('blob'));
+    bool showPlasma = ref.watch(togglerProvider('plasma'));
 
     return ProviderScope(
       // overrides: [
       //   togglerProvider,
       // ],
       child: InkWell(
-        onTap: () => ref.read(togglerProvider('blob').notifier).toggle(),
-        child: showBlob
+        onTap: () => ref.read(togglerProvider('plasma').notifier).toggle(),
+        child: showPlasma
             ? ShaderBuilder(
-                assetKey: 'shaders/blob.frag',
+                assetKey: 'shaders/plasma.frag',
                 (context, shader, child) => TimerBuilder.periodic(
                   const Duration(milliseconds: 16),
                   builder: (context) {

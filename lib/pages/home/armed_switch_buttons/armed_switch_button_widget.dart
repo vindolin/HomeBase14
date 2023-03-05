@@ -65,7 +65,7 @@ class _ArmedSwitchState extends ConsumerState<ArmedSwitchButton> {
       switchDevicesProvider.select((switchDevices) => switchDevices[widget.id]),
     )!;
 
-    print('ArmedSwitchButton: ${widget.label} ${switchDevice.state} ${switchDevice.state.runtimeType}');
+    // print('ArmedSwitchButton: ${widget.label} ${switchDevice.state} ${switchDevice.state.runtimeType}');
     return Card(
       child: Stack(
         alignment: Alignment.center,

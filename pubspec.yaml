@@ -119,6 +119,7 @@ flutter:
   shaders:
     - shaders/flubber.frag
     - shaders/raymarching_basic.frag
+    - shaders/pulsing_guts.frag
     # - shaders/plasma.frag
     # - shaders/spiral.frag
 

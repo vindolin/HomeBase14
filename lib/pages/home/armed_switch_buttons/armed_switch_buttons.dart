@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
@@ -74,9 +76,17 @@ Widget armedButtons() {
               textOff: translate('armed_buttons.tv.text_off'),
               confirm: false,
             ),
-            const ShaderBox(
-              'raymarching_basic.frag',
-            ),
+            Random().nextDouble() > 0.5
+                ? const ShaderBox(
+                    'raymarching_basic.frag',
+                  )
+                : const ShaderBox(
+                    'pulsing_guts.frag',
+                    parameters: [
+                      ...[4.0, 2.0, 1.0] /* color */,
+                    ],
+                    slowDown: 3,
+                  ),
             const ShaderBox(
               'flubber.frag',
               parameters: [

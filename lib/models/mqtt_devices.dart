@@ -522,8 +522,8 @@ class ThermostatDevices extends _$ThermostatDevices {
 
 class SmartBulbDevice extends AbstractMqttDevice {
   String state = 'OFF';
-  double brightness = 0;
-  double colorTemp = 0;
+  int brightness = 0;
+  int colorTemp = 0;
 
   SmartBulbDevice(
     super.deviceId,
@@ -539,13 +539,18 @@ class SmartBulbDevice extends AbstractMqttDevice {
         state = value;
         break;
       case 'brightness':
-        brightness = value.toDouble();
+        brightness = value.toInt();
         break;
       case 'color_temp':
-        colorTemp = value.toDouble();
+        colorTemp = value.toInt();
         break;
     }
     super.readValue(key, value);
+  }
+
+  void toggleState() {
+    state == 'ON' ? 'OFF' : 'ON';
+    publishState();
   }
 
   @override
@@ -554,8 +559,8 @@ class SmartBulbDevice extends AbstractMqttDevice {
     String json = jsonEncode(
       {
         'state': state,
-        'brightness': brightness.toDouble(),
-        'color_temp': colorTemp.toDouble(),
+        'brightness': brightness.toInt(),
+        'color_temp': colorTemp.toInt(),
       },
     );
     log('publish> $deviceId $json');

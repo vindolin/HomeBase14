@@ -148,7 +148,6 @@ class RiverSliderHook extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final currentValue = useState(value);
-    print(minColor);
 
     return Slider(
       value: currentValue.value,

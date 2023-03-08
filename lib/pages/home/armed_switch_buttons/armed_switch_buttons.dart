@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
+import '/widgets/shader_widget.dart';
 import 'armed_switch_button_widget.dart';
 import '../widgets/prusa_progress_widget.dart';
-import '/widgets/blob.dart';
-import '/widgets/plasma.dart';
 
 Widget armedButtons() {
   return SliverPadding(
@@ -75,13 +74,16 @@ Widget armedButtons() {
               textOff: translate('armed_buttons.tv.text_off'),
               confirm: false,
             ),
-            const Card(
-              clipBehavior: Clip.antiAlias,
-              child: Plasma(),
+            const ShaderBox(
+              'raymarching_basic.frag',
             ),
-            const Card(
-              clipBehavior: Clip.antiAlias,
-              child: Blob(),
+            const ShaderBox(
+              'flubber.frag',
+              parameters: [
+                ...[0.16, 0.49, .24] /* light1 */,
+                ...[.19, .9, .03] /* light2 */,
+              ],
+              slowDown: 6.0,
             ),
             const PrusaProgress(),
             // const Card(child: Text('BUMP')),

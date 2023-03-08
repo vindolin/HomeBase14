@@ -114,10 +114,13 @@ flutter:
     - assets/images/svg/nozzle.svg
     - assets/i18n/
 
+    - assets/certs/
+
   shaders:
-    - shaders/blob.frag
-    - shaders/plasma.frag
-    - shaders/spiral.frag
+    - shaders/flubber.frag
+    - shaders/raymarching_basic.frag
+    # - shaders/plasma.frag
+    # - shaders/spiral.frag
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

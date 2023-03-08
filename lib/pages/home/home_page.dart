@@ -3,13 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:simple_shadow/simple_shadow.dart';
 
 import '/pages/home/widgets/temperatures_widget.dart';
 import '/pages/home/armed_switch_buttons/armed_switch_buttons.dart';
+
 import 'device_group_slivers.dart';
 import 'cameras.dart';
-
+import 'widgets/solar_watts_widget.dart';
 import '/models/mqtt_providers.dart';
 import '/widgets/stream_blinker_widget.dart';
 import '/widgets/connection_bar_widget.dart';
@@ -198,6 +200,8 @@ class HomePage extends ConsumerWidget {
           children: [
             SizedBox(width: 8.0),
             Temperatures(),
+            Spacer(),
+            SolarWatts(),
             Spacer(),
           ],
         ),

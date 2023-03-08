@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:nanoid/nanoid.dart';
 import 'package:mqtt_client/mqtt_client.dart' as mqtt;
@@ -32,6 +33,8 @@ const subscribeTopics = [
   'prusa/progress',
   'prusa/file',
   'prusa/temp',
+  'sma/tripower/totw',
+  'sma/b3b461c9/total_w',
 ];
 
 final clientIdentifier = 'K${nanoid()}';
@@ -368,4 +371,20 @@ class Mqtt extends _$Mqtt {
     log('disconnected');
     ref.read(mqttConnectionStateProvider.notifier).state = mqtt.MqttConnectionState.disconnected;
   }
+}
+
+dynamic getMessage(ProviderBase provider, WidgetRef ref, String topic) {
+  dynamic payload;
+  final mqttMessage = ref.watch(
+    provider.select(
+      (mqttMessages) {
+        return mqttMessages[topic];
+      },
+    ),
+  );
+  if (mqttMessage?.payload != null) {
+    payload = mqttMessage!.payload;
+  }
+
+  return payload;
 }

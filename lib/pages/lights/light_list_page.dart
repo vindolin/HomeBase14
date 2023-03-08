@@ -61,7 +61,7 @@ class LightPage extends ConsumerWidget {
       ),
     );
 
-    int onSmartLightCount = smartBulbDevices.values.where((device) => device.state == 'ON').length;
+    // int onSmartLightCount = smartBulbDevices.values.where((device) => device.state == 'ON').length;
 
     // print(smartBulbDevices['bulb/i001']!.state);
     final smartBulbDeviceTiles = List<Widget>.from(

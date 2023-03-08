@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
+import 'image_fade_refresh.dart';
 
 class RefreshableImage extends ConsumerStatefulWidget {
   // this needs to be a ConsumerStatefulWidget because it needs to rebuild when tapped
@@ -28,31 +30,8 @@ class _RefreshableImageState extends ConsumerState<RefreshableImage> {
     return InkWell(
       onTap: widget.onTap,
       onDoubleTap: () => setState(() {}), // just refresh image
-      child: Container(
-        color: Colors.grey[800],
-        child: Image.network(
-          errorBuilder: (context, error, stackTrace) => const Center(
-            heightFactor: 1,
-            child: Image(
-              filterQuality: FilterQuality.medium,
-              image: AssetImage('assets/images/gif/searching_eye.gif'),
-            ),
-          ),
-          '${widget.imageUrl}&${DateTime.now().millisecondsSinceEpoch}',
-          filterQuality: FilterQuality.medium,
-          loadingBuilder: (context, child, loadingProgress) {
-            if (loadingProgress == null) return child;
-            return const Center(
-              child: SizedBox(
-                width: 32,
-                height: 32,
-                child: CircularProgressIndicator(
-                  strokeWidth: 6,
-                ),
-              ),
-            );
-          },
-        ),
+      child: ImageFadeRefresh(
+        '${widget.imageUrl}&${DateTime.now().millisecondsSinceEpoch}',
       ),
     );
   }

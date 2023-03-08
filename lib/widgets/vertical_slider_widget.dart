@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:format/format.dart';
 
-import '/widgets/river_slider_widget.dart';
+import 'slider_widget.dart';
 
 class VerticalSlider extends StatelessWidget {
   final double percentage;
@@ -30,7 +30,7 @@ class VerticalSlider extends StatelessWidget {
           Expanded(
             child: RotatedBox(
               quarterTurns: 1,
-              child: RiverSlider(
+              child: SliderWidget(
                 value: inverted(percentage),
                 max: 100,
                 divisions: divisions,

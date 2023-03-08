@@ -59,6 +59,15 @@ class Temperatures extends ConsumerWidget {
     );
     // final humidity = checkMessage(mqttMessagesProvider, ref, 'greenhouse/humidity') ?? '-.-';
 
+    String frosty = '';
+    if (tempInside != null && tempOutside != null) {
+      if (tempInside < 0 || tempOutside < 0) {
+        frosty = '🥶';
+      } else if (tempInside > 30 || tempOutside > 30) {
+        frosty = '🥵';
+      }
+    }
+
     return Row(
       children: [
         const Icon(
@@ -66,13 +75,18 @@ class Temperatures extends ConsumerWidget {
           color: Colors.white,
           shadows: [shadow],
         ),
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.end,
+        Row(
           children: [
-            temperature('', tempOutside, Colors.blue),
-            temperature('', tempInside, Colors.green),
-            // Text(humidity),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                temperature('', tempOutside, Colors.blue),
+                temperature('', tempInside, Colors.green),
+                // Text(humidity),
+              ],
+            ),
+            Text(' $frosty')
           ],
         ),
       ],

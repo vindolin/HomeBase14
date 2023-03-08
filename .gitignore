@@ -51,3 +51,5 @@ macos/*
 web/*
 
 README.de.md
+assets/certs/*.crt
+assets/certs/*.key

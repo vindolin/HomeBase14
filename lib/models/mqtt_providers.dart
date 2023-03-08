@@ -115,27 +115,30 @@ class Mqtt extends _$Mqtt {
 
     final connectionData = ref.watch(appSettingsProvider.notifier);
 
-    bool useCerts = false;
+    bool useCerts = true;
 
     if (useCerts) {
       client = MqttServerClient.withPort(
         ***REMOVED***,
         clientIdentifier,
-        8882,
+        8883,
       );
 
-      final context = SecurityContext.defaultContext;
+      final cert = await rootBundle.load('assets/certs/ca.crt');
+      final clientCrt = await rootBundle.load('assets/certs/homebase14.crt');
+      final clientKey = await rootBundle.load('assets/certs/homebase14.key');
+      SecurityContext context;
 
-      final cert = await rootBundle.load('assets/pem/cert.pem');
-      // final fullchain = await rootBundle.load('assets/pem/fullchain.pem');
-      // final chain = await rootBundle.load('assets/pem/chain.pem');
-
-      context.setClientAuthoritiesBytes(cert.buffer.asInt8List());
-      // context.setTrustedCertificatesBytes(xxx.buffer.asInt8List());
-      // context.useCertificateChainBytes(xxx.buffer.asInt8List());
-
-      final privkey = await rootBundle.load('assets/pem/privkey.pem');
-      context.usePrivateKeyBytes(privkey.buffer.asInt8List());
+      try {
+        context = SecurityContext.defaultContext
+          ..setTrustedCertificatesBytes(cert.buffer.asUint8List())
+          ..setClientAuthoritiesBytes(cert.buffer.asInt8List())
+          ..useCertificateChainBytes(clientCrt.buffer.asInt8List())
+          ..usePrivateKeyBytes(clientKey.buffer.asInt8List());
+      } catch (_) {
+        // already set
+        context = SecurityContext.defaultContext;
+      }
 
       client.securityContext = context;
       client.secure = true;

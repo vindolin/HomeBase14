@@ -14,42 +14,47 @@ class ConnectionBar extends ConsumerWidget {
     final mqttConnectionState = ref.watch(mqttConnectionStateProvider);
     final mqttProviderNotifier = ref.watch(mqttProvider.notifier);
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        ...?children,
-        if (mqttConnectionState == MqttConnectionState.connected) ...[
-          TextButton(
-            onPressed: () => mqttProviderNotifier.disconnect(),
-            child: const Icon(
-              Icons.wifi,
-            ),
-          ),
-        ] else if (mqttConnectionState == MqttConnectionState.disconnected) ...[
-          TextButton(
-            onPressed: () => mqttProviderNotifier.connect(),
-            child: const Icon(
-              Icons.wifi_off,
-            ),
-          ),
-        ] else if (mqttConnectionState == MqttConnectionState.faulted) ...[
-          const Icon(Icons.wifi_off, color: Colors.red)
-        ] else ...[
-          const TextButton(
-            onPressed: null,
-            child: SizedBox(
-              width: 16,
-              height: 16,
-              child: CircularProgressIndicator(),
-            ),
-          ),
+    return Padding(
+      padding: const EdgeInsets.only(left: 4, right: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          ...?children,
+          Row(
+            children: [
+              if (mqttConnectionState == MqttConnectionState.connected) ...[
+                IconButton(
+                  onPressed: () => mqttProviderNotifier.disconnect(),
+                  icon: const Icon(
+                    color: Colors.green,
+                    Icons.wifi,
+                  ),
+                )
+              ] else if (mqttConnectionState == MqttConnectionState.disconnected) ...[
+                IconButton(
+                  onPressed: () => mqttProviderNotifier.connect(),
+                  color: Colors.red,
+                  icon: const Icon(
+                    Icons.wifi_off,
+                  ),
+                )
+              ] else if (mqttConnectionState == MqttConnectionState.faulted) ...[
+                const Icon(Icons.wifi_off, color: Colors.red)
+              ] else ...[
+                const SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator(),
+                )
+              ],
+              const IgnorePointer(
+                ignoring: true,
+                child: MessageBlinker(),
+              )
+            ],
+          )
         ],
-        const IgnorePointer(
-          ignoring: true,
-          child: MessageBlinker(),
-        ),
-        const SizedBox(width: 8.0)
-      ],
+      ),
     );
   }
 }

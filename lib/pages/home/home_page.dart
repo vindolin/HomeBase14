@@ -18,15 +18,15 @@ import '/widgets/connection_bar_widget.dart';
 import 'user_select_widget.dart';
 
 class Delegate extends SliverPersistentHeaderDelegate {
-  final Color backgroundColor;
+  final Color _backgroundColor;
   final String _title;
 
-  Delegate(this.backgroundColor, this._title);
+  Delegate(this._backgroundColor, this._title);
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
-      color: backgroundColor,
+      color: _backgroundColor,
       child: Center(
         child: Text(
           _title,
@@ -52,17 +52,17 @@ class Delegate extends SliverPersistentHeaderDelegate {
 }
 
 class SliverHeader extends StatelessWidget {
-  final Color backgroundColor;
+  final Color _backgroundColor;
   final String _title;
 
-  const SliverHeader(this.backgroundColor, this._title, {super.key});
+  const SliverHeader(this._backgroundColor, this._title, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return SliverPersistentHeader(
       pinned: true,
       floating: false,
-      delegate: Delegate(backgroundColor, _title),
+      delegate: Delegate(_backgroundColor, _title),
     );
   }
 }
@@ -170,9 +170,9 @@ class HomePage extends ConsumerWidget {
                     ),
                   ),
                   // const SliverHeader(Colors.red, 'SliverPersistentHeader 1'),
-                  armedButtons(),
+                  const ArmedButtons(),
                   const DeviceGroups(),
-                  cameras(),
+                  const Cameras(),
                 ],
               ),
             ],
@@ -198,11 +198,8 @@ class HomePage extends ConsumerWidget {
         // color: Colors.black26,
         child: const ConnectionBar(
           children: [
-            SizedBox(width: 8.0),
             Temperatures(),
-            Spacer(),
             SolarWatts(),
-            Spacer(),
           ],
         ),
       ),

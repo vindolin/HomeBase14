@@ -37,6 +37,7 @@ const subscribeTopics = [
   'sma/b3b461c9/total_w',
 ];
 
+// gerneate a random client identifier
 final clientIdentifier = 'K${nanoid()}';
 
 // used for the flashing message icon
@@ -133,6 +134,7 @@ class Mqtt extends _$Mqtt {
       SecurityContext context;
 
       try {
+        // TODO key icon !!!
         context = SecurityContext.defaultContext
           ..setTrustedCertificatesBytes(cert.buffer.asUint8List())
           ..setClientAuthoritiesBytes(cert.buffer.asInt8List())

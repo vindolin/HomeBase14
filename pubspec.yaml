@@ -58,9 +58,6 @@ dependencies:
   video_player: ^2.5.1
   flutter_vlc_player: ^7.2.0
 
-  # keep_screen_on:
-  #   path: "plugins/keep_screen_on-2.1.0"
-
   # patched library
   keep_screen_on:
     git:
@@ -121,6 +118,8 @@ flutter:
     - shaders/flubber.frag
     - shaders/raymarching_basic.frag
     - shaders/pulsing_guts.frag
+
+    - shaders/warning.frag
     # - shaders/plasma.frag
     # - shaders/spiral.frag
 

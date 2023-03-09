@@ -7,6 +7,7 @@ import '/utils.dart';
 import 'widgets/lights_off_button_widget.dart';
 import '../../widgets/slider_widget.dart';
 import '/models/mqtt_devices.dart';
+import '/widgets/connection_bar_widget.dart';
 
 abstract class ListItem {
   /// The title line to show in a list item.
@@ -183,6 +184,7 @@ class LightPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(translate('device_names.lights')),
+        actions: const [ConnectionBar()],
       ),
       body: ListView.separated(
         separatorBuilder: (context, index) {

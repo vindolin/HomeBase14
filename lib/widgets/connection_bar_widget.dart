@@ -14,7 +14,6 @@ class ConnectionBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final mqttConnectionState = ref.watch(mqttConnectionStateProvider);
     final mqttProviderNotifier = ref.watch(mqttProvider.notifier);
-    final sslStatus = ref.watch(togglerProvider('ssl'));
 
     return Padding(
       padding: const EdgeInsets.only(left: 4, right: 4),
@@ -24,11 +23,6 @@ class ConnectionBar extends ConsumerWidget {
           ...?children,
           Row(
             children: [
-              if (sslStatus) ...[
-                const Icon(Icons.lock, color: Colors.green),
-              ] else ...[
-                const Icon(Icons.lock_open, color: Colors.red),
-              ],
               if (mqttConnectionState == MqttConnectionState.connected) ...[
                 IconButton(
                   onPressed: () => mqttProviderNotifier.disconnect(),

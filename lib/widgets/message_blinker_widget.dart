@@ -11,16 +11,21 @@ class MessageBlinker extends ConsumerWidget {
     const int onDurationMs = 100;
     const int fadeDurationMs = 100;
 
-    Color flashColor = Colors.orange;
+    Color? flashColor;
     Color? targetColor;
 
     Future<void> setColor() async {
       targetColor = flashColor; // flash color
-      await Future.delayed(const Duration(milliseconds: onDurationMs));
-      targetColor = Colors.transparent; // and back to transparent
+      await Future.delayed(const Duration(milliseconds: onDurationMs), () {
+        targetColor = flashColor?.withAlpha(150); // and back
+      });
     }
 
     ref.watch(counterProvider('mqtt_message')); // every time message stream provider fires, the icon will blink
+    final sslStatus = ref.watch(togglerProvider('ssl'));
+
+    // TODOs implicit animation?
+    flashColor = sslStatus ? Colors.green : Colors.red;
 
     return FutureBuilder<void>(
       future: setColor(),
@@ -37,9 +42,18 @@ class MessageBlinker extends ConsumerWidget {
             Color? iconColor,
             Widget? child,
           ) {
-            return Icon(
-              Icons.auto_awesome,
-              color: iconColor,
+            return Stack(
+              children: [
+                sslStatus
+                    ? Icon(
+                        Icons.lock,
+                        color: iconColor,
+                      )
+                    : Icon(
+                        Icons.lock_open,
+                        color: iconColor,
+                      )
+              ],
             );
           },
         );

@@ -43,7 +43,7 @@ class SolarWatts extends ConsumerWidget {
             text: 'Solar:',
           ),
           TextSpan(
-            text: ' ${solarWatt}w $sunEmoji',
+            text: '$sunEmoji${solarWatt}w',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Color.lerp(Colors.white, Colors.amber, solarWatt / 5500),

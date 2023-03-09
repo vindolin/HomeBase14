@@ -13,7 +13,7 @@ import 'package:mqtt_client/mqtt_server_client.dart';
 
 import '/utils.dart';
 import 'mqtt_connection_state_provider.dart';
-import 'ssl_status_provider.dart';
+import 'generic_providers.dart';
 import 'app_settings.dart';
 import 'mqtt_devices.dart';
 
@@ -90,7 +90,7 @@ class Mqtt extends _$Mqtt {
   late SwitchDevices switchDevices;
   late Leech leech;
   late MqttMessages mqttMessages;
-  late SSLStatus sslStatusNotifier;
+  late Toggler sslStatus;
 
   @override
   build() {
@@ -102,7 +102,7 @@ class Mqtt extends _$Mqtt {
     dualCurtainDevices = ref.watch(dualCurtainDevicesProvider.notifier);
     doorDevices = ref.watch(doorDevicesProvider.notifier);
     thermostatDevices = ref.watch(thermostatDevicesProvider.notifier);
-    sslStatusNotifier = ref.watch(sSLStatusProvider.notifier);
+    sslStatus = ref.watch(togglerProvider('ssl').notifier);
     leech = ref.watch(leechProvider.notifier);
 
     mqttMessages = ref.watch(mqttMessagesProvider.notifier);
@@ -143,9 +143,11 @@ class Mqtt extends _$Mqtt {
           ..useCertificateChainBytes(clientCrt.buffer.asInt8List())
           ..usePrivateKeyBytes(clientKey.buffer.asInt8List());
 
-        sslStatusNotifier.state = true;
+        sslStatus.state = true;
+
         log('SSL enabled');
       } catch (_) {
+        // print(_);
         // already set
         context = SecurityContext.defaultContext;
       }

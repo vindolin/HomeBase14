@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '/models/ssl_status_provider.dart';
+import '/models/generic_providers.dart';
 import '/models/mqtt_providers.dart';
 import '/models/mqtt_connection_state_provider.dart';
 import '/widgets/message_blinker_widget.dart';
@@ -14,7 +14,7 @@ class ConnectionBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final mqttConnectionState = ref.watch(mqttConnectionStateProvider);
     final mqttProviderNotifier = ref.watch(mqttProvider.notifier);
-    final sslStatus = ref.watch(sSLStatusProvider);
+    final sslStatus = ref.watch(togglerProvider('ssl'));
 
     return Padding(
       padding: const EdgeInsets.only(left: 4, right: 4),

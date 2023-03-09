@@ -1,23 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'mqtt_providers.dart';
+part of 'ssl_status_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$mqttHash() => r'291d0833fc0334cda1f9f6e809c13ae7fa8cd955';
+String _$sSLStatusHash() => r'968a06594cef11672c98641c7d6e3449371938b6';
 
-/// See also [Mqtt].
-@ProviderFor(Mqtt)
-final mqttProvider = AutoDisposeNotifierProvider<Mqtt, dynamic>.internal(
-  Mqtt.new,
-  name: r'mqttProvider',
+/// See also [SSLStatus].
+@ProviderFor(SSLStatus)
+final sSLStatusProvider = AutoDisposeNotifierProvider<SSLStatus, bool>.internal(
+  SSLStatus.new,
+  name: r'sSLStatusProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$mqttHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$sSLStatusHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$Mqtt = AutoDisposeNotifier<dynamic>;
+typedef _$SSLStatus = AutoDisposeNotifier<bool>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

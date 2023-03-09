@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '/styles/text_styles.dart';
 import '/models/mqtt_providers.dart';
 import '/models/mqtt_devices.dart';
 
@@ -38,6 +39,16 @@ class SolarWatts extends ConsumerWidget {
 
     return RichText(
       text: TextSpan(
+        style: const TextStyle(
+          fontSize: 13,
+          shadows: [
+            Shadow(
+              offset: Offset(1.0, 1.0),
+              blurRadius: 1.0,
+              color: Colors.black,
+            )
+          ],
+        ),
         children: [
           const TextSpan(
             text: 'Solar:',

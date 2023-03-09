@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import '/models/mqtt_devices.dart';
-import '/widgets/pulsating_container_widget.dart';
+import '/widgets/pulsating_container_hooks_widget.dart';
 
 Future<bool> confirmIcon(
   BuildContext context, {
@@ -15,7 +15,11 @@ Future<bool> confirmIcon(
     builder: (_) => WillPopScope(
       child: AlertDialog(
         title: title,
-        content: IconButton(icon: icon, iconSize: iconSize, onPressed: () => Navigator.pop(context, true)),
+        content: IconButton(
+          icon: icon,
+          iconSize: iconSize,
+          onPressed: () => Navigator.pop(context, true),
+        ),
       ),
       onWillPop: () async {
         Navigator.pop(context, false);

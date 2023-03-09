@@ -22,11 +22,13 @@ class PulsatingContainerState extends State<PulsatingContainer> with SingleTicke
     controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1500),
+      lowerBound: 0.0,
+      upperBound: 0.3,
     )..repeat(reverse: true);
 
     animation = Tween(
       begin: 0.0,
-      end: 0.2,
+      end: 1.0,
     ).animate(CurvedAnimation(
       parent: controller,
       curve: Curves.easeInOut,

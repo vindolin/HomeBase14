@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/models/mqtt_devices.dart';
 import '/widgets/shader_widget.dart';
-import 'graph_widget.dart';
+// import 'graph_widget.dart';
 
 class ThermostatDetailPage extends ConsumerWidget {
   final String deviceId;

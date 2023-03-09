@@ -9,3 +9,11 @@ class Toggler extends _$Toggler {
 
   void toggle() => state = !state;
 }
+
+@riverpod
+class Counter extends _$Counter {
+  @override
+  int build(String key) => 0;
+
+  void increment() => state++;
+}

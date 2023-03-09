@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '/models/mqtt_providers.dart';
+import '/models/generic_providers.dart';
 
 class MessageBlinker extends ConsumerWidget {
   // symbol that binds to the message stream provider and blinks when a message is received
@@ -20,7 +20,7 @@ class MessageBlinker extends ConsumerWidget {
       targetColor = Colors.transparent; // and back to transparent
     }
 
-    ref.watch(messageProvider); // every time message stream provider fires, the icon will blink
+    ref.watch(counterProvider('mqtt_message')); // every time message stream provider fires, the icon will blink
 
     return FutureBuilder<void>(
       future: setColor(),

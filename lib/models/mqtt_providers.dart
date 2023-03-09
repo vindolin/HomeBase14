@@ -38,8 +38,8 @@ const subscribeTopics = [
   'sma/b3b461c9/total_w',
 ];
 
-// gerneate a random client identifier
-final clientIdentifier = 'K${nanoid()}';
+// generate a random mqtt client identifier
+final clientIdentifier = 'HB14${nanoid()}';
 
 // used for the flashing message icon
 StreamController<Map<String, dynamic>> messageController = StreamController<Map<String, dynamic>>.broadcast();
@@ -91,6 +91,7 @@ class Mqtt extends _$Mqtt {
   late Leech leech;
   late MqttMessages mqttMessages;
   late Toggler sslStatus;
+  late Counter mqttMessageCounter;
 
   @override
   build() {
@@ -103,6 +104,7 @@ class Mqtt extends _$Mqtt {
     doorDevices = ref.watch(doorDevicesProvider.notifier);
     thermostatDevices = ref.watch(thermostatDevicesProvider.notifier);
     sslStatus = ref.watch(togglerProvider('ssl').notifier);
+    mqttMessageCounter = ref.watch(counterProvider('mqtt_message').notifier);
     leech = ref.watch(leechProvider.notifier);
 
     mqttMessages = ref.watch(mqttMessagesProvider.notifier);
@@ -227,6 +229,8 @@ class Mqtt extends _$Mqtt {
     client.updates?.listen((List<mqtt.MqttReceivedMessage<mqtt.MqttMessage>> messages) {
       // iterate over all new messages
       for (mqtt.MqttReceivedMessage mqttReceivedMessage in messages) {
+        mqttMessageCounter.increment();
+
         final mqtt.MqttPublishMessage message = mqttReceivedMessage.payload as mqtt.MqttPublishMessage;
         final String payload = const Utf8Decoder().convert(message.payload.message);
         dynamic payloadDecoded;

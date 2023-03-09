@@ -120,4 +120,98 @@ class TogglerProvider extends AutoDisposeNotifierProviderImpl<Toggler, bool> {
     );
   }
 }
+
+String _$counterHash() => r'c05627355904c10bc3a5a694d0fea3bcb4806544';
+
+abstract class _$Counter extends BuildlessAutoDisposeNotifier<int> {
+  late final String key;
+
+  int build(
+    String key,
+  );
+}
+
+/// See also [Counter].
+@ProviderFor(Counter)
+const counterProvider = CounterFamily();
+
+/// See also [Counter].
+class CounterFamily extends Family<int> {
+  /// See also [Counter].
+  const CounterFamily();
+
+  /// See also [Counter].
+  CounterProvider call(
+    String key,
+  ) {
+    return CounterProvider(
+      key,
+    );
+  }
+
+  @override
+  CounterProvider getProviderOverride(
+    covariant CounterProvider provider,
+  ) {
+    return call(
+      provider.key,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'counterProvider';
+}
+
+/// See also [Counter].
+class CounterProvider extends AutoDisposeNotifierProviderImpl<Counter, int> {
+  /// See also [Counter].
+  CounterProvider(
+    this.key,
+  ) : super.internal(
+          () => Counter()..key = key,
+          from: counterProvider,
+          name: r'counterProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$counterHash,
+          dependencies: CounterFamily._dependencies,
+          allTransitiveDependencies: CounterFamily._allTransitiveDependencies,
+        );
+
+  final String key;
+
+  @override
+  bool operator ==(Object other) {
+    return other is CounterProvider && other.key == key;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, key.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+
+  @override
+  int runNotifierBuild(
+    covariant Counter notifier,
+  ) {
+    return notifier.build(
+      key,
+    );
+  }
+}
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import '/models/mqtt_devices.dart';
 
 abstract class CurtainPainterBase extends CustomPainter {
+  CurtainPainterBase(List<double> positions) : super(repaint: ValueNotifier(positions));
   // all sizes are computed relativ to the icon size of 24x24
   final baseSize = 36.0;
 
@@ -87,7 +88,7 @@ void drawBlinds(
 class CurtainPainter extends CurtainPainterBase {
   final double position;
 
-  CurtainPainter(this.position);
+  CurtainPainter(this.position) : super([position]);
 
   @override
   bool shouldRepaint(covariant CurtainPainter oldDelegate) => oldDelegate.position != position;
@@ -119,7 +120,7 @@ class DualCurtainPainter extends CurtainPainterBase {
   final double positionLeft;
   final double positionRight;
 
-  DualCurtainPainter(this.positionLeft, this.positionRight);
+  DualCurtainPainter(this.positionLeft, this.positionRight) : super([positionLeft, positionRight]);
 
   @override
   bool shouldRepaint(covariant DualCurtainPainter oldDelegate) =>

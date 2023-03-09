@@ -102,6 +102,7 @@ class CurtainListPage extends ConsumerWidget {
                 ),
               );
             },
+            trailing: Row(mainAxisSize: MainAxisSize.min, children: [...curtainActions(context, ref, device.deviceId)]),
           );
         },
       ),

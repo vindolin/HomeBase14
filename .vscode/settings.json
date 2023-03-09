@@ -1,4 +1,7 @@
 {
     "cmake.configureOnOpen": false,
-    "cmake.sourceDirectory": "${workspaceFolder}/windows/flutter"
+    "cmake.sourceDirectory": "${workspaceFolder}/windows/flutter",
+    "workbench.colorCustomizations": {
+        "terminal.ansiRed": "#ff389c"
+    }
 }

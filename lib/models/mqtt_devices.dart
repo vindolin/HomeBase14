@@ -23,6 +23,7 @@ class MqttMessage with _$MqttMessage {
 @riverpod
 class MqttMessages extends _$MqttMessages {
   late Function publishCallback; // get's injected by the mqtt class
+
   @override
   IMap<String, MqttMessage> build() {
     return IMap();
@@ -45,6 +46,20 @@ class Leech extends _$Leech {
   @override
   IMap<String, String> build() {
     return IMap(const {'sleep_state': 'none'});
+  }
+}
+
+@riverpod
+class Prusa extends _$Prusa {
+  @override
+  IMap<String, dynamic> build() {
+    return IMap(const {
+      'percent_done': 0,
+      'extruder_actual': 0,
+      'extruder_target': 0,
+      'mins_remaining': 0,
+      'file_name': '',
+    });
   }
 }
 

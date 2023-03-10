@@ -50,15 +50,6 @@ final messageProvider = StreamProvider<Map<String, dynamic>>((ref) async* {
   }
 });
 
-// used for the flashing 3d printer icon
-StreamController<String> nozzleBlinkController = StreamController<String>.broadcast();
-
-final nozzleBlinkProvider = StreamProvider<String>((ref) async* {
-  await for (final message in nozzleBlinkController.stream) {
-    yield message;
-  }
-});
-
 // used for vibration on door movement
 StreamController<int> doorMovementController = StreamController<int>.broadcast();
 
@@ -90,6 +81,8 @@ class Mqtt extends _$Mqtt {
   late SwitchDevices switchDevices;
   late Leech leech;
   late MqttMessages mqttMessages;
+  late Prusa prusa;
+
   late Toggler sslStatus;
   late Counter mqttMessageCounter;
 
@@ -106,6 +99,7 @@ class Mqtt extends _$Mqtt {
     sslStatus = ref.watch(togglerProvider('ssl').notifier);
     mqttMessageCounter = ref.watch(counterProvider('mqtt_message').notifier);
     leech = ref.watch(leechProvider.notifier);
+    prusa = ref.watch(prusaProvider.notifier);
 
     mqttMessages = ref.watch(mqttMessagesProvider.notifier);
 
@@ -318,8 +312,33 @@ class Mqtt extends _$Mqtt {
         } else if (mqttReceivedMessage.topic == 'zigbee2mqtt/bridge/devices') {
           // we find the device name (description) in the zigbee2mqtt/bridge/devices message
           setDeviceNameMap(payloadDecoded);
-        } else if (mqttReceivedMessage.topic == 'prusa/progress') {
-          nozzleBlinkController.sink.add(payloadDecoded['percent_done']);
+        } else if (mqttReceivedMessage.topic.startsWith('prusa/')) {
+          final attribute = mqttReceivedMessage.topic.split('/').last;
+
+          // TODOs: pattern matching!
+          Map<String, dynamic> data = {};
+          switch (attribute) {
+            case 'file':
+              data = {
+                'file_name': payloadDecoded['file_name'],
+              };
+              break;
+            case 'temp':
+              data = {
+                'extruder_actual': double.tryParse(payloadDecoded['extruder_actual']) ?? 0,
+                'extruder_target': double.tryParse(payloadDecoded['extruder_target']) ?? 0,
+              };
+              break;
+            case 'progress':
+              data = {
+                'percent_done': int.tryParse(payloadDecoded['percent_done']) ?? 0,
+                'mins_remaining': int.tryParse(payloadDecoded['mins_remaining']) ?? 0,
+              };
+              break;
+            default:
+          }
+
+          prusa.state = prusa.state.addAll(IMap(data));
         } else {
           // print(mqttReceivedMessage.topic);
         }

@@ -51,6 +51,21 @@ final leechProvider =
 );
 
 typedef _$Leech = AutoDisposeNotifier<IMap<String, String>>;
+String _$prusaHash() => r'b9226ae7ec738b951dc61d7c1a922582cab88417';
+
+/// See also [Prusa].
+@ProviderFor(Prusa)
+final prusaProvider =
+    AutoDisposeNotifierProvider<Prusa, IMap<String, dynamic>>.internal(
+  Prusa.new,
+  name: r'prusaProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$prusaHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$Prusa = AutoDisposeNotifier<IMap<String, dynamic>>;
 String _$singleCurtainDevicesHash() =>
     r'4de6d46b069d920055290f613ef4b3f2efeebc7d';
 

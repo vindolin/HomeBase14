@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
+import '/utils.dart';
 import '/models/mqtt_devices.dart';
 
 class Dummy extends Widget {
@@ -22,10 +23,6 @@ const nozzleColors = [
 
 class PrusaNozzle extends ConsumerWidget {
   const PrusaNozzle({super.key});
-
-  Color lerp3(Color a, Color b, Color c, double t) {
-    return t < 0.5 ? Color.lerp(a, b, t / 0.5)! : Color.lerp(b, c, (t - 0.5) / 0.5)!;
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

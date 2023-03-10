@@ -1,4 +1,5 @@
 import 'dart:developer' as d;
+import 'package:flutter/material.dart';
 import 'package:stack_trace/stack_trace.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
@@ -91,3 +92,7 @@ int compareName(String a, String b) {
 //   (a, b) => a.compareTo(b),
 //   (a, b) => b.compareTo(a),
 // ]);
+
+Color lerp3(Color a, Color b, Color c, double t) {
+  return t < 0.5 ? Color.lerp(a, b, t / 0.5)! : Color.lerp(b, c, (t - 0.5) / 0.5)!;
+}

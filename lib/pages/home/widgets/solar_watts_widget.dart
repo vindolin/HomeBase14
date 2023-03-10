@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '/styles/text_styles.dart';
 import '/models/mqtt_providers.dart';
 import '/models/mqtt_devices.dart';
 

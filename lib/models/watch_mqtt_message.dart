@@ -1,6 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-dynamic watchMqttMessage(ProviderBase provider, WidgetRef ref, String topic) {
+dynamic watchMqttMessage(
+  ProviderBase provider,
+  WidgetRef ref,
+  String topic,
+) {
   dynamic payload;
   final mqttMessage = ref.watch(
     provider.select(

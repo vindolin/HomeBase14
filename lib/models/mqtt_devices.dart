@@ -55,8 +55,8 @@ class Prusa extends _$Prusa {
   IMap<String, dynamic> build() {
     return IMap(const {
       'percent_done': 0,
-      'extruder_actual': 0,
-      'extruder_target': 0,
+      'extruder_actual': 0.0,
+      'extruder_target': 0.0,
       'mins_remaining': 0,
       'file_name': '',
     });
@@ -99,7 +99,6 @@ class SingleCurtainDevice extends CurtainDevice {
         'position': position.toInt(),
       },
     );
-    log('publish> $deviceId $json');
 
     publishCallback(
       deviceId,

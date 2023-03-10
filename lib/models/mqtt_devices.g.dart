@@ -51,7 +51,7 @@ final leechProvider =
 );
 
 typedef _$Leech = AutoDisposeNotifier<IMap<String, String>>;
-String _$prusaHash() => r'b9226ae7ec738b951dc61d7c1a922582cab88417';
+String _$prusaHash() => r'34a35466150cdc5f0cc8475c094b60f79e0502e1';
 
 /// See also [Prusa].
 @ProviderFor(Prusa)

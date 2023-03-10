@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -6,29 +7,33 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import '/utils.dart';
 import '/models/mqtt_devices.dart';
 
-class Dummy extends Widget {
-  const Dummy({super.key});
-
-  @override
-  Element createElement() {
-    throw UnimplementedError();
-  }
-}
-
+const onDurationMs = 2500;
+const fadeDurationMs = 500;
 const nozzleColors = [
   Color.fromARGB(255, 50, 50, 255),
   Color.fromARGB(255, 255, 173, 50),
   Color.fromARGB(255, 255, 50, 50),
 ];
 
+Color colorFromTemps(double actual, double target, colors) {
+  Color finalColor = Colors.transparent;
+
+  double position = clampDouble(actual / target, 0.0, 1.0);
+
+  finalColor = lerp3(
+    colors[0],
+    colors[1],
+    colors[2],
+    position,
+  );
+  return finalColor;
+}
+
 class PrusaNozzle extends ConsumerWidget {
   const PrusaNozzle({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    const int onDurationMs = 2500;
-    const int fadeDurationMs = 500;
-
     final prusa = ref.watch(prusaProvider.select(
       // IMap is important here or select cannot compare the values and the widget would rebuild on changes to other attributes e.g. 'percent_done'
       (prusa) => IMap({
@@ -37,17 +42,11 @@ class PrusaNozzle extends ConsumerWidget {
       }),
     ));
 
-    Color nozzleColor = Colors.transparent;
-
-    if (prusa['extruder_actual']! > 0 && prusa['extruder_target']! > 0.0) {
-      final redFactor = (prusa['extruder_actual']! / prusa['extruder_target']!);
-      nozzleColor = lerp3(
-        nozzleColors[0],
-        nozzleColors[1],
-        nozzleColors[2],
-        redFactor,
-      );
-    }
+    final nozzleColor = colorFromTemps(
+      prusa['extruder_actual'],
+      prusa['extruder_target'],
+      nozzleColors,
+    );
 
     Color? targetColor;
 

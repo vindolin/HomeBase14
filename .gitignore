@@ -54,3 +54,4 @@ README.de.md
 assets/certs/*.crt
 assets/certs/*.key
 __not_tracked/*
+.vscode/launch.json

@@ -1,4 +1,6 @@
 import 'dart:developer' as d;
+import 'dart:math';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:stack_trace/stack_trace.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -13,6 +15,7 @@ void log(dynamic message) {
   } else {
     d.log(message);
   }
+
   // final re = RegExp(r'(?<file>\w+\.dart) (?<line>\d+\:\d+)');
   // final match = re.firstMatch(trace);
   // if (match != null) {
@@ -83,10 +86,6 @@ extension IMapMultipleSort<K, V> on IMap<K, V> {
   }
 }
 
-int compareName(String a, String b) {
-  return a.compareTo(b);
-}
-
 // var testList = [2, 3, 5, 6];
 // var newList = sortByList(testList, [
 //   (a, b) => a.compareTo(b),
@@ -95,4 +94,22 @@ int compareName(String a, String b) {
 
 Color lerp3(Color a, Color b, Color c, double t) {
   return t < 0.5 ? Color.lerp(a, b, t / 0.5)! : Color.lerp(b, c, (t - 0.5) / 0.5)!;
+}
+
+Color colorClamp3(double actual, double target, colors) {
+  Color finalColor = Colors.transparent;
+
+  double position = clampDouble(actual / target, 0.0, 1.0);
+
+  finalColor = lerp3(
+    colors[0],
+    colors[1],
+    colors[2],
+    position,
+  );
+  return finalColor;
+}
+
+T valueToItem<T, N extends num>(List<T> items, N value, N max) {
+  return items[(value * (items.length - 1) / max).round()];
 }

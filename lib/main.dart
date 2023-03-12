@@ -1,4 +1,3 @@
-// import 'package:wakelock/wakelock.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +70,9 @@ class _MyAppState extends ConsumerState<HomeBase14App> {
         // show login form only when disconnected/not connecting
         MqttConnectionState.connected,
         MqttConnectionState.connecting,
-      ].contains(ref.watch(mqttConnectionStateProvider))
+      ].contains(
+        ref.watch(mqttConnectionStateProvider),
+      )
           ? const HomePage()
           : LoginFormPage(),
       theme: ThemeData(

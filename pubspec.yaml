@@ -72,6 +72,8 @@ dependencies:
   timer_builder: ^2.0.0
   fast_immutable_collections: ^9.0.0
   connectivity_plus: ^3.0.3
+  webview_flutter:
+  webview_flutter_android: ^3.4.2
 
 dev_dependencies:
   build_runner:

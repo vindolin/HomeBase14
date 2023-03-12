@@ -12,6 +12,7 @@ import '/pages/lights/widgets/lights_off_button_widget.dart';
 import '/pages/curtains/widgets/curtain_actions.dart';
 import '/pages/other_page.dart';
 import '/pages/thomas/thomas_page.dart';
+import '/pages/grafana/grafana_page.dart';
 
 class DeviceGroups extends ConsumerWidget {
   const DeviceGroups({super.key});
@@ -116,6 +117,25 @@ class DeviceGroups extends ConsumerWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const ThomasPage(),
+                ),
+              );
+            },
+          ),
+        const Divider(),
+        if (appSettings.user == User.thomas)
+          ListTile(
+            // tileColor: Colors.purple.shade800,
+            title: const Text(
+              'Grafana',
+              style: textStyleShadowOne,
+            ),
+            leading: const Icon(Icons.auto_graph),
+            visualDensity: visualDensity,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const GrafanaPage(),
                 ),
               );
             },

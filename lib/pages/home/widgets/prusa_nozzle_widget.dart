@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -15,20 +14,6 @@ const nozzleColors = [
   Color.fromARGB(255, 255, 50, 50),
 ];
 
-Color colorFromTemps(double actual, double target, colors) {
-  Color finalColor = Colors.transparent;
-
-  double position = clampDouble(actual / target, 0.0, 1.0);
-
-  finalColor = lerp3(
-    colors[0],
-    colors[1],
-    colors[2],
-    position,
-  );
-  return finalColor;
-}
-
 class PrusaNozzle extends ConsumerWidget {
   const PrusaNozzle({super.key});
 
@@ -42,11 +27,14 @@ class PrusaNozzle extends ConsumerWidget {
       }),
     ));
 
-    final nozzleColor = colorFromTemps(
-      prusa['extruder_actual'],
-      prusa['extruder_target'],
-      nozzleColors,
-    );
+    Color nozzleColor = Colors.transparent;
+    if (prusa['extruder_target'] > 0) {
+      nozzleColor = colorClamp3(
+        prusa['extruder_actual'],
+        prusa['extruder_target'],
+        nozzleColors,
+      );
+    }
 
     Color? targetColor;
 

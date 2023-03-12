@@ -24,19 +24,6 @@ class FakePrusa extends _$FakePrusa implements Prusa {
 
 void main() {
   group(
-    'Function Tests',
-    () {
-      testWidgets(
-        'Testing nozzleColor',
-        (tester) async {
-          expect(colorFromTemps(-10.0, 200.0, nozzleColors), nozzleColors[0]);
-          expect(colorFromTemps(0.0, 200.0, nozzleColors), nozzleColors[0]);
-          expect(colorFromTemps(210.0, 200.0, nozzleColors), nozzleColors[2]);
-        },
-      );
-    },
-  );
-  group(
     'Widget Tests',
     () {
       testWidgets(
@@ -76,6 +63,7 @@ void main() {
               BlendMode.srcIn,
             ),
           );
+          await tester.pumpAndSettle(const Duration(seconds: 3));
         },
       );
     },

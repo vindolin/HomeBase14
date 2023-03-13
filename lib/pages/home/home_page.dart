@@ -116,6 +116,7 @@ class HomePage extends ConsumerWidget {
               CustomScrollView(
                 slivers: [
                   SliverAppBar(
+                    iconTheme: const IconThemeData(color: Colors.black),
                     titleSpacing: 0.0,
                     leadingWidth: 10.0,
                     leading: Container(),

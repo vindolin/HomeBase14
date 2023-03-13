@@ -5,11 +5,10 @@ import '/models/mqtt_devices.dart';
 import '/styles/text_styles.dart';
 
 class DropdownSelect extends ConsumerStatefulWidget {
-  final String subTopic;
-  final String pubTopic;
-  final bool retain;
+  final String statTopic;
+  final String setTopic;
   final Map<String, String> options;
-  const DropdownSelect({required this.options, required this.subTopic, required this.pubTopic, this.retain = false, super.key});
+  const DropdownSelect({required this.options, required this.statTopic, required this.setTopic, super.key});
 
   @override
   ConsumerState<DropdownSelect> createState() => _DropdownStateSelect();
@@ -23,7 +22,7 @@ class _DropdownStateSelect extends ConsumerState<DropdownSelect> {
     final mqttMessage = ref.watch(
       mqttMessagesProvider.select(
         (mqttMessages) {
-          return mqttMessages[widget.subTopic];
+          return mqttMessages[widget.statTopic];
         },
       ),
     );
@@ -35,7 +34,8 @@ class _DropdownStateSelect extends ConsumerState<DropdownSelect> {
     return DropdownButton<String>(
       value: dropdownValue,
       onChanged: (String? value) {
-        ref.read(mqttMessagesProvider.notifier).publishCallback(widget.pubTopic, value!, retain: widget.retain);
+        ref.read(mqttMessagesProvider.notifier).publishCallback(widget.setTopic, value!, retain: false);
+        ref.read(mqttMessagesProvider.notifier).publishCallback(widget.statTopic, value, retain: true);
         setState(
           () {
             dropdownValue = value;

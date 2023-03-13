@@ -4,7 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 class PulsatingContainer extends HookWidget {
   final Color color;
   const PulsatingContainer({
-    this.color = Colors.pink,
+    this.color = Colors.red,
     super.key,
   });
 

@@ -19,12 +19,11 @@ void onPressed(WidgetRef ref, String? deviceName, String topic, String stateLc) 
 List<Widget> curtainActions(BuildContext context, WidgetRef ref, [String? deviceName]) {
   final topic = deviceName == null ? 'home/curtains' : 'zigbee2mqtt/$deviceName/set';
   return [
-    // TODOs move publish to mqtt_devices.dart
     IconButton(
       onPressed: () {
-        onPressed(ref, deviceName, topic, 'open');
+        onPressed(ref, deviceName, topic, 'close');
       },
-      icon: const Icon(Icons.arrow_circle_up),
+      icon: const Icon(Icons.arrow_circle_down),
     ),
     IconButton(
       onPressed: () {
@@ -34,9 +33,9 @@ List<Widget> curtainActions(BuildContext context, WidgetRef ref, [String? device
     ),
     IconButton(
       onPressed: () {
-        onPressed(ref, deviceName, topic, 'close');
+        onPressed(ref, deviceName, topic, 'open');
       },
-      icon: const Icon(Icons.arrow_circle_down),
+      icon: const Icon(Icons.arrow_circle_up),
     ),
   ];
 }

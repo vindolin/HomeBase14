@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
-import '/models/app_settings.dart';
 import '/models/mqtt_devices.dart';
 import '/styles/text_styles.dart';
 import '/pages/thermostats/thermostat_list_page.dart';
@@ -11,8 +10,6 @@ import '/pages/lights/light_list_page.dart';
 import '/pages/lights/widgets/lights_off_button_widget.dart';
 import '/pages/curtains/widgets/curtain_actions.dart';
 import '/pages/other_page.dart';
-import '/pages/thomas/thomas_page.dart';
-import '/pages/grafana/grafana_page.dart';
 
 class DeviceGroups extends ConsumerWidget {
   const DeviceGroups({super.key});
@@ -20,7 +17,6 @@ class DeviceGroups extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appSettings = ref.watch(appSettingsProvider);
     final lightDevices = ref.watch(lightDevicesProvider);
 
     // color the icon yellow if any lights are on
@@ -102,45 +98,6 @@ class DeviceGroups extends ConsumerWidget {
             );
           },
         ),
-        const Divider(),
-        if (appSettings.user == User.thomas)
-          ListTile(
-            // tileColor: Colors.purple.shade800,
-            title: const Text(
-              'Thomas',
-              style: textStyleShadowOne,
-            ),
-            leading: const Icon(Icons.pest_control),
-            visualDensity: visualDensity,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ThomasPage(),
-                ),
-              );
-            },
-          ),
-        const Divider(),
-        if (appSettings.user == User.thomas)
-          ListTile(
-            // tileColor: Colors.purple.shade800,
-            title: const Text(
-              'Grafana',
-              style: textStyleShadowOne,
-            ),
-            leading: const Icon(Icons.auto_graph),
-            visualDensity: visualDensity,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const GrafanaPage(),
-                ),
-              );
-            },
-          ),
-        const Divider(),
       ]),
     );
   }

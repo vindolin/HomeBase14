@@ -10,6 +10,7 @@ import '/pages/home/widgets/temperatures_widget.dart';
 import '/pages/home/armed_switch_buttons/armed_switch_buttons.dart';
 
 import 'device_group_slivers.dart';
+import 'thomas_group_slivers.dart';
 import 'cameras.dart';
 import 'widgets/solar_watts_widget.dart';
 import '/models/mqtt_providers.dart';
@@ -174,6 +175,7 @@ class HomePage extends ConsumerWidget {
                   const ArmedButtons(),
                   const DeviceGroups(),
                   const Cameras(),
+                  const ThomasGroups(),
                 ],
               ),
             ],

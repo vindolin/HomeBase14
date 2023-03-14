@@ -26,11 +26,9 @@ class CamWidgetState extends ConsumerState<CamWidget> {
       options: VlcPlayerOptions(
         video: VlcVideoOptions(
           [
-            // '--network-caching=1000',
-            // '--live-caching=1000',
-            '--clock-jitter=500',
-            '--udp-caching=0',
-            '--http-caching=0',
+            // '--network-caching=200',
+            // '--clock-jitter=500',
+            // '--rtsp-caching=100',
           ],
         ),
       ),

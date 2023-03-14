@@ -7,10 +7,11 @@ import '/models/connectivity_provider.dart';
 import '/models/mqtt_providers.dart';
 import '/models/secrets.dart' as secrets;
 import '/widgets/refreshable_image_widget.dart';
-import '/pages/cams/cam_details_page.dart';
+import '/pages/cams/cam_image_page.dart';
+import '/pages/cams/cam_video_page.dart';
 
 const refreshTimeMobile = 120;
-const refreshTimeWifi = 10;
+const refreshTimeWifi = 5;
 
 Widget camContainer(Widget child) {
   return Container(
@@ -58,36 +59,32 @@ class Cameras extends ConsumerWidget {
           ),
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
-              final widgets = [
-                camContainer(
-                  RefreshableImage(
-                    secrets.camData['door']!['snapshotUrl']!,
-                    streamProvider: doorAlarmProvider,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const CamDetailPage(camId: 'door'),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                camContainer(
-                  RefreshableImage(
-                    secrets.camData['garden']!['snapshotUrl']!,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const CamDetailPage(camId: 'garden'),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ];
-
+              final widgets = ['door', 'garden'].map(
+                (camId) {
+                  return camContainer(
+                    RefreshableImage(
+                      secrets.camData[camId]!['snapshotUrl']!,
+                      streamProvider: doorAlarmProvider,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CamImagePage(camId: camId),
+                          ),
+                        );
+                      },
+                      onDoubleTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CamVideoPage(camId: camId),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ).toList();
               return index >= widgets.length ? null : widgets[index];
             },
             childCount: 1 * 2,

@@ -1,5 +1,4 @@
 import 'dart:developer' as d;
-import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:stack_trace/stack_trace.dart';

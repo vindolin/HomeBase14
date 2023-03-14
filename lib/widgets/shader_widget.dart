@@ -71,7 +71,12 @@ class ShaderBox extends StatefulWidget {
   final List<double> parameters;
   final String shader;
   final double slowDown;
-  const ShaderBox(this.shader, {this.parameters = const [], this.slowDown = 1.0, super.key});
+  const ShaderBox(
+    this.shader, {
+    this.parameters = const [],
+    this.slowDown = 1.0,
+    super.key,
+  });
 
   @override
   State<ShaderBox> createState() => _ShaderBoxState();
@@ -89,7 +94,11 @@ class _ShaderBoxState extends State<ShaderBox> {
           visible = !visible;
         }),
         child: visible
-            ? ShaderWidget(widget.shader, parameters: widget.parameters, slowDown: widget.slowDown)
+            ? ShaderWidget(
+                widget.shader,
+                parameters: widget.parameters,
+                slowDown: widget.slowDown,
+              )
             : Container(),
       ),
     );

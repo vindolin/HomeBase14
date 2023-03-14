@@ -1,7 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+
+import '/models/connectivity_provider.dart';
+
 // import 'package:cached_network_image/cached_network_image.dart';
 import 'image_fade_refresh.dart';
+
+const refreshTimeMobile = 120;
+const refreshTimeWifi = 10;
 
 class RefreshableImage extends ConsumerStatefulWidget {
   // this needs to be a ConsumerStatefulWidget because it needs to rebuild when tapped
@@ -9,6 +18,7 @@ class RefreshableImage extends ConsumerStatefulWidget {
   final StreamProvider? streamProvider; // refreshes the image when the stream emits
   final VoidCallback? onTap;
   final VoidCallback? onDoubleTap;
+  final bool autoRefresh;
 
   const RefreshableImage(
     this.imageUrl, {
@@ -16,6 +26,7 @@ class RefreshableImage extends ConsumerStatefulWidget {
     this.onTap,
     this.onDoubleTap,
     super.key,
+    this.autoRefresh = true,
   });
 
   @override
@@ -23,9 +34,42 @@ class RefreshableImage extends ConsumerStatefulWidget {
 }
 
 class _RefreshableImageState extends ConsumerState<RefreshableImage> {
+  Timer? timer;
+
+  void setTimer(int seconds) {
+    timer?.cancel();
+    timer = Timer.periodic(
+      Duration(seconds: seconds),
+      (Timer t) => setState(
+        () {},
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    setTimer(refreshTimeMobile);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(DateTime.now().millisecondsSinceEpoch.toString());
+    final conn = ref.watch(connProvider);
+
+    if (widget.autoRefresh) {
+      if (conn == ConnectivityResult.mobile) {
+        setTimer(refreshTimeMobile);
+      } else {
+        setTimer(refreshTimeWifi);
+      }
+    }
+
     if (widget.streamProvider != null) {
       ref.watch(widget.streamProvider!);
     }

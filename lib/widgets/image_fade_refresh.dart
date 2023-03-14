@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 
 class ImageFadeRefresh extends StatefulWidget {
   final String url;
-  const ImageFadeRefresh(this.url, {super.key});
+  final bool autoRefresh;
+  const ImageFadeRefresh(
+    this.url, {
+    super.key,
+    this.autoRefresh = false,
+  });
 
   @override
   ImageFadeRefreshState createState() => ImageFadeRefreshState();

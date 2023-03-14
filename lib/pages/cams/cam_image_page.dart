@@ -20,6 +20,7 @@ class CamImagePage extends StatelessWidget {
           quarterTurns: 1,
           child: RefreshableImage(
             secrets.camData[camId]!['snapshotUrl']!,
+            autoRefresh: true,
           ),
         ),
       ),

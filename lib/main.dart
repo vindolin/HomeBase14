@@ -52,12 +52,23 @@ class _MyAppState extends ConsumerState<HomeBase14App> {
   @override
   void initState() {
     super.initState();
-    ref.read(appSettingsProvider.notifier).loadConnectionData().then((_) {
+
+    // listen to changes in connectivity state
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      ref.read(connProvider.notifier).setResult(result);
+    });
+
+    // load connection data from shared preferences
+    ref.read(appSettingsProvider.notifier).loadConnectionData().then((_) async {
       ref.watch(mqttProvider.notifier).connect();
     });
-    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-      connectivityController.add(result);
-    });
+
+    Future(
+      () async {
+        // get initial connectivity state
+        ref.read(connProvider.notifier).setResult(await Connectivity().checkConnectivity());
+      },
+    );
   }
 
   @override

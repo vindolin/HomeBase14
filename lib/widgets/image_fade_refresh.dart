@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
+/// Network image that transions from the last image to the new image.
+/// Transition duration can be set with [transitionDurationMs], defaults to 1sec.
 class ImageFadeRefresh extends StatefulWidget {
   final String url;
-  final bool autoRefresh;
   final double? widthFactor;
+  final int transitionDurationMs;
 
   const ImageFadeRefresh(
     this.url, {
     super.key,
     this.widthFactor,
-    this.autoRefresh = false,
+    this.transitionDurationMs = 1000,
   });
 
   @override
@@ -26,7 +28,7 @@ class ImageFadeRefreshState extends State<ImageFadeRefresh> {
       frameBuilder: (context, child, frame, _) {
         return AnimatedOpacity(
           opacity: frame == null ? 0 : 1,
-          duration: const Duration(seconds: 1),
+          duration: Duration(milliseconds: widget.transitionDurationMs),
           curve: Curves.linear,
           child: child,
         );

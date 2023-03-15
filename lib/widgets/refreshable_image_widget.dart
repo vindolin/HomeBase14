@@ -5,15 +5,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 import '/models/connectivity_provider.dart';
-
-// import 'package:cached_network_image/cached_network_image.dart';
 import 'image_fade_refresh.dart';
 
 const refreshTimeMobile = 120;
 const refreshTimeWifi = 10;
 
 /// Image Container that refreshes the image when tapped or when a stream emits
-///
+/// Uses the
 class RefreshableImage extends ConsumerStatefulWidget {
   final String imageUrl;
   final StreamProvider? streamProvider; // refreshes the image when the stream emits
@@ -61,7 +59,7 @@ class _RefreshableImageState extends ConsumerState<RefreshableImage> {
 
   @override
   Widget build(BuildContext context) {
-    final conn = ref.watch(connProvider);
+    final conn = ref.watch(connectivityProvider);
 
     if (widget.autoRefresh) {
       if (conn == ConnectivityResult.mobile) {

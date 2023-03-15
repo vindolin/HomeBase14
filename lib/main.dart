@@ -8,7 +8,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 
 import '/models/app_settings.dart';
 import '/models/mqtt_connection_state_provider.dart';
-import '/models/connectivity_provider.dart';
+import '/models/connectivity_provider.dart' as connectivity_rovider; // rename to avoid conflict with Connectivity class
 import '/models/mqtt_providers.dart';
 import '/pages/login_page.dart';
 import '/pages/home/home_page.dart';
@@ -55,7 +55,7 @@ class _MyAppState extends ConsumerState<HomeBase14App> {
 
     // listen to changes in connectivity state
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-      ref.read(connProvider.notifier).setResult(result);
+      ref.read(connectivity_rovider.connectivityProvider.notifier).setResult(result);
     });
 
     // load connection data from shared preferences
@@ -66,7 +66,9 @@ class _MyAppState extends ConsumerState<HomeBase14App> {
     Future(
       () async {
         // get initial connectivity state
-        ref.read(connProvider.notifier).setResult(await Connectivity().checkConnectivity());
+        ref
+            .read(connectivity_rovider.connectivityProvider.notifier)
+            .setResult(await Connectivity().checkConnectivity());
       },
     );
   }

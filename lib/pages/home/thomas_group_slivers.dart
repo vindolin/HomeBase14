@@ -6,6 +6,7 @@ import '/styles/text_styles.dart';
 import '/pages/thomas/thomas_page.dart';
 import '/pages/grafana/grafana_page.dart';
 
+/// Stuff only relevant for Thomas (only visible if user is Thomas)
 class ThomasGroups extends ConsumerWidget {
   const ThomasGroups({super.key});
   final visualDensity = const VisualDensity(horizontal: 0, vertical: -3);

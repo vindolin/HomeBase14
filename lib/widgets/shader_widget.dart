@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_shaders/flutter_shaders.dart';
 import 'package:timer_builder/timer_builder.dart';
 
-class ShaderPainter extends CustomPainter {
+class _ShaderPainter extends CustomPainter {
   final List<double> parameters;
   late double startTime;
   double slowDown;
-  ShaderPainter(this.shader, this.startTime, this.slowDown, {this.parameters = const []});
+  _ShaderPainter(this.shader, this.startTime, this.slowDown, {this.parameters = const []});
 
   ui.FragmentShader shader;
 
@@ -34,6 +34,7 @@ class ShaderPainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) => true;
 }
 
+/// A widget that builds a shader from a shader file
 class ShaderWidget extends StatelessWidget {
   final List<double> parameters;
   final String shader;
@@ -51,7 +52,7 @@ class ShaderWidget extends StatelessWidget {
         builder: (context) {
           return CustomPaint(
             size: MediaQuery.of(context).size,
-            painter: ShaderPainter(
+            painter: _ShaderPainter(
               shader,
               time,
               slowDown,
@@ -67,6 +68,7 @@ class ShaderWidget extends StatelessWidget {
   }
 }
 
+/// Wrapper for ShaderWidget that shows the shader when tapped
 class ShaderBox extends StatefulWidget {
   final List<double> parameters;
   final String shader;

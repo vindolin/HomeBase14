@@ -6,22 +6,20 @@ import '/widgets/refreshable_image_widget.dart';
 import '/pages/cams/cam_image_page.dart';
 import '/pages/cams/cam_video_page.dart';
 
-Widget camContainer(Widget child) {
-  return Container(
-    decoration: BoxDecoration(
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.2),
-          spreadRadius: 1,
-          blurRadius: 2,
-          offset: const Offset(3, 3), // changes position of shadow
-        ),
-      ],
+Widget _camContainer(Widget child) {
+  return Card(
+    margin: EdgeInsets.zero,
+    clipBehavior: Clip.antiAlias,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(8.0),
     ),
+    elevation: 4,
     child: child,
   );
 }
 
+// Shows the cameras side by side
+// The cameras are refreshed every n seconds depending on the connection (wifi or mobile)
 class Cameras extends ConsumerWidget {
   const Cameras({super.key});
 
@@ -39,7 +37,7 @@ class Cameras extends ConsumerWidget {
           (BuildContext context, int index) {
             final widgets = ['door', 'garden'].map(
               (camId) {
-                return camContainer(
+                return _camContainer(
                   RefreshableImage(
                     secrets.camData[camId]!['snapshotUrl']!,
                     streamProvider: camId == 'door' ? doorAlarmProvider : null,

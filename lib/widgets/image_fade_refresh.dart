@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 class ImageFadeRefresh extends StatefulWidget {
   final String url;
   final bool autoRefresh;
+  final double? widthFactor;
+
   const ImageFadeRefresh(
     this.url, {
     super.key,
+    this.widthFactor,
     this.autoRefresh = false,
   });
 
@@ -39,8 +42,9 @@ class ImageFadeRefreshState extends State<ImageFadeRefresh> {
 
   @override
   void initState() {
-    previousImage = const Center(
-      child: SizedBox(
+    previousImage = Center(
+      widthFactor: widget.widthFactor,
+      child: const SizedBox(
         width: 32,
         height: 32,
         child: CircularProgressIndicator(

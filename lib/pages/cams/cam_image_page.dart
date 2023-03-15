@@ -16,10 +16,12 @@ class CamImagePage extends StatelessWidget {
         title: Text(translate('cams.$camId')),
       ),
       body: Center(
+        widthFactor: 16 / 9,
         child: RotatedBox(
           quarterTurns: 1,
           child: RefreshableImage(
             secrets.camData[camId]!['snapshotUrl']!,
+            widthFactor: 16 / 9,
             autoRefresh: true,
           ),
         ),

@@ -1,4 +1,15 @@
 import 'package:flutter/material.dart';
+import 'shader_widget.dart';
+
+const _errorImage = AspectRatio(
+  aspectRatio: 16 / 9,
+  child: ShaderWidget('tv_static.frag'),
+);
+
+// Image(
+//   filterQuality: FilterQuality.medium,
+//   image: AssetImage('assets/images/gif/searching_eye.gif'),
+// );
 
 /// Network image that fades from the last image to the new image.
 /// Transition duration can be set with [transitionDurationMs], defaults to 1sec.
@@ -32,11 +43,13 @@ class ImageFadeRefreshState extends State<ImageFadeRefresh> {
         );
       },
       loadingBuilder: (context, child, loadingProgress) {
-        if (loadingProgress == null) return child;
+        if (loadingProgress == null) {
+          return child;
+        }
         return Align(
           alignment: Alignment.bottomCenter,
           child: LinearProgressIndicator(
-            color: Colors.blue[900],
+            color: Colors.pink,
             minHeight: 2,
             value: loadingProgress.expectedTotalBytes != null
                 ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
@@ -44,10 +57,7 @@ class ImageFadeRefreshState extends State<ImageFadeRefresh> {
           ),
         );
       },
-      errorBuilder: (context, error, stackTrace) => const Image(
-        filterQuality: FilterQuality.medium,
-        image: AssetImage('assets/images/gif/searching_eye.gif'),
-      ),
+      errorBuilder: (context, error, stackTrace) => _errorImage,
     );
     previousImage = newImage;
     return newImage;
@@ -55,9 +65,7 @@ class ImageFadeRefreshState extends State<ImageFadeRefresh> {
 
   @override
   void initState() {
-    previousImage = const CircularProgressIndicator(
-      strokeWidth: 6,
-    );
+    previousImage = _errorImage;
     super.initState();
   }
 

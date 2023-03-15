@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Network image that transions from the last image to the new image.
+/// Network image that fades from the last image to the new image.
 /// Transition duration can be set with [transitionDurationMs], defaults to 1sec.
 class ImageFadeRefresh extends StatefulWidget {
   final String url;
@@ -33,6 +33,19 @@ class ImageFadeRefreshState extends State<ImageFadeRefresh> {
           child: child,
         );
       },
+      loadingBuilder: (context, child, loadingProgress) {
+        if (loadingProgress == null) return child;
+        return Align(
+          alignment: Alignment.bottomCenter,
+          child: LinearProgressIndicator(
+            color: Colors.blue[900],
+            minHeight: 2,
+            value: loadingProgress.expectedTotalBytes != null
+                ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                : null,
+          ),
+        );
+      },
       errorBuilder: (context, error, stackTrace) => const Image(
         filterQuality: FilterQuality.medium,
         image: AssetImage('assets/images/gif/searching_eye.gif'),
@@ -44,15 +57,8 @@ class ImageFadeRefreshState extends State<ImageFadeRefresh> {
 
   @override
   void initState() {
-    previousImage = Center(
-      widthFactor: widget.widthFactor,
-      child: const SizedBox(
-        width: 32,
-        height: 32,
-        child: CircularProgressIndicator(
-          strokeWidth: 6,
-        ),
-      ),
+    previousImage = const CircularProgressIndicator(
+      strokeWidth: 6,
     );
     super.initState();
   }
@@ -61,8 +67,11 @@ class ImageFadeRefreshState extends State<ImageFadeRefresh> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        previousImage!,
-        fetchImage(),
+        Align(alignment: Alignment.center, child: previousImage),
+        Align(
+          alignment: Alignment.center,
+          child: fetchImage(),
+        ),
       ],
     );
   }

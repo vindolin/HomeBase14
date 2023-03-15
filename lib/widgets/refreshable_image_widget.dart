@@ -12,8 +12,9 @@ import 'image_fade_refresh.dart';
 const refreshTimeMobile = 120;
 const refreshTimeWifi = 10;
 
+/// Image Container that refreshes the image when tapped or when a stream emits
+///
 class RefreshableImage extends ConsumerStatefulWidget {
-  // this needs to be a ConsumerStatefulWidget because it needs to rebuild when tapped
   final String imageUrl;
   final StreamProvider? streamProvider; // refreshes the image when the stream emits
   final VoidCallback? onTap;
@@ -80,11 +81,9 @@ class _RefreshableImageState extends ConsumerState<RefreshableImage> {
       onTap: widget.onTap,
       onDoubleTap: widget.onDoubleTap,
       onLongPress: () => setState(() {}), // just refresh image
-      child: Center(
-        child: ImageFadeRefresh(
-          '${widget.imageUrl}&${DateTime.now().millisecondsSinceEpoch}',
-          widthFactor: widget.widthFactor,
-        ),
+      child: ImageFadeRefresh(
+        '${widget.imageUrl}&${DateTime.now().millisecondsSinceEpoch}',
+        widthFactor: widget.widthFactor,
       ),
     );
   }

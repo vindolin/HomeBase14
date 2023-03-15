@@ -151,7 +151,7 @@ abstract class _MqttMessage implements MqttMessage {
 
 /// @nodoc
 mixin _$ArmedSwitchDevice {
-  String get topicGet => throw _privateConstructorUsedError;
+  String get topicState => throw _privateConstructorUsedError;
   String get topicSet => throw _privateConstructorUsedError;
   String get onState => throw _privateConstructorUsedError;
   String get offState => throw _privateConstructorUsedError;
@@ -172,7 +172,7 @@ abstract class $ArmedSwitchDeviceCopyWith<$Res> {
       _$ArmedSwitchDeviceCopyWithImpl<$Res, ArmedSwitchDevice>;
   @useResult
   $Res call(
-      {String topicGet,
+      {String topicState,
       String topicSet,
       String onState,
       String offState,
@@ -194,7 +194,7 @@ class _$ArmedSwitchDeviceCopyWithImpl<$Res, $Val extends ArmedSwitchDevice>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? topicGet = null,
+    Object? topicState = null,
     Object? topicSet = null,
     Object? onState = null,
     Object? offState = null,
@@ -203,9 +203,9 @@ class _$ArmedSwitchDeviceCopyWithImpl<$Res, $Val extends ArmedSwitchDevice>
     Object? stateKey = freezed,
   }) {
     return _then(_value.copyWith(
-      topicGet: null == topicGet
-          ? _value.topicGet
-          : topicGet // ignore: cast_nullable_to_non_nullable
+      topicState: null == topicState
+          ? _value.topicState
+          : topicState // ignore: cast_nullable_to_non_nullable
               as String,
       topicSet: null == topicSet
           ? _value.topicSet
@@ -244,7 +244,7 @@ abstract class _$$_SwitchDeviceCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String topicGet,
+      {String topicState,
       String topicSet,
       String onState,
       String offState,
@@ -264,7 +264,7 @@ class __$$_SwitchDeviceCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? topicGet = null,
+    Object? topicState = null,
     Object? topicSet = null,
     Object? onState = null,
     Object? offState = null,
@@ -273,9 +273,9 @@ class __$$_SwitchDeviceCopyWithImpl<$Res>
     Object? stateKey = freezed,
   }) {
     return _then(_$_SwitchDevice(
-      topicGet: null == topicGet
-          ? _value.topicGet
-          : topicGet // ignore: cast_nullable_to_non_nullable
+      topicState: null == topicState
+          ? _value.topicState
+          : topicState // ignore: cast_nullable_to_non_nullable
               as String,
       topicSet: null == topicSet
           ? _value.topicSet
@@ -309,7 +309,7 @@ class __$$_SwitchDeviceCopyWithImpl<$Res>
 
 class _$_SwitchDevice implements _SwitchDevice {
   _$_SwitchDevice(
-      {required this.topicGet,
+      {required this.topicState,
       required this.topicSet,
       required this.onState,
       required this.offState,
@@ -318,7 +318,7 @@ class _$_SwitchDevice implements _SwitchDevice {
       this.stateKey = null});
 
   @override
-  final String topicGet;
+  final String topicState;
   @override
   final String topicSet;
   @override
@@ -337,7 +337,7 @@ class _$_SwitchDevice implements _SwitchDevice {
 
   @override
   String toString() {
-    return 'ArmedSwitchDevice(topicGet: $topicGet, topicSet: $topicSet, onState: $onState, offState: $offState, state: $state, transitioning: $transitioning, stateKey: $stateKey)';
+    return 'ArmedSwitchDevice(topicState: $topicState, topicSet: $topicSet, onState: $onState, offState: $offState, state: $state, transitioning: $transitioning, stateKey: $stateKey)';
   }
 
   @JsonKey(ignore: true)
@@ -349,7 +349,7 @@ class _$_SwitchDevice implements _SwitchDevice {
 
 abstract class _SwitchDevice implements ArmedSwitchDevice {
   factory _SwitchDevice(
-      {required final String topicGet,
+      {required final String topicState,
       required final String topicSet,
       required final String onState,
       required final String offState,
@@ -358,7 +358,7 @@ abstract class _SwitchDevice implements ArmedSwitchDevice {
       final String? stateKey}) = _$_SwitchDevice;
 
   @override
-  String get topicGet;
+  String get topicState;
   @override
   String get topicSet;
   @override

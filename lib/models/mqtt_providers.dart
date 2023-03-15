@@ -105,7 +105,7 @@ class Mqtt extends _$Mqtt {
 
     // inject publish function
     lightDevices.publishCallback = publish;
-    switchDevices.publishCallback = publishRetained;
+    switchDevices.publishCallback = publish;
     mqttMessages.publishCallback = publish;
 
     ref.onDispose(() {
@@ -356,7 +356,7 @@ class Mqtt extends _$Mqtt {
 
         // armed switches like garage door
         switchDevices.state.forEach((key, switchDevice) {
-          if (switchDevice.topicGet == mqttReceivedMessage.topic) {
+          if (switchDevice.topicState == mqttReceivedMessage.topic) {
             dynamic devicePayload = payload;
 
             // if the device has a stateKey, we need to parse the json and set the payload to that key's value (e.g. zigbee2mqtt plugs)

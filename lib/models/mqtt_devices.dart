@@ -130,7 +130,7 @@ class SingleCurtainDevices extends _$SingleCurtainDevices {
 @unfreezed
 class ArmedSwitchDevice with _$ArmedSwitchDevice {
   factory ArmedSwitchDevice({
-    required final String topicGet,
+    required final String topicState,
     required final String topicSet,
     required final String onState,
     required final String offState,
@@ -142,31 +142,31 @@ class ArmedSwitchDevice with _$ArmedSwitchDevice {
 
 IMap<String, ArmedSwitchDevice> switchDevices = IMap({
   'garage': ArmedSwitchDevice(
-    topicGet: 'garagedoor/state',
+    topicState: 'garagedoor/state',
     topicSet: 'garagedoor/set',
     onState: 'open',
     offState: 'close',
   ),
   'burglar': ArmedSwitchDevice(
-    topicGet: 'home/burglar_alarm',
+    topicState: 'home/burglar_alarm',
     topicSet: 'home/burglar_alarm',
     onState: '1',
     offState: '0',
   ),
   'camera': ArmedSwitchDevice(
-    topicGet: 'kittycam/privacy',
+    topicState: 'kittycam/privacy',
     topicSet: 'kittycam/privacy',
     onState: 'ON',
     offState: 'OFF',
   ),
   'pump': ArmedSwitchDevice(
-    topicGet: 'garden/cistern_pump/get',
+    topicState: 'garden/cistern_pump/get',
     topicSet: 'garden/cistern_pump/set',
     onState: '1',
     offState: '0',
   ),
   'tv': ArmedSwitchDevice(
-    topicGet: 'zigbee2mqtt/plug/i002',
+    topicState: 'zigbee2mqtt/plug/i002',
     topicSet: 'zigbee2mqtt/plug/i002/set',
     onState: 'ON',
     offState: 'OFF',

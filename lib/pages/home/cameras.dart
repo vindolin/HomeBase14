@@ -59,7 +59,6 @@ class Cameras extends ConsumerWidget {
                         ),
                       );
                     },
-                    widthFactor: 16 / 9,
                     autoRefresh: true,
                   ),
                 );

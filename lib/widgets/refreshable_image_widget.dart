@@ -19,7 +19,6 @@ class RefreshableImage extends ConsumerStatefulWidget {
   final StreamProvider? streamProvider; // refreshes the image when the stream emits
   final VoidCallback? onTap;
   final VoidCallback? onDoubleTap;
-  final double? widthFactor;
   final bool autoRefresh;
 
   const RefreshableImage(
@@ -28,7 +27,6 @@ class RefreshableImage extends ConsumerStatefulWidget {
     this.onTap,
     this.onDoubleTap,
     super.key,
-    this.widthFactor,
     this.autoRefresh = true,
   });
 
@@ -83,7 +81,6 @@ class _RefreshableImageState extends ConsumerState<RefreshableImage> {
       onLongPress: () => setState(() {}), // just refresh image
       child: ImageFadeRefresh(
         '${widget.imageUrl}&${DateTime.now().millisecondsSinceEpoch}',
-        widthFactor: widget.widthFactor,
       ),
     );
   }

@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 /// Transition duration can be set with [transitionDurationMs], defaults to 1sec.
 class ImageFadeRefresh extends StatefulWidget {
   final String url;
-  final double? widthFactor;
   final int transitionDurationMs;
 
   const ImageFadeRefresh(
     this.url, {
     super.key,
-    this.widthFactor,
     this.transitionDurationMs = 1000,
   });
 

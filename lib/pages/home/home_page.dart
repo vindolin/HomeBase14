@@ -13,6 +13,7 @@ import 'device_group_slivers.dart';
 import 'thomas_group_slivers.dart';
 import 'cameras.dart';
 import 'widgets/solar_watts_widget.dart';
+import '/models/app_settings.dart';
 import '/models/mqtt_providers.dart';
 import '/widgets/stream_blinker_widget.dart';
 import '/widgets/connection_bar_widget.dart';
@@ -74,6 +75,8 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final appSettings = ref.watch(appSettingsProvider);
+
     return Scaffold(
       endDrawer: const Drawer(
         child: UserSelect(),
@@ -175,7 +178,7 @@ class HomePage extends ConsumerWidget {
                   const ArmedButtons(),
                   const DeviceGroups(),
                   const Cameras(),
-                  const ThomasGroups(),
+                  if (appSettings.user == User.thomas) const ThomasGroups(),
                 ],
               ),
             ],

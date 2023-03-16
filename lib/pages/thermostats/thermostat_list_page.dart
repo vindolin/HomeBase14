@@ -16,6 +16,14 @@ const temperatureColors = {
   'tooHot': Colors.orange,
 };
 
+MaterialColor? getTemperatureColor(double temperature, double setpoint) {
+  return temperature == setpoint
+      ? temperatureColors['perfect']
+      : temperature < setpoint
+          ? temperatureColors['tooCold']
+          : temperatureColors['tooHot'];
+}
+
 /// Shows a list of all thermostats, sorted by name and temperature.
 class ThermostatListPage extends ConsumerWidget {
   const ThermostatListPage({super.key});
@@ -57,11 +65,10 @@ class ThermostatListPage extends ConsumerWidget {
           final device = thermostatDevices.values.elementAt(index);
 
           // log(key);
-          final tempColor = device.localTemperature == device.currentHeatingSetpoint
-              ? temperatureColors['perfect']
-              : device.localTemperature < device.currentHeatingSetpoint
-                  ? temperatureColors['tooCold']
-                  : temperatureColors['tooHot'];
+          final tempColor = getTemperatureColor(
+            device.localTemperature,
+            device.currentHeatingSetpoint,
+          );
 
           return ListTile(
             leading: Icon(

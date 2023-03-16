@@ -50,6 +50,7 @@ class ImageFadeRefreshState extends State<ImageFadeRefresh> {
           alignment: Alignment.bottomCenter,
           child: LinearProgressIndicator(
             color: Colors.pink,
+            backgroundColor: Colors.pink.withOpacity(0.2),
             minHeight: 2,
             value: loadingProgress.expectedTotalBytes != null
                 ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!

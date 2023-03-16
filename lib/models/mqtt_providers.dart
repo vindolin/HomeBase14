@@ -103,7 +103,7 @@ class Mqtt extends _$Mqtt {
 
     mqttMessages = ref.watch(mqttMessagesProvider.notifier);
 
-    // inject publish function
+    // inject publish function //TODOs find a better way
     lightDevices.publishCallback = publish;
     switchDevices.publishCallback = publish;
     mqttMessages.publishCallback = publish;
@@ -235,6 +235,11 @@ class Mqtt extends _$Mqtt {
         } on FormatException catch (_) {
           payloadDecoded = payload;
         }
+
+        // ref.read(mqttMessagesFamProvider(mqttReceivedMessage.topic).notifier).publishCallback = publish;
+        ref.read(mqttMessagesFamProvider(mqttReceivedMessage.topic).notifier).state = payloadDecoded;
+
+        // add all messages to this generic mqttMessages provider
         mqttMessages.state = mqttMessages.state.add(
           mqttReceivedMessage.topic,
           MqttMessage(

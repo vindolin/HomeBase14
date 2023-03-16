@@ -21,6 +21,135 @@ final mqttMessagesProvider = AutoDisposeNotifierProvider<MqttMessages,
 );
 
 typedef _$MqttMessages = AutoDisposeNotifier<IMap<String, MqttMessage>>;
+String _$mqttMessagesFamHash() => r'561c4b8c4b558191eb638c666ded09eb52a0bdfc';
+
+/// Copied from Dart SDK
+class _SystemHash {
+  _SystemHash._();
+
+  static int combine(int hash, int value) {
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + value);
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
+    return hash ^ (hash >> 6);
+  }
+
+  static int finish(int hash) {
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
+    // ignore: parameter_assignments
+    hash = hash ^ (hash >> 11);
+    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
+  }
+}
+
+abstract class _$MqttMessagesFam extends BuildlessAutoDisposeNotifier<dynamic> {
+  late final dynamic statTopic;
+
+  dynamic build(
+    dynamic statTopic,
+  );
+}
+
+/// A generic MqttMessages family provider (instead of filtering the MqttMessages with .select())
+///
+/// Copied from [MqttMessagesFam].
+@ProviderFor(MqttMessagesFam)
+const mqttMessagesFamProvider = MqttMessagesFamFamily();
+
+/// A generic MqttMessages family provider (instead of filtering the MqttMessages with .select())
+///
+/// Copied from [MqttMessagesFam].
+class MqttMessagesFamFamily extends Family<dynamic> {
+  /// A generic MqttMessages family provider (instead of filtering the MqttMessages with .select())
+  ///
+  /// Copied from [MqttMessagesFam].
+  const MqttMessagesFamFamily();
+
+  /// A generic MqttMessages family provider (instead of filtering the MqttMessages with .select())
+  ///
+  /// Copied from [MqttMessagesFam].
+  MqttMessagesFamProvider call(
+    dynamic statTopic,
+  ) {
+    return MqttMessagesFamProvider(
+      statTopic,
+    );
+  }
+
+  @override
+  MqttMessagesFamProvider getProviderOverride(
+    covariant MqttMessagesFamProvider provider,
+  ) {
+    return call(
+      provider.statTopic,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'mqttMessagesFamProvider';
+}
+
+/// A generic MqttMessages family provider (instead of filtering the MqttMessages with .select())
+///
+/// Copied from [MqttMessagesFam].
+class MqttMessagesFamProvider
+    extends AutoDisposeNotifierProviderImpl<MqttMessagesFam, dynamic> {
+  /// A generic MqttMessages family provider (instead of filtering the MqttMessages with .select())
+  ///
+  /// Copied from [MqttMessagesFam].
+  MqttMessagesFamProvider(
+    this.statTopic,
+  ) : super.internal(
+          () => MqttMessagesFam()..statTopic = statTopic,
+          from: mqttMessagesFamProvider,
+          name: r'mqttMessagesFamProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$mqttMessagesFamHash,
+          dependencies: MqttMessagesFamFamily._dependencies,
+          allTransitiveDependencies:
+              MqttMessagesFamFamily._allTransitiveDependencies,
+        );
+
+  final dynamic statTopic;
+
+  @override
+  bool operator ==(Object other) {
+    return other is MqttMessagesFamProvider && other.statTopic == statTopic;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, statTopic.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+
+  @override
+  dynamic runNotifierBuild(
+    covariant MqttMessagesFam notifier,
+  ) {
+    return notifier.build(
+      statTopic,
+    );
+  }
+}
+
 String _$deviceNamesHash() => r'4a792cd0be469feeaebdd13356b3f2f392817001';
 
 /// See also [DeviceNames].

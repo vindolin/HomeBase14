@@ -22,11 +22,22 @@ class MqttMessage with _$MqttMessage {
 
 @riverpod
 class MqttMessages extends _$MqttMessages {
-  late Function publishCallback; // get's injected by the mqtt class
+  late Function publishCallback; // get's injected by the mqtt class  // TODOs can this be done another way?
 
   @override
   IMap<String, MqttMessage> build() {
     return IMap();
+  }
+}
+
+/// A generic MqttMessages family provider (instead of filtering the MqttMessages with .select())
+@riverpod
+class MqttMessagesFam extends _$MqttMessagesFam {
+  late Function publishCallback; // get's injected by the mqtt class
+
+  @override
+  dynamic build(statTopic) {
+    return null;
   }
 }
 

@@ -36,6 +36,7 @@ const subscribeTopics = [
   'prusa/temp',
   'sma/tripower/totw',
   'sma/b3b461c9/total_w',
+  'meep/#', // test device
 ];
 
 // generate a random mqtt client identifier

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '/styles/text_styles.dart';
 import '/utils.dart';
+import '/widgets/mqtt_switch_widget.dart';
 import '/widgets/connection_bar_widget.dart';
 import 'dropdown_select_widget.dart';
 
@@ -79,6 +80,28 @@ class ThomasPage extends ConsumerWidget {
                   setTopic: 'leech/screens/set',
                 ),
               ],
+            ),
+          ),
+          const Card(
+            child: Center(
+              child: MqttSwitchWidget(
+                title: 'Meep A!',
+                statTopic: 'meep/a/stat',
+                setTopic: 'meep/a/set',
+                optimistic: true,
+                orientation: MqttSwitchWidgetOrientation.horizontal,
+              ),
+            ),
+          ),
+          const Card(
+            child: Center(
+              child: MqttSwitchWidget(
+                title: 'Meep B!',
+                statTopic: 'meep/b/stat',
+                setTopic: 'meep/b/set',
+                optimistic: false,
+                orientation: MqttSwitchWidgetOrientation.vertical,
+              ),
             ),
           ),
         ],

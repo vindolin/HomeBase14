@@ -79,7 +79,8 @@ class AppSettings extends _$AppSettings {
     );
 
     String plainText = jsonEncode(state);
-    log('plainText: $plainText');
+
+    // encrypt the connection data
     final encrypted = encrypter.encrypt(plainText, iv: iv);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();

@@ -10,7 +10,7 @@ import '/pages/curtains/curtain_list_page.dart';
 import '/pages/lights/light_list_page.dart';
 import '/pages/lights/widgets/lights_off_button_widget.dart';
 import '/pages/curtains/widgets/curtain_actions.dart';
-import '/pages/other_page.dart';
+import '/pages/other/other_page.dart';
 
 class DeviceGroups extends ConsumerWidget {
   const DeviceGroups({super.key});

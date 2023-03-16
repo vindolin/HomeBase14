@@ -11,9 +11,9 @@ Widget _camContainer(Widget child) {
     margin: EdgeInsets.zero,
     clipBehavior: Clip.antiAlias,
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(8.0),
+      borderRadius: BorderRadius.circular(4.0),
     ),
-    elevation: 4,
+    elevation: 6,
     child: child,
   );
 }

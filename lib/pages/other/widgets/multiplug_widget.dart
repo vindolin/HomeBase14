@@ -18,7 +18,6 @@ class MultiplugWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final payload = ref.watch(mqttMessagesFamProvider(topic));
-
     var filteredPayload = {};
     if (payload != null) {
       // filter relevant keys

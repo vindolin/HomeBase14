@@ -237,7 +237,6 @@ class Mqtt extends _$Mqtt {
           payloadDecoded = payload;
         }
 
-        // ref.read(mqttMessagesFamProvider(mqttReceivedMessage.topic).notifier).publishCallback = publish;
         ref.read(mqttMessagesFamProvider(mqttReceivedMessage.topic).notifier).state = payloadDecoded;
 
         // add all messages to this generic mqttMessages provider

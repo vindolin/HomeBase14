@@ -6,7 +6,7 @@ part of 'generic_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$togglerHash() => r'138e72744acb313f8b5f18e0373d7b2a79177638';
+String _$togglerHash() => r'9540fd5f29e813085db43543f8a035327ec290e8';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-abstract class _$Toggler extends BuildlessAutoDisposeNotifier<bool> {
+abstract class _$Toggler extends BuildlessNotifier<bool> {
   late final String key;
 
   bool build(
@@ -80,7 +80,7 @@ class TogglerFamily extends Family<bool> {
 }
 
 /// See also [Toggler].
-class TogglerProvider extends AutoDisposeNotifierProviderImpl<Toggler, bool> {
+class TogglerProvider extends NotifierProviderImpl<Toggler, bool> {
   /// See also [Toggler].
   TogglerProvider(
     this.key,
@@ -121,9 +121,9 @@ class TogglerProvider extends AutoDisposeNotifierProviderImpl<Toggler, bool> {
   }
 }
 
-String _$counterHash() => r'c05627355904c10bc3a5a694d0fea3bcb4806544';
+String _$counterHash() => r'f0606350ca2a444ac72f31a0c6e1a96663893a42';
 
-abstract class _$Counter extends BuildlessAutoDisposeNotifier<int> {
+abstract class _$Counter extends BuildlessNotifier<int> {
   late final String key;
 
   int build(
@@ -174,7 +174,7 @@ class CounterFamily extends Family<int> {
 }
 
 /// See also [Counter].
-class CounterProvider extends AutoDisposeNotifierProviderImpl<Counter, int> {
+class CounterProvider extends NotifierProviderImpl<Counter, int> {
   /// See also [Counter].
   CounterProvider(
     this.key,

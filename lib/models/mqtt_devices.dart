@@ -31,7 +31,7 @@ class MqttMessages extends _$MqttMessages {
 }
 
 /// A generic MqttMessages family provider (instead of filtering the MqttMessages with .select())
-/// Why is keepAlive needed here but not in the MqttMessages provider?
+// keepAlive is required here because the members are spun up on demand by the mqtt class and no reference is kept to them
 @Riverpod(keepAlive: true)
 class MqttMessagesFam extends _$MqttMessagesFam {
   @override
@@ -46,16 +46,6 @@ class DeviceNames extends _$DeviceNames {
   @override
   IMap<String, String> build() {
     return IMap();
-  }
-}
-
-@riverpod
-class Leech extends _$Leech {
-  late Function publishCallback; // get's injected by the mqtt class
-
-  @override
-  IMap<String, String> build() {
-    return IMap(const {'sleep_state': 'none'});
   }
 }
 
@@ -596,7 +586,7 @@ class SmartBulbDevice extends AbstractMqttDevice {
   }
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class SmartBulbDevices extends _$SmartBulbDevices {
   @override
   IMap<String, SmartBulbDevice> build() {

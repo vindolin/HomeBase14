@@ -44,7 +44,6 @@ final clientIdentifier = 'HB14${nanoid()}';
 
 // used for the flashing message icon
 StreamController<Map<String, dynamic>> messageController = StreamController<Map<String, dynamic>>.broadcast();
-
 final messageProvider = StreamProvider<Map<String, dynamic>>((ref) async* {
   await for (final message in messageController.stream) {
     yield message;
@@ -53,7 +52,6 @@ final messageProvider = StreamProvider<Map<String, dynamic>>((ref) async* {
 
 // used for vibration on door movement
 StreamController<int> doorMovementController = StreamController<int>.broadcast();
-
 final doorMovementProvider = StreamProvider<int>((ref) async* {
   await for (final message in doorMovementController.stream) {
     yield message;
@@ -62,7 +60,6 @@ final doorMovementProvider = StreamProvider<int>((ref) async* {
 
 // used for refreshing the preview image
 StreamController<int> doorAlarmController = StreamController<int>.broadcast();
-
 final doorAlarmProvider = StreamProvider<int>((ref) async* {
   await for (final message in doorAlarmController.stream) {
     yield message;
@@ -80,12 +77,8 @@ class Mqtt extends _$Mqtt {
   late LightDevices lightDevices;
   late SmartBulbDevices ikeaBulbDevices;
   late SwitchDevices switchDevices;
-  late Leech leech;
   late MqttMessages mqttMessages;
   late Prusa prusa;
-
-  late Toggler sslStatus;
-  late Counter mqttMessageCounter;
 
   @override
   build() {
@@ -97,9 +90,7 @@ class Mqtt extends _$Mqtt {
     dualCurtainDevices = ref.watch(dualCurtainDevicesProvider.notifier);
     doorDevices = ref.watch(doorDevicesProvider.notifier);
     thermostatDevices = ref.watch(thermostatDevicesProvider.notifier);
-    sslStatus = ref.watch(togglerProvider('ssl').notifier);
-    mqttMessageCounter = ref.watch(counterProvider('mqtt_message').notifier);
-    leech = ref.watch(leechProvider.notifier);
+
     prusa = ref.watch(prusaProvider.notifier);
 
     mqttMessages = ref.watch(mqttMessagesProvider.notifier);
@@ -140,7 +131,7 @@ class Mqtt extends _$Mqtt {
           ..useCertificateChainBytes(clientCrt.buffer.asInt8List())
           ..usePrivateKeyBytes(clientKey.buffer.asInt8List());
 
-        sslStatus.state = true;
+        ref.read(togglerProvider('ssl').notifier).state = true;
 
         log('SSL enabled');
       } catch (_) {
@@ -224,7 +215,7 @@ class Mqtt extends _$Mqtt {
     client.updates?.listen((List<mqtt.MqttReceivedMessage<mqtt.MqttMessage>> messages) {
       // iterate over all new messages
       for (mqtt.MqttReceivedMessage mqttReceivedMessage in messages) {
-        mqttMessageCounter.increment();
+        ref.watch(counterProvider('mqtt_message').notifier).increment();
 
         final mqtt.MqttPublishMessage message = mqttReceivedMessage.payload as mqtt.MqttPublishMessage;
         final String payload = const Utf8Decoder().convert(message.payload.message);
@@ -315,9 +306,10 @@ class Mqtt extends _$Mqtt {
             doorAlarmController.sink.add(objectValue);
           }
         } else if (mqttReceivedMessage.topic == 'zigbee2mqtt/bridge/devices') {
-          // we find the device name (description) in the zigbee2mqtt/bridge/devices message
+          /// we find the device name (description) in the zigbee2mqtt/bridge/devices message
           setDeviceNameMap(payloadDecoded);
         } else if (mqttReceivedMessage.topic.startsWith('prusa/')) {
+          /// Prusa i3 MK3S
           final attribute = mqttReceivedMessage.topic.split('/').last;
 
           // TODOs: pattern matching!

@@ -53,25 +53,21 @@ abstract class _$MqttMessagesFam extends BuildlessNotifier<dynamic> {
 }
 
 /// A generic MqttMessages family provider (instead of filtering the MqttMessages with .select())
-/// Why is keepAlive needed here but not in the MqttMessages provider?
 ///
 /// Copied from [MqttMessagesFam].
 @ProviderFor(MqttMessagesFam)
 const mqttMessagesFamProvider = MqttMessagesFamFamily();
 
 /// A generic MqttMessages family provider (instead of filtering the MqttMessages with .select())
-/// Why is keepAlive needed here but not in the MqttMessages provider?
 ///
 /// Copied from [MqttMessagesFam].
 class MqttMessagesFamFamily extends Family<dynamic> {
   /// A generic MqttMessages family provider (instead of filtering the MqttMessages with .select())
-  /// Why is keepAlive needed here but not in the MqttMessages provider?
   ///
   /// Copied from [MqttMessagesFam].
   const MqttMessagesFamFamily();
 
   /// A generic MqttMessages family provider (instead of filtering the MqttMessages with .select())
-  /// Why is keepAlive needed here but not in the MqttMessages provider?
   ///
   /// Copied from [MqttMessagesFam].
   MqttMessagesFamProvider call(
@@ -107,13 +103,11 @@ class MqttMessagesFamFamily extends Family<dynamic> {
 }
 
 /// A generic MqttMessages family provider (instead of filtering the MqttMessages with .select())
-/// Why is keepAlive needed here but not in the MqttMessages provider?
 ///
 /// Copied from [MqttMessagesFam].
 class MqttMessagesFamProvider
     extends NotifierProviderImpl<MqttMessagesFam, dynamic> {
   /// A generic MqttMessages family provider (instead of filtering the MqttMessages with .select())
-  /// Why is keepAlive needed here but not in the MqttMessages provider?
   ///
   /// Copied from [MqttMessagesFam].
   MqttMessagesFamProvider(
@@ -171,21 +165,6 @@ final deviceNamesProvider =
 );
 
 typedef _$DeviceNames = AutoDisposeNotifier<IMap<String, String>>;
-String _$leechHash() => r'0a413e597e33be80f44f8237aced20a66183a16f';
-
-/// See also [Leech].
-@ProviderFor(Leech)
-final leechProvider =
-    AutoDisposeNotifierProvider<Leech, IMap<String, String>>.internal(
-  Leech.new,
-  name: r'leechProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$leechHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$Leech = AutoDisposeNotifier<IMap<String, String>>;
 String _$prusaHash() => r'34a35466150cdc5f0cc8475c094b60f79e0502e1';
 
 /// See also [Prusa].
@@ -300,12 +279,12 @@ final thermostatDevicesProvider = AutoDisposeNotifierProvider<ThermostatDevices,
 
 typedef _$ThermostatDevices
     = AutoDisposeNotifier<IMap<String, ThermostatDevice>>;
-String _$smartBulbDevicesHash() => r'390d2e9d1be6840f4bdd4cb02fc19d4be3e3bf5c';
+String _$smartBulbDevicesHash() => r'4b7988a9394f2ef5005f659f9da878e30083e9c1';
 
 /// See also [SmartBulbDevices].
 @ProviderFor(SmartBulbDevices)
-final smartBulbDevicesProvider = AutoDisposeNotifierProvider<SmartBulbDevices,
-    IMap<String, SmartBulbDevice>>.internal(
+final smartBulbDevicesProvider =
+    NotifierProvider<SmartBulbDevices, IMap<String, SmartBulbDevice>>.internal(
   SmartBulbDevices.new,
   name: r'smartBulbDevicesProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -315,5 +294,5 @@ final smartBulbDevicesProvider = AutoDisposeNotifierProvider<SmartBulbDevices,
   allTransitiveDependencies: null,
 );
 
-typedef _$SmartBulbDevices = AutoDisposeNotifier<IMap<String, SmartBulbDevice>>;
+typedef _$SmartBulbDevices = Notifier<IMap<String, SmartBulbDevice>>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

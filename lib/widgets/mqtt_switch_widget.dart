@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '/models/mqtt_devices.dart';
 import '/models/mqtt_providers.dart';
+import '/models/mqtt_devices.dart';
 
 enum MqttSwitchWidgetOrientation {
   horizontal,

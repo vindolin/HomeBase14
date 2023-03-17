@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '/models/mqtt_providers.dart';
 import '/models/mqtt_devices.dart';
 
@@ -35,8 +36,24 @@ class MultiplugWidget extends ConsumerWidget {
         (i) => Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('L${i + 1}'),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SvgPicture.asset(
+                  'assets/images/svg/power_socket3.svg',
+                  colorFilter: const ColorFilter.mode(
+                    Colors.white,
+                    BlendMode.srcIn,
+                  ),
+                  width: 22,
+                  height: 22,
+                ),
+                const SizedBox(width: 4),
+                Text('L${i + 1}'),
+              ],
+            ),
             Switch(
+              activeColor: Colors.green,
               value: filteredPayload['state_l${i + 1}'] == 'ON' ? true : false,
               onChanged: (value) {
                 filteredPayload['state_l${i + 1}'] = value ? 'ON' : 'OFF';

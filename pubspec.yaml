@@ -109,9 +109,7 @@ flutter:
     - assets/images/gif/searching_eye.gif
     - assets/images/bg_pattern.png
     - assets/images/bar_pattern.jpg
-    - assets/images/svg/14.svg
-    - assets/images/svg/blinds.svg
-    - assets/images/svg/nozzle.svg
+    - assets/images/svg/
     - assets/i18n/
 
     - assets/certs/

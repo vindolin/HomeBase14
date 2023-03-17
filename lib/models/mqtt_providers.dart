@@ -343,11 +343,10 @@ class Mqtt extends _$Mqtt {
         // tasmota switches, plugs, bulps, etc
         lightDevices.state.forEach((key, lightDevice) {
           if (lightDevice.topicGet == mqttReceivedMessage.topic) {
-            lightDevices.state = lightDevices.state.add(key, lightDevice.copyWith(state: payload));
-            // lightDevices.state = {
-            //   ...lightDevices.state,
-            //   key: lightDevice.copyWith(state: payload),
-            // };
+            lightDevices.state = lightDevices.state.add(
+              key,
+              lightDevice.copyWith(state: payload),
+            );
           }
         });
 

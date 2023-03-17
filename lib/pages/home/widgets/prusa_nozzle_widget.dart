@@ -45,7 +45,6 @@ class PrusaNozzle extends ConsumerWidget {
     }
 
     // nozzleColor = Colors.white;
-    const String assetName = 'assets/images/svg/nozzle.svg';
 
     return FutureBuilder<void>(
       future: setColor(),
@@ -63,7 +62,7 @@ class PrusaNozzle extends ConsumerWidget {
             Widget? child,
           ) {
             return SvgPicture.asset(
-              assetName,
+              'assets/images/svg/nozzle.svg',
               colorFilter: ColorFilter.mode(nozzleColor!, BlendMode.srcIn),
               width: 16,
               height: 16,

@@ -5,6 +5,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 
 import '/utils.dart';
 import '/widgets/connection_bar_widget.dart';
+import 'widgets/multiplug_widget.dart';
 
 class OtherPage extends ConsumerWidget {
   const OtherPage({super.key});
@@ -18,7 +19,21 @@ class OtherPage extends ConsumerWidget {
         title: Text(translate('device_names.other')),
         actions: const [ConnectionBar()],
       ),
-      body: const Center(child: Text('implement me')),
+      body: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: const [
+              Text('Multiplug Sofa'),
+              Spacer(),
+              MultiplugWidget(
+                plugCount: 3,
+                topic: 'zigbee2mqtt/multiplug/i001',
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

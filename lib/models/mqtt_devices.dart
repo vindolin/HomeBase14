@@ -31,12 +31,11 @@ class MqttMessages extends _$MqttMessages {
 }
 
 /// A generic MqttMessages family provider (instead of filtering the MqttMessages with .select())
-@riverpod
+/// Why is keepAlive needed here but not in the MqttMessages provider?
+@Riverpod(keepAlive: true)
 class MqttMessagesFam extends _$MqttMessagesFam {
-  late Function publishCallback; // get's injected by the mqtt class
-
   @override
-  dynamic build(statTopic) {
+  dynamic build(topic) {
     return null;
   }
 }

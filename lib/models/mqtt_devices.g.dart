@@ -21,7 +21,7 @@ final mqttMessagesProvider = AutoDisposeNotifierProvider<MqttMessages,
 );
 
 typedef _$MqttMessages = AutoDisposeNotifier<IMap<String, MqttMessage>>;
-String _$mqttMessagesFamHash() => r'561c4b8c4b558191eb638c666ded09eb52a0bdfc';
+String _$mqttMessagesFamHash() => r'a547d8eeda40913e0d5ce821b8bcad3b0dd4066e';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -44,37 +44,41 @@ class _SystemHash {
   }
 }
 
-abstract class _$MqttMessagesFam extends BuildlessAutoDisposeNotifier<dynamic> {
-  late final dynamic statTopic;
+abstract class _$MqttMessagesFam extends BuildlessNotifier<dynamic> {
+  late final dynamic topic;
 
   dynamic build(
-    dynamic statTopic,
+    dynamic topic,
   );
 }
 
 /// A generic MqttMessages family provider (instead of filtering the MqttMessages with .select())
+/// Why is keepAlive needed here but not in the MqttMessages provider?
 ///
 /// Copied from [MqttMessagesFam].
 @ProviderFor(MqttMessagesFam)
 const mqttMessagesFamProvider = MqttMessagesFamFamily();
 
 /// A generic MqttMessages family provider (instead of filtering the MqttMessages with .select())
+/// Why is keepAlive needed here but not in the MqttMessages provider?
 ///
 /// Copied from [MqttMessagesFam].
 class MqttMessagesFamFamily extends Family<dynamic> {
   /// A generic MqttMessages family provider (instead of filtering the MqttMessages with .select())
+  /// Why is keepAlive needed here but not in the MqttMessages provider?
   ///
   /// Copied from [MqttMessagesFam].
   const MqttMessagesFamFamily();
 
   /// A generic MqttMessages family provider (instead of filtering the MqttMessages with .select())
+  /// Why is keepAlive needed here but not in the MqttMessages provider?
   ///
   /// Copied from [MqttMessagesFam].
   MqttMessagesFamProvider call(
-    dynamic statTopic,
+    dynamic topic,
   ) {
     return MqttMessagesFamProvider(
-      statTopic,
+      topic,
     );
   }
 
@@ -83,7 +87,7 @@ class MqttMessagesFamFamily extends Family<dynamic> {
     covariant MqttMessagesFamProvider provider,
   ) {
     return call(
-      provider.statTopic,
+      provider.topic,
     );
   }
 
@@ -103,17 +107,19 @@ class MqttMessagesFamFamily extends Family<dynamic> {
 }
 
 /// A generic MqttMessages family provider (instead of filtering the MqttMessages with .select())
+/// Why is keepAlive needed here but not in the MqttMessages provider?
 ///
 /// Copied from [MqttMessagesFam].
 class MqttMessagesFamProvider
-    extends AutoDisposeNotifierProviderImpl<MqttMessagesFam, dynamic> {
+    extends NotifierProviderImpl<MqttMessagesFam, dynamic> {
   /// A generic MqttMessages family provider (instead of filtering the MqttMessages with .select())
+  /// Why is keepAlive needed here but not in the MqttMessages provider?
   ///
   /// Copied from [MqttMessagesFam].
   MqttMessagesFamProvider(
-    this.statTopic,
+    this.topic,
   ) : super.internal(
-          () => MqttMessagesFam()..statTopic = statTopic,
+          () => MqttMessagesFam()..topic = topic,
           from: mqttMessagesFamProvider,
           name: r'mqttMessagesFamProvider',
           debugGetCreateSourceHash:
@@ -125,17 +131,17 @@ class MqttMessagesFamProvider
               MqttMessagesFamFamily._allTransitiveDependencies,
         );
 
-  final dynamic statTopic;
+  final dynamic topic;
 
   @override
   bool operator ==(Object other) {
-    return other is MqttMessagesFamProvider && other.statTopic == statTopic;
+    return other is MqttMessagesFamProvider && other.topic == topic;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, statTopic.hashCode);
+    hash = _SystemHash.combine(hash, topic.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -145,7 +151,7 @@ class MqttMessagesFamProvider
     covariant MqttMessagesFam notifier,
   ) {
     return notifier.build(
-      statTopic,
+      topic,
     );
   }
 }

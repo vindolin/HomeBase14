@@ -24,7 +24,7 @@ class LightPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     log('LightPage.build()');
 
-    final deviceNames = ref.read(deviceNamesProvider);
+    final deviceNames = ref.watch(deviceNamesProvider);
     final lightDevices = ref.watch(lightDevicesProvider);
     final smartBulbDevices = ref.watch(smartBulbDevicesProvider);
 

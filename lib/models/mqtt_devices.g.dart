@@ -150,12 +150,12 @@ class MqttMessagesFamProvider
   }
 }
 
-String _$deviceNamesHash() => r'4a792cd0be469feeaebdd13356b3f2f392817001';
+String _$deviceNamesHash() => r'4dbde2b23b949a59799b019b82263235704c62be';
 
 /// See also [DeviceNames].
 @ProviderFor(DeviceNames)
 final deviceNamesProvider =
-    AutoDisposeNotifierProvider<DeviceNames, IMap<String, String>>.internal(
+    NotifierProvider<DeviceNames, IMap<String, String>>.internal(
   DeviceNames.new,
   name: r'deviceNamesProvider',
   debugGetCreateSourceHash:
@@ -164,7 +164,7 @@ final deviceNamesProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$DeviceNames = AutoDisposeNotifier<IMap<String, String>>;
+typedef _$DeviceNames = Notifier<IMap<String, String>>;
 String _$prusaHash() => r'34a35466150cdc5f0cc8475c094b60f79e0502e1';
 
 /// See also [Prusa].
@@ -295,4 +295,20 @@ final smartBulbDevicesProvider =
 );
 
 typedef _$SmartBulbDevices = Notifier<IMap<String, SmartBulbDevice>>;
+String _$humiTempDevicesHash() => r'5f2d3f4d9f6f2b063556ebb39971dfffc4df4596';
+
+/// See also [HumiTempDevices].
+@ProviderFor(HumiTempDevices)
+final humiTempDevicesProvider =
+    NotifierProvider<HumiTempDevices, IMap<String, HumiTempDevice>>.internal(
+  HumiTempDevices.new,
+  name: r'humiTempDevicesProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$humiTempDevicesHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$HumiTempDevices = Notifier<IMap<String, HumiTempDevice>>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

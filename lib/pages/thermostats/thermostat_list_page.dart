@@ -30,7 +30,7 @@ class ThermostatListPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final deviceNames = ref.read(deviceNamesProvider);
+    final deviceNames = ref.watch(deviceNamesProvider);
 
     final thermostatDevicesUnfiltered = ref.watch(thermostatDevicesProvider);
     final thermostatDevices = ref.watch(

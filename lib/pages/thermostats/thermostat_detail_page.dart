@@ -16,7 +16,7 @@ class ThermostatDetailPage extends ConsumerWidget {
         (mqttDevices) => mqttDevices[deviceId],
       ),
     );
-    final deviceNames = ref.read(deviceNamesProvider);
+    final deviceNames = ref.watch(deviceNamesProvider);
 
     return Scaffold(
       appBar: AppBar(

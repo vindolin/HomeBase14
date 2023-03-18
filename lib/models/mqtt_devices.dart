@@ -40,7 +40,7 @@ class MqttMessagesFam extends _$MqttMessagesFam {
   }
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class DeviceNames extends _$DeviceNames {
   // Mapping of device id to device name
   @override
@@ -274,7 +274,7 @@ abstract class AbstractMqttDevice {
   Map<String, dynamic> mqttPayload = {};
   F publishCallback;
   int linkQuality = 0;
-  double? battery;
+  int? battery;
   bool followUpMessage = false; // the first message after a publish always has the old values, ignore
 
   AbstractMqttDevice(this.deviceId, this.deviceType, Map<String, dynamic> payload, this.publishCallback) {
@@ -321,7 +321,7 @@ abstract class AbstractMqttDevice {
           linkQuality = value;
           break;
         case 'battery':
-          battery = value.toDouble();
+          battery = value.toInt();
           break;
         default:
           readValue(key, value);
@@ -590,6 +590,40 @@ class SmartBulbDevice extends AbstractMqttDevice {
 class SmartBulbDevices extends _$SmartBulbDevices {
   @override
   IMap<String, SmartBulbDevice> build() {
+    return IMap();
+  }
+}
+
+class HumiTempDevice extends AbstractMqttDevice {
+  String state = 'OFF';
+  double humidity = 0.0;
+  double temperature = 0.0;
+
+  HumiTempDevice(
+    super.deviceId,
+    super.deviceType,
+    super.payload,
+    super.publishCallback,
+  );
+
+  @override
+  void readValue(String key, dynamic value) {
+    switch (key) {
+      case 'humidity':
+        humidity = value.toDouble();
+        break;
+      case 'temperature':
+        temperature = value.toDouble();
+        break;
+    }
+    super.readValue(key, value);
+  }
+}
+
+@Riverpod(keepAlive: true)
+class HumiTempDevices extends _$HumiTempDevices {
+  @override
+  IMap<String, HumiTempDevice> build() {
     return IMap();
   }
 }

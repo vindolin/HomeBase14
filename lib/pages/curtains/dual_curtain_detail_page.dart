@@ -18,7 +18,7 @@ class DualCurtainDetailPage extends ConsumerWidget {
       ),
     );
 
-    final deviceNames = ref.read(deviceNamesProvider);
+    final deviceNames = ref.watch(deviceNamesProvider);
     log('build DualCurtainDetailPage $deviceId');
 
     return Scaffold(

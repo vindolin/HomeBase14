@@ -18,7 +18,7 @@ class CurtainDetailPage extends ConsumerWidget {
       ),
     );
 
-    final deviceNames = ref.read(deviceNamesProvider);
+    final deviceNames = ref.watch(deviceNamesProvider);
     log('build CurtainDetailPage');
 
     return Scaffold(

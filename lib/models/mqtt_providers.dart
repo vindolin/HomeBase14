@@ -74,6 +74,7 @@ class Mqtt extends _$Mqtt {
   late DualCurtainDevices dualCurtainDevices;
   late DoorDevices doorDevices;
   late ThermostatDevices thermostatDevices;
+  late HumiTempDevices humiTempDevices;
   late LightDevices lightDevices;
   late SmartBulbDevices ikeaBulbDevices;
   late SwitchDevices switchDevices;
@@ -90,6 +91,7 @@ class Mqtt extends _$Mqtt {
     dualCurtainDevices = ref.watch(dualCurtainDevicesProvider.notifier);
     doorDevices = ref.watch(doorDevicesProvider.notifier);
     thermostatDevices = ref.watch(thermostatDevicesProvider.notifier);
+    humiTempDevices = ref.watch(humiTempDevicesProvider.notifier);
 
     prusa = ref.watch(prusaProvider.notifier);
 
@@ -287,6 +289,12 @@ class Mqtt extends _$Mqtt {
               deviceId,
               ThermostatDevice(deviceId, deviceType, payloadDecoded, publishZ2M),
             );
+          } else if (deviceType == 'humitemp') {
+            // thermostat
+            humiTempDevices.state = humiTempDevices.state.add(
+              deviceId,
+              HumiTempDevice(deviceId, deviceType, payloadDecoded, publishZ2M),
+            );
           }
 
           // send the message to the message stream
@@ -372,6 +380,7 @@ class Mqtt extends _$Mqtt {
     ref.read(mqttConnectionStateProvider.notifier).state = mqtt.MqttConnectionState.connected;
   }
 
+  /// get the device names from the zigbee2mqtt/bridge/devices message
   void setDeviceNameMap(List devices) {
     final mqttDescriptions = ref.watch(deviceNamesProvider.notifier);
 
@@ -401,6 +410,8 @@ class Mqtt extends _$Mqtt {
   }
 }
 
+/// filter a the messageProvider by topic
+/// TODOs use the family provider
 dynamic getMessage(ProviderBase provider, WidgetRef ref, String topic) {
   dynamic payload;
   final mqttMessage = ref.watch(

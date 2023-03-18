@@ -29,6 +29,16 @@ class MultiplugWidget extends ConsumerWidget {
         for (var item in List<int>.generate(plugCount, (i) => i + 1)) 'state_l$item': 'OFF',
       };
     }
+    const activeColor = Colors.green;
+    const inActiveColor = Colors.white;
+
+    String getTopic(int i) {
+      return 'state_l${i + 1}';
+    }
+
+    Color getActiveColor(Map<dynamic, dynamic> filteredPayload, int i) {
+      return filteredPayload[getTopic(i)] == 'ON' ? activeColor : inActiveColor;
+    }
 
     return Row(
       children: List<Widget>.generate(
@@ -41,22 +51,27 @@ class MultiplugWidget extends ConsumerWidget {
               children: [
                 SvgPicture.asset(
                   'assets/images/svg/power_socket3.svg',
-                  colorFilter: const ColorFilter.mode(
-                    Colors.white,
+                  colorFilter: ColorFilter.mode(
+                    getActiveColor(filteredPayload, i),
                     BlendMode.srcIn,
                   ),
                   width: 22,
                   height: 22,
                 ),
                 const SizedBox(width: 4),
-                Text('L${i + 1}'),
+                Text(
+                  'L${i + 1}',
+                  style: TextStyle(
+                    color: getActiveColor(filteredPayload, i),
+                  ),
+                ),
               ],
             ),
             Switch(
-              activeColor: Colors.green,
-              value: filteredPayload['state_l${i + 1}'] == 'ON' ? true : false,
+              activeColor: activeColor,
+              value: filteredPayload[getTopic(i)] == 'ON' ? true : false,
               onChanged: (value) {
-                filteredPayload['state_l${i + 1}'] = value ? 'ON' : 'OFF';
+                filteredPayload[getTopic(i)] = value ? 'ON' : 'OFF';
                 ref.read(mqttProvider.notifier).publish(
                       '$topic/set',
                       jsonEncode(filteredPayload),

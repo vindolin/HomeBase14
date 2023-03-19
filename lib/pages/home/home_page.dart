@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,14 +10,16 @@ import 'package:simple_shadow/simple_shadow.dart';
 import '/pages/home/widgets/temperatures_widget.dart';
 import '/pages/home/armed_switch_buttons/armed_switch_buttons.dart';
 
+import '/models/app_settings.dart';
+import '/models/mqtt_providers.dart';
+
+import '/widgets/stream_blinker_widget.dart';
+import '/widgets/connection_bar_widget.dart';
+
 import 'device_group_slivers.dart';
 import 'thomas_group_slivers.dart';
 import 'cameras.dart';
 import 'widgets/solar_watts_widget.dart';
-import '/models/app_settings.dart';
-import '/models/mqtt_providers.dart';
-import '/widgets/stream_blinker_widget.dart';
-import '/widgets/connection_bar_widget.dart';
 import 'user_select_widget.dart';
 
 class Delegate extends SliverPersistentHeaderDelegate {
@@ -158,6 +161,13 @@ class HomePage extends ConsumerWidget {
                                 height: 42,
                               ),
                             ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          child: Text(
+                            Platform.operatingSystemVersion,
+                            style: const TextStyle(fontSize: 8),
                           ),
                         ),
                       ],

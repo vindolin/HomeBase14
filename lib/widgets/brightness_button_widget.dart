@@ -21,12 +21,12 @@ class BrightnessButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final brightness = ref.watch(brightnessSettingProvider);
 
-    return IconButton(
-      onPressed: () => ref.read(brightnessSettingProvider.notifier).toggle(),
-      color: brightness == Brightness.dark ? Colors.white : Colors.black,
-      icon: Container(
-        color: brightness == Brightness.dark ? Colors.black : Colors.transparent,
-        child: const Icon(
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: GestureDetector(
+        onTap: () => ref.read(brightnessSettingProvider.notifier).toggle(),
+        child: Icon(
+          color: brightness == Brightness.dark ? Colors.white : Colors.black,
           Icons.brightness_medium,
         ),
       ),

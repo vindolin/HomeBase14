@@ -22,21 +22,28 @@ class ConnectionBar extends ConsumerWidget {
         children: [
           ...?children,
           Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               if (mqttConnectionState == MqttConnectionState.connected) ...[
-                IconButton(
-                  onPressed: () => mqttProviderNotifier.disconnect(),
-                  icon: const Icon(
-                    color: Colors.green,
-                    Icons.wifi,
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: GestureDetector(
+                    onTap: () => mqttProviderNotifier.disconnect(),
+                    child: const Icon(
+                      color: Colors.green,
+                      Icons.wifi,
+                    ),
                   ),
                 )
               ] else if (mqttConnectionState == MqttConnectionState.disconnected) ...[
-                IconButton(
-                  onPressed: () => mqttProviderNotifier.connect(),
-                  color: Colors.red,
-                  icon: const Icon(
-                    Icons.wifi_off,
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: GestureDetector(
+                    onTap: () => mqttProviderNotifier.connect(),
+                    child: const Icon(
+                      color: Colors.red,
+                      Icons.wifi_off,
+                    ),
                   ),
                 )
               ] else if (mqttConnectionState == MqttConnectionState.faulted) ...[

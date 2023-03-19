@@ -30,13 +30,24 @@ class DeviceGroups extends ConsumerWidget {
     // color the icon yellow if any lights are on
     int onLightCount = lightDevices.values.where((lightDevice) => lightDevice.state == 'ON').length;
 
+    final brightness = Theme.of(context).brightness;
+    TextStyle titleStyle = textStyleShadowOne.copyWith(
+      shadows: [
+        Shadow(
+          blurRadius: 2.0,
+          color: brightness == Brightness.dark ? Colors.black : Colors.black45,
+          offset: const Offset(1.0, 1.0),
+        ),
+      ],
+    );
+
     return SliverList(
       delegate: SliverChildListDelegate([
         const Divider(),
         ListTile(
             title: Text(
               translate('device_names.thermostats'),
-              style: textStyleShadowOne,
+              style: titleStyle,
             ),
             leading: const Icon(Icons.thermostat),
             visualDensity: visualDensity,
@@ -50,7 +61,7 @@ class DeviceGroups extends ConsumerWidget {
             },
             trailing: Text(
               ' ${localTemperatureAvg.toStringAsFixed(1)}°C⌀',
-              style: textStyleShadowOne.copyWith(
+              style: titleStyle.copyWith(
                 color: getTemperatureColor(localTemperatureAvg, currentHeatingSetpointAvg),
               ),
             )),
@@ -58,7 +69,7 @@ class DeviceGroups extends ConsumerWidget {
         ListTile(
           title: Text(
             translate('device_names.curtains'),
-            style: textStyleShadowOne,
+            style: titleStyle,
           ),
           leading: const Icon(Icons.blinds),
           visualDensity: visualDensity,
@@ -79,7 +90,7 @@ class DeviceGroups extends ConsumerWidget {
         ListTile(
           title: Text(
             translate('device_names.lights'),
-            style: textStyleShadowOne,
+            style: titleStyle,
           ),
           leading: const Icon(Icons.lightbulb),
           trailing: onLightCount > 0 ? const LightsOffButton() : null,
@@ -97,7 +108,7 @@ class DeviceGroups extends ConsumerWidget {
         ListTile(
           title: Text(
             translate('device_names.other'),
-            style: textStyleShadowOne,
+            style: titleStyle,
           ),
           leading: const Icon(Icons.extension),
           visualDensity: visualDensity,

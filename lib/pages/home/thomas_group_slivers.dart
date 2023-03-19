@@ -13,13 +13,30 @@ class ThomasGroups extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final brightness = Theme.of(context).brightness;
+    TextStyle titleStyle = textStyleShadowOne.copyWith(
+      shadows: [
+        Shadow(
+          blurRadius: 2.0,
+          color: brightness == Brightness.dark ? Colors.black : Colors.black45,
+          offset: const Offset(1.0, 1.0),
+        ),
+      ],
+    );
+
+    final inactiveColor = WebViewPlatform.instance != null
+        ? brightness == Brightness.dark
+            ? Colors.white
+            : Colors.black
+        : Colors.grey;
+
     return SliverList(
       delegate: SliverChildListDelegate([
         ListTile(
           // tileColor: Colors.purple.shade800,
-          title: const Text(
+          title: Text(
             'Thomas',
-            style: textStyleShadowOne,
+            style: titleStyle,
           ),
           leading: const Icon(Icons.pest_control),
           visualDensity: visualDensity,
@@ -37,11 +54,12 @@ class ThomasGroups extends ConsumerWidget {
           // tileColor: Colors.purple.shade800,
           title: Text(
             'Grafana ${WebViewPlatform.instance != null ? '' : '(WebView is not available on this platform)'}',
-            style: textStyleShadowOne.copyWith(
-              color: WebViewPlatform.instance != null ? Colors.white : Colors.grey,
+            style: titleStyle.copyWith(
+              color: inactiveColor,
             ),
           ),
-          leading: Icon(Icons.auto_graph, color: WebViewPlatform.instance != null ? Colors.white : Colors.grey),
+          leading: Icon(Icons.auto_graph,
+              color: WebViewPlatform.instance != null ? Theme.of(context).listTileTheme.iconColor : Colors.grey),
           visualDensity: visualDensity,
           onTap: () {
             WebViewPlatform.instance != null

@@ -72,23 +72,34 @@ class PrusaProgress extends ConsumerWidget {
             if (prusa['percent_done'] != null)
               Transform.rotate(
                 angle: -0.6,
-                child: BorderedText(
-                  strokeWidth: 4,
-                  strokeColor: brightness == Brightness.dark ? Colors.black87 : Colors.white,
-                  child: Text(
-                    '${prusa['percent_done']}%',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 26,
-                      shadows: [
-                        Shadow(
-                          blurRadius: 3.0,
-                          color: Colors.black54,
-                          offset: Offset(2.0, 2.0),
-                        ),
-                      ],
+                child: Stack(
+                  children: [
+                    Text(
+                      '${prusa['percent_done']}%',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 26,
+                        shadows: [
+                          Shadow(
+                            blurRadius: 3.0,
+                            color: Colors.black54,
+                            offset: Offset(3.0, 3.0),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
+                    BorderedText(
+                      strokeWidth: 4,
+                      strokeColor: brightness == Brightness.dark ? Colors.black87 : Colors.white,
+                      child: Text(
+                        '${prusa['percent_done']}%',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 26,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             Column(

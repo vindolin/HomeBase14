@@ -3,7 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import '/models/mqtt_devices.dart';
 
 abstract class CurtainPainterBase extends CustomPainter {
-  CurtainPainterBase(List<double> positions) : super(repaint: ValueNotifier(positions));
+  final Brightness brightness;
+  CurtainPainterBase(List<double> positions, this.brightness) : super(repaint: ValueNotifier(positions));
   // all sizes are computed relativ to the icon size of 24x24
   final baseSize = 36.0;
 
@@ -15,7 +16,8 @@ abstract class CurtainPainterBase extends CustomPainter {
     Canvas canvas,
     Size size,
   );
-  final blindsPaint = Paint()..color = Colors.white;
+
+  Paint blindsPaint = Paint()..color = Colors.green;
   final transPaint = Paint()..color = Colors.transparent;
   final redPaint = Paint()..color = Colors.red;
 
@@ -26,7 +28,7 @@ abstract class CurtainPainterBase extends CustomPainter {
     final blindsPadding = size.width / baseSize * 1.0;
     final blindsMaxHeight = size.height - topBarHeight - bottomBarHeight;
 
-    final blindsPaint = Paint()..color = Colors.white;
+    blindsPaint = Paint()..color = brightness == Brightness.dark ? Colors.white : Colors.black;
     final stripDistance = size.width / baseSize * 3.0;
     final stripWidth = size.width / baseSize * 0.3;
 
@@ -88,7 +90,7 @@ void drawBlinds(
 class CurtainPainter extends CurtainPainterBase {
   final double position;
 
-  CurtainPainter(this.position) : super([position]);
+  CurtainPainter(this.position, brightness) : super([position], brightness);
 
   @override
   bool shouldRepaint(covariant CurtainPainter oldDelegate) => oldDelegate.position != position;
@@ -120,7 +122,8 @@ class DualCurtainPainter extends CurtainPainterBase {
   final double positionLeft;
   final double positionRight;
 
-  DualCurtainPainter(this.positionLeft, this.positionRight) : super([positionLeft, positionRight]);
+  DualCurtainPainter(this.positionLeft, this.positionRight, brightness)
+      : super([positionLeft, positionRight], brightness);
 
   @override
   bool shouldRepaint(covariant DualCurtainPainter oldDelegate) =>
@@ -182,6 +185,7 @@ class AnimatedCurtainItem extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
     double position = 100.0 - device.position;
 
     final animationController = useAnimationController(
@@ -202,7 +206,7 @@ class AnimatedCurtainItem extends HookWidget {
       animation: animationController,
       builder: (context, child) {
         return CustomPaint(
-          painter: CurtainPainter(animationController.value),
+          painter: CurtainPainter(animationController.value, brightness),
           size: const Size(36, 36),
         );
       },
@@ -218,6 +222,7 @@ class AnimatedDualCurtainItem extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
     double positionLeft = 100.0 - device.positionLeft;
     double positionRight = 100.0 - device.positionRight;
 
@@ -254,7 +259,7 @@ class AnimatedDualCurtainItem extends HookWidget {
       ]),
       builder: (context, child) {
         return CustomPaint(
-          painter: DualCurtainPainter(animationControllerLeft.value, animationControllerRight.value),
+          painter: DualCurtainPainter(animationControllerLeft.value, animationControllerRight.value, brightness),
           size: const Size(36, 36),
         );
       },

@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:bordered_text/bordered_text.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
-import 'prusa_nozzle_widget.dart';
 import '/models/mqtt_devices.dart';
 import '/models/watch_mqtt_message.dart';
+import 'prusa_nozzle_widget.dart';
 
 class PrusaProgress extends ConsumerWidget {
   const PrusaProgress({super.key});
@@ -34,14 +34,18 @@ class PrusaProgress extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final prusa = ref.watch(prusaProvider.select(
-      // IMap is important here or select cannot compare the values and the widget would rebuild on changes to other attributes e.g. 'percent_done'
-      (prusa) => IMap({
-        'percent_done': prusa['percent_done'],
-        'mins_remaining': prusa['mins_remaining'],
-        'file_name': prusa['file_name'],
-      }),
-    ));
+    final brightness = Theme.of(context).brightness;
+
+    final prusa = ref.watch(
+      prusaProvider.select(
+        // IMap is important here or select cannot compare the values and the widget would rebuild on changes to other attributes e.g. 'percent_done'
+        (prusa) => IMap({
+          'percent_done': prusa['percent_done'],
+          'mins_remaining': prusa['mins_remaining'],
+          'file_name': prusa['file_name'],
+        }),
+      ),
+    );
 
     int heightPercent = prusa['percent_done'];
 
@@ -70,16 +74,20 @@ class PrusaProgress extends ConsumerWidget {
                 angle: -0.6,
                 child: BorderedText(
                   strokeWidth: 4,
-                  strokeColor: Colors.black87,
+                  strokeColor: brightness == Brightness.dark ? Colors.black87 : Colors.white,
                   child: Text(
                     '${prusa['percent_done']}%',
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 26, shadows: [
-                      Shadow(
-                        blurRadius: 3.0,
-                        color: Colors.black54,
-                        offset: Offset(2.0, 2.0),
-                      ),
-                    ]),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 26,
+                      shadows: [
+                        Shadow(
+                          blurRadius: 3.0,
+                          color: Colors.black54,
+                          offset: Offset(2.0, 2.0),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

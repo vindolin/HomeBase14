@@ -26,6 +26,8 @@ class SolarWatts extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final brightness = Theme.of(context).brightness;
+
     int solarWatt = int.tryParse(
           getMessage(mqttMessagesProvider, ref, 'sma/tripower/totw') ?? '',
         ) ??
@@ -94,14 +96,15 @@ class SolarWatts extends ConsumerWidget {
               const TextSpan(
                 text: ' - ',
               ),
-              const TextSpan(
-                text: 'Verbrauch: ',
-              ),
+              TextSpan(
+                  text: 'Verbrauch: ',
+                  style: TextStyle(
+                    color: brightness == Brightness.dark ? Colors.white : Colors.black,
+                  )),
               TextSpan(
                 text: '${useWatt}w',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: brightness == Brightness.dark ? Colors.white : Colors.black),
               ),
             ],
           ),
@@ -119,8 +122,10 @@ class SolarWatts extends ConsumerWidget {
               ],
             ),
             children: [
-              const TextSpan(
+              TextSpan(
                 text: ' = ',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: brightness == Brightness.dark ? Colors.white : Colors.black),
               ),
               TextSpan(
                 text: '${totalWatt > 0 ? '+' : ''}${totalWatt}w $happy',

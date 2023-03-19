@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '/styles/text_styles.dart';
 import '/pages/thomas/thomas_page.dart';
@@ -17,24 +18,6 @@ class ThomasGroups extends ConsumerWidget {
         ListTile(
           // tileColor: Colors.purple.shade800,
           title: const Text(
-            'Grafana',
-            style: textStyleShadowOne,
-          ),
-          leading: const Icon(Icons.auto_graph),
-          visualDensity: visualDensity,
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const GrafanaPage(),
-              ),
-            );
-          },
-        ),
-        const Divider(),
-        ListTile(
-          // tileColor: Colors.purple.shade800,
-          title: const Text(
             'Thomas',
             style: textStyleShadowOne,
           ),
@@ -47,6 +30,28 @@ class ThomasGroups extends ConsumerWidget {
                 builder: (context) => const ThomasPage(),
               ),
             );
+          },
+        ),
+        const Divider(),
+        ListTile(
+          // tileColor: Colors.purple.shade800,
+          title: Text(
+            'Grafana ${WebViewPlatform.instance != null ? '' : '(WebView is not available on this platform)'}',
+            style: textStyleShadowOne.copyWith(
+              color: WebViewPlatform.instance != null ? Colors.white : Colors.grey,
+            ),
+          ),
+          leading: Icon(Icons.auto_graph, color: WebViewPlatform.instance != null ? Colors.white : Colors.grey),
+          visualDensity: visualDensity,
+          onTap: () {
+            WebViewPlatform.instance != null
+                ? Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const GrafanaPage(),
+                    ),
+                  )
+                : null;
           },
         ),
         const Divider(),

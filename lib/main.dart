@@ -12,6 +12,7 @@ import '/models/connectivity_provider.dart' as connectivity_rovider; // rename t
 import '/models/mqtt_providers.dart';
 import '/pages/login_page.dart';
 import '/pages/home/home_page.dart';
+import '/widgets/brightness_button_widget.dart';
 
 void main() async {
   var delegate = await LocalizationDelegate.create(
@@ -75,6 +76,8 @@ class _MyAppState extends ConsumerState<HomeBase14App> {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = ref.watch(brightnessSettingProvider);
+
     return MaterialApp(
       scaffoldMessengerKey: rootScaffoldMessengerKey,
       title: 'HomeBase14',
@@ -91,9 +94,7 @@ class _MyAppState extends ConsumerState<HomeBase14App> {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color.fromARGB(255, 153, 4, 145),
-          brightness: MediaQueryData.fromWindow(
-            WidgetsBinding.instance.window,
-          ).platformBrightness,
+          brightness: brightness,
           surface: const Color.fromARGB(255, 153, 4, 145),
         ),
         // textTheme: TextTheme(),

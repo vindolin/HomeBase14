@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/models/mqtt_providers.dart';
 import '/models/mqtt_connection_state_provider.dart';
 import '/widgets/message_blinker_widget.dart';
+import '/widgets/brightness_button_widget.dart';
 
 class ConnectionBar extends ConsumerWidget {
   final List<Widget>? children;
@@ -47,6 +48,7 @@ class ConnectionBar extends ConsumerWidget {
                   child: CircularProgressIndicator(),
                 )
               ],
+              const BrightnessButton(),
               const IgnorePointer(
                 ignoring: true,
                 child: MessageBlinker(),

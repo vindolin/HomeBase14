@@ -61,13 +61,11 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
 
     // await Future.delayed(const Duration(seconds: 1), () {});
 
-    final solar = jsonDecode(response.body)['results'][0]['series'][0]['values']
-        .where(
-          (element) => element[1] != null && element[1] > 0,
-        )
-        .toList()
-        .map<TimePoint>(
+    final solar = jsonDecode(response.body)['results'][0]['series'][0]['values'].map<TimePoint>(
       (e) {
+        if (e[1] == null) {
+          e[1] = 0;
+        }
         return TimePoint(DateTime.parse(e[0]), e[1].toDouble() / 1000);
       },
     ).toList();
@@ -86,13 +84,11 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
 
     // await Future.delayed(const Duration(seconds: 1), () {});
 
-    final usage = jsonDecode(response.body)['results'][0]['series'][0]['values']
-        .where(
-          (element) => element[1] != null && element[1] > 0,
-        )
-        .toList()
-        .map<TimePoint>(
+    final usage = jsonDecode(response.body)['results'][0]['series'][0]['values'].map<TimePoint>(
       (e) {
+        if (e[1] == null) {
+          e[1] = 0;
+        }
         return TimePoint(DateTime.parse(e[0]), e[1].toDouble() / 1000);
       },
     ).toList();

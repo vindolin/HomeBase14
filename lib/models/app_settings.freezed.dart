@@ -27,6 +27,7 @@ mixin _$AppSettingsCls {
   User get user => throw _privateConstructorUsedError;
   bool get valid => throw _privateConstructorUsedError;
   bool get onlyPortrait => throw _privateConstructorUsedError;
+  bool get showBrightness => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -47,7 +48,8 @@ abstract class $AppSettingsClsCopyWith<$Res> {
       int mqttPort,
       User user,
       bool valid,
-      bool onlyPortrait});
+      bool onlyPortrait,
+      bool showBrightness});
 }
 
 /// @nodoc
@@ -70,6 +72,7 @@ class _$AppSettingsClsCopyWithImpl<$Res, $Val extends AppSettingsCls>
     Object? user = null,
     Object? valid = null,
     Object? onlyPortrait = null,
+    Object? showBrightness = null,
   }) {
     return _then(_value.copyWith(
       mqttUsername: null == mqttUsername
@@ -100,6 +103,10 @@ class _$AppSettingsClsCopyWithImpl<$Res, $Val extends AppSettingsCls>
           ? _value.onlyPortrait
           : onlyPortrait // ignore: cast_nullable_to_non_nullable
               as bool,
+      showBrightness: null == showBrightness
+          ? _value.showBrightness
+          : showBrightness // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -119,7 +126,8 @@ abstract class _$$_AppSettingsClsCopyWith<$Res>
       int mqttPort,
       User user,
       bool valid,
-      bool onlyPortrait});
+      bool onlyPortrait,
+      bool showBrightness});
 }
 
 /// @nodoc
@@ -140,6 +148,7 @@ class __$$_AppSettingsClsCopyWithImpl<$Res>
     Object? user = null,
     Object? valid = null,
     Object? onlyPortrait = null,
+    Object? showBrightness = null,
   }) {
     return _then(_$_AppSettingsCls(
       mqttUsername: null == mqttUsername
@@ -170,6 +179,10 @@ class __$$_AppSettingsClsCopyWithImpl<$Res>
           ? _value.onlyPortrait
           : onlyPortrait // ignore: cast_nullable_to_non_nullable
               as bool,
+      showBrightness: null == showBrightness
+          ? _value.showBrightness
+          : showBrightness // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -186,7 +199,8 @@ class _$_AppSettingsCls
       required this.mqttPort,
       required this.user,
       required this.valid,
-      required this.onlyPortrait});
+      required this.onlyPortrait,
+      required this.showBrightness});
 
   factory _$_AppSettingsCls.fromJson(Map<String, dynamic> json) =>
       _$$_AppSettingsClsFromJson(json);
@@ -205,10 +219,12 @@ class _$_AppSettingsCls
   final bool valid;
   @override
   final bool onlyPortrait;
+  @override
+  final bool showBrightness;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AppSettingsCls(mqttUsername: $mqttUsername, mqttPassword: $mqttPassword, mqttAddress: $mqttAddress, mqttPort: $mqttPort, user: $user, valid: $valid, onlyPortrait: $onlyPortrait)';
+    return 'AppSettingsCls(mqttUsername: $mqttUsername, mqttPassword: $mqttPassword, mqttAddress: $mqttAddress, mqttPort: $mqttPort, user: $user, valid: $valid, onlyPortrait: $onlyPortrait, showBrightness: $showBrightness)';
   }
 
   @override
@@ -222,7 +238,8 @@ class _$_AppSettingsCls
       ..add(DiagnosticsProperty('mqttPort', mqttPort))
       ..add(DiagnosticsProperty('user', user))
       ..add(DiagnosticsProperty('valid', valid))
-      ..add(DiagnosticsProperty('onlyPortrait', onlyPortrait));
+      ..add(DiagnosticsProperty('onlyPortrait', onlyPortrait))
+      ..add(DiagnosticsProperty('showBrightness', showBrightness));
   }
 
   @override
@@ -241,13 +258,15 @@ class _$_AppSettingsCls
             (identical(other.user, user) || other.user == user) &&
             (identical(other.valid, valid) || other.valid == valid) &&
             (identical(other.onlyPortrait, onlyPortrait) ||
-                other.onlyPortrait == onlyPortrait));
+                other.onlyPortrait == onlyPortrait) &&
+            (identical(other.showBrightness, showBrightness) ||
+                other.showBrightness == showBrightness));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, mqttUsername, mqttPassword,
-      mqttAddress, mqttPort, user, valid, onlyPortrait);
+      mqttAddress, mqttPort, user, valid, onlyPortrait, showBrightness);
 
   @JsonKey(ignore: true)
   @override
@@ -271,7 +290,8 @@ abstract class _AppSettingsCls implements AppSettingsCls {
       required final int mqttPort,
       required final User user,
       required final bool valid,
-      required final bool onlyPortrait}) = _$_AppSettingsCls;
+      required final bool onlyPortrait,
+      required final bool showBrightness}) = _$_AppSettingsCls;
 
   factory _AppSettingsCls.fromJson(Map<String, dynamic> json) =
       _$_AppSettingsCls.fromJson;
@@ -290,6 +310,8 @@ abstract class _AppSettingsCls implements AppSettingsCls {
   bool get valid;
   @override
   bool get onlyPortrait;
+  @override
+  bool get showBrightness;
   @override
   @JsonKey(ignore: true)
   _$$_AppSettingsClsCopyWith<_$_AppSettingsCls> get copyWith =>

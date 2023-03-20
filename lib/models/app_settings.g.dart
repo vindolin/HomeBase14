@@ -15,6 +15,7 @@ _$_AppSettingsCls _$$_AppSettingsClsFromJson(Map<String, dynamic> json) =>
       user: $enumDecode(_$UserEnumMap, json['user']),
       valid: json['valid'] as bool,
       onlyPortrait: json['onlyPortrait'] as bool,
+      showBrightness: json['showBrightness'] as bool,
     );
 
 Map<String, dynamic> _$$_AppSettingsClsToJson(_$_AppSettingsCls instance) =>
@@ -26,6 +27,7 @@ Map<String, dynamic> _$$_AppSettingsClsToJson(_$_AppSettingsCls instance) =>
       'user': _$UserEnumMap[instance.user]!,
       'valid': instance.valid,
       'onlyPortrait': instance.onlyPortrait,
+      'showBrightness': instance.showBrightness,
     };
 
 const _$UserEnumMap = {
@@ -37,7 +39,7 @@ const _$UserEnumMap = {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appSettingsHash() => r'be1425d1b75cef2c2a50f7fa9922fe80832d32ef';
+String _$appSettingsHash() => r'7432b6edfabee61b665b767e9871435d392f4f38';
 
 /// See also [AppSettings].
 @ProviderFor(AppSettings)

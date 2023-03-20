@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '/models/app_settings.dart';
 import '/models/mqtt_providers.dart';
 import '/models/mqtt_connection_state_provider.dart';
 import '/widgets/message_blinker_widget.dart';
@@ -14,6 +15,7 @@ class ConnectionBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final mqttConnectionState = ref.watch(mqttConnectionStateProvider);
     final mqttProviderNotifier = ref.watch(mqttProvider.notifier);
+    final appSettings = ref.watch(appSettingsProvider);
 
     return Padding(
       padding: const EdgeInsets.only(left: 4, right: 4),
@@ -55,7 +57,7 @@ class ConnectionBar extends ConsumerWidget {
                   child: CircularProgressIndicator(),
                 )
               ],
-              const BrightnessButton(),
+              if (appSettings.showBrightness) const BrightnessButton(),
               const IgnorePointer(
                 ignoring: true,
                 child: MessageBlinker(),

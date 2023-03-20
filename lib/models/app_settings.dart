@@ -18,6 +18,7 @@ enum User {
 }
 
 bool onlyPortrait = true;
+bool showBrightness = true;
 
 final encrypter = encrypt.Encrypter(
   encrypt.AES(
@@ -38,6 +39,7 @@ class AppSettingsCls with _$AppSettingsCls {
     required User user,
     required bool valid,
     required bool onlyPortrait,
+    required bool showBrightness,
   }) = _AppSettingsCls;
   factory AppSettingsCls.fromJson(Map<String, dynamic> json) => _$AppSettingsClsFromJson(json);
 }
@@ -54,6 +56,7 @@ class AppSettings extends _$AppSettings {
       user: User.thomas,
       valid: false,
       onlyPortrait: true,
+      showBrightness: true,
     );
   }
 
@@ -70,6 +73,12 @@ class AppSettings extends _$AppSettings {
   void saveOnlyPortrait(bool onlyPortrait) {
     state = state.copyWith(
       onlyPortrait: onlyPortrait,
+    );
+  }
+
+  void saveShowBrightness(bool showBrightness) {
+    state = state.copyWith(
+      showBrightness: showBrightness,
     );
   }
 

@@ -21,49 +21,64 @@ class UserSelect extends ConsumerWidget {
       await ref.read(appSettingsProvider.notifier).persistConnectionData();
     }
 
-    return ListView(children: [
-      DrawerHeader(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            filterQuality: FilterQuality.medium,
-            image: appSettings.user == User.thomas
-                ? const AssetImage('assets/images/rivig.jpg')
-                : const AssetImage('assets/images/lina.jpg'),
-            fit: BoxFit.fitWidth,
+    void submitShowBrightness(bool showBrightness) async {
+      ref.read(appSettingsProvider.notifier).saveShowBrightness(showBrightness);
+      await ref.read(appSettingsProvider.notifier).persistConnectionData();
+    }
+
+    return ListView(
+      children: [
+        DrawerHeader(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              filterQuality: FilterQuality.medium,
+              image: appSettings.user == User.thomas
+                  ? const AssetImage('assets/images/rivig.jpg')
+                  : const AssetImage('assets/images/lina.jpg'),
+              fit: BoxFit.fitWidth,
+            ),
           ),
+          child: Text(translate('settings')),
         ),
-        child: Text(translate('settings')),
-      ),
-      ListTile(
-        title: Text(translate('user')),
-      ),
-      RadioListTile<User>(
-        dense: true,
-        title: const Text('Thomas'),
-        value: User.thomas,
-        selected: appSettings.user == User.thomas,
-        groupValue: appSettings.user,
-        onChanged: submitUser,
-      ),
-      RadioListTile<User>(
-        dense: true,
-        title: const Text('Mona'),
-        value: User.mona,
-        selected: appSettings.user == User.mona,
-        groupValue: appSettings.user,
-        onChanged: submitUser,
-      ),
-      const ListTile(
-        title: Text('Sonstiges'),
-      ),
-      CheckboxListTile(
-        value: appSettings.onlyPortrait,
-        onChanged: (value) {
-          submitOnlyPortraitrientation(value == true);
-        },
-        title: const Text('Nur Hochformat'),
-        selected: appSettings.onlyPortrait,
-      )
-    ]);
+        ListTile(
+          title: Text(translate('user')),
+        ),
+        RadioListTile<User>(
+          dense: true,
+          title: const Text('Thomas'),
+          value: User.thomas,
+          selected: appSettings.user == User.thomas,
+          groupValue: appSettings.user,
+          onChanged: submitUser,
+        ),
+        RadioListTile<User>(
+          dense: true,
+          title: const Text('Mona'),
+          value: User.mona,
+          selected: appSettings.user == User.mona,
+          groupValue: appSettings.user,
+          onChanged: submitUser,
+        ),
+        const ListTile(
+          title: Text('Sonstiges'),
+        ),
+        CheckboxListTile(
+          value: appSettings.onlyPortrait,
+          onChanged: (value) {
+            submitOnlyPortraitrientation(value == true);
+          },
+          title: const Text('Nur Hochformat'),
+          selected: appSettings.onlyPortrait,
+        ),
+        CheckboxListTile(
+          value: appSettings.showBrightness,
+          onChanged: (value) {
+            submitShowBrightness(value == true);
+          },
+          title: const Text('Bright/Dark anzeigen'),
+          selected: appSettings.showBrightness,
+        )
+      ],
+    );
   }
 }

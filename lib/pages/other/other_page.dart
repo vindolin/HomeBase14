@@ -22,7 +22,6 @@ class OtherPage extends ConsumerWidget {
         actions: const [ConnectionBar()],
       ),
       body: Column(
-        // mainAxisSize: MainAxisSize.min,
         children: [
           Card(
             child: Padding(

@@ -26,6 +26,7 @@ mixin _$AppSettingsCls {
   int get mqttPort => throw _privateConstructorUsedError;
   User get user => throw _privateConstructorUsedError;
   bool get valid => throw _privateConstructorUsedError;
+  bool get onlyPortrait => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,7 +46,8 @@ abstract class $AppSettingsClsCopyWith<$Res> {
       String mqttAddress,
       int mqttPort,
       User user,
-      bool valid});
+      bool valid,
+      bool onlyPortrait});
 }
 
 /// @nodoc
@@ -67,6 +69,7 @@ class _$AppSettingsClsCopyWithImpl<$Res, $Val extends AppSettingsCls>
     Object? mqttPort = null,
     Object? user = null,
     Object? valid = null,
+    Object? onlyPortrait = null,
   }) {
     return _then(_value.copyWith(
       mqttUsername: null == mqttUsername
@@ -93,6 +96,10 @@ class _$AppSettingsClsCopyWithImpl<$Res, $Val extends AppSettingsCls>
           ? _value.valid
           : valid // ignore: cast_nullable_to_non_nullable
               as bool,
+      onlyPortrait: null == onlyPortrait
+          ? _value.onlyPortrait
+          : onlyPortrait // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -111,7 +118,8 @@ abstract class _$$_AppSettingsClsCopyWith<$Res>
       String mqttAddress,
       int mqttPort,
       User user,
-      bool valid});
+      bool valid,
+      bool onlyPortrait});
 }
 
 /// @nodoc
@@ -131,6 +139,7 @@ class __$$_AppSettingsClsCopyWithImpl<$Res>
     Object? mqttPort = null,
     Object? user = null,
     Object? valid = null,
+    Object? onlyPortrait = null,
   }) {
     return _then(_$_AppSettingsCls(
       mqttUsername: null == mqttUsername
@@ -157,6 +166,10 @@ class __$$_AppSettingsClsCopyWithImpl<$Res>
           ? _value.valid
           : valid // ignore: cast_nullable_to_non_nullable
               as bool,
+      onlyPortrait: null == onlyPortrait
+          ? _value.onlyPortrait
+          : onlyPortrait // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -172,7 +185,8 @@ class _$_AppSettingsCls
       required this.mqttAddress,
       required this.mqttPort,
       required this.user,
-      required this.valid});
+      required this.valid,
+      required this.onlyPortrait});
 
   factory _$_AppSettingsCls.fromJson(Map<String, dynamic> json) =>
       _$$_AppSettingsClsFromJson(json);
@@ -189,10 +203,12 @@ class _$_AppSettingsCls
   final User user;
   @override
   final bool valid;
+  @override
+  final bool onlyPortrait;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AppSettingsCls(mqttUsername: $mqttUsername, mqttPassword: $mqttPassword, mqttAddress: $mqttAddress, mqttPort: $mqttPort, user: $user, valid: $valid)';
+    return 'AppSettingsCls(mqttUsername: $mqttUsername, mqttPassword: $mqttPassword, mqttAddress: $mqttAddress, mqttPort: $mqttPort, user: $user, valid: $valid, onlyPortrait: $onlyPortrait)';
   }
 
   @override
@@ -205,7 +221,8 @@ class _$_AppSettingsCls
       ..add(DiagnosticsProperty('mqttAddress', mqttAddress))
       ..add(DiagnosticsProperty('mqttPort', mqttPort))
       ..add(DiagnosticsProperty('user', user))
-      ..add(DiagnosticsProperty('valid', valid));
+      ..add(DiagnosticsProperty('valid', valid))
+      ..add(DiagnosticsProperty('onlyPortrait', onlyPortrait));
   }
 
   @override
@@ -222,13 +239,15 @@ class _$_AppSettingsCls
             (identical(other.mqttPort, mqttPort) ||
                 other.mqttPort == mqttPort) &&
             (identical(other.user, user) || other.user == user) &&
-            (identical(other.valid, valid) || other.valid == valid));
+            (identical(other.valid, valid) || other.valid == valid) &&
+            (identical(other.onlyPortrait, onlyPortrait) ||
+                other.onlyPortrait == onlyPortrait));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, mqttUsername, mqttPassword,
-      mqttAddress, mqttPort, user, valid);
+      mqttAddress, mqttPort, user, valid, onlyPortrait);
 
   @JsonKey(ignore: true)
   @override
@@ -251,7 +270,8 @@ abstract class _AppSettingsCls implements AppSettingsCls {
       required final String mqttAddress,
       required final int mqttPort,
       required final User user,
-      required final bool valid}) = _$_AppSettingsCls;
+      required final bool valid,
+      required final bool onlyPortrait}) = _$_AppSettingsCls;
 
   factory _AppSettingsCls.fromJson(Map<String, dynamic> json) =
       _$_AppSettingsCls.fromJson;
@@ -268,6 +288,8 @@ abstract class _AppSettingsCls implements AppSettingsCls {
   User get user;
   @override
   bool get valid;
+  @override
+  bool get onlyPortrait;
   @override
   @JsonKey(ignore: true)
   _$$_AppSettingsClsCopyWith<_$_AppSettingsCls> get copyWith =>

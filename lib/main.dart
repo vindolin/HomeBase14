@@ -25,25 +25,11 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (Platform.isAndroid) {
-    KeepScreenOn.turnOn();
-
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]).then(
-      (value) => runApp(
-        ProviderScope(
-          child: LocalizedApp(delegate, const HomeBase14App()),
-        ),
-      ),
-    );
-  } else {
-    runApp(
-      ProviderScope(
-        child: LocalizedApp(delegate, const HomeBase14App()),
-      ),
-    );
-  }
+  runApp(
+    ProviderScope(
+      child: LocalizedApp(delegate, const HomeBase14App()),
+    ),
+  );
 }
 
 class HomeBase14App extends ConsumerStatefulWidget {
@@ -80,6 +66,21 @@ class _MyAppState extends ConsumerState<HomeBase14App> {
   @override
   Widget build(BuildContext context) {
     final brightness = ref.watch(brightnessSettingProvider);
+
+    final appSettings = ref.watch(appSettingsProvider);
+
+    // set orientation according to app settings
+    if (appSettings.onlyPortrait) {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+      ]);
+    } else {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight,
+      ]);
+    }
 
     return MaterialApp(
       scaffoldMessengerKey: rootScaffoldMessengerKey,

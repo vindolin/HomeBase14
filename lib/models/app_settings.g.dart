@@ -14,6 +14,7 @@ _$_AppSettingsCls _$$_AppSettingsClsFromJson(Map<String, dynamic> json) =>
       mqttPort: json['mqttPort'] as int,
       user: $enumDecode(_$UserEnumMap, json['user']),
       valid: json['valid'] as bool,
+      onlyPortrait: json['onlyPortrait'] as bool,
     );
 
 Map<String, dynamic> _$$_AppSettingsClsToJson(_$_AppSettingsCls instance) =>
@@ -24,6 +25,7 @@ Map<String, dynamic> _$$_AppSettingsClsToJson(_$_AppSettingsCls instance) =>
       'mqttPort': instance.mqttPort,
       'user': _$UserEnumMap[instance.user]!,
       'valid': instance.valid,
+      'onlyPortrait': instance.onlyPortrait,
     };
 
 const _$UserEnumMap = {
@@ -35,7 +37,7 @@ const _$UserEnumMap = {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appSettingsHash() => r'a3a92db6c75f9ec9d1a50bf25efc94bae0c99e3d';
+String _$appSettingsHash() => r'be1425d1b75cef2c2a50f7fa9922fe80832d32ef';
 
 /// See also [AppSettings].
 @ProviderFor(AppSettings)

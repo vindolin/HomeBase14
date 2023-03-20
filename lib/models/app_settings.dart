@@ -17,6 +17,8 @@ enum User {
   mona,
 }
 
+bool onlyPortrait = true;
+
 final encrypter = encrypt.Encrypter(
   encrypt.AES(
     encrypt.Key.fromUtf8(encryptionKey),
@@ -35,6 +37,7 @@ class AppSettingsCls with _$AppSettingsCls {
     required int mqttPort,
     required User user,
     required bool valid,
+    required bool onlyPortrait,
   }) = _AppSettingsCls;
   factory AppSettingsCls.fromJson(Map<String, dynamic> json) => _$AppSettingsClsFromJson(json);
 }
@@ -50,6 +53,7 @@ class AppSettings extends _$AppSettings {
       mqttPort: 1883,
       user: User.thomas,
       valid: false,
+      onlyPortrait: true,
     );
   }
 
@@ -60,6 +64,12 @@ class AppSettings extends _$AppSettings {
   void saveUser(User user) {
     state = state.copyWith(
       user: user,
+    );
+  }
+
+  void saveOnlyPortrait(bool onlyPortrait) {
+    state = state.copyWith(
+      onlyPortrait: onlyPortrait,
     );
   }
 

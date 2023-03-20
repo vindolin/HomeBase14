@@ -6,6 +6,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import '/utils.dart';
 import '/widgets/connection_bar_widget.dart';
 import '/widgets/influxdb_widget.dart';
+import 'widgets/doors_widget.dart';
 import 'widgets/multiplug_widget.dart';
 import 'widgets/humitemps_widget.dart';
 
@@ -38,14 +39,10 @@ class OtherPage extends ConsumerWidget {
               ),
             ),
           ),
-          Card(
-            child: Row(
-              children: const [
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text('Doors (implement me!)'),
-                ),
-              ],
+          const Card(
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: DoorsWidget(),
             ),
           ),
           Card(

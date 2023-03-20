@@ -76,6 +76,7 @@ dependencies:
   webview_flutter:
   webview_flutter_android: ^3.4.2
   syncfusion_flutter_charts: ^20.4.54
+  font_awesome_flutter: ^10.4.0
 
 dev_dependencies:
   build_runner:

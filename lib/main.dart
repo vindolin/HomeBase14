@@ -24,6 +24,9 @@ void main() async {
   initializeDateFormatting('de_DE', null);
 
   WidgetsFlutterBinding.ensureInitialized();
+  if (Platform.isAndroid) {
+    KeepScreenOn.turnOn();
+  }
 
   runApp(
     ProviderScope(

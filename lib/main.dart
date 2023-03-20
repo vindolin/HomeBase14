@@ -5,6 +5,7 @@ import 'package:keep_screen_on/keep_screen_on.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import '/models/app_settings.dart';
 import '/models/mqtt_connection_state_provider.dart';
@@ -19,6 +20,8 @@ void main() async {
     fallbackLocale: 'de_DE',
     supportedLocales: ['en_US', 'de_DE'],
   );
+
+  initializeDateFormatting('de_DE', null);
 
   WidgetsFlutterBinding.ensureInitialized();
 

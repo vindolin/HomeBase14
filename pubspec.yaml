@@ -54,9 +54,10 @@ dependencies:
   stack_trace: ^1.11.0
   flutter_svg: ^2.0.2
   tuple: ^2.0.1
-  fl_chart: ^0.61.0
   video_player: ^2.5.1
   flutter_vlc_player: ^7.2.0
+  http: any
+  intl: any
 
   # patched library
   keep_screen_on:
@@ -74,6 +75,7 @@ dependencies:
   connectivity_plus: ^3.0.3
   webview_flutter:
   webview_flutter_android: ^3.4.2
+  syncfusion_flutter_charts: ^20.4.54
 
 dev_dependencies:
   build_runner:

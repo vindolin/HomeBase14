@@ -5,9 +5,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '/models/mqtt_devices.dart';
 
 class DoorWidget extends ConsumerWidget {
+  final bool miniMode;
   final String topic;
 
-  const DoorWidget({super.key, required this.topic});
+  const DoorWidget({super.key, required this.topic, this.miniMode = false});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,13 +24,13 @@ class DoorWidget extends ConsumerWidget {
       doorIcon = FaIcon(
         contact ? FontAwesomeIcons.doorClosed : FontAwesomeIcons.doorOpen,
         color: contact ? Colors.green : Colors.red,
-        size: 70,
+        size: miniMode ? 24 : 70,
       );
     } catch (e) {
-      doorIcon = const FaIcon(
+      doorIcon = FaIcon(
         FontAwesomeIcons.doorOpen,
         color: Colors.grey,
-        size: 70,
+        size: miniMode ? 24 : 70,
       );
 
       unknown = true;
@@ -37,14 +38,21 @@ class DoorWidget extends ConsumerWidget {
     return Column(
       children: [
         doorIcon,
-        Text(deviceName ?? topic.split('zigbee2mqtt/')[1]),
-        Text(
-          unknown
-              ? '???'
-              : contact
-                  ? 'zu'
-                  : 'auf',
+        Padding(
+          padding: const EdgeInsetsDirectional.symmetric(horizontal: 4),
+          child: Text(
+            deviceName ?? topic.split('zigbee2mqtt/')[1],
+            style: TextStyle(fontSize: miniMode ? 12 : 14),
+          ),
         ),
+        if (!miniMode)
+          Text(
+            unknown
+                ? '???'
+                : contact
+                    ? 'zu'
+                    : 'auf',
+          ),
       ],
     );
   }

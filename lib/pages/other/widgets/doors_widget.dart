@@ -4,16 +4,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'door_widget.dart';
 
 class DoorsWidget extends ConsumerWidget {
-  const DoorsWidget({super.key});
+  final bool miniMode;
+  const DoorsWidget({super.key, this.miniMode = false});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Row(
+      mainAxisSize: miniMode ? MainAxisSize.min : MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: const [
-        DoorWidget(topic: 'zigbee2mqtt/door/i001'),
-        DoorWidget(topic: 'zigbee2mqtt/door/i002'),
-        DoorWidget(topic: 'zigbee2mqtt/door/i003'),
+      children: [
+        DoorWidget(topic: 'zigbee2mqtt/door/i001', miniMode: miniMode),
+        DoorWidget(topic: 'zigbee2mqtt/door/i002', miniMode: miniMode),
+        DoorWidget(topic: 'zigbee2mqtt/door/i003', miniMode: miniMode),
       ],
     );
   }

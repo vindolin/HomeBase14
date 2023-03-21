@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'shader_widget.dart';
 
 class InfluxdbWidget extends StatefulWidget {
   const InfluxdbWidget({super.key});
@@ -55,7 +56,7 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
         FROM sma WHERE
         (sensor = 'totw')
         AND  (time >= now() - 12h)
-        GROUP BY time(10m)
+        GROUP BY time(5m)
       ''',
     });
 
@@ -78,7 +79,7 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
         FROM sma WHERE
         (sensor = 'total_w')
         AND  (time >= now() - 12h)
-        GROUP BY time(10m)
+        GROUP BY time(5m)
       ''',
     });
 
@@ -147,7 +148,8 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
             ),
           );
         } else if (snapshot.hasError) {
-          return Text('${snapshot.error}');
+          // return Text('${snapshot.error}');
+          const ShaderWidget('tv_static.frag');
         }
 
         // By default, show a loading spinner.

@@ -77,6 +77,7 @@ class PrusaProgress extends ConsumerWidget {
                     Text(
                       '${prusa['percent_done']}%',
                       style: const TextStyle(
+                        color: Colors.black,
                         fontWeight: FontWeight.w900,
                         fontSize: 26,
                         shadows: [

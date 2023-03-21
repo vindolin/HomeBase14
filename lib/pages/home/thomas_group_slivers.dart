@@ -5,6 +5,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '/styles/text_styles.dart';
 import '/pages/thomas/thomas_page.dart';
 import '/pages/grafana/grafana_page.dart';
+import '/pages/thomas/dropdown_select_widget.dart';
 
 /// Stuff only relevant for Thomas (only visible if user is Thomas)
 class ThomasGroups extends ConsumerWidget {
@@ -48,6 +49,29 @@ class ThomasGroups extends ConsumerWidget {
               ),
             );
           },
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: const [
+              DropdownSelect(
+                options: {
+                  'wakeup': '☕️',
+                  'sleep': '😴',
+                  'hibernate': '🐻',
+                },
+                statTopic: 'leech/sleep',
+                setTopic: 'leech/sleep/set',
+              ),
+              SizedBox(width: 8),
+              DropdownSelect(
+                options: {
+                  'tv': '📺',
+                  'monitor': '💻',
+                },
+                statTopic: 'leech/screens',
+                setTopic: 'leech/screens/set',
+              ),
+            ],
+          ),
         ),
         const Divider(),
         ListTile(

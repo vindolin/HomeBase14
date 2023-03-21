@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '/styles/text_styles.dart';
 import '/utils.dart';
 import '/widgets/mqtt_switch_widget.dart';
 import '/widgets/connection_bar_widget.dart';
 import 'dropdown_select_widget.dart';
 
-class ThomasPage extends ConsumerWidget {
+class ThomasPage extends StatelessWidget {
   const ThomasPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     log('ThomasPage.build()');
 
     return Scaffold(
@@ -25,20 +23,6 @@ class ThomasPage extends ConsumerWidget {
         crossAxisCount: 2,
         childAspectRatio: 1.5,
         children: [
-          // Card(
-          //   color: Colors.amber[900],
-          //   child: Column(
-          //     mainAxisSize: MainAxisSize.min,
-          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //     children: const [
-          //       Text(
-          //         'Select sleep mode',
-          //         style: textStyleShadowOne,
-          //       ),
-          //       SleepModeDropdown(),
-          //     ],
-          //   ),
-          // ),
           Card(
             color: Colors.amber[900],
             child: Column(

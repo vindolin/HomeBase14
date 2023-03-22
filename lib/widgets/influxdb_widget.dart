@@ -48,6 +48,7 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
   Future<List<List<TimePoint>>> fetchResult() async {
     var url = Uri.parse('***REMOVED***');
 
+    // solar watt sma/tripower/totw
     var response = await http.post(url, body: {
       'db': 'sensors',
       'q': '''
@@ -64,13 +65,15 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
 
     final solar = jsonDecode(response.body)['results'][0]['series'][0]['values'].map<TimePoint>(
       (e) {
-        if (e[1] == null) {
+        // -2147483647 is an error value from the Tripower inverter
+        if (e[1] == null || e[1] == -2147483648) {
           e[1] = 0;
         }
         return TimePoint(DateTime.parse(e[0]), e[1].toDouble() / 1000);
       },
     ).toList();
 
+    // usage watt
     response = await http.post(url, body: {
       'db': 'sensors',
       'q': '''
@@ -94,8 +97,11 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
       },
     ).toList();
 
+    // solar - total_w = usage
     for (int i = 0; i < usage.length; i++) {
-      usage[i].value = solar[i].value - usage[i].value;
+      var usageValue = solar[i].value - usage[i].value;
+      if (usageValue < 0) usageValue = 0.0; // correct error values
+      usage[i].value = usageValue;
     }
 
     return [solar, usage];

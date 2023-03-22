@@ -1,2 +1,3 @@
 del ..\my_app.apks
-flutter build appbundle --target-platform android-arm64
+flutter build appbundle
+REM flutter build appbundle --target-platform android-arm64

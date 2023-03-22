@@ -7,9 +7,11 @@ part 'brightness_button_widget.g.dart';
 @Riverpod(keepAlive: true)
 class BrightnessSetting extends _$BrightnessSetting {
   @override
-  Brightness build() => MediaQueryData.fromWindow(
-        WidgetsBinding.instance.window,
-      ).platformBrightness;
+  Brightness build() => Brightness.dark;
+
+  // MediaQueryData.fromWindow(
+  //       WidgetsBinding.instance.window,
+  //     ).platformBrightness;
 
   void toggle() => state = state == Brightness.dark ? Brightness.light : Brightness.dark;
 }

@@ -22,18 +22,6 @@ import 'cameras.dart';
 import 'widgets/solar_watts_widget.dart';
 import 'user_select_widget.dart';
 
-Widget homeBackButton(BuildContext context) {
-  return BackButton(
-    /// we have to build our own back button because pushReplacement() did override the history stack
-    onPressed: () => Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const HomePage(),
-      ),
-    ),
-  );
-}
-
 class Delegate extends SliverPersistentHeaderDelegate {
   final Color _backgroundColor;
   final String _title;

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
-import '/pages/home/home_page.dart';
 import '/utils.dart';
 import '/widgets/connection_bar_widget.dart';
 import '/widgets/influxdb_widget.dart';
@@ -22,7 +21,6 @@ class OtherPage extends ConsumerWidget {
       appBar: AppBar(
         title: Text(translate('device_names.other')),
         actions: const [ConnectionBar()],
-        leading: homeBackButton(context),
       ),
       body: Column(
         children: [

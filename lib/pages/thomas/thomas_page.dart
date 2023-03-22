@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '/pages/home/home_page.dart';
 import '/styles/text_styles.dart';
 import '/utils.dart';
 import '/widgets/mqtt_switch_widget.dart';
@@ -18,7 +17,6 @@ class ThomasPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Thomas'),
         actions: const [ConnectionBar()],
-        leading: homeBackButton(context),
       ),
       body: GridView.count(
         padding: const EdgeInsets.all(8),

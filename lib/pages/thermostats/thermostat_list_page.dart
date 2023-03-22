@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
-import '/pages/home/home_page.dart';
 import '/utils.dart';
 import '/models/mqtt_devices.dart';
 import '/pages/thermostats/thermostat_detail_page.dart';
@@ -57,7 +56,6 @@ class ThermostatListPage extends ConsumerWidget {
       appBar: AppBar(
         title: Text(translate('device_names.thermostats')),
         actions: const [ConnectionBar()],
-        leading: homeBackButton(context),
       ),
       body: ListView.separated(
         separatorBuilder: (context, index) => const Divider(),

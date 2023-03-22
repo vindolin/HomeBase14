@@ -7,7 +7,6 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import '/utils.dart';
 
 import '/models/mqtt_devices.dart';
-import '/pages/home/home_page.dart';
 import '/pages/curtains/curtain_detail_page.dart';
 import '/pages/curtains/dual_curtain_detail_page.dart';
 
@@ -64,7 +63,6 @@ class CurtainListPage extends ConsumerWidget {
       appBar: AppBar(
         title: Text(translate('device_names.curtains')),
         actions: [...curtainActions(context, ref), const ConnectionBar()],
-        leading: homeBackButton(context),
       ),
       body: ListView.separated(
         separatorBuilder: (context, index) => const Divider(),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import '/pages/home/home_page.dart';
 import '/models/secrets.dart';
 
 class GrafanaPage extends StatefulWidget {
@@ -42,10 +41,7 @@ class _GrafanaPageState extends State<GrafanaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Grafana 📊'),
-        leading: homeBackButton(context),
-      ),
+      appBar: AppBar(title: const Text('Grafana 📊')),
       body: WebViewWidget(controller: controller),
     );
   }

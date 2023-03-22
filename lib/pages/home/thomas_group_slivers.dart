@@ -42,7 +42,7 @@ class ThomasGroups extends ConsumerWidget {
           leading: const Icon(Icons.pest_control),
           visualDensity: visualDensity,
           onTap: () {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (context) => const ThomasPage(),
@@ -87,7 +87,7 @@ class ThomasGroups extends ConsumerWidget {
           visualDensity: visualDensity,
           onTap: () {
             WebViewPlatform.instance != null
-                ? Navigator.push(
+                ? Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const GrafanaPage(),

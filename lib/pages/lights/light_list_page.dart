@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
+import '/pages/home/home_page.dart';
 import '/utils.dart';
 import 'widgets/lights_off_button_widget.dart';
 import '../../widgets/slider_widget.dart';
@@ -185,6 +186,7 @@ class LightPage extends ConsumerWidget {
       appBar: AppBar(
         title: Text(translate('device_names.lights')),
         actions: const [ConnectionBar()],
+        leading: homeBackButton(context),
       ),
       body: ListView.separated(
         separatorBuilder: (context, index) {

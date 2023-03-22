@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/models/mqtt_providers.dart';
 import '/models/secrets.dart' as secrets;
 import '/widgets/refreshable_image_widget.dart';
@@ -20,11 +19,11 @@ Widget _camContainer(Widget child) {
 
 // Shows the cameras side by side
 // The cameras are refreshed every n seconds depending on the connection (wifi or mobile)
-class Cameras extends ConsumerWidget {
+class Cameras extends StatelessWidget {
   const Cameras({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return SliverPadding(
       padding: const EdgeInsets.all(8.0),
       sliver: SliverGrid(

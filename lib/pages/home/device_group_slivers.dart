@@ -53,7 +53,7 @@ class DeviceGroups extends ConsumerWidget {
             leading: const Icon(Icons.thermostat),
             visualDensity: visualDensity,
             onTap: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const ThermostatListPage(),
@@ -79,7 +79,7 @@ class DeviceGroups extends ConsumerWidget {
             children: curtainActions(context, ref),
           ),
           onTap: () {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (context) => const CurtainListPage(),
@@ -97,7 +97,7 @@ class DeviceGroups extends ConsumerWidget {
           trailing: onLightCount > 0 ? const LightsOffButton() : null,
           visualDensity: visualDensity,
           onTap: () {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (context) => const LightPage(),
@@ -114,7 +114,7 @@ class DeviceGroups extends ConsumerWidget {
           leading: const Icon(Icons.extension),
           visualDensity: visualDensity,
           onTap: () {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (context) => const OtherPage(),

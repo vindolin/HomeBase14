@@ -1,6 +1,5 @@
 import 'dart:async';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -46,12 +45,16 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
   late Future<List<List<TimePoint>>> result;
 
   Future<List<List<TimePoint>>> fetchResult() async {
-    var url = Uri.parse('***REMOVED***');
+    var url = '***REMOVED***';
 
-    // solar watt sma/tripower/totw
-    var response = await http.post(url, body: {
-      'db': 'sensors',
-      'q': '''
+    final dio = Dio();
+
+    var response = await dio.post(
+      url,
+      data: FormData.fromMap(
+        {
+          'db': 'sensors',
+          'q': '''
         SELECT
         mean(value)
         FROM sma WHERE
@@ -59,11 +62,13 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
         AND  (time >= now() - 12h)
         GROUP BY time(5m)
       ''',
-    });
+        },
+      ),
+    );
 
     // await Future.delayed(const Duration(seconds: 1), () {});
 
-    final solar = jsonDecode(response.body)['results'][0]['series'][0]['values'].map<TimePoint>(
+    final solar = response.data['results'][0]['series'][0]['values'].map<TimePoint>(
       (e) {
         // -2147483647 is an error value from the Tripower inverter
         if (e[1] == null || e[1] == -2147483648) {
@@ -74,9 +79,12 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
     ).toList();
 
     // usage watt
-    response = await http.post(url, body: {
-      'db': 'sensors',
-      'q': '''
+    response = await dio.post(
+      url,
+      data: FormData.fromMap(
+        {
+          'db': 'sensors',
+          'q': '''
         SELECT
         mean(value)
         FROM sma WHERE
@@ -84,11 +92,13 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
         AND  (time >= now() - 12h)
         GROUP BY time(5m)
       ''',
-    });
+        },
+      ),
+    );
 
     // await Future.delayed(const Duration(seconds: 1), () {});
 
-    final usage = jsonDecode(response.body)['results'][0]['series'][0]['values'].map<TimePoint>(
+    final usage = response.data['results'][0]['series'][0]['values'].map<TimePoint>(
       (e) {
         if (e[1] == null) {
           e[1] = 0;

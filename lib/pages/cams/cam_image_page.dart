@@ -12,16 +12,19 @@ class CamImagePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(translate('cams.$camId')),
-        leading: homeBackButton(context),
-      ),
-      body: RotatedBox(
-        quarterTurns: 1,
-        child: RefreshableImage(
-          secrets.camData[camId]!['snapshotUrl']!,
-          autoRefresh: true,
+    return pageAfterHome(
+      context,
+      Scaffold(
+        appBar: AppBar(
+          title: Text(translate('cams.$camId')),
+          leading: homeBackButton(context),
+        ),
+        body: RotatedBox(
+          quarterTurns: 1,
+          child: RefreshableImage(
+            secrets.camData[camId]!['snapshotUrl']!,
+            autoRefresh: true,
+          ),
         ),
       ),
     );

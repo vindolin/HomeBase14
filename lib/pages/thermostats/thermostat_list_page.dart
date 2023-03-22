@@ -53,64 +53,67 @@ class ThermostatListPage extends ConsumerWidget {
       ),
     );
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(translate('device_names.thermostats')),
-        actions: const [ConnectionBar()],
-        leading: homeBackButton(context),
-      ),
-      body: ListView.separated(
-        separatorBuilder: (context, index) => const Divider(),
-        itemCount: thermostatDevices.length,
-        itemBuilder: (context, index) {
-          final key = thermostatDevices.keys.elementAt(index);
-          final device = thermostatDevices.values.elementAt(index);
+    return pageAfterHome(
+      context,
+      Scaffold(
+        appBar: AppBar(
+          title: Text(translate('device_names.thermostats')),
+          actions: const [ConnectionBar()],
+          leading: homeBackButton(context),
+        ),
+        body: ListView.separated(
+          separatorBuilder: (context, index) => const Divider(),
+          itemCount: thermostatDevices.length,
+          itemBuilder: (context, index) {
+            final key = thermostatDevices.keys.elementAt(index);
+            final device = thermostatDevices.values.elementAt(index);
 
-          // log(key);
-          final tempColor = getTemperatureColor(
-            device.localTemperature,
-            device.currentHeatingSetpoint,
-          );
+            // log(key);
+            final tempColor = getTemperatureColor(
+              device.localTemperature,
+              device.currentHeatingSetpoint,
+            );
 
-          return ListTile(
-            leading: Icon(
-              Icons.thermostat,
-              color: tempColor,
-              grade: 0.2,
-            ),
-            key: Key(key),
-            visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-            title: Text(
-              deviceNames[key]!,
-            ),
-            subtitle: Row(
-              children: [
-                Text(
-                  '${device.localTemperature}°C',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: tempColor,
+            return ListTile(
+              leading: Icon(
+                Icons.thermostat,
+                color: tempColor,
+                grade: 0.2,
+              ),
+              key: Key(key),
+              visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+              title: Text(
+                deviceNames[key]!,
+              ),
+              subtitle: Row(
+                children: [
+                  Text(
+                    '${device.localTemperature}°C',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: tempColor,
+                    ),
                   ),
-                ),
-                Text(
-                  '  / ${device.currentHeatingSetpoint}°C',
-                  style: const TextStyle(
-                    color: heatingSetpointColor,
+                  Text(
+                    '  / ${device.currentHeatingSetpoint}°C',
+                    style: const TextStyle(
+                      color: heatingSetpointColor,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            onTap: () {
-              log('tapped $key');
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ThermostatDetailPage(deviceId: key),
-                ),
-              );
-            },
-          );
-        },
+                ],
+              ),
+              onTap: () {
+                log('tapped $key');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ThermostatDetailPage(deviceId: key),
+                  ),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

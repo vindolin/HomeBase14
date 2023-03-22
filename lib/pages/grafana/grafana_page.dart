@@ -41,12 +41,15 @@ class _GrafanaPageState extends State<GrafanaPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Grafana 📊'),
-        leading: homeBackButton(context),
+    return pageAfterHome(
+      context,
+      Scaffold(
+        appBar: AppBar(
+          title: const Text('Grafana 📊'),
+          leading: homeBackButton(context),
+        ),
+        body: WebViewWidget(controller: controller),
       ),
-      body: WebViewWidget(controller: controller),
     );
   }
 }

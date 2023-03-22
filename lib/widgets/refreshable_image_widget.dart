@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:focus_detector/focus_detector.dart';
 
 import '/models/connectivity_provider.dart';
 import 'image_fade_refresh.dart';
@@ -35,7 +36,7 @@ class RefreshableImage extends ConsumerStatefulWidget {
 class _RefreshableImageState extends ConsumerState<RefreshableImage> {
   Timer? timer;
 
-  void setTimer(int seconds) {
+  void startTimer(int seconds) {
     timer?.cancel();
     timer = Timer.periodic(
       Duration(seconds: seconds),
@@ -47,7 +48,7 @@ class _RefreshableImageState extends ConsumerState<RefreshableImage> {
 
   @override
   void initState() {
-    setTimer(refreshTimeMobile);
+    startTimer(refreshTimeMobile);
     super.initState();
   }
 
@@ -59,26 +60,33 @@ class _RefreshableImageState extends ConsumerState<RefreshableImage> {
 
   @override
   Widget build(BuildContext context) {
+    print('refreshable image build');
     final conn = ref.watch(connectivityProvider);
-
-    if (widget.autoRefresh) {
-      if (conn == ConnectivityResult.mobile) {
-        setTimer(refreshTimeMobile);
-      } else {
-        setTimer(refreshTimeWifi);
-      }
-    }
 
     if (widget.streamProvider != null) {
       ref.watch(widget.streamProvider!);
     }
 
-    return InkWell(
-      onTap: widget.onTap,
-      onDoubleTap: widget.onDoubleTap,
-      onLongPress: () => setState(() {}), // just refresh image
-      child: ImageFadeRefresh(
-        '${widget.imageUrl}&${DateTime.now().millisecondsSinceEpoch}',
+    return FocusDetector(
+      onVisibilityLost: () {
+        timer?.cancel();
+      },
+      onVisibilityGained: () {
+        if (widget.autoRefresh) {
+          if (conn == ConnectivityResult.mobile) {
+            startTimer(refreshTimeMobile);
+          } else {
+            startTimer(refreshTimeWifi);
+          }
+        }
+      },
+      child: InkWell(
+        onTap: widget.onTap,
+        onDoubleTap: widget.onDoubleTap,
+        onLongPress: () => setState(() {}), // just refresh image
+        child: ImageFadeRefresh(
+          '${widget.imageUrl}&${DateTime.now().millisecondsSinceEpoch}',
+        ),
       ),
     );
   }

@@ -182,23 +182,20 @@ class LightPage extends ConsumerWidget {
       ...smartBulbDeviceTiles,
     ];
 
-    return pageAfterHome(
-      context,
-      Scaffold(
-        appBar: AppBar(
-          title: Text(translate('device_names.lights')),
-          actions: const [ConnectionBar()],
-          leading: homeBackButton(context),
-        ),
-        body: ListView.separated(
-          separatorBuilder: (context, index) {
-            return !noDividerIndices.contains(index) ? const Divider() : Container();
-          },
-          itemCount: combinedListViewWidgets.length,
-          itemBuilder: (context, index) {
-            return combinedListViewWidgets[index];
-          },
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(translate('device_names.lights')),
+        actions: const [ConnectionBar()],
+        leading: homeBackButton(context),
+      ),
+      body: ListView.separated(
+        separatorBuilder: (context, index) {
+          return !noDividerIndices.contains(index) ? const Divider() : Container();
+        },
+        itemCount: combinedListViewWidgets.length,
+        itemBuilder: (context, index) {
+          return combinedListViewWidgets[index];
+        },
       ),
     );
   }

@@ -60,61 +60,58 @@ class CurtainListPage extends ConsumerWidget {
       ...curtainDevices.unlock,
     });
 
-    return pageAfterHome(
-      context,
-      Scaffold(
-        appBar: AppBar(
-          title: Text(translate('device_names.curtains')),
-          actions: [...curtainActions(context, ref), const ConnectionBar()],
-          leading: homeBackButton(context),
-        ),
-        body: ListView.separated(
-          separatorBuilder: (context, index) => const Divider(),
-          itemCount: combinedCurtainDevices.length,
-          itemBuilder: (context, index) {
-            final device = combinedCurtainDevices.values.elementAt(index);
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(translate('device_names.curtains')),
+        actions: [...curtainActions(context, ref), const ConnectionBar()],
+        leading: homeBackButton(context),
+      ),
+      body: ListView.separated(
+        separatorBuilder: (context, index) => const Divider(),
+        itemCount: combinedCurtainDevices.length,
+        itemBuilder: (context, index) {
+          final device = combinedCurtainDevices.values.elementAt(index);
 
-            Widget? icon;
+          Widget? icon;
 
-            if (device is DualCurtainDevice) {
-              icon = AnimatedDualCurtainItem(device);
-            } else if (device is SingleCurtainDevice) {
-              icon = AnimatedCurtainItem(device);
-            }
+          if (device is DualCurtainDevice) {
+            icon = AnimatedDualCurtainItem(device);
+          } else if (device is SingleCurtainDevice) {
+            icon = AnimatedCurtainItem(device);
+          }
 
-            return ListTile(
-              leading: icon,
-              key: Key(device.deviceId),
-              visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-              title: Text(
-                deviceNames[device.deviceId] ?? device.deviceId,
-              ),
-              subtitle: Row(
-                children: [
-                  Text(
-                    device.deviceType,
-                  )
-                ],
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => device is DualCurtainDevice
-                        ? DualCurtainDetailPage(deviceId: device.deviceId)
-                        : CurtainDetailPage(deviceId: device.deviceId),
-                  ),
-                );
-              },
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ...curtainActions(context, ref, device.deviceId),
-                ],
-              ),
-            );
-          },
-        ),
+          return ListTile(
+            leading: icon,
+            key: Key(device.deviceId),
+            visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+            title: Text(
+              deviceNames[device.deviceId] ?? device.deviceId,
+            ),
+            subtitle: Row(
+              children: [
+                Text(
+                  device.deviceType,
+                )
+              ],
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => device is DualCurtainDevice
+                      ? DualCurtainDetailPage(deviceId: device.deviceId)
+                      : CurtainDetailPage(deviceId: device.deviceId),
+                ),
+              );
+            },
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ...curtainActions(context, ref, device.deviceId),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

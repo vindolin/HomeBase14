@@ -18,59 +18,56 @@ class OtherPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     log('OtherPage.build()');
 
-    return pageAfterHome(
-      context,
-      Scaffold(
-        appBar: AppBar(
-          title: Text(translate('device_names.other')),
-          actions: const [ConnectionBar()],
-          leading: homeBackButton(context),
-        ),
-        body: Column(
-          children: [
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: const [
-                    Text('Multiplug Sofa'),
-                    Spacer(),
-                    MultiplugWidget(
-                      plugCount: 3,
-                      topic: 'zigbee2mqtt/multiplug/i001',
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const Card(
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: DoorsWidget(),
-              ),
-            ),
-            Card(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(translate('device_names.other')),
+        actions: const [ConnectionBar()],
+        leading: homeBackButton(context),
+      ),
+      body: Column(
+        children: [
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: const [
-                  HumiTempWidget(),
+                  Text('Multiplug Sofa'),
+                  Spacer(),
+                  MultiplugWidget(
+                    plugCount: 3,
+                    topic: 'zigbee2mqtt/multiplug/i001',
+                  ),
                 ],
               ),
             ),
-            Expanded(
-              child: Card(
-                color: const Color.fromARGB(255, 66, 33, 62),
-                child: LayoutBuilder(builder: (context, constraints) {
-                  return SingleChildScrollView(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(maxHeight: constraints.maxHeight),
-                      child: const InfluxdbWidget(),
-                    ),
-                  );
-                }),
-              ),
+          ),
+          const Card(
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: DoorsWidget(),
             ),
-          ],
-        ),
+          ),
+          Card(
+            child: Row(
+              children: const [
+                HumiTempWidget(),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Card(
+              color: const Color.fromARGB(255, 66, 33, 62),
+              child: LayoutBuilder(builder: (context, constraints) {
+                return SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxHeight: constraints.maxHeight),
+                    child: const InfluxdbWidget(),
+                  ),
+                );
+              }),
+            ),
+          ),
+        ],
       ),
     );
   }

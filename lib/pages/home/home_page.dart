@@ -234,20 +234,3 @@ class HomePage extends ConsumerWidget {
     );
   }
 }
-
-/// because we had to use pushReplacement() instead of push(), the physical back button on the follow up pages of home would close the app.
-/// this wrapper will intercept the back button and redirect to home instead.
-Widget pageAfterHome(BuildContext context, Scaffold scaffold) {
-  return WillPopScope(
-    onWillPop: () async {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const HomePage(),
-        ),
-      );
-      return false;
-    },
-    child: scaffold,
-  );
-}

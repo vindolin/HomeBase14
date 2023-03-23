@@ -8,6 +8,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 ///https://pub.dev/packages/raw_sound
 
+import '/models/secrets.dart';
 import 'shader_widget.dart';
 
 class InfluxdbWidget extends StatefulWidget {
@@ -50,10 +51,11 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
   late Future<List<List<TimePoint>>> result;
 
   Future<List<List<TimePoint>>> fetchResult() async {
-    var url = '***REMOVED***';
+    var url = influxdbAddress;
 
     final dio = Dio();
 
+    // solar watt
     var response = await dio.post(
       url,
       data: FormData.fromMap(

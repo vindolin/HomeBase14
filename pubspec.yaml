@@ -63,13 +63,13 @@ dependencies:
   google_fonts: ^4.0.3
   simple_shadow: ^0.3.1
   shader: ^1.0.1
-  flutter_shaders: ^0.0.6
+  flutter_shaders: ^0.1.0
   timer_builder: ^2.0.0
   fast_immutable_collections: ^9.0.0
   connectivity_plus: ^3.0.3
   webview_flutter:
   webview_flutter_android: ^3.4.2
-  syncfusion_flutter_charts: ^20.4.54
+  syncfusion_flutter_charts: ^21.1.35
   font_awesome_flutter: ^10.4.0
 
   # patched libraries

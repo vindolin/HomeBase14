@@ -142,7 +142,7 @@ class LoginFormPage extends ConsumerWidget {
               labelText: 'Server Port',
               hintText: 'Enter your MQTT server port',
             ),
-            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))],
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             initialValue: appSettingsCls.mqttPort.toString(),
             onSaved: (String? value) {
               formData['mqttPort'] = int.parse(value!);

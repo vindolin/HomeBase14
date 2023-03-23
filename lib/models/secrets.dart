@@ -1,3 +1,5 @@
+/// this file only demonstrates how the real file is structured and what variables are set
+
 const encryptionKey = 'SECRET_USED_FOR_SETTINGS_ENCRYPTION';
 
 String serverAddress = 'flutter.dev';

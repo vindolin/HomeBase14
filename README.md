@@ -15,3 +15,4 @@ This project is Work In Progress and there's a lot of stuff that I would do diff
 I'm randomly refactoring old mistakes and add new gadgets whenever they appear in our house.
 
 I'm planning to break it down into a separate project that would be more universal though.
+xxx

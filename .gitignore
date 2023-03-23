@@ -42,9 +42,8 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-# lib/models/GitHub Copilot.txt
 
-lib/models/secrets.dart
+# lib/models/secrets.dart
 ios/*
 linux/*
 macos/*
@@ -55,3 +54,4 @@ assets/certs/*.crt
 assets/certs/*.key
 __not_tracked/*
 .vscode/launch.json
+README.md

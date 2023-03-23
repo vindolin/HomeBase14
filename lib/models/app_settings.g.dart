@@ -16,6 +16,8 @@ _$_AppSettingsCls _$$_AppSettingsClsFromJson(Map<String, dynamic> json) =>
       valid: json['valid'] as bool,
       onlyPortrait: json['onlyPortrait'] as bool,
       showBrightness: json['showBrightness'] as bool,
+      camRefreshRateWifi: json['camRefreshRateWifi'] as int,
+      camRefreshRateMobile: json['camRefreshRateMobile'] as int,
     );
 
 Map<String, dynamic> _$$_AppSettingsClsToJson(_$_AppSettingsCls instance) =>
@@ -28,6 +30,8 @@ Map<String, dynamic> _$$_AppSettingsClsToJson(_$_AppSettingsCls instance) =>
       'valid': instance.valid,
       'onlyPortrait': instance.onlyPortrait,
       'showBrightness': instance.showBrightness,
+      'camRefreshRateWifi': instance.camRefreshRateWifi,
+      'camRefreshRateMobile': instance.camRefreshRateMobile,
     };
 
 const _$UserEnumMap = {
@@ -39,7 +43,7 @@ const _$UserEnumMap = {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appSettingsHash() => r'7432b6edfabee61b665b767e9871435d392f4f38';
+String _$appSettingsHash() => r'3f7b2568007ad2bf5f1668065b170c3f03f75387';
 
 /// See also [AppSettings].
 @ProviderFor(AppSettings)

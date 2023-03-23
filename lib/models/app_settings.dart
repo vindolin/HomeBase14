@@ -40,6 +40,8 @@ class AppSettingsCls with _$AppSettingsCls {
     required bool valid,
     required bool onlyPortrait,
     required bool showBrightness,
+    required int camRefreshRateWifi,
+    required int camRefreshRateMobile,
   }) = _AppSettingsCls;
   factory AppSettingsCls.fromJson(Map<String, dynamic> json) => _$AppSettingsClsFromJson(json);
 }
@@ -57,6 +59,8 @@ class AppSettings extends _$AppSettings {
       valid: false,
       onlyPortrait: true,
       showBrightness: true,
+      camRefreshRateWifi: 5,
+      camRefreshRateMobile: 20,
     );
   }
 
@@ -79,6 +83,12 @@ class AppSettings extends _$AppSettings {
   void saveShowBrightness(bool showBrightness) {
     state = state.copyWith(
       showBrightness: showBrightness,
+    );
+  }
+
+  void saveCamRefreshRateWifi(int duration) {
+    state = state.copyWith(
+      camRefreshRateWifi: duration,
     );
   }
 

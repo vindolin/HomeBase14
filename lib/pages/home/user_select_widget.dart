@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
@@ -23,6 +24,11 @@ class UserSelect extends ConsumerWidget {
 
     void submitShowBrightness(bool showBrightness) async {
       ref.read(appSettingsProvider.notifier).saveShowBrightness(showBrightness);
+      await ref.read(appSettingsProvider.notifier).persistConnectionData();
+    }
+
+    void saveCamRefreshRateWifi(int duration) async {
+      ref.read(appSettingsProvider.notifier).saveCamRefreshRateWifi(duration);
       await ref.read(appSettingsProvider.notifier).persistConnectionData();
     }
 
@@ -77,7 +83,23 @@ class UserSelect extends ConsumerWidget {
           },
           title: const Text('Bright/Dark anzeigen'),
           selected: appSettings.showBrightness,
-        )
+        ),
+        ListTile(
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(translate('Kamera refresh rate')),
+              TextFormField(
+                initialValue: appSettings.camRefreshRateWifi.toString(),
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                onChanged: (value) {
+                  saveCamRefreshRateWifi(int.parse(value));
+                },
+              )
+            ],
+          ),
+        ),
       ],
     );
   }

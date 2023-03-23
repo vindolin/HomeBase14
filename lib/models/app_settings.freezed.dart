@@ -28,6 +28,8 @@ mixin _$AppSettingsCls {
   bool get valid => throw _privateConstructorUsedError;
   bool get onlyPortrait => throw _privateConstructorUsedError;
   bool get showBrightness => throw _privateConstructorUsedError;
+  int get camRefreshRateWifi => throw _privateConstructorUsedError;
+  int get camRefreshRateMobile => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,7 +51,9 @@ abstract class $AppSettingsClsCopyWith<$Res> {
       User user,
       bool valid,
       bool onlyPortrait,
-      bool showBrightness});
+      bool showBrightness,
+      int camRefreshRateWifi,
+      int camRefreshRateMobile});
 }
 
 /// @nodoc
@@ -73,6 +77,8 @@ class _$AppSettingsClsCopyWithImpl<$Res, $Val extends AppSettingsCls>
     Object? valid = null,
     Object? onlyPortrait = null,
     Object? showBrightness = null,
+    Object? camRefreshRateWifi = null,
+    Object? camRefreshRateMobile = null,
   }) {
     return _then(_value.copyWith(
       mqttUsername: null == mqttUsername
@@ -107,6 +113,14 @@ class _$AppSettingsClsCopyWithImpl<$Res, $Val extends AppSettingsCls>
           ? _value.showBrightness
           : showBrightness // ignore: cast_nullable_to_non_nullable
               as bool,
+      camRefreshRateWifi: null == camRefreshRateWifi
+          ? _value.camRefreshRateWifi
+          : camRefreshRateWifi // ignore: cast_nullable_to_non_nullable
+              as int,
+      camRefreshRateMobile: null == camRefreshRateMobile
+          ? _value.camRefreshRateMobile
+          : camRefreshRateMobile // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -127,7 +141,9 @@ abstract class _$$_AppSettingsClsCopyWith<$Res>
       User user,
       bool valid,
       bool onlyPortrait,
-      bool showBrightness});
+      bool showBrightness,
+      int camRefreshRateWifi,
+      int camRefreshRateMobile});
 }
 
 /// @nodoc
@@ -149,6 +165,8 @@ class __$$_AppSettingsClsCopyWithImpl<$Res>
     Object? valid = null,
     Object? onlyPortrait = null,
     Object? showBrightness = null,
+    Object? camRefreshRateWifi = null,
+    Object? camRefreshRateMobile = null,
   }) {
     return _then(_$_AppSettingsCls(
       mqttUsername: null == mqttUsername
@@ -183,6 +201,14 @@ class __$$_AppSettingsClsCopyWithImpl<$Res>
           ? _value.showBrightness
           : showBrightness // ignore: cast_nullable_to_non_nullable
               as bool,
+      camRefreshRateWifi: null == camRefreshRateWifi
+          ? _value.camRefreshRateWifi
+          : camRefreshRateWifi // ignore: cast_nullable_to_non_nullable
+              as int,
+      camRefreshRateMobile: null == camRefreshRateMobile
+          ? _value.camRefreshRateMobile
+          : camRefreshRateMobile // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -200,7 +226,9 @@ class _$_AppSettingsCls
       required this.user,
       required this.valid,
       required this.onlyPortrait,
-      required this.showBrightness});
+      required this.showBrightness,
+      required this.camRefreshRateWifi,
+      required this.camRefreshRateMobile});
 
   factory _$_AppSettingsCls.fromJson(Map<String, dynamic> json) =>
       _$$_AppSettingsClsFromJson(json);
@@ -221,10 +249,14 @@ class _$_AppSettingsCls
   final bool onlyPortrait;
   @override
   final bool showBrightness;
+  @override
+  final int camRefreshRateWifi;
+  @override
+  final int camRefreshRateMobile;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AppSettingsCls(mqttUsername: $mqttUsername, mqttPassword: $mqttPassword, mqttAddress: $mqttAddress, mqttPort: $mqttPort, user: $user, valid: $valid, onlyPortrait: $onlyPortrait, showBrightness: $showBrightness)';
+    return 'AppSettingsCls(mqttUsername: $mqttUsername, mqttPassword: $mqttPassword, mqttAddress: $mqttAddress, mqttPort: $mqttPort, user: $user, valid: $valid, onlyPortrait: $onlyPortrait, showBrightness: $showBrightness, camRefreshRateWifi: $camRefreshRateWifi, camRefreshRateMobile: $camRefreshRateMobile)';
   }
 
   @override
@@ -239,7 +271,9 @@ class _$_AppSettingsCls
       ..add(DiagnosticsProperty('user', user))
       ..add(DiagnosticsProperty('valid', valid))
       ..add(DiagnosticsProperty('onlyPortrait', onlyPortrait))
-      ..add(DiagnosticsProperty('showBrightness', showBrightness));
+      ..add(DiagnosticsProperty('showBrightness', showBrightness))
+      ..add(DiagnosticsProperty('camRefreshRateWifi', camRefreshRateWifi))
+      ..add(DiagnosticsProperty('camRefreshRateMobile', camRefreshRateMobile));
   }
 
   @override
@@ -260,13 +294,27 @@ class _$_AppSettingsCls
             (identical(other.onlyPortrait, onlyPortrait) ||
                 other.onlyPortrait == onlyPortrait) &&
             (identical(other.showBrightness, showBrightness) ||
-                other.showBrightness == showBrightness));
+                other.showBrightness == showBrightness) &&
+            (identical(other.camRefreshRateWifi, camRefreshRateWifi) ||
+                other.camRefreshRateWifi == camRefreshRateWifi) &&
+            (identical(other.camRefreshRateMobile, camRefreshRateMobile) ||
+                other.camRefreshRateMobile == camRefreshRateMobile));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, mqttUsername, mqttPassword,
-      mqttAddress, mqttPort, user, valid, onlyPortrait, showBrightness);
+  int get hashCode => Object.hash(
+      runtimeType,
+      mqttUsername,
+      mqttPassword,
+      mqttAddress,
+      mqttPort,
+      user,
+      valid,
+      onlyPortrait,
+      showBrightness,
+      camRefreshRateWifi,
+      camRefreshRateMobile);
 
   @JsonKey(ignore: true)
   @override
@@ -291,7 +339,9 @@ abstract class _AppSettingsCls implements AppSettingsCls {
       required final User user,
       required final bool valid,
       required final bool onlyPortrait,
-      required final bool showBrightness}) = _$_AppSettingsCls;
+      required final bool showBrightness,
+      required final int camRefreshRateWifi,
+      required final int camRefreshRateMobile}) = _$_AppSettingsCls;
 
   factory _AppSettingsCls.fromJson(Map<String, dynamic> json) =
       _$_AppSettingsCls.fromJson;
@@ -312,6 +362,10 @@ abstract class _AppSettingsCls implements AppSettingsCls {
   bool get onlyPortrait;
   @override
   bool get showBrightness;
+  @override
+  int get camRefreshRateWifi;
+  @override
+  int get camRefreshRateMobile;
   @override
   @JsonKey(ignore: true)
   _$$_AppSettingsClsCopyWith<_$_AppSettingsCls> get copyWith =>

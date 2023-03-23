@@ -52,7 +52,7 @@ class _MyAppState extends ConsumerState<HomeBase14App> {
     });
 
     // load connection data from shared preferences
-    ref.read(appSettingsProvider.notifier).loadConnectionData().then((_) async {
+    ref.read(appSettingsProvider.notifier).loadAppSettings().then((_) async {
       ref.watch(mqttProvider.notifier).connect();
     });
 

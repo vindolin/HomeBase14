@@ -84,6 +84,7 @@ class CurtainListPage extends ConsumerWidget {
             visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
             title: Text(
               deviceNames[device.deviceId] ?? device.deviceId,
+              overflow: TextOverflow.ellipsis,
             ),
             subtitle: Row(
               children: [

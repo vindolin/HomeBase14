@@ -1,8 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:decorated_icon/decorated_icon.dart';
 
 import '/models/mqtt_devices.dart';
+
+Widget iconWrapper(IconData icon, Color color, double size) {
+  return DecoratedIcon(
+    icon,
+    color: color,
+    size: size,
+    shadows: const [
+      BoxShadow(
+        blurRadius: 2.0,
+        color: Colors.black,
+        offset: Offset(1.0, 1.0),
+      ),
+    ],
+  );
+}
 
 class DoorWidget extends ConsumerWidget {
   final bool miniMode;
@@ -21,16 +37,16 @@ class DoorWidget extends ConsumerWidget {
     bool unknown = false;
     try {
       contact = door['contact'];
-      doorIcon = FaIcon(
+      doorIcon = iconWrapper(
         contact ? FontAwesomeIcons.doorClosed : FontAwesomeIcons.doorOpen,
-        color: contact ? Colors.green : Colors.red,
-        size: miniMode ? 24 : 70,
+        contact ? Colors.green : Colors.red,
+        miniMode ? 24 : 70,
       );
     } catch (e) {
-      doorIcon = FaIcon(
+      doorIcon = iconWrapper(
         FontAwesomeIcons.doorOpen,
-        color: Colors.grey,
-        size: miniMode ? 24 : 70,
+        Colors.grey,
+        miniMode ? 24 : 70,
       );
 
       unknown = true;

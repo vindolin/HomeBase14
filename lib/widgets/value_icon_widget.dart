@@ -10,6 +10,7 @@ enum IconType {
   battery, //0-6
 }
 
+/// TODOs refactor, make more generic!
 class ValueIcon extends StatelessWidget {
   final int value;
   final IconType type;

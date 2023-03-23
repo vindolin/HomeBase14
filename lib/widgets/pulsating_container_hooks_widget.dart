@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
+/// same widget as PulsatingContainer but using flutter_hooks
 class PulsatingContainer extends HookWidget {
   final Color color;
   const PulsatingContainer({

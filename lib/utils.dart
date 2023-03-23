@@ -7,6 +7,7 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 // const bool debugTrace = false;
 const bool debugTrace = true;
 
+// logs a message with the file and line number
 void log(dynamic message) {
   if (debugTrace) {
     final trace = Frame.caller(1).location;

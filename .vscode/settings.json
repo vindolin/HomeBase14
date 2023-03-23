@@ -3,5 +3,8 @@
     "cmake.sourceDirectory": "${workspaceFolder}/windows/flutter",
     "workbench.colorCustomizations": {
         "terminal.ansiRed": "#ff389c"
-    }
+    },
+    "cSpell.words": [
+        "Riverpod"
+    ]
 }

@@ -3,6 +3,7 @@ import 'package:format/format.dart';
 
 import 'slider_widget.dart';
 
+/// widget that turns a horizontal slider on its side
 class VerticalSlider extends StatelessWidget {
   final double percentage;
   final Function setValueEnd;

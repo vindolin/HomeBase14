@@ -10,6 +10,7 @@ enum MqttSwitchWidgetOrientation {
   vertical,
 }
 
+/// generic switch widget that binds to a MQTT switch device
 class MqttSwitchWidget extends ConsumerStatefulWidget {
   final String title;
   final String statTopic;

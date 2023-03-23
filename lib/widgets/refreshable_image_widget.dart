@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:focus_detector/focus_detector.dart';
 
+import '/utils.dart' as d;
 import '/models/app_settings.dart';
 import '/models/connectivity_provider.dart';
 import 'image_fade_refresh.dart';
@@ -13,7 +14,8 @@ const refreshTimeMobile = 120;
 const refreshTimeWifi = 10;
 
 /// Image Container that refreshes the image when tapped or when a stream emits
-/// Uses the
+/// The timer is halted when the widget is not visible
+/// It uses my patched version of FocusDetector (faster reaction) to detect when the widget is visible.
 class RefreshableImage extends ConsumerStatefulWidget {
   final String imageUrl;
   final StreamProvider? streamProvider; // refreshes the image when the stream emits
@@ -35,21 +37,23 @@ class RefreshableImage extends ConsumerStatefulWidget {
 }
 
 class _RefreshableImageState extends ConsumerState<RefreshableImage> {
-  Timer? timer;
-  int? refreshRate;
+  bool _isVisible = false;
+  Timer? _timer;
+  int? _refreshRate;
 
   void startTimer() {
-    timer?.cancel();
+    d.log('RefreshableImage: startTimer()');
+    _timer?.cancel();
 
-    timer = Timer(
-      Duration(seconds: refreshRate!),
+    _timer = Timer(
+      Duration(seconds: _refreshRate!),
       () => setState(() {}),
     );
   }
 
   @override
   void dispose() {
-    timer?.cancel();
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -62,20 +66,22 @@ class _RefreshableImageState extends ConsumerState<RefreshableImage> {
       appSettingsProvider.select((appSettings) => appSettings.camRefreshRateWifi),
     );
     final conn = ref.watch(connectivityProvider);
-    refreshRate = conn == ConnectivityResult.mobile ? camRefreshRateMobile : camRefreshRateWifi;
+    _refreshRate = conn == ConnectivityResult.mobile ? camRefreshRateMobile : camRefreshRateWifi;
 
     // this timer triggers a build() which in turn starts the timer again
     // this way the timer can instantly react to changes of the refresh rate
-    startTimer();
+    if (_isVisible) startTimer();
 
     // when the Instar camera detects motion, it sends a MQTT message, this causes an instant refresh
     if (widget.streamProvider != null) ref.watch(widget.streamProvider!);
 
     return FocusDetector(
       onVisibilityLost: () {
-        timer?.cancel();
+        _isVisible = false;
+        _timer?.cancel();
       },
       onVisibilityGained: () {
+        _isVisible = true;
         if (widget.autoRefresh) {
           startTimer();
         }

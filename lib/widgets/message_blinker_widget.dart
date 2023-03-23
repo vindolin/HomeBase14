@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/models/generic_providers.dart';
 
+/// Lock symbol in the connection bar that binds to the message stream provider and blinks when a subscribed MQTT message is received
 class MessageBlinker extends ConsumerWidget {
-  // symbol that binds to the message stream provider and blinks when a message is received
   const MessageBlinker({super.key});
 
   @override

@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import '/models/mqtt_devices.dart';
 
+/// custom painter that draws a curtain icon
 abstract class CurtainPainterBase extends CustomPainter {
   final Brightness brightness;
   CurtainPainterBase(List<double> positions, this.brightness) : super(repaint: ValueNotifier(positions));
-  // all sizes are computed relativ to the icon size of 24x24
+  // all sizes are computed relativ to the icon size of 36x36
   final baseSize = 36.0;
 
-  void paintBlinds(
+  void drawBlinds(
     double blindsMaxHeight,
     double topBarHeight,
     double bottomBarHeight,
@@ -53,11 +54,12 @@ abstract class CurtainPainterBase extends CustomPainter {
       blindsPaint,
     );
 
-    paintBlinds(blindsMaxHeight, topBarHeight, bottomBarHeight, blindsPadding, canvas, size);
+    drawBlinds(blindsMaxHeight, topBarHeight, bottomBarHeight, blindsPadding, canvas, size);
   }
 }
 
-void drawBlinds(
+/// abstract function that draws the blinds for the readl drawBlinds functions down below
+void _drawBlinds(
   Canvas canvas,
   double position,
   Size size,
@@ -87,6 +89,7 @@ void drawBlinds(
   }
 }
 
+/// implementation for a single curtain
 class CurtainPainter extends CurtainPainterBase {
   final double position;
 
@@ -96,7 +99,7 @@ class CurtainPainter extends CurtainPainterBase {
   bool shouldRepaint(covariant CurtainPainter oldDelegate) => oldDelegate.position != position;
 
   @override
-  void paintBlinds(
+  void drawBlinds(
     double blindsMaxHeight,
     double topBarHeight,
     double bottomBarHeight,
@@ -104,7 +107,7 @@ class CurtainPainter extends CurtainPainterBase {
     Canvas canvas,
     Size size,
   ) {
-    drawBlinds(
+    _drawBlinds(
       canvas,
       position,
       size,
@@ -118,6 +121,7 @@ class CurtainPainter extends CurtainPainterBase {
   }
 }
 
+/// implementation for dual curtains
 class DualCurtainPainter extends CurtainPainterBase {
   final double positionLeft;
   final double positionRight;
@@ -130,7 +134,7 @@ class DualCurtainPainter extends CurtainPainterBase {
       oldDelegate.positionLeft != positionLeft || oldDelegate.positionRight != positionRight;
 
   @override
-  void paintBlinds(
+  void drawBlinds(
     double blindsMaxHeight,
     double topBarHeight,
     double bottomBarHeight,
@@ -139,7 +143,7 @@ class DualCurtainPainter extends CurtainPainterBase {
     Size size,
   ) {
     // left
-    drawBlinds(
+    _drawBlinds(
       canvas,
       positionLeft,
       size,
@@ -152,7 +156,7 @@ class DualCurtainPainter extends CurtainPainterBase {
     );
 
     // right
-    drawBlinds(
+    _drawBlinds(
       canvas,
       positionRight,
       size,
@@ -177,6 +181,7 @@ class DualCurtainPainter extends CurtainPainterBase {
   }
 }
 
+/// this widgt reacts to changes of the position and animates the curtain
 class AnimatedCurtainItem extends HookWidget {
   final SingleCurtainDevice device;
   final Duration duration = const Duration(milliseconds: 3000);
@@ -214,6 +219,7 @@ class AnimatedCurtainItem extends HookWidget {
   }
 }
 
+/// same only for dual curtains
 class AnimatedDualCurtainItem extends HookWidget {
   final DualCurtainDevice device;
   final Duration duration = const Duration(milliseconds: 3000);

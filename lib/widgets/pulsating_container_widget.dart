@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// pulsates the backgtround color of a container
 class PulsatingContainer extends StatefulWidget {
   final Color color;
   const PulsatingContainer({

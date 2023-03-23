@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
 
-// container that binds to the message stream provider and blinks when a message is received
+/// container that binds to the message stream provider and blinks when a message is received
 class StreamContainerBlinker extends ConsumerWidget {
   final StreamProvider streamProvider;
   final bool vibrate;
   final bool ignoreFirstBuild;
   final Color color;
 
-  // prevent the first build from blinking because of the retained MQTT message
+  /// prevent the first build from blinking because of the retained MQTT message
   final firstBuildProvider = StateProvider<bool>((ref) => true);
 
   StreamContainerBlinker(
@@ -24,7 +24,7 @@ class StreamContainerBlinker extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(streamProvider); // every time message stream provider fires, the icon will blink
 
-    // the future is needed to move the provider state change to the next frame
+    /// the future is needed to move the provider state change to the next frame
     if (ignoreFirstBuild && ref.read(firstBuildProvider)) {
       Future(() => ref.read(firstBuildProvider.notifier).state = false);
       return Container();

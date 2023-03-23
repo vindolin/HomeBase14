@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:decorated_icon/decorated_icon.dart';
 
 import '/models/mqtt_providers.dart';
 
@@ -23,19 +24,46 @@ List<Widget> curtainActions(BuildContext context, WidgetRef ref, [String? device
       onPressed: () {
         onPressed(ref, deviceName, topic, 'close');
       },
-      icon: const Icon(Icons.arrow_circle_down),
+      icon: const DecoratedIcon(
+        Icons.arrow_circle_down,
+        shadows: [
+          BoxShadow(
+            blurRadius: 2.0,
+            color: Colors.black,
+            offset: Offset(1.0, 1.0),
+          ),
+        ],
+      ),
     ),
     IconButton(
       onPressed: () {
         onPressed(ref, deviceName, topic, 'stop');
       },
-      icon: const Icon(Icons.pause_circle_outline),
+      icon: const DecoratedIcon(
+        Icons.pause_circle_outline,
+        shadows: [
+          BoxShadow(
+            blurRadius: 2.0,
+            color: Colors.black,
+            offset: Offset(1.0, 1.0),
+          ),
+        ],
+      ),
     ),
     IconButton(
       onPressed: () {
         onPressed(ref, deviceName, topic, 'open');
       },
-      icon: const Icon(Icons.arrow_circle_up),
+      icon: const DecoratedIcon(
+        Icons.arrow_circle_up,
+        shadows: [
+          BoxShadow(
+            blurRadius: 2.0,
+            color: Colors.black,
+            offset: Offset(1.0, 1.0),
+          ),
+        ],
+      ),
     ),
   ];
 }

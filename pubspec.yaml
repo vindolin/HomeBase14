@@ -83,6 +83,7 @@ dependencies:
     git:
       url: https://github.com/vindolin/focus_detector.git
       ref: master
+  decorated_icon: ^1.2.1
   # raw_sound: ^0.3.0+1
 
 dev_dependencies:

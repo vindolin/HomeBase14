@@ -6,7 +6,7 @@ part of 'brightness_button_widget.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$brightnessSettingHash() => r'1b4562420837e95c03f3b63e40f8ff75e999fc38';
+String _$brightnessSettingHash() => r'8f9987bf89a77db84f9508a0a6ceebfb588feee6';
 
 /// See also [BrightnessSetting].
 @ProviderFor(BrightnessSetting)

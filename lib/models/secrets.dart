@@ -15,15 +15,15 @@ String gardenCamVideoPort = '0815';
 Map<String, Map<String, String>> camData = {
   'door': {
     'snapshotUrl': 'http://SECRET',
-    'videoUrl': 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4',
+    'videoUrl': 'rtsp://SECRET',
   },
   'garden': {
     'snapshotUrl': 'http://SECRET',
-    'videoUrl': 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4',
+    'videoUrl': 'rtsp://SECRET',
   },
 };
 
-const grafanaAdddress = 'https://play.grafana.org/d/000000012/grafana-play-home?orgId=1';
+const grafanaAdddress = 'https://SECRET/d/000000012/grafana-play-home?orgId=11';
 const influxdbUser = 'SECRET';
 const influxdbPassword = 'SECRET';
 const influxdbAddress = 'http://SECRET/query?pretty=false';

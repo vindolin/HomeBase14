@@ -116,7 +116,7 @@ class Mqtt extends _$Mqtt {
 
     if (useCerts) {
       client = MqttServerClient.withPort(
-        ***REMOVED***,
+        'mqtt.server.com',
         clientIdentifier,
         8883,
       );

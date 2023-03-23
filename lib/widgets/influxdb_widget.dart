@@ -18,8 +18,6 @@ class InfluxdbWidget extends StatefulWidget {
   State<InfluxdbWidget> createState() => _InfluxdbWidgetState();
 }
 
-***REMOVED***
-
 class _InfluxdbWidgetState extends State<InfluxdbWidget> {
   Timer? timer;
 

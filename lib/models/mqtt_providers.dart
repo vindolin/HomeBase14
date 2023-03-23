@@ -110,13 +110,13 @@ class Mqtt extends _$Mqtt {
   FutureOr<mqtt.MqttConnectionState> connect() async {
     log('connecting');
 
-    final connectionData = ref.watch(appSettingsProvider.notifier);
+    final appSettings = ref.watch(appSettingsProvider.notifier);
 
     bool useCerts = true;
 
     if (useCerts) {
       client = MqttServerClient.withPort(
-        'mqtt.server.com',
+        appSettings.state.mqttAddress,
         clientIdentifier,
         8883,
       );
@@ -146,9 +146,9 @@ class Mqtt extends _$Mqtt {
       client.secure = true;
     } else {
       client = MqttServerClient.withPort(
-        connectionData.state.mqttAddress,
+        appSettings.state.mqttAddress,
         clientIdentifier,
-        connectionData.state.mqttPort,
+        appSettings.state.mqttPort,
       );
     }
     client.autoReconnect = true;
@@ -163,7 +163,7 @@ class Mqtt extends _$Mqtt {
     // );
 
     mqtt.MqttClientConnectionStatus? mqttConnectionStatus =
-        await client.connect(connectionData.state.mqttUsername, connectionData.state.mqttPassword).catchError(
+        await client.connect(appSettings.state.mqttUsername, appSettings.state.mqttPassword).catchError(
       // await client.connect().catchError(
       (error) {
         ref.read(appSettingsProvider.notifier).setValid(false);

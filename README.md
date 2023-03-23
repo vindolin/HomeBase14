@@ -8,7 +8,9 @@ As a fan of open source home automation and a lot of heterogenous devices all ha
 
 After trying different frameworks, I chose Riverpod for data-binding and while all the different providers and their notifiers irritated me a lot at the beginning, I'm really happy with that decision now.
 
-This project is Work In Progress and there's a lot of stuff that I would do different now after I learned more Flutter/Dart and which I'm constantly improving when I have the time.
+This project is Work In Progress and there's a lot of stuff that I would do different now after I learned more Flutter/Dart.
+
+I'm randomly refactoring old mistakes and adding new gadgets whenever they appear in our house.
 
 Warning! This app only works in my specific environment but maybe parts can be useful for beginners looking into writing a Flutter/Riverpod/MQTT app themselves.
 

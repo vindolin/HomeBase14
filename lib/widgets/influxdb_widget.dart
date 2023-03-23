@@ -8,7 +8,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 ///https://pub.dev/packages/raw_sound
 
-import '/models/secrets.dart';
+import '/models/secrets.dart' as secrets;
 import 'shader_widget.dart';
 
 class InfluxdbWidget extends StatefulWidget {
@@ -49,7 +49,7 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
   late Future<List<List<TimePoint>>> result;
 
   Future<List<List<TimePoint>>> fetchResult() async {
-    var url = influxdbAddress;
+    var url = secrets.influxdbAddress;
 
     final dio = Dio();
 

@@ -20,7 +20,7 @@ import 'device_group_slivers.dart';
 import 'thomas_group_slivers.dart';
 import 'cameras.dart';
 import 'widgets/solar_watts_widget.dart';
-import 'user_select_widget.dart';
+import 'settings_form_widget.dart';
 
 class Delegate extends SliverPersistentHeaderDelegate {
   final Color _backgroundColor;
@@ -82,7 +82,7 @@ class HomePage extends ConsumerWidget {
 
     return Scaffold(
       endDrawer: const Drawer(
-        child: UserSelect(),
+        child: SettingsForm(),
       ),
       body: RefreshIndicator(
         // reload home page on pull down
@@ -196,6 +196,7 @@ class HomePage extends ConsumerWidget {
         ),
       ),
       bottomNavigationBar: Container(
+        // pattern on bottom bar
         // decoration: const BoxDecoration(
         //   image: DecorationImage(
         //     fit: BoxFit.fitWidth,

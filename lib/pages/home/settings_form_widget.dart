@@ -5,32 +5,12 @@ import 'package:flutter_translate/flutter_translate.dart';
 
 import '/models/app_settings.dart';
 
-class UserSelect extends ConsumerWidget {
-  const UserSelect({super.key});
+class SettingsForm extends ConsumerWidget {
+  const SettingsForm({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appSettings = ref.watch(appSettingsProvider);
-
-    void submitUser(User? user) async {
-      ref.read(appSettingsProvider.notifier).saveUser(user!);
-      await ref.read(appSettingsProvider.notifier).persistConnectionData();
-    }
-
-    void submitOnlyPortraitrientation(bool onlyPortrait) async {
-      ref.read(appSettingsProvider.notifier).saveOnlyPortrait(onlyPortrait);
-      await ref.read(appSettingsProvider.notifier).persistConnectionData();
-    }
-
-    void submitShowBrightness(bool showBrightness) async {
-      ref.read(appSettingsProvider.notifier).saveShowBrightness(showBrightness);
-      await ref.read(appSettingsProvider.notifier).persistConnectionData();
-    }
-
-    void saveCamRefreshRateWifi(int duration) async {
-      ref.read(appSettingsProvider.notifier).saveCamRefreshRateWifi(duration);
-      await ref.read(appSettingsProvider.notifier).persistConnectionData();
-    }
 
     return ListView(
       children: [
@@ -55,7 +35,7 @@ class UserSelect extends ConsumerWidget {
           value: User.thomas,
           selected: appSettings.user == User.thomas,
           groupValue: appSettings.user,
-          onChanged: submitUser,
+          onChanged: (value) => ref.read(appSettingsProvider.notifier).saveUser(value!),
         ),
         RadioListTile<User>(
           dense: true,
@@ -63,7 +43,7 @@ class UserSelect extends ConsumerWidget {
           value: User.mona,
           selected: appSettings.user == User.mona,
           groupValue: appSettings.user,
-          onChanged: submitUser,
+          onChanged: (value) => ref.read(appSettingsProvider.notifier).saveUser(value!),
         ),
         const ListTile(
           title: Text('Sonstiges'),
@@ -71,7 +51,7 @@ class UserSelect extends ConsumerWidget {
         CheckboxListTile(
           value: appSettings.onlyPortrait,
           onChanged: (value) {
-            submitOnlyPortraitrientation(value == true);
+            ref.read(appSettingsProvider.notifier).saveOnlyPortrait(value == true);
           },
           title: const Text('Nur Hochformat'),
           selected: appSettings.onlyPortrait,
@@ -79,7 +59,7 @@ class UserSelect extends ConsumerWidget {
         CheckboxListTile(
           value: appSettings.showBrightness,
           onChanged: (value) {
-            submitShowBrightness(value == true);
+            ref.read(appSettingsProvider.notifier).saveShowBrightness(value == true);
           },
           title: const Text('Bright/Dark anzeigen'),
           selected: appSettings.showBrightness,
@@ -88,19 +68,51 @@ class UserSelect extends ConsumerWidget {
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(translate('Kamera refresh rate')),
-              TextFormField(
-                initialValue: appSettings.camRefreshRateWifi.toString(),
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                onChanged: (value) {
-                  saveCamRefreshRateWifi(int.parse(value));
-                },
-              )
+              refreshRateInput(
+                translate('Kamera refresh rate Wifi'),
+                appSettings.camRefreshRateWifi,
+                ref.read(appSettingsProvider.notifier).saveCamRefreshRateWifi,
+                ref.read(appSettingsProvider.notifier).persistAppSettings,
+              ),
+              refreshRateInput(
+                translate('Kamera refresh rate mobile'),
+                appSettings.camRefreshRateMobile,
+                ref.read(appSettingsProvider.notifier).saveCamRefreshRateMobile,
+                ref.read(appSettingsProvider.notifier).persistAppSettings,
+              ),
             ],
           ),
         ),
       ],
     );
   }
+}
+
+Widget refreshRateInput(
+  String label,
+  int refreshRate,
+  Function saveFunction,
+  Function persistFunction,
+) {
+  return Row(
+    children: [
+      Text(label),
+      const Spacer(),
+      SizedBox(
+        width: 30,
+        child: TextFormField(
+          initialValue: refreshRate.toString(),
+          keyboardType: TextInputType.number,
+          textAlign: TextAlign.end,
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          onEditingComplete: () => persistFunction(), // save on enter
+          onChanged: (value) {
+            try {
+              saveFunction(int.parse(value));
+            } on FormatException catch (_) {}
+          },
+        ),
+      ),
+    ],
+  );
 }

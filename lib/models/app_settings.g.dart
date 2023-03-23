@@ -43,7 +43,7 @@ const _$UserEnumMap = {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appSettingsHash() => r'3f7b2568007ad2bf5f1668065b170c3f03f75387';
+String _$appSettingsHash() => r'c0accfc43f2fc386f2c4f33d554c0fb1c0672073';
 
 /// See also [AppSettings].
 @ProviderFor(AppSettings)

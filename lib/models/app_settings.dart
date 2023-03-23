@@ -54,41 +54,52 @@ class AppSettings extends _$AppSettings {
       mqttUsername: '',
       mqttPassword: '',
       mqttAddress: '',
-      mqttPort: 1883,
+      mqttPort: 8883,
       user: User.thomas,
       valid: false,
       onlyPortrait: true,
-      showBrightness: true,
+      showBrightness: false,
       camRefreshRateWifi: 5,
       camRefreshRateMobile: 20,
     );
   }
 
+  // TODOs add certificate upload (currently hardcoded in mqtt_providers.dart)
+
   void setValid(bool valid) {
     state = state.copyWith(valid: valid);
   }
 
-  void saveUser(User user) {
+  void saveUser(User user) async {
     state = state.copyWith(
       user: user,
     );
+    await persistAppSettings();
   }
 
-  void saveOnlyPortrait(bool onlyPortrait) {
+  void saveOnlyPortrait(bool onlyPortrait) async {
     state = state.copyWith(
       onlyPortrait: onlyPortrait,
     );
+    await persistAppSettings();
   }
 
-  void saveShowBrightness(bool showBrightness) {
+  void saveShowBrightness(bool showBrightness) async {
     state = state.copyWith(
       showBrightness: showBrightness,
     );
+    await persistAppSettings();
   }
 
   void saveCamRefreshRateWifi(int duration) {
     state = state.copyWith(
       camRefreshRateWifi: duration,
+    );
+  }
+
+  void saveCamRefreshRateMobile(int duration) {
+    state = state.copyWith(
+      camRefreshRateMobile: duration,
     );
   }
 
@@ -101,8 +112,8 @@ class AppSettings extends _$AppSettings {
     );
   }
 
-  Future<void> persistConnectionData() async {
-    log('persistConnectionData...');
+  Future<void> persistAppSettings() async {
+    log('persistSettings...');
     await Future.delayed(
       const Duration(milliseconds: 500),
     );
@@ -114,20 +125,19 @@ class AppSettings extends _$AppSettings {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    await prefs.setString('connectionData', encrypted.base64);
+    await prefs.setString('settings', encrypted.base64);
   }
 
-  Future<void> loadConnectionData() async {
-    log('loadConnectionData...');
+  Future<void> loadAppSettings() async {
+    log('loadSettings...');
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    String? userPref = prefs.getString('connectionData');
-    String connectionData = encrypter.decrypt64(userPref!, iv: iv);
-    // log('pref: $connectionData');
+    String? userPref = prefs.getString('settings');
+    String appSettings = encrypter.decrypt64(userPref!, iv: iv);
+    // log('pref: $Settings');
 
     try {
-      state = AppSettingsCls.fromJson(jsonDecode(connectionData));
-      // state = state.copyWith(mqttUsername: 'gunk');
+      state = AppSettingsCls.fromJson(jsonDecode(appSettings));
     } catch (e) {
       log('Error: $e');
     }

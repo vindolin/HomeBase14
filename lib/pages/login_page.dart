@@ -48,7 +48,7 @@ class LoginFormPage extends ConsumerWidget {
 
         // if the connection was successful, persist the connection data
         if (mqttConnectionState == MqttConnectionState.connected) {
-          await appSettings.persistConnectionData();
+          await appSettings.persistAppSettings();
           log('persisted connection data');
           rootScaffoldMessengerKey.currentState
             ?..hideCurrentSnackBar(

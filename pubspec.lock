@@ -794,6 +794,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.2"
+  raw_sound:
+    dependency: "direct main"
+    description:
+      name: raw_sound
+      sha256: "66919d129a5743ba3cdcebd2daa89a46cd5760c0bca74a1fd1a6bec86aa9c14b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.0+1"
   riverpod:
     dependency: transitive
     description:
@@ -1015,6 +1023,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "20.4.54"
+  synchronized:
+    dependency: transitive
+    description:
+      name: synchronized
+      sha256: "33b31b6beb98100bf9add464a36a8dd03eb10c7a8cf15aeec535e9b054aaf04b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.1"
   term_glyph:
     dependency: transitive
     description:

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:focus_detector/focus_detector.dart';
 
+import '/models/app_settings.dart';
 import '/models/connectivity_provider.dart';
 import 'image_fade_refresh.dart';
 
@@ -35,21 +36,15 @@ class RefreshableImage extends ConsumerStatefulWidget {
 
 class _RefreshableImageState extends ConsumerState<RefreshableImage> {
   Timer? timer;
+  int? refreshRate;
 
-  void startTimer(int seconds) {
+  void startTimer() {
     timer?.cancel();
-    timer = Timer.periodic(
-      Duration(seconds: seconds),
-      (Timer t) => setState(
-        () {},
-      ),
-    );
-  }
 
-  @override
-  void initState() {
-    startTimer(refreshTimeMobile);
-    super.initState();
+    timer = Timer(
+      Duration(seconds: refreshRate!),
+      () => setState(() {}),
+    );
   }
 
   @override
@@ -60,12 +55,21 @@ class _RefreshableImageState extends ConsumerState<RefreshableImage> {
 
   @override
   Widget build(BuildContext context) {
-    print('refreshable image build');
+    final camRefreshRateMobile = ref.watch(
+      appSettingsProvider.select((appSettings) => appSettings.camRefreshRateMobile),
+    );
+    final camRefreshRateWifi = ref.watch(
+      appSettingsProvider.select((appSettings) => appSettings.camRefreshRateWifi),
+    );
     final conn = ref.watch(connectivityProvider);
+    refreshRate = conn == ConnectivityResult.mobile ? camRefreshRateMobile : camRefreshRateWifi;
 
-    if (widget.streamProvider != null) {
-      ref.watch(widget.streamProvider!);
-    }
+    // this timer triggers a build() which in turn starts the timer again
+    // this way the timer can instantly react to changes of the refresh rate
+    startTimer();
+
+    // when the Instar camera detects motion, it sends a MQTT message, this causes an instant refresh
+    if (widget.streamProvider != null) ref.watch(widget.streamProvider!);
 
     return FocusDetector(
       onVisibilityLost: () {
@@ -73,11 +77,7 @@ class _RefreshableImageState extends ConsumerState<RefreshableImage> {
       },
       onVisibilityGained: () {
         if (widget.autoRefresh) {
-          if (conn == ConnectivityResult.mobile) {
-            startTimer(refreshTimeMobile);
-          } else {
-            startTimer(refreshTimeWifi);
-          }
+          startTimer();
         }
       },
       child: InkWell(

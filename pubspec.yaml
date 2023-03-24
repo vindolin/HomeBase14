@@ -54,7 +54,7 @@ dependencies:
   stack_trace: ^1.11.0
   flutter_svg: ^2.0.2
   tuple: ^2.0.1
-  # video_player: ^2.5.1
+  video_player: ^2.6.0
   flutter_vlc_player: ^7.2.0
   http: any
   intl: any

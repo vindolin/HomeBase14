@@ -70,7 +70,7 @@ dependencies:
   syncfusion_flutter_charts: ^21.1.35
   font_awesome_flutter: ^10.4.0
   decorated_icon: ^1.2.1
-  # video_player: any
+  video_player: any
   flutter_vlc_player: ^7.2.0
 
   # patched libraries

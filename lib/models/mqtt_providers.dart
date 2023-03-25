@@ -219,15 +219,16 @@ class Mqtt extends _$Mqtt {
       for (mqtt.MqttReceivedMessage mqttReceivedMessage in messages) {
         ref.watch(counterProvider('mqtt_message').notifier).increment();
 
-        final mqtt.MqttPublishMessage message = mqttReceivedMessage.payload as mqtt.MqttPublishMessage;
-        final String payload = const Utf8Decoder().convert(message.payload.message);
+        final payload = mqttReceivedMessage.payload as mqtt.MqttPublishMessage;
+        final String message = const Utf8Decoder().convert(payload.payload.message);
+
         dynamic payloadDecoded;
         // try to parse the payload as json
         try {
-          payloadDecoded = jsonDecode(payload);
+          payloadDecoded = jsonDecode(message);
           // if the payload is not json, it's probably a string
         } on FormatException catch (_) {
-          payloadDecoded = payload;
+          payloadDecoded = message;
         }
 
         ref.read(mqttMessagesFamProvider(mqttReceivedMessage.topic).notifier).state = payloadDecoded;
@@ -237,7 +238,7 @@ class Mqtt extends _$Mqtt {
           mqttReceivedMessage.topic,
           MqttMessage(
             topic: mqttReceivedMessage.topic,
-            payload: payload,
+            payload: message,
           ),
         );
 
@@ -353,7 +354,7 @@ class Mqtt extends _$Mqtt {
           if (lightDevice.topicGet == mqttReceivedMessage.topic) {
             lightDevices.state = lightDevices.state.add(
               key,
-              lightDevice.copyWith(state: payload),
+              lightDevice.copyWith(state: message),
             );
           }
         });
@@ -361,11 +362,11 @@ class Mqtt extends _$Mqtt {
         // armed switches like garage door
         switchDevices.state.forEach((key, switchDevice) {
           if (switchDevice.topicState == mqttReceivedMessage.topic) {
-            dynamic devicePayload = payload;
+            dynamic devicePayload = message;
 
             // if the device has a stateKey, we need to parse the json and set the payload to that key's value (e.g. zigbee2mqtt plugs)
             if (switchDevice.stateKey != null) {
-              payloadDecoded = jsonDecode(payload);
+              payloadDecoded = jsonDecode(message);
               devicePayload = payloadDecoded[switchDevice.stateKey!];
             }
             switchDevices.state = switchDevices.state.add(

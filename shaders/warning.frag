@@ -1,4 +1,6 @@
+#version 460 core
 precision mediump float;
+
 layout(location=0) out vec4 fragColor;
 layout(location=0) uniform float iTime;
 layout(location=1) uniform vec2 iResolution;

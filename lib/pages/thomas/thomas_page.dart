@@ -7,6 +7,7 @@ import '/widgets/connection_bar_widget.dart';
 import 'dropdown_select_widget.dart';
 // import 'video_player_test_widget.dart';
 import 'video_player_test_page.dart';
+// import 'fijkplayer_test_page.dart';
 
 class ThomasPage extends StatelessWidget {
   const ThomasPage({super.key});
@@ -103,7 +104,24 @@ class ThomasPage extends StatelessWidget {
               },
               child: const Text('Video Player Test'),
             ),
-          )
+          ),
+          // Card(
+          //   // child: VideoPlayerTestWidget(),
+          //   child: TextButton(
+          //     onPressed: () {
+          //       Navigator.push(
+          //         context,
+          //         MaterialPageRoute(
+          //           builder: (context) => VideoScreen(
+          //             // url: 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4',
+          //             url: secrets.camData['door']!['videoUrl']!,
+          //           ),
+          //         ),
+          //       );
+          //     },
+          //     child: const Text('Video Player Test'),
+          //   ),
+          // ),
         ],
       ),
     );

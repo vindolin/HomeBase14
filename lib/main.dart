@@ -38,10 +38,10 @@ void main() async {
 class HomeBase14App extends ConsumerStatefulWidget {
   const HomeBase14App({super.key});
   @override
-  ConsumerState<HomeBase14App> createState() => _MyAppState();
+  ConsumerState<HomeBase14App> createState() => _HomeBase14AppState();
 }
 
-class _MyAppState extends ConsumerState<HomeBase14App> {
+class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
   @override
   void initState() {
     super.initState();
@@ -52,9 +52,11 @@ class _MyAppState extends ConsumerState<HomeBase14App> {
     });
 
     // load connection data from shared preferences
-    ref.read(appSettingsProvider.notifier).loadAppSettings().then((_) async {
-      ref.watch(mqttProvider.notifier).connect();
-    });
+    ref.read(appSettingsProvider.notifier).loadAppSettings().then(
+      (_) async {
+        ref.watch(mqttProvider.notifier).connect();
+      },
+    );
 
     Future(
       () async {

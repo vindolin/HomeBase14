@@ -91,7 +91,7 @@ class _RefreshableImageState extends ConsumerState<RefreshableImage> {
         onDoubleTap: widget.onDoubleTap,
         onLongPress: () => setState(() {}), // just refresh image
         child: ImageFadeRefresh(
-          '${widget.imageUrl}&${DateTime.now().millisecondsSinceEpoch}',
+          '${widget.imageUrl}?${DateTime.now().millisecondsSinceEpoch}',
         ),
       ),
     );

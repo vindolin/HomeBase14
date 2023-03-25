@@ -54,8 +54,6 @@ dependencies:
   stack_trace: ^1.11.0
   flutter_svg: ^2.0.2
   tuple: ^2.0.1
-  video_player: ^2.6.0
-  flutter_vlc_player: ^7.2.0
   http: any
   intl: any
 
@@ -71,6 +69,9 @@ dependencies:
   webview_flutter_android: ^3.4.2
   syncfusion_flutter_charts: ^21.1.35
   font_awesome_flutter: ^10.4.0
+  decorated_icon: ^1.2.1
+  # video_player: any
+  flutter_vlc_player: ^7.2.0
 
   # patched libraries
   keep_screen_on:
@@ -83,7 +84,17 @@ dependencies:
     git:
       url: https://github.com/vindolin/focus_detector.git
       ref: master
-  decorated_icon: ^1.2.1
+  # ext_video_player:
+  #   # path: c:/Flutter/github/focus_detector/
+  #   git:
+  #     url: https://github.com/vindolin/ext_video_player.git
+  #     ref: master
+  # fijkplayer:
+  #   git:
+  #     # url: https://github.com/befovy/fijkplayer.git
+  #     url: 'c:/Flutter/github/fijkplayer/'
+
+
   # raw_sound: ^0.3.0+1
 
 dev_dependencies:
@@ -132,6 +143,8 @@ flutter:
     - shaders/tv_static.frag
 
     - shaders/warning.frag
+
+    - shaders/pixelation.frag
     # - shaders/plasma.frag
     # - shaders/spiral.frag
 

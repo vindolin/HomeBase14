@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
-import '/widgets/refreshable_image_widget.dart';
+import '/pages/cams/mjpeg_cam_image.dart';
+// import '/widgets/refreshable_image_widget.dart';
 import '/models/secrets.dart' as secrets;
 
 class CamImagePage extends StatelessWidget {
@@ -17,9 +18,13 @@ class CamImagePage extends StatelessWidget {
       ),
       body: RotatedBox(
         quarterTurns: 1,
-        child: RefreshableImage(
-          secrets.camData[camId]!['snapshotUrl']!,
-          autoRefresh: true,
+        // replaced with MjpegCamImage
+        // child: RefreshableImage(
+        //   secrets.camData[camId]!['snapshotUrl']!,
+        //   autoRefresh: true,
+        // ),
+        child: MjpegCamImage(
+          secrets.camData[camId]!['mjpegUrlHigh']!,
         ),
       ),
     );

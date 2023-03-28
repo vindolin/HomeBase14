@@ -70,9 +70,9 @@ dependencies:
   syncfusion_flutter_charts: ^21.1.35
   font_awesome_flutter: ^10.4.0
   decorated_icon: ^1.2.1
-  video_player: any
+  # video_player: any
   flutter_vlc_player: ^7.2.0
-
+  # native_video_view: any
   # patched libraries
   keep_screen_on:
     git:
@@ -84,6 +84,7 @@ dependencies:
     git:
       url: https://github.com/vindolin/focus_detector.git
       ref: master
+  flutter_mjpeg: ^2.0.3
   # ext_video_player:
   #   # path: c:/Flutter/github/focus_detector/
   #   git:

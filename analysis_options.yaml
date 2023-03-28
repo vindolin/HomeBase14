@@ -33,3 +33,4 @@ analyzer:
   exclude:
     - "lib/graveyard.dart"
     - "**/*.g.dart"
+    - "dev/shaders/*.*"

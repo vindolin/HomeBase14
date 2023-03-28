@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/models/secrets.dart' as secrets;
-// import '/widgets/refreshable_image_widget.dart';
-// import '/models/mqtt_providers.dart';  //need this for doorAlarmProvider (not needed anymore)
+import '/widgets/refreshable_image_widget.dart';
+import '/models/mqtt_providers.dart'; //need this for doorAlarmProvider (not needed anymore)
 import '/pages/cams/cam_image_page.dart';
 import '/pages/cams/cam_video_page.dart';
-import '/pages/cams/mjpeg_cam_image.dart';
+// import '/pages/cams/mjpeg_cam_image.dart';
 
 Widget _camContainer(Widget child, BuildContext context, String camId) {
   return InkWell(
@@ -55,40 +55,26 @@ class Cameras extends ConsumerWidget {
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
             final widgets = ['door', 'garden'].map(
+              // (camId) {
+              //   return _camContainer(
+              //     MjpegCamImage(
+              //       secrets.camData[camId]!['mjpegUrlLow']!,
+              //     ),
+              //     context,
+              //     camId,
+              //   );
+              // },
               (camId) {
                 return _camContainer(
-                  MjpegCamImage(
-                    secrets.camData[camId]!['mjpegUrlLow']!,
+                  RefreshableImage(
+                    secrets.camData[camId]!['snapshotUrl']!,
+                    streamProvider: camId == 'door' ? doorAlarmProvider : null,
+                    autoRefresh: true,
                   ),
                   context,
                   camId,
                 );
               },
-              // (camId) {
-              //   return _camContainer(
-              //     RefreshableImage(
-              //       secrets.camData[camId]!['snapshotUrl']!,
-              //       streamProvider: camId == 'door' ? doorAlarmProvider : null,
-              //       onTap: () {
-              //         Navigator.push(
-              //           context,
-              //           MaterialPageRoute(
-              //             builder: (context) => CamImagePage(camId: camId),
-              //           ),
-              //         );
-              //       },
-              //       onDoubleTap: () {
-              //         Navigator.push(
-              //           context,
-              //           MaterialPageRoute(
-              //             builder: (context) => CamVideoPage(camId: camId),
-              //           ),
-              //         );
-              //       },
-              //       autoRefresh: true,
-              //     ),
-              //   );
-              // },
             ).toList();
             return index >= widgets.length ? null : widgets[index];
           },

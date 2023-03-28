@@ -13,7 +13,10 @@ class MjpegCamImage extends HookWidget {
     return Mjpeg(
       timeout: const Duration(seconds: 600),
       isLive: isRunning.value,
-      loading: (context) => const ShaderWidget('tv_static.frag'),
+      loading: (context) => const AspectRatio(
+        aspectRatio: 16 / 9,
+        child: ShaderWidget('tv_static.frag'),
+      ),
       error: (context, error, stack) {
         return Text(error.toString(), style: const TextStyle(color: Colors.red));
       },

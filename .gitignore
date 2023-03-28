@@ -55,4 +55,4 @@ assets/certs/*.key
 __not_tracked/*
 .vscode/launch.json
 README.md
-dev/ignore/secrets.dart
+dev/ignore/*

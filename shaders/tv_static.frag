@@ -3,10 +3,14 @@ layout(location=0) out vec4 fragColor;
 layout(location=0) uniform float iTime;
 layout(location=1) uniform vec2 iResolution;
 
+// parameters
+layout(location=2) uniform int xamount;
+
 vec2 fragCoord = gl_FragCoord.xy;
 
 // Original Shadertoy code:
 //  TV / VHS noise static - https://www.shadertoy.com/view/tsX3RN
+
 
 float maxStrength = 0.7;
 float minStrength = 0.525;
@@ -39,11 +43,12 @@ float random (vec2 noise)
 
 void main() {
     vec2 uv2 = fract(fragCoord.xy/iResolution.xy*fract(sin(iTime*speed)));
-
     //--- Strength animate ---
     maxStrength = clamp(sin(iTime/2.0),minStrength,maxStrength);
     //-----------------------
 
+
+    // vec2 uv3 = round(uv2 * float(iResolution / 1)) / float(iResolution / 1);
     //--- Black and white ---
     vec3 color = vec3(random(uv2.xy))*maxStrength;
     //-----------------------

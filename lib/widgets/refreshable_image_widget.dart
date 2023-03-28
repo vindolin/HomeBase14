@@ -19,15 +19,11 @@ const refreshTimeWifi = 10;
 class RefreshableImage extends ConsumerStatefulWidget {
   final String imageUrl;
   final StreamProvider? streamProvider; // refreshes the image when the stream emits
-  final VoidCallback? onTap;
-  final VoidCallback? onDoubleTap;
   final bool autoRefresh;
 
   const RefreshableImage(
     this.imageUrl, {
     this.streamProvider,
-    this.onTap,
-    this.onDoubleTap,
     super.key,
     this.autoRefresh = true,
   });
@@ -86,13 +82,8 @@ class _RefreshableImageState extends ConsumerState<RefreshableImage> {
           startTimer();
         }
       },
-      child: InkWell(
-        onTap: widget.onTap,
-        onDoubleTap: widget.onDoubleTap,
-        onLongPress: () => setState(() {}), // just refresh image
-        child: ImageFadeRefresh(
-          '${widget.imageUrl}?${DateTime.now().millisecondsSinceEpoch}',
-        ),
+      child: ImageFadeRefresh(
+        '${widget.imageUrl}?${DateTime.now().millisecondsSinceEpoch}',
       ),
     );
   }

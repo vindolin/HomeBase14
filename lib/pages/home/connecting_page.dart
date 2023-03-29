@@ -9,10 +9,7 @@ class ConnectingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final Mqtt mqttProviderNotifier = ref.watch(mqttProvider.notifier);
     ref.watch(mqttProvider.notifier); // this triggers the mqtt connection
-
-    Future(() async => await mqttProviderNotifier.connect());
 
     return Scaffold(
       appBar: AppBar(
@@ -23,7 +20,7 @@ class ConnectingPage extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
             Text(
-              'Connecting to the server...',
+              'Connecting to the Homebase...\n',
             ),
             CircularProgressIndicator(),
           ],

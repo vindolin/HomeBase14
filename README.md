@@ -8,7 +8,7 @@ You can find a bare bones example here: https://github.com/vindolin/simple_mqtt_
 
 I started this project because I wanted to learn Flutter/Dart and I needed a real-life project to safely sharpen my claws on.
 
-As a fan of open source home automation and a lot of heterogenous devices all having different styles of MQTT payloads, this was a good opportunity to replace all the generic control programs with a program tailored to my needs.
+As a fan of open source home automation and a lot of heterogeneous devices all having different styles of MQTT payloads, this was a good opportunity to replace all the generic control programs with a program tailored to my needs.
 
 After trying different frameworks, I chose Riverpod for data-binding and while all the different providers and their notifiers irritated me a lot at the beginning, I'm really happy with that decision now.
 

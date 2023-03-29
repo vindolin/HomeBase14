@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 
 import '/utils.dart';
-import 'secrets.dart';
+import 'secrets.dart' as secrets;
 
 part 'app_settings.g.dart';
 part 'app_settings.freezed.dart';
@@ -22,7 +22,7 @@ bool showBrightness = true;
 
 final encrypter = encrypt.Encrypter(
   encrypt.AES(
-    encrypt.Key.fromUtf8(encryptionKey),
+    encrypt.Key.fromUtf8(secrets.encryptionKey),
   ),
 );
 
@@ -51,10 +51,10 @@ class AppSettings extends _$AppSettings {
   @override
   AppSettingsCls build() {
     return const AppSettingsCls(
-      mqttUsername: '',
-      mqttPassword: '',
-      mqttAddress: '',
-      mqttPort: 8883,
+      mqttUsername: secrets.mqttUsername,
+      mqttPassword: secrets.mqttPassword,
+      mqttAddress: secrets.mqttAddress,
+      mqttPort: secrets.mqttPort,
       user: User.thomas,
       valid: false,
       onlyPortrait: true,

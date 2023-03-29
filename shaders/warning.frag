@@ -7,6 +7,11 @@ layout(location=1) uniform vec2 iResolution;
 
 vec2 fragCoord = gl_FragCoord.xy;
 
+// Original Shadertoy code:
+//  WARNING SIGN - https://www.shadertoy.com/view/Wl2fWV
+/*************************************************************************************************/
+
+
 void main() {
     // Normalized pixel coordinates (from 0 to 1)
     vec2 uv = fragCoord/iResolution.xy;

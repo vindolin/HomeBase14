@@ -3,13 +3,11 @@ layout(location=0) out vec4 fragColor;
 layout(location=0) uniform float iTime;
 layout(location=1) uniform vec2 iResolution;
 
-// parameters
-layout(location=2) uniform int xamount;
-
 vec2 fragCoord = gl_FragCoord.xy;
 
 // Original Shadertoy code:
 //  TV / VHS noise static - https://www.shadertoy.com/view/tsX3RN
+/*************************************************************************************************/
 
 
 float maxStrength = 0.7;

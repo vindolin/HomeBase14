@@ -12,6 +12,7 @@ vec2 fragCoord = gl_FragCoord.xy;
 
 // Original Shadertoy code:
 // Pulsing Guts - https://www.shadertoy.com/view/clXXDl
+/*************************************************************************************************/
 
 mat2 rotate2D(float r) {
     return mat2(cos(r), sin(r), -sin(r), cos(r));

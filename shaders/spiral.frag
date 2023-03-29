@@ -4,8 +4,10 @@ precision mediump float;
 layout(location=0) out vec4 fragColor;
 layout(location=0) uniform float iTime;
 layout(location=1) uniform vec2 iResolution;
-layout(location=2) uniform vec3 light1;
-layout(location=3) uniform vec3 light2;
+
+// Original Shadertoy code:
+// Spiral #6 - https://www.shadertoy.com/view/dddGWB
+/*************************************************************************************************/
 
 vec2 fragCoord = gl_FragCoord.xy;
 

@@ -3,7 +3,7 @@ layout(location=0) uniform float iTime;
 layout(location=1) uniform vec2 iResolution;
 
 // parameters
-layout(location=2) uniform vec3 color;
+//...
 
 vec2 fragCoord = gl_FragCoord.xy;
 

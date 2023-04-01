@@ -1,4 +1,4 @@
-import 'dart:io' show Platform;
+import 'dart:io' show Platform, SecurityContext;
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
@@ -25,6 +25,12 @@ void main() async {
   initializeDateFormatting('de_DE', null);
 
   WidgetsFlutterBinding.ensureInitialized();
+
+  // I had certificate problems with the mjpeg file from my server, this solved it
+  // https://stackoverflow.com/questions/54285172/how-to-solve-flutter-certificate-verify-failed-error-while-performing-a-post-req
+  ByteData data = await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
+  SecurityContext.defaultContext.setTrustedCertificatesBytes(data.buffer.asUint8List());
+
   if (Platform.isAndroid) {
     KeepScreenOn.turnOn();
   }
@@ -72,7 +78,6 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
   @override
   Widget build(BuildContext context) {
     final brightness = ref.watch(brightnessSettingProvider);
-
     final appSettings = ref.watch(appSettingsProvider);
 
     // set orientation according to app settings
@@ -100,8 +105,8 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
         ref.watch(mqttConnectionStateProvider),
       )
           ? const HomePage()
-          : ConnectingPage(),
-      // : LoginFormPage(),
+          // : const ConnectingPage(),
+          : LoginFormPage(),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color.fromARGB(255, 153, 4, 145),

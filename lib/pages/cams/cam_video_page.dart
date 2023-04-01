@@ -21,7 +21,7 @@ class CamVideoPage extends ConsumerWidget {
                 quarterTurns: 1,
                 child: DoorCamVideo(),
               )
-            : CamWidget(camId),
+            : const Text('...'), //CamWidget(camId),
       ),
     );
   }

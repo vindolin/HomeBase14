@@ -1,2 +1,3 @@
 del ..\homebase_tablet.apks >NUL
-flutter build appbundle --target-platform android-arm
+rem flutter build appbundle --target-platform android-arm
+flutter build appbundle --target-platform android-arm,android-arm64

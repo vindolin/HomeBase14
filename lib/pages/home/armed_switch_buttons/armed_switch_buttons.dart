@@ -82,14 +82,16 @@ class ArmedButtons extends StatelessWidget {
               ),
               Random().nextDouble() > 0.5
                   ? const ShaderBox(
-                      'raymarching_basic.frag',
+                      // 'raymarching_basic.frag',
+                      'plasma_cube.frag',
                     )
                   : const ShaderBox(
-                      'pulsing_guts.frag',
-                      parameters: [
-                        ...[4.0, 2.0, 1.0] /* color */,
-                      ],
-                      slowDown: 3,
+                      'plasma_cube.frag',
+                      // 'pulsing_guts.frag',
+                      // parameters: [
+                      //   ...[4.0, 2.0, 1.0] /* color */,
+                      // ],
+                      // slowDown: 3,
                     ),
               const ShaderBox(
                 'flubber.frag',

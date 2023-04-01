@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:simple_shadow/simple_shadow.dart';
 
 import '/pages/home/widgets/temperatures_widget.dart';
@@ -12,6 +11,7 @@ import '/pages/home/armed_switch_buttons/armed_switch_buttons.dart';
 
 import '/models/app_settings.dart';
 import '/models/mqtt_providers.dart';
+import '/models/app_version_provider.dart';
 
 import '/widgets/stream_blinker_widget.dart';
 import '/widgets/connection_bar_widget.dart';
@@ -78,6 +78,7 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final appVersion = ref.watch(appVersionProvider);
     final appSettings = ref.watch(appSettingsProvider);
 
     return Scaffold(
@@ -168,6 +169,18 @@ class HomePage extends ConsumerWidget {
                           child: Text(
                             Platform.operatingSystemVersion,
                             style: const TextStyle(fontSize: 8),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: Text(
+                            appVersion.when(
+                              data: (value) => value,
+                              loading: () => '...',
+                              error: (e, s) => '...',
+                            ),
+                            style: const TextStyle(fontSize: 8, color: Colors.black, fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],

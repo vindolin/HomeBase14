@@ -5,6 +5,7 @@ import '/utils.dart';
 import '/widgets/mqtt_switch_widget.dart';
 import '/widgets/connection_bar_widget.dart';
 import 'dropdown_select_widget.dart';
+import 'test_page.dart';
 // import 'video_player_test_widget.dart';
 // import 'video_player_test_page.dart';
 
@@ -88,6 +89,21 @@ class ThomasPage extends StatelessWidget {
                 optimistic: false,
                 orientation: MqttSwitchWidgetOrientation.vertical,
               ),
+            ),
+          ),
+          Card(
+            // child: VideoPlayerTestWidget(),
+            child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const TestPage(),
+                  ),
+                );
+              },
+              // child: const WebviewVideo(),
+              child: const Text('Video Player Test'),
             ),
           ),
           // Card(

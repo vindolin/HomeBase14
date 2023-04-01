@@ -11,6 +11,8 @@ import 'package:nanoid/nanoid.dart';
 import 'package:mqtt_client/mqtt_client.dart' as mqtt;
 import 'package:mqtt_client/mqtt_server_client.dart';
 
+import '/models/encrypted_key.dart';
+
 import '/utils.dart';
 import 'mqtt_connection_state_provider.dart';
 import 'generic_providers.dart';
@@ -118,20 +120,21 @@ class Mqtt extends _$Mqtt {
       client = MqttServerClient.withPort(
         appSettings.state.mqttAddress,
         clientIdentifier,
-        8883,
+        appSettings.state.mqttPort,
       );
 
       final cert = await rootBundle.load('assets/certs/ca.crt');
       final clientCrt = await rootBundle.load('assets/certs/homebase14.crt');
-      final clientKey = await rootBundle.load('assets/certs/homebase14.key');
+      // final clientKey = await rootBundle.load('assets/certs/homebase14.key');
+      final clientKey = encrypter.decrypt64(hbk, iv: iv);
       SecurityContext context;
 
       try {
-        context = SecurityContext.defaultContext
-          ..setTrustedCertificatesBytes(cert.buffer.asUint8List())
-          ..setClientAuthoritiesBytes(cert.buffer.asInt8List())
-          ..useCertificateChainBytes(clientCrt.buffer.asInt8List())
-          ..usePrivateKeyBytes(clientKey.buffer.asInt8List());
+        context = SecurityContext.defaultContext;
+        context.setTrustedCertificatesBytes(cert.buffer.asUint8List());
+        context.setClientAuthoritiesBytes(cert.buffer.asInt8List());
+        context.useCertificateChainBytes(clientCrt.buffer.asInt8List());
+        context.usePrivateKeyBytes(clientKey.codeUnits);
 
         ref.read(togglerProvider('ssl').notifier).state = true;
 

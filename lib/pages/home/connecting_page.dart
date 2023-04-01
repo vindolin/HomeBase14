@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '/models/app_settings.dart';
 
 import '/models/mqtt_providers.dart';
 
@@ -9,7 +10,8 @@ class ConnectingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(mqttProvider.notifier); // this triggers the mqtt connection
+    ref.watch(appSettingsProvider);
+    ref.watch(mqttProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(

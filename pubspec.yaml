@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.1
+version: 1.0.4+4
 
 environment:
   sdk: '>=2.19.2 <3.0.0'
@@ -71,7 +71,7 @@ dependencies:
   font_awesome_flutter: ^10.4.0
   decorated_icon: ^1.2.1
   # video_player: any
-  flutter_vlc_player: ^7.2.0
+  # flutter_vlc_player: ^7.2.0
   # native_video_view: any
   # patched libraries
   keep_screen_on:
@@ -85,6 +85,7 @@ dependencies:
       url: https://github.com/vindolin/focus_detector.git
       ref: master
   flutter_mjpeg: ^2.0.3
+  package_info_plus: ^3.0.3
   # ext_video_player:
   #   # path: c:/Flutter/github/focus_detector/
   #   git:
@@ -136,6 +137,7 @@ flutter:
     - assets/i18n/
 
     - assets/certs/
+    - assets/ca/
 
   shaders:
     - shaders/flubber.frag

@@ -1,4 +1,4 @@
-package com.example.homebase14
+package com.atomar.homebase14
 
 import io.flutter.embedding.android.FlutterActivity
 

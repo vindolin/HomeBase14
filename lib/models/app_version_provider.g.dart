@@ -1,23 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'mqtt_providers.dart';
+part of 'app_version_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$mqttHash() => r'1328d5e15ad7117f16e018cb4a7a2cec0a4dc796';
+String _$appVersionHash() => r'2a458c21cb83aef1e69edc34e6c3edf4b49bf4ea';
 
-/// See also [Mqtt].
-@ProviderFor(Mqtt)
-final mqttProvider = AutoDisposeNotifierProvider<Mqtt, dynamic>.internal(
-  Mqtt.new,
-  name: r'mqttProvider',
+/// See also [AppVersion].
+@ProviderFor(AppVersion)
+final appVersionProvider =
+    AutoDisposeAsyncNotifierProvider<AppVersion, String>.internal(
+  AppVersion.new,
+  name: r'appVersionProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$mqttHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$appVersionHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$Mqtt = AutoDisposeNotifier<dynamic>;
+typedef _$AppVersion = AutoDisposeAsyncNotifier<String>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

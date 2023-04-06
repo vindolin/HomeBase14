@@ -6,7 +6,7 @@ part of 'mqtt_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$mqttHash() => r'1328d5e15ad7117f16e018cb4a7a2cec0a4dc796';
+String _$mqttHash() => r'eb6d89f87eb4d29f6a0d719efda7bdee7e8f5b4d';
 
 /// See also [Mqtt].
 @ProviderFor(Mqtt)

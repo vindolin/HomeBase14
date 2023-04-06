@@ -28,10 +28,10 @@ class ThomasPage extends StatelessWidget {
         children: [
           Card(
             color: Colors.amber[900],
-            child: Column(
+            child: const Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
+              children: [
                 Text(
                   'Select sleep mode',
                   style: textStyleShadowOne,
@@ -50,10 +50,10 @@ class ThomasPage extends StatelessWidget {
           ),
           Card(
             color: Colors.cyan[900],
-            child: Column(
+            child: const Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
+              children: [
                 Text(
                   'Select Monitor',
                   style: textStyleShadowOne,

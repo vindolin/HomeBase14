@@ -24,11 +24,11 @@ class OtherPage extends ConsumerWidget {
       ),
       body: Column(
         children: [
-          Card(
+          const Card(
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: Row(
-                children: const [
+                children: [
                   Text('Multiplug Sofa'),
                   Spacer(),
                   MultiplugWidget(
@@ -45,9 +45,9 @@ class OtherPage extends ConsumerWidget {
               child: DoorsWidget(),
             ),
           ),
-          Card(
+          const Card(
             child: Row(
-              children: const [
+              children: [
                 HumiTempWidget(),
               ],
             ),

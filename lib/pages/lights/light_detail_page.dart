@@ -20,9 +20,9 @@ class LightDetailPage extends ConsumerWidget {
       appBar: AppBar(
         title: Text('${deviceNames[deviceId]}'),
       ),
-      body: Row(
+      body: const Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: const [],
+        children: [],
       ),
       bottomNavigationBar: BottomAppBar(
         child: Row(

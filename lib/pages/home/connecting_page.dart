@@ -17,10 +17,10 @@ class ConnectingPage extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Connecting'),
       ),
-      body: Center(
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
             Text(
               'Connecting to the Homebase...\n',
             ),

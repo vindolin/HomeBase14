@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import '/widgets/video_widget.dart';
+// import '/widgets/video_widget.dart';
 import 'webview_door_video.dart';
 
 class CamVideoPage extends ConsumerWidget {

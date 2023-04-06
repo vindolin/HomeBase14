@@ -49,9 +49,9 @@ class ThomasGroups extends ConsumerWidget {
               ),
             );
           },
-          trailing: Row(
+          trailing: const Row(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               DropdownSelect(
                 options: {
                   'wakeup': '☕️',

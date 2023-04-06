@@ -38,8 +38,8 @@ void main() {
                 home: Scaffold(
                   body: Consumer(
                     builder: (context, ref, _) {
-                      return Stack(
-                        children: const [
+                      return const Stack(
+                        children: [
                           Positioned(
                             top: 0,
                             left: 0,

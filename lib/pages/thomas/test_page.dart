@@ -7,6 +7,7 @@ class TestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final encrypted = encrypter.encrypt('testkey', iv: iv);
+    // ignore: avoid_print
     print(encrypted.base64);
     return Container();
   }

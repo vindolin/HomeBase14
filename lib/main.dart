@@ -13,7 +13,7 @@ import '/models/connectivity_provider.dart' as connectivity_rovider; // rename t
 import '/models/mqtt_providers.dart';
 import '/pages/login_page.dart';
 import '/pages/home/home_page.dart';
-import '/pages/home/connecting_page.dart';
+// import '/pages/home/connecting_page.dart';
 import '/widgets/brightness_button_widget.dart';
 
 void main() async {

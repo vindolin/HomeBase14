@@ -3,20 +3,20 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:nanoid/nanoid.dart';
 import 'package:mqtt_client/mqtt_client.dart' as mqtt;
 import 'package:mqtt_client/mqtt_server_client.dart';
+import 'package:nanoid/nanoid.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '/models/encrypted_key.dart';
-
 import '/utils.dart';
-import 'mqtt_connection_state_provider.dart';
-import 'generic_providers.dart';
 import 'app_settings.dart';
+import 'generic_providers.dart';
+import 'mqtt_connection_state_provider.dart';
 import 'mqtt_devices.dart';
 
 part 'mqtt_providers.g.dart';

@@ -56,3 +56,4 @@ __not_tracked/*
 .vscode/launch.json
 README.md
 dev/ignore/*
+pubspec.lock

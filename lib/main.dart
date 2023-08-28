@@ -113,9 +113,7 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color.fromARGB(255, 153, 4, 145),
           brightness: brightness,
-          surface: const Color.fromARGB(255, 153, 4, 145),
         ),
-        // textTheme: TextTheme(),
       ),
     );
   }

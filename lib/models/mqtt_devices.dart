@@ -162,8 +162,8 @@ IMap<String, ArmedSwitchDevice> switchDevices = IMap({
   'pump': ArmedSwitchDevice(
     topicState: 'garden/cistern_pump/get',
     topicSet: 'garden/cistern_pump/set',
-    onState: '1',
-    offState: '0',
+    onState: 'ON',
+    offState: 'OFF',
   ),
   'tv': ArmedSwitchDevice(
     topicState: 'zigbee2mqtt/plug/i002',

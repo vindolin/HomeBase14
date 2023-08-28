@@ -1,0 +1,19 @@
+void mainImage( out vec4 fragColor, in vec2 fragCoord )
+{
+    vec2 uv = (fragCoord.xy / iResolution.xy) - 0.5;
+    uv.x *= iResolution.x / iResolution.y;
+    float dist = length(uv);
+    float pulse1 = 0.5 + 0.5 * sin(iTime * 2.0);
+    float pulse2 = 0.5 + 0.5 * sin(iTime * 3.0);
+    float pulse3 = 0.5 + 0.5 * sin(iTime * 1.0);
+    float ring1 = smoothstep(0.0, pulse1, dist) - smoothstep(pulse1 - 0.1, pulse1, dist);
+    float ring2 = smoothstep(0.0, pulse2, dist) - smoothstep(pulse2 - 0.1, pulse2, dist);
+    float ring3 = smoothstep(0.0, pulse3, dist) - smoothstep(pulse3 - 0.1, pulse3, dist);
+    vec3 color1 = vec3(1.0, 0.0, 0.0);
+    vec3 color2 = vec3(0.0, 1.0, 0.0);
+    vec3 color3 = vec3(0.0, 0.0, 1.0);
+    vec4 texColor = texture(iChannel0, fragCoord.xy / iResolution.xy);
+    float gray = dot(texColor.rgb, vec3(0.1, 0.1, 0.1));
+    vec3 satColor = mix(vec3(gray), texColor.rgb, 1.5 * (ring1 + ring2 + ring3));
+    fragColor = vec4(satColor, texColor);
+}

@@ -138,7 +138,7 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
               title: ChartTitle(text: 'Solar Watt ☀️ ${snapshot.data![0].last.value.toStringAsFixed(1)} kW'),
               primaryXAxis: CategoryAxis(),
               primaryYAxis: NumericAxis(numberFormat: NumberFormat('#0.0 kW')),
-              legend: Legend(isVisible: true, alignment: ChartAlignment.near, position: LegendPosition.bottom),
+              legend: const Legend(isVisible: true, alignment: ChartAlignment.near, position: LegendPosition.bottom),
               series: <LineSeries<TimePoint, String>>[
                 LineSeries<TimePoint, String>(
                     name: 'Solar ${snapshot.data![0].last.value.toStringAsFixed(1)} kW',

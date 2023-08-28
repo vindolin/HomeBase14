@@ -5,6 +5,7 @@ import '/widgets/refreshable_image_widget.dart';
 import '/models/mqtt_providers.dart'; //need this for doorAlarmProvider (not needed anymore)
 import '/pages/cams/cam_image_page.dart';
 import '/pages/cams/cam_video_page.dart';
+// import '/pages/cams/media_kit_cam_page.dart';
 // import '/pages/cams/mjpeg_cam_image.dart';
 
 Widget _camContainer(Widget child, BuildContext context, String camId) {
@@ -24,6 +25,9 @@ Widget _camContainer(Widget child, BuildContext context, String camId) {
         MaterialPageRoute(
           builder: (context) => CamImagePage(camId: camId),
         ),
+        // MaterialPageRoute(
+        //   builder: (context) => MediaKitCamPage(camId: camId),
+        // ),
       );
     },
     onDoubleTap: () {

@@ -46,6 +46,27 @@ class DeviceGroups extends ConsumerWidget {
       delegate: SliverChildListDelegate([
         const Divider(),
         ListTile(
+          title: Text(
+            translate('device_names.curtains'),
+            style: titleStyle,
+          ),
+          leading: const Icon(Icons.blinds),
+          visualDensity: visualDensity,
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: curtainActions(context, ref),
+          ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CurtainListPage(),
+              ),
+            );
+          },
+        ),
+        const Divider(),
+        ListTile(
             title: Text(
               translate('device_names.thermostats'),
               style: titleStyle,
@@ -66,27 +87,6 @@ class DeviceGroups extends ConsumerWidget {
                 color: getTemperatureColor(localTemperatureAvg, currentHeatingSetpointAvg),
               ),
             )),
-        const Divider(),
-        ListTile(
-          title: Text(
-            translate('device_names.curtains'),
-            style: titleStyle,
-          ),
-          leading: const Icon(Icons.blinds),
-          visualDensity: visualDensity,
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: curtainActions(context, ref),
-          ),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const CurtainListPage(),
-              ),
-            );
-          },
-        ),
         const Divider(),
         ListTile(
           title: Text(

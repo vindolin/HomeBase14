@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:ir_sensor_plugin/ir_sensor_plugin.dart';
 
 import '/styles/text_styles.dart';
 import '/utils.dart';
 import '/widgets/mqtt_switch_widget.dart';
 import '/widgets/connection_bar_widget.dart';
 import 'dropdown_select_widget.dart';
-import 'test_page.dart';
+// import 'test_page.dart';
 // import 'video_player_test_widget.dart';
-// import 'video_player_test_page.dart';
+import 'video_player_test_page.dart';
 
 class ThomasPage extends StatelessWidget {
   const ThomasPage({super.key});
@@ -15,7 +16,6 @@ class ThomasPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     log('ThomasPage.build()');
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Thomas'),
@@ -98,12 +98,45 @@ class ThomasPage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const TestPage(),
+                    builder: (context) => const VideoApp(),
                   ),
                 );
               },
               // child: const WebviewVideo(),
               child: const Text('Video Player Test'),
+            ),
+          ),
+          Card(
+            child: TextButton(
+              onPressed: () async {
+                // final String getCarrierFrequencies = await IrSensorPlugin.getCarrierFrequencies;
+                // print(getCarrierFrequencies);
+                // await IrSensorPlugin.setFrequencies(40000);
+                Map samsungHex = {
+                  'power':
+                      '0000 006d 0022 0003 00a9 00a8 0015 003f 0015 003f 0015 003f 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 003f 0015 003f 0015 003f 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 003f 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0040 0015 0015 0015 003f 0015 003f 0015 003f 0015 003f 0015 003f 0015 003f 0015 0702 00a9 00a8 0015 0015 0015 0e6e',
+                  'volume_up':
+                      '0000 006d 0022 0003 00a9 00a8 0015 003f 0015 003f 0015 003f 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 003f 0015 003f 0015 003f 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 003f 0015 003f 0015 003f 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 003f 0015 003f 0015 003f 0015 003f 0015 003f 0015 0702 00a9 00a8 0015 0015 0015 0e6e',
+                  'volume_down':
+                      '0000 006d 0022 0003 00a9 00a8 0015 003f 0015 003f 0015 003f 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 003f 0015 003f 0015 003f 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 003f 0015 003f 0015 0015 0015 003f 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 003f 0015 0015 0015 003f 0015 003f 0015 003f 0015 003f 0015 0702 00a9 00a8 0015 0015 0015 0e6e',
+                  'blue':
+                      '0000 006d 0022 0003 00a9 00a8 0015 003f 0015 003f 0015 003f 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 003f 0015 003f 0015 003f 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 003f 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0040 0015 0015 0015 003f 0015 003f 0015 003f 0015 003f 0015 003f 0015 003f 0015 0702 00a9 00a8 0015 0015 0015 0e6e',
+                };
+                samsungHex;
+
+                Map necHex = {
+                  'power':
+                      '0000 0073 0000 0022 0144 00a2 0014 0014 0014 0014 0014 0014 0014 0014 0014 003c 0014 0014 0014 0014 0014 0014 0014 003c 0014 0014 0014 003c 0014 003c 0014 003c 0014 0014 0014 0014 0014 003c 0014 0014 0014 003c 0014 003c 0014 003c 0014 003c 0014 003c 0014 0014 0014 0014 0014 003c 0014 0014 0014 0014 0014 0014 0014 0014 0014 0014 0014 003c 0014 003c 0014 003c',
+                };
+
+                // final String result = await IrSensorPlugin.transmitString(pattern: samsungHex['power']!);
+                // final String result = await IrSensorPlugin.transmitString(pattern: samsungHex['volume_up']!);
+                // await IrSensorPlugin.setFrequencies(38000);
+                await IrSensorPlugin.transmitString(pattern: necHex['power']!);
+                // transmit NEC pattern
+                // final String result = await IrSensorPlugin.transmitString(pattern: samsungHex['volume_up']!);
+              },
+              child: const Text('IR'),
             ),
           ),
           // Card(

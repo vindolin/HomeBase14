@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:intl/date_symbol_data_local.dart';
+// import 'package:media_kit/media_kit.dart';
 
 import '/models/app_settings.dart';
 import '/models/mqtt_connection_state_provider.dart';
@@ -25,6 +26,7 @@ void main() async {
   initializeDateFormatting('de_DE', null);
 
   WidgetsFlutterBinding.ensureInitialized();
+  // MediaKit.ensureInitialized();
 
   // I had certificate problems with the mjpeg file from my server, this solved it
   // https://stackoverflow.com/questions/54285172/how-to-solve-flutter-certificate-verify-failed-error-while-performing-a-post-req

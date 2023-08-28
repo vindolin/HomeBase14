@@ -12,7 +12,8 @@ Future<bool> confirmIcon(
 }) async {
   final bool? isConfirm = await showDialog<bool>(
     context: context,
-    builder: (_) => WillPopScope(
+    builder: (_) => PopScope(
+      canPop: true,
       child: AlertDialog(
         title: title,
         content: IconButton(
@@ -21,10 +22,6 @@ Future<bool> confirmIcon(
           onPressed: () => Navigator.pop(context, true),
         ),
       ),
-      onWillPop: () async {
-        Navigator.pop(context, false);
-        return true;
-      },
     ),
   );
 

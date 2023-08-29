@@ -5,7 +5,6 @@ import 'package:flutter_translate/flutter_translate.dart';
 
 import '/utils.dart';
 import '/widgets/connection_bar_widget.dart';
-import '/widgets/influxdb_widget.dart';
 import 'widgets/doors_widget.dart';
 import 'widgets/multiplug_widget.dart';
 import 'widgets/humitemps_widget.dart';
@@ -22,9 +21,9 @@ class OtherPage extends ConsumerWidget {
         title: Text(translate('device_names.other')),
         actions: const [ConnectionBar()],
       ),
-      body: Column(
+      body: const Column(
         children: [
-          const Card(
+          Card(
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: Row(
@@ -39,30 +38,17 @@ class OtherPage extends ConsumerWidget {
               ),
             ),
           ),
-          const Card(
+          Card(
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: DoorsWidget(),
             ),
           ),
-          const Card(
+          Card(
             child: Row(
               children: [
                 HumiTempWidget(),
               ],
-            ),
-          ),
-          Expanded(
-            child: Card(
-              color: const Color.fromARGB(255, 66, 33, 62),
-              child: LayoutBuilder(builder: (context, constraints) {
-                return SingleChildScrollView(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(maxHeight: constraints.maxHeight),
-                    child: const InfluxdbWidget(),
-                  ),
-                );
-              }),
             ),
           ),
         ],

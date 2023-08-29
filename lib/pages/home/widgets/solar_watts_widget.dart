@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/utils.dart';
 import '/models/mqtt_providers.dart';
 import '/models/mqtt_devices.dart';
+import '/pages/solar/solar_page.dart';
 
 const smaErrorValue = -2147483648;
 const maxSolarWatt = 6000;
@@ -67,77 +68,87 @@ class SolarWatts extends ConsumerWidget {
       solarWatt / 5500,
     );
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        RichText(
-          text: TextSpan(
-            style: const TextStyle(
-              fontSize: 13,
-              shadows: [
-                Shadow(
-                  offset: Offset(1.0, 1.0),
-                  blurRadius: 1.0,
-                  color: Colors.black,
-                )
-              ],
-            ),
-            children: [
-              const TextSpan(
-                text: 'Solar: ',
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const SolarPage(),
+          ),
+        );
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          RichText(
+            text: TextSpan(
+              style: const TextStyle(
+                fontSize: 13,
+                shadows: [
+                  Shadow(
+                    offset: Offset(1.0, 1.0),
+                    blurRadius: 1.0,
+                    color: Colors.black,
+                  )
+                ],
               ),
-              TextSpan(
-                text: '${solarWatt}w $sunEmoji',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: solarColor,
+              children: [
+                const TextSpan(
+                  text: 'Solar: ',
                 ),
-              ),
-              const TextSpan(
-                text: ' - ',
-              ),
-              TextSpan(
-                  text: 'Verbrauch: ',
+                TextSpan(
+                  text: '${solarWatt}w $sunEmoji',
                   style: TextStyle(
-                    color: brightness == Brightness.dark ? Colors.white : Colors.black,
-                  )),
-              TextSpan(
-                text: '${useWatt}w',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, color: brightness == Brightness.dark ? Colors.white : Colors.black),
-              ),
-            ],
-          ),
-        ),
-        RichText(
-          text: TextSpan(
-            style: const TextStyle(
-              fontSize: 13,
-              shadows: [
-                Shadow(
-                  offset: Offset(1.0, 1.0),
-                  blurRadius: 1.0,
-                  color: Colors.black,
-                )
+                    fontWeight: FontWeight.bold,
+                    color: solarColor,
+                  ),
+                ),
+                const TextSpan(
+                  text: ' - ',
+                ),
+                TextSpan(
+                    text: 'Verbrauch: ',
+                    style: TextStyle(
+                      color: brightness == Brightness.dark ? Colors.white : Colors.black,
+                    )),
+                TextSpan(
+                  text: '${useWatt}w',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: brightness == Brightness.dark ? Colors.white : Colors.black),
+                ),
               ],
             ),
-            children: [
-              TextSpan(
-                text: ' = ',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, color: brightness == Brightness.dark ? Colors.white : Colors.black),
-              ),
-              TextSpan(
-                text: '${totalWatt > 0 ? '+' : ''}${totalWatt}w $happy',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: totalWatt > 0 ? Colors.green : Colors.red,
-                ),
-              ),
-            ],
           ),
-        ),
-      ],
+          RichText(
+            text: TextSpan(
+              style: const TextStyle(
+                fontSize: 13,
+                shadows: [
+                  Shadow(
+                    offset: Offset(1.0, 1.0),
+                    blurRadius: 1.0,
+                    color: Colors.black,
+                  )
+                ],
+              ),
+              children: [
+                TextSpan(
+                  text: ' = ',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: brightness == Brightness.dark ? Colors.white : Colors.black),
+                ),
+                TextSpan(
+                  text: '${totalWatt > 0 ? '+' : ''}${totalWatt}w $happy',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: totalWatt > 0 ? Colors.green : Colors.red,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -21,13 +21,13 @@ bool onlyPortrait = true;
 bool showBrightness = true;
 
 final encrypter = encrypt.Encrypter(
-  encrypt.AES(
+  encrypt.Salsa20(
     encrypt.Key.fromUtf8(secrets.encryptionKey),
   ),
 );
 
-final iv = encrypt.IV.fromLength(16);
-final prefs = SharedPreferences.getInstance(); // where we store the encrypted connection data
+// final iv = encrypt.IV.fromLength(8);
+final iv = encrypt.IV.fromBase64('4ygMAg7aRyw=');
 
 @freezed
 class AppSettingsCls with _$AppSettingsCls {
@@ -133,13 +133,16 @@ class AppSettings extends _$AppSettings {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     String? userPref = prefs.getString('settings');
-    String appSettings = encrypter.decrypt64(userPref!, iv: iv);
-    // log('pref: $Settings');
+    String appSettings;
+    if (userPref != null) {
+      final encrypted = encrypt.Encrypted.fromBase64(userPref);
+      appSettings = encrypter.decrypt(encrypted, iv: iv);
 
-    try {
-      state = AppSettingsCls.fromJson(jsonDecode(appSettings));
-    } catch (e) {
-      log('Error: $e');
-    }
+      try {
+        state = AppSettingsCls.fromJson(jsonDecode(appSettings));
+      } catch (e) {
+        log('Error: $e');
+      }
+    } else {}
   }
 }

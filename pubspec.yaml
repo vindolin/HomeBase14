@@ -49,7 +49,7 @@ dependencies:
   freezed_annotation: ^2.2.0
   json_annotation: any
   freezed: ^2.3.2
-  encrypt: ^5.0.1
+  encrypt: ^5.0.3
   shared_preferences: ^2.0.15
   format: ^1.1.1
   stack_trace: ^1.11.0

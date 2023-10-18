@@ -58,7 +58,18 @@ class ImageFadeRefreshState extends State<ImageFadeRefresh> {
           ),
         );
       },
-      errorBuilder: (context, error, stackTrace) => _errorImage,
+      errorBuilder: (context, error, stackTrace) {
+        // this is a workaround for the dreaded "Connection closed before full header was received" error
+        // seems to be a framework bug
+        if (error.toString().contains('full header')) {
+          return AspectRatio(
+            aspectRatio: 16 / 9,
+            child: Container(),
+          );
+        } else {
+          return _errorImage;
+        }
+      },
     );
     previousImage = newImage;
     return newImage;

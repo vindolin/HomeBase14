@@ -174,6 +174,7 @@ class Mqtt extends _$Mqtt {
         return null;
       },
     );
+
     ref.read(appSettingsProvider.notifier).setValid(mqttConnectionStatus?.state == mqtt.MqttConnectionState.connected);
 
     return mqttConnectionStatus?.state ?? mqtt.MqttConnectionState.faulted;

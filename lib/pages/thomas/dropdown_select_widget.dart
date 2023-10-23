@@ -11,10 +11,10 @@ class DropdownSelect extends ConsumerStatefulWidget {
   const DropdownSelect({required this.options, required this.statTopic, required this.setTopic, super.key});
 
   @override
-  ConsumerState<DropdownSelect> createState() => _DropdownStateSelect();
+  ConsumerState<DropdownSelect> createState() => _DropdownSelectState();
 }
 
-class _DropdownStateSelect extends ConsumerState<DropdownSelect> {
+class _DropdownSelectState extends ConsumerState<DropdownSelect> {
   late String dropdownValue = widget.options.keys.first;
 
   @override

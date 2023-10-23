@@ -16,7 +16,7 @@ class CurtainDetailPage extends ConsumerWidget {
       singleCurtainDevicesProvider.select(
         (mqttDevices) => mqttDevices[deviceId],
       ),
-    );
+    )!;
 
     final deviceNames = ref.watch(deviceNamesProvider);
     log('build CurtainDetailPage');
@@ -29,7 +29,7 @@ class CurtainDetailPage extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           CurtainControll(
-            device!.position,
+            device.position,
             (double value) {
               device.position = value.toDouble();
               device.publishState();

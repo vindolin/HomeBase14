@@ -51,6 +51,9 @@
 		"garden" : "Garten",
 		"door" : "Haustüre"
 	},
+	"thermostats": {
+		"submit_button_text": "speichern"
+	},
 	"user": "Benutzer",
 	"solar": "Solar",
 	"settings": "Einstellungen"

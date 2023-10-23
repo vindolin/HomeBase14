@@ -47,7 +47,7 @@ dependencies:
   dio: ^5.0.1
   event: ^2.1.2
   freezed_annotation: ^2.2.0
-  json_annotation: any
+  json_annotation: ^4.8.1
   freezed: ^2.3.2
   encrypt: ^5.0.3
   shared_preferences: ^2.0.15
@@ -95,6 +95,7 @@ dependencies:
   package_info_plus: ^4.0.1
   video_player: ^2.6.1
   ir_sensor_plugin: ^0.3.0
+  flutter_spinbox: ^0.13.1
   # cached_network_image: ^3.2.3
   # ext_video_player:
   #   # path: c:/Flutter/github/focus_detector/

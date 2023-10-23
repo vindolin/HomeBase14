@@ -1,5 +1,3 @@
-// ignore_for_file: overridden_fields
-
 import 'dart:convert';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -271,13 +269,19 @@ abstract class AbstractMqttDevice {
 
   late String deviceId;
   String deviceType;
+
   Map<String, dynamic> mqttPayload = {};
   F publishCallback;
   int linkQuality = 0;
   int? battery;
   bool followUpMessage = false; // the first message after a publish always has the old values, ignore
 
-  AbstractMqttDevice(this.deviceId, this.deviceType, Map<String, dynamic> payload, this.publishCallback) {
+  AbstractMqttDevice(
+    this.deviceId,
+    this.deviceType,
+    Map<String, dynamic> payload,
+    this.publishCallback,
+  ) {
     readValues(payload);
   }
 

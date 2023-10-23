@@ -8,21 +8,7 @@ import '/utils.dart';
 import '/models/mqtt_devices.dart';
 import '/pages/thermostats/thermostat_detail_page.dart';
 import '/widgets/connection_bar_widget.dart';
-
-const heatingSetpointColor = Color.fromARGB(255, 100, 100, 100);
-const temperatureColors = {
-  'perfect': Colors.green,
-  'tooCold': Colors.blue,
-  'tooHot': Colors.orange,
-};
-
-MaterialColor? getTemperatureColor(double temperature, double setpoint) {
-  return temperature == setpoint
-      ? temperatureColors['perfect']
-      : temperature < setpoint
-          ? temperatureColors['tooCold']
-          : temperatureColors['tooHot'];
-}
+import 'thermostat_colors.dart';
 
 /// Shows a list of all thermostats, sorted by name and temperature.
 class ThermostatListPage extends ConsumerWidget {
@@ -81,22 +67,9 @@ class ThermostatListPage extends ConsumerWidget {
             title: Text(
               deviceNames[key]!,
             ),
-            subtitle: Row(
-              children: [
-                Text(
-                  '${device.localTemperature}°C',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: tempColor,
-                  ),
-                ),
-                Text(
-                  '  / ${device.currentHeatingSetpoint}°C',
-                  style: const TextStyle(
-                    color: heatingSetpointColor,
-                  ),
-                ),
-              ],
+            subtitle: ThermostatReadings(
+              currentHeatingSetpoint: device.currentHeatingSetpoint,
+              localTemperature: device.localTemperature,
             ),
             onTap: () {
               log('tapped $key');

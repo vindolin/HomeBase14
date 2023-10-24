@@ -43,7 +43,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# lib/models/secrets.dart
 ios/*
 linux/*
 macos/*
@@ -57,3 +56,6 @@ __not_tracked/*
 README.md
 dev/ignore/*
 hist.txt
+
+*.g.dart
+*.freezed.dart

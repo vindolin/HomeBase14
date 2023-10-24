@@ -163,6 +163,12 @@ IMap<String, ArmedSwitchDevice> switchDevices = IMap({
     onState: 'ON',
     offState: 'OFF',
   ),
+  'silence': ArmedSwitchDevice(
+    topicState: 'home/silence',
+    topicSet: 'home/silence',
+    onState: '1',
+    offState: '0',
+  ),
   'tv': ArmedSwitchDevice(
     topicState: 'zigbee2mqtt/plug/i002',
     topicSet: 'zigbee2mqtt/plug/i002/set',
@@ -171,6 +177,7 @@ IMap<String, ArmedSwitchDevice> switchDevices = IMap({
     stateKey: 'state',
   ),
 });
+// Don't forget to subscribe to the topics in the mqtt class! 😅
 
 @riverpod
 class SwitchDevices extends _$SwitchDevices {

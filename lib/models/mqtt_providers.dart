@@ -25,7 +25,7 @@ const subscribeTopics = [
   'zigbee2mqtt/#', // all the zigbee devices registered in zigbee2mqtt
   'stat/#', // all the tasmota devices
   'garagedoor/state', // an esp32 controlling the garage door
-  'home/burglar_alarm', // node-red controlling the burglar alarm
+  'home/#', // node-red controlling the burglar alarm
   'garden/cistern_pump/get', // node-red controlling the cistern pump
   'kittycam/privacy', // node-red controlling the privacy mode of the cat cam
   'instar/10D1DC228582/status/alarm/triggered/object', // motion detection of the door cam

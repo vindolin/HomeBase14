@@ -80,27 +80,35 @@ class ArmedButtons extends StatelessWidget {
                 textOff: translate('armed_buttons.tv.text_off'),
                 confirm: false,
               ),
+              ArmedSwitchButton(
+                id: 'silence',
+                label: translate('armed_buttons.silence.label'),
+                iconOn: Icons.volume_off,
+                iconOff: Icons.volume_up,
+                colorOn: Colors.pink,
+                colorOff: Colors.cyan,
+                textOn: translate('armed_buttons.silence.text_on'),
+                textOff: translate('armed_buttons.silence.text_off'),
+                confirm: false,
+              ),
               Random().nextDouble() > 0.5
                   ? const ShaderBox(
                       // 'raymarching_basic.frag',
                       'plasma_cube.frag',
                     )
                   : const ShaderBox(
-                      'plasma_cube.frag',
+                      'flubber.frag',
+                      parameters: [
+                        ...[0.16, 0.49, .24] /* light1 */,
+                        ...[.19, .9, .03] /* light2 */,
+                      ],
+                      slowDown: 6.0,
                       // 'pulsing_guts.frag',
                       // parameters: [
                       //   ...[4.0, 2.0, 1.0] /* color */,
                       // ],
                       // slowDown: 3,
                     ),
-              const ShaderBox(
-                'flubber.frag',
-                parameters: [
-                  ...[0.16, 0.49, .24] /* light1 */,
-                  ...[.19, .9, .03] /* light2 */,
-                ],
-                slowDown: 6.0,
-              ),
               const PrusaProgress(),
               // const Card(child: Text('BUMP')),
             ];

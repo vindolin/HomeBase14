@@ -45,6 +45,11 @@
 			"label": "TV Wohnzimmer",
 			"text_on": "TV ist an",
 			"text_off": "TV ist aus"
+		},
+		"silence": {
+			"label": "Ruhe!",
+			"text_on": "Ruhe ist an",
+			"text_off": "Ruhe ist aus"
 		}
 	},
 	"cams": {

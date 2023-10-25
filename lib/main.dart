@@ -14,7 +14,6 @@ import '/models/connectivity_provider.dart' as connectivity_rovider; // rename t
 import '/models/mqtt_providers.dart';
 import '/pages/login_page.dart';
 import '/pages/home/home_page.dart';
-// import '/pages/home/connecting_page.dart';
 import '/widgets/brightness_button_widget.dart';
 
 void main() async {
@@ -81,7 +80,6 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
   Widget build(BuildContext context) {
     final brightness = ref.watch(brightnessSettingProvider);
     final appSettings = ref.watch(appSettingsProvider);
-
     // set orientation according to app settings
     if (appSettings.onlyPortrait) {
       SystemChrome.setPreferredOrientations([
@@ -99,16 +97,10 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
       scaffoldMessengerKey: rootScaffoldMessengerKey,
       title: 'HomeBase14',
       debugShowCheckedModeBanner: false,
-      home: [
-        // show login form only when disconnected/not connecting
-        MqttConnectionState.connected,
-        MqttConnectionState.connecting,
-      ].contains(
-        ref.watch(mqttConnectionStateProvider),
-      )
-          ? const HomePage()
-          // : const ConnectingPage(),
-          : LoginFormPage(),
+      home: switch (ref.watch(mqttConnectionStateProvider)) {
+        MqttConnectionState.connected || MqttConnectionState.connecting => const HomePage(),
+        _ => LoginFormPage(),
+      },
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(

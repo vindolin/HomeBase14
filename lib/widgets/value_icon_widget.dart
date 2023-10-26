@@ -44,9 +44,8 @@ class ValueIcon extends StatelessWidget {
       );
     }
 
-    switch (type) {
-      case IconType.battery:
-        return makeIcon(
+    return switch (type) {
+      IconType.battery => makeIcon(
           iconsBattery[mapValue(
             value.toDouble(),
             0.0,
@@ -54,9 +53,8 @@ class ValueIcon extends StatelessWidget {
             0.0,
             iconsBattery.length.toDouble(),
           ).round()],
-        );
-      case IconType.wifi:
-        return makeIcon(
+        ),
+      IconType.wifi => makeIcon(
           iconsWifi[mapValue(
             value.toDouble(),
             0.0,
@@ -64,9 +62,7 @@ class ValueIcon extends StatelessWidget {
             0.0,
             iconsWifi.length.toDouble(),
           ).round()],
-        );
-      default:
-        return const Spacer();
-    }
+        ),
+    };
   }
 }

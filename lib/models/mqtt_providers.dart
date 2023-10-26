@@ -325,28 +325,20 @@ class Mqtt extends _$Mqtt {
           /// Prusa i3 MK3S
           final attribute = mqttReceivedMessage.topic.split('/').last;
 
-          // TODOs: pattern matching!
-          Map<String, dynamic> data = {};
-          switch (attribute) {
-            case 'file':
-              data = {
+          Map<String, dynamic> data = switch (attribute) {
+            'file' => {
                 'file_name': payloadDecoded['file_name'],
-              };
-              break;
-            case 'temp':
-              data = {
+              },
+            'temp' => {
                 'extruder_actual': double.tryParse(payloadDecoded['extruder_actual']) ?? 0,
                 'extruder_target': double.tryParse(payloadDecoded['extruder_target']) ?? 0,
-              };
-              break;
-            case 'progress':
-              data = {
+              },
+            'progress' => {
                 'percent_done': int.tryParse(payloadDecoded['percent_done']) ?? 0,
                 'mins_remaining': int.tryParse(payloadDecoded['mins_remaining']) ?? 0,
-              };
-              break;
-            default:
-          }
+              },
+            _ => {},
+          };
 
           prusa.state = prusa.state.addAll(IMap(data));
         } else {

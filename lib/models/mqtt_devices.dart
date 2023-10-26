@@ -301,17 +301,14 @@ abstract class AbstractMqttDevice {
   void parseData(key, value) {
     try {
       final mapping = dataMapping.firstWhere((element) => element.item1 == key);
-      if (mapping.item3 == double) {
-        data[mapping.item2] = value.toDouble();
-      } else if (mapping.item3 == int) {
-        data[mapping.item2] = value.toInt();
-      } else if (mapping.item3 == String) {
-        data[mapping.item2] = value.toString();
-      } else if (mapping.item3 == bool) {
-        data[mapping.item2] = value.toString() == 'true';
-      } else {
-        data[mapping.item2] = value;
-      }
+
+      data[mapping.item2] = switch (mapping.item3) {
+        double => value.toDouble(),
+        int => value.toInt(),
+        String => value.toString(),
+        bool => value.toString() == 'true',
+        _ => value,
+      };
     } catch (_) {}
   }
 

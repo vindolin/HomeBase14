@@ -72,6 +72,7 @@ class ThomasGroups extends ConsumerWidget {
                   'wakeup': '☕️',
                   'sleep': '😴',
                   'hibernate': '🐻',
+                  'off': '❌',
                 },
                 statTopic: 'leech/sleep',
                 setTopic: 'leech/sleep/set',

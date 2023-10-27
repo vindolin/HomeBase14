@@ -41,6 +41,7 @@ class ThomasPage extends StatelessWidget {
                     'wakeup': '☕️ - wake up',
                     'sleep': '😴 - sleep',
                     'hibernate': '🐻 - hibernate',
+                    'off': '❌ - off',
                   },
                   statTopic: 'leech/sleep',
                   setTopic: 'leech/sleep/set',

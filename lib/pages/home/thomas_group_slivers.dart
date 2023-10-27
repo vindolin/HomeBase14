@@ -18,7 +18,7 @@ class ThomasGroups extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final brightness = Theme.of(context).brightness;
 
-    final leechOnlineState = ref.watch(mqttMessagesFamProvider('leech/online'));
+    final leechOnlineState = ref.watch(mqttMessagesFamProvider('leech/online')).toString() == 'true';
 
     TextStyle titleStyle = textStyleShadowOne.copyWith(
       shadows: [

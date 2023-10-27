@@ -6,6 +6,8 @@ import '/styles/text_styles.dart';
 import '/pages/thomas/thomas_page.dart';
 import '/pages/grafana/grafana_page.dart';
 import '/pages/thomas/dropdown_select_widget.dart';
+import '/models/generic_providers.dart';
+import '/models/mqtt_devices.dart';
 
 /// Stuff only relevant for Thomas (only visible if user is Thomas)
 class ThomasGroups extends ConsumerWidget {
@@ -15,6 +17,9 @@ class ThomasGroups extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final brightness = Theme.of(context).brightness;
+
+    final leechOnlineState = ref.watch(mqttMessagesFamProvider('leech/online'));
+
     TextStyle titleStyle = textStyleShadowOne.copyWith(
       shadows: [
         Shadow(
@@ -49,10 +54,20 @@ class ThomasGroups extends ConsumerWidget {
               ),
             );
           },
-          trailing: const Row(
+          trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              DropdownSelect(
+              Text(
+                '${ref.watch(counterProvider('mqtt_message'))}',
+                style: TextStyle(
+                  color: Colors.amber.withAlpha(120),
+                  fontSize: 10,
+                ),
+              ),
+              const SizedBox(width: 32),
+              Icon(Icons.power_settings_new, color: leechOnlineState ? Colors.green : Colors.red),
+              const SizedBox(width: 16),
+              const DropdownSelect(
                 options: {
                   'wakeup': '☕️',
                   'sleep': '😴',
@@ -61,8 +76,8 @@ class ThomasGroups extends ConsumerWidget {
                 statTopic: 'leech/sleep',
                 setTopic: 'leech/sleep/set',
               ),
-              SizedBox(width: 8),
-              DropdownSelect(
+              const SizedBox(width: 16),
+              const DropdownSelect(
                 options: {
                   'tv': '📺',
                   'monitor': '💻',

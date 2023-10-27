@@ -34,7 +34,9 @@ class _DropdownSelectState extends ConsumerState<DropdownSelect> {
     return DropdownButton<String>(
       value: dropdownValue,
       onChanged: (String? value) {
+        // trigger the script
         ref.read(mqttMessagesProvider.notifier).publishCallback(widget.setTopic, value!, retain: false);
+        // persist the state status
         ref.read(mqttMessagesProvider.notifier).publishCallback(widget.statTopic, value, retain: true);
         setState(
           () {

@@ -28,7 +28,7 @@ void log(dynamic message) {
 Map<K, V> sortByDeviceName<K, V>(Map<K, V> map, Map<String, String> deviceNames) {
   return Map.fromEntries(({...map}).entries.toList()
     ..sort(
-      // first sort by device name
+      // sort by device name
       (a, b) => deviceNames[a.key]!.compareTo(
         deviceNames[b.key]!,
       ),
@@ -46,7 +46,7 @@ extension NameSorting<K, V> on Map<K, V> {
 List<T> sortByDeviceNameX<T>(List<T> list, Map<String, String> deviceNames) {
   return List.from(
     [...list]..sort(
-        // first sort by device name
+        // sort by device name
         (a, b) => deviceNames[a]!.compareTo(
           deviceNames[b]!,
         ),

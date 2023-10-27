@@ -27,7 +27,7 @@ class _DropdownSelectState extends ConsumerState<DropdownSelect> {
       ),
     );
 
-    if (mqttMessage?.payload != null) {
+    if (widget.options.keys.contains(mqttMessage?.payload)) {
       dropdownValue = mqttMessage!.payload;
     }
 

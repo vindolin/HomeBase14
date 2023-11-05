@@ -113,7 +113,7 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
       },
     ).toList();
 
-    // solar - total_w = usage
+    // xTODO solar can be empty, fix!
     for (int i = 0; i < usage.length; i++) {
       var usageValue = solar[i].value - usage[i].value;
       if (usageValue < 0) usageValue = 0.0; // correct error values

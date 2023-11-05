@@ -6,6 +6,7 @@ import '/styles/text_styles.dart';
 import '/pages/thomas/thomas_page.dart';
 import '/pages/grafana/grafana_page.dart';
 import '/pages/thomas/dropdown_select_widget.dart';
+import '/pages/placeholder_page.dart';
 import '/models/generic_providers.dart';
 import '/models/mqtt_devices.dart';
 
@@ -17,8 +18,7 @@ class ThomasGroups extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final brightness = Theme.of(context).brightness;
-
-    final leechOnlineState = ref.watch(mqttMessagesFamProvider('leech/online')).toString() == 'true';
+    final leechOnlineState = ref.watch(mqttMessagesFamProvider('leech/online')).toString();
 
     TextStyle titleStyle = textStyleShadowOne.copyWith(
       shadows: [
@@ -43,7 +43,9 @@ class ThomasGroups extends ConsumerWidget {
           title: Text(
             'Thomas',
             style: titleStyle,
+            overflow: TextOverflow.ellipsis,
           ),
+
           leading: const Icon(Icons.pest_control),
           visualDensity: visualDensity,
           onTap: () {
@@ -57,15 +59,14 @@ class ThomasGroups extends ConsumerWidget {
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                '${ref.watch(counterProvider('mqtt_message'))}',
-                style: TextStyle(
-                  color: Colors.amber.withAlpha(120),
-                  fontSize: 10,
-                ),
-              ),
-              const SizedBox(width: 32),
-              Icon(Icons.power_settings_new, color: leechOnlineState ? Colors.green : Colors.red),
+              const SizedBox(width: 16),
+              Icon(Icons.power_settings_new,
+                  color: switch (leechOnlineState) {
+                    'on' => Colors.green,
+                    'off' => Colors.red,
+                    'sleep' => Colors.amber,
+                    _ => Colors.grey,
+                  }),
               const SizedBox(width: 16),
               const DropdownSelect(
                 options: {
@@ -113,6 +114,29 @@ class ThomasGroups extends ConsumerWidget {
           },
         ),
         const Divider(),
+        ListTile(
+          trailing: Text(
+            '${ref.watch(counterProvider('mqtt_message'))}',
+            style: TextStyle(
+              color: Colors.amber.withAlpha(120),
+              fontSize: 10,
+            ),
+          ),
+        ),
+        const Divider(),
+        ListTile(
+          title: TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const PlaceholderPage(),
+                ),
+              );
+            },
+            child: const Text('login'),
+          ),
+        ),
       ]),
     );
   }

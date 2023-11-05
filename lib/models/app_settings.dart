@@ -91,16 +91,18 @@ class AppSettings extends _$AppSettings {
     await persistAppSettings();
   }
 
-  void saveCamRefreshRateWifi(int duration) {
+  void saveCamRefreshRateWifi(int duration) async {
     state = state.copyWith(
       camRefreshRateWifi: duration,
     );
+    await persistAppSettings();
   }
 
-  void saveCamRefreshRateMobile(int duration) {
+  void saveCamRefreshRateMobile(int duration) async {
     state = state.copyWith(
       camRefreshRateMobile: duration,
     );
+    await persistAppSettings();
   }
 
   void saveMqttLoginForm(Map<String, dynamic> data) {

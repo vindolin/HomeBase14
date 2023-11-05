@@ -47,6 +47,7 @@ ios/*
 linux/*
 macos/*
 web/*
+windows/*
 
 README.de.md
 assets/certs/*.crt
@@ -59,3 +60,4 @@ hist.txt
 
 *.g.dart
 *.freezed.dart
+pubspec.lock

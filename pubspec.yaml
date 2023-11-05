@@ -96,6 +96,8 @@ dependencies:
   video_player: ^2.6.1
   ir_sensor_plugin: ^0.3.0
   flutter_spinbox: ^0.13.1
+  audioplayers: ^5.2.0
+
   # cached_network_image: ^3.2.3
   # ext_video_player:
   #   # path: c:/Flutter/github/focus_detector/
@@ -150,6 +152,8 @@ flutter:
 
     - assets/certs/
     - assets/ca/
+
+    - assets/sounds/pop.wav
 
   shaders:
     - shaders/flubber.frag

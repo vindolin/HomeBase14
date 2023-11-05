@@ -1,6 +1,9 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:ir_sensor_plugin/ir_sensor_plugin.dart';
+import 'package:audioplayers/audioplayers.dart';
 
+import '/models/mqtt_providers.dart';
 import '/styles/text_styles.dart';
 import '/utils.dart';
 import '/widgets/mqtt_switch_widget.dart';
@@ -10,11 +13,11 @@ import 'dropdown_select_widget.dart';
 // import 'video_player_test_widget.dart';
 import 'video_player_test_page.dart';
 
-class ThomasPage extends StatelessWidget {
+class ThomasPage extends ConsumerWidget {
   const ThomasPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     log('ThomasPage.build()');
     return Scaffold(
       appBar: AppBar(
@@ -138,6 +141,21 @@ class ThomasPage extends StatelessWidget {
                 // final String result = await IrSensorPlugin.transmitString(pattern: samsungHex['volume_up']!);
               },
               child: const Text('IR'),
+            ),
+          ),
+          Card(
+            child: TextButton(
+              onPressed: () async {
+                final player = AudioPlayer();
+                await player.play(AssetSource('sounds/pop.wav'));
+                ref.read(mqttProvider.notifier).publish('tulpe/spray', 'ON');
+              },
+              child: const Text(
+                '🌿',
+                style: TextStyle(
+                  fontSize: 50,
+                ),
+              ),
             ),
           ),
           // Card(

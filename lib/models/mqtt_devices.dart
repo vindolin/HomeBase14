@@ -228,8 +228,8 @@ IMap<String, LightDevice> lightDevices = IMap(const {
   'esstisch': LightDevice(
     id: 'esstisch',
     name: 'Esstisch',
-    topicGet: 'stat/dose4/POWER',
-    topicSet: 'cmnd/dose4/POWER',
+    topicGet: 'stat/dose11/POWER',
+    topicSet: 'cmnd/dose11/POWER',
     state: 'OFF',
   ),
 });

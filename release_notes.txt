@@ -1,3 +1,7 @@
+// pub run build_runner watch -v --delete-conflicting-outputs
+
+
 Added silence button.
 
 // New thermostat screen for setting the heatpoint of a device.
+

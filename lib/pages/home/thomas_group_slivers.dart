@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:format/format.dart';
+import 'package:audioplayers/audioplayers.dart';
 
+import '../../utils.dart';
 import '/styles/text_styles.dart';
 import '/pages/thomas/thomas_page.dart';
 import '/pages/grafana/grafana_page.dart';
 import '/pages/thomas/dropdown_select_widget.dart';
-import '/pages/placeholder_page.dart';
-import '/models/generic_providers.dart';
+// import '/pages/placeholder_page.dart';
+import '/models/mqtt_providers.dart';
+// import '/models/generic_providers.dart';
 import '/models/mqtt_devices.dart';
+
+String lastSprayDuration(String timestamp) {
+  if (timestamp == 'null') return '---';
+  final microseconds = int.parse(timestamp);
+  final now = DateTime.now();
+  final lastSpray = DateTime.fromMicrosecondsSinceEpoch(microseconds * 1000);
+  final duration = now.difference(lastSpray);
+  return '{:02d}:{:02d}'.format(duration.inHours, duration.inMinutes % 60);
+}
 
 /// Stuff only relevant for Thomas (only visible if user is Thomas)
 class ThomasGroups extends ConsumerWidget {
@@ -19,6 +32,7 @@ class ThomasGroups extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final brightness = Theme.of(context).brightness;
     final leechOnlineState = ref.watch(mqttMessagesFamProvider('leech/online')).toString();
+    final lastSpray = ref.watch(mqttMessagesFamProvider('tulpe/spray_last')).toString();
 
     TextStyle titleStyle = textStyleShadowOne.copyWith(
       shadows: [
@@ -59,7 +73,21 @@ class ThomasGroups extends ConsumerWidget {
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(width: 16),
+              TextButton(
+                onPressed: () {},
+                onLongPress: () async {
+                  final player = AudioPlayer();
+                  await player.play(AssetSource('sounds/pop.wav'));
+                  ref.read(mqttProvider.notifier).publish('tulpe/spray', 'ON');
+                },
+                child: Text(
+                  lastSprayDuration(lastSpray),
+                  style: TextStyle(
+                    color: Colors.green.withAlpha(120),
+                    fontSize: 12,
+                  ),
+                ),
+              ),
               Icon(Icons.power_settings_new,
                   color: switch (leechOnlineState) {
                     'on' => Colors.green,
@@ -67,7 +95,7 @@ class ThomasGroups extends ConsumerWidget {
                     'sleep' => Colors.amber,
                     _ => Colors.grey,
                   }),
-              const SizedBox(width: 16),
+              const SizedBox(width: 8),
               const DropdownSelect(
                 options: {
                   'wakeup': '☕️',
@@ -114,29 +142,29 @@ class ThomasGroups extends ConsumerWidget {
           },
         ),
         const Divider(),
-        ListTile(
-          trailing: Text(
-            '${ref.watch(counterProvider('mqtt_message'))}',
-            style: TextStyle(
-              color: Colors.amber.withAlpha(120),
-              fontSize: 10,
-            ),
-          ),
-        ),
-        const Divider(),
-        ListTile(
-          title: TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const PlaceholderPage(),
-                ),
-              );
-            },
-            child: const Text('login'),
-          ),
-        ),
+        // ListTile(
+        //   trailing: Text(
+        //     '${ref.watch(counterProvider('mqtt_message'))}',
+        //     style: TextStyle(
+        //       color: Colors.amber.withAlpha(120),
+        //       fontSize: 10,
+        //     ),
+        //   ),
+        // ),
+        // const Divider(),
+        // ListTile(
+        //   title: TextButton(
+        //     onPressed: () {
+        //       Navigator.push(
+        //         context,
+        //         MaterialPageRoute(
+        //           builder: (context) => const PlaceholderPage(),
+        //         ),
+        //       );
+        //     },
+        //     child: const Text('login'),
+        //   ),
+        // ),
       ]),
     );
   }

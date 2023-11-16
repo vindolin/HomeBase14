@@ -521,8 +521,7 @@ class ThermostatDevice extends AbstractMqttDevice {
     super.publishState();
     String json = jsonEncode(
       {
-        'local_temperature': localTemperature.toDouble(),
-        'current_heating_setpoint': currentHeatingSetpoint.toDouble(),
+        'current_heating_setpoint': currentHeatingSetpoint.toInt(),
       },
     );
     log('publish> $deviceId $json');

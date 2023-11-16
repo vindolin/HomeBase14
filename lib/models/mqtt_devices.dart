@@ -303,10 +303,10 @@ abstract class AbstractMqttDevice {
       final mapping = dataMapping.firstWhere((element) => element.item1 == key);
 
       data[mapping.item2] = switch (mapping.item3) {
-        double => value.toDouble(),
-        int => value.toInt(),
-        String => value.toString(),
-        bool => value.toString() == 'true',
+        double _ => value.toDouble(),
+        int _ => value.toInt(),
+        String _ => value.toString(),
+        bool _ => value.toString() == 'true',
         _ => value,
       };
     } catch (_) {}

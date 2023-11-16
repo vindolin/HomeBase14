@@ -107,6 +107,7 @@ class Mqtt extends _$Mqtt {
     ref.onDispose(() {
       disconnect();
     });
+    return null;
   }
 
   FutureOr<mqtt.MqttConnectionState> connect() async {

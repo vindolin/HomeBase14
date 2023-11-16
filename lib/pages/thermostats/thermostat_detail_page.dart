@@ -70,7 +70,8 @@ class ThermostatDetailPage extends ConsumerWidget {
       ),
     )!;
 
-    return WillPopScope(
+    return PopScope(
+      canPop: true,
       child: Scaffold(
         appBar: AppBar(
           title: Text('${deviceNames[deviceId]}'),
@@ -79,30 +80,44 @@ class ThermostatDetailPage extends ConsumerWidget {
           child: SizedBox(
             width: 300,
             child: ThermostatInput(device: device),
-            // child: Stack(
-            //   children: [
-            //     const ShaderWidget(
-            //       'warning.frag',
-            //     ),
-            //     Center(
-            //         child: Column(
-            //       mainAxisSize: MainAxisSize.min,
-            //       children: [
-            //         Text('${deviceNames[deviceId]} - ${device?.localTemperature}°C'),
-            //         const Icon(Icons.construction),
-            //         const Text('Implement graphs for list and detail page'),
-            //         // const ThermostatGraph(),
-            //       ],
-            //     )),
-            //   ],
-            // ),
           ),
         ),
       ),
-      onWillPop: () async {
-        Navigator.pop(context);
-        return true;
-      },
     );
+
+    //   return WillPopScope(
+    //     child: Scaffold(
+    //       appBar: AppBar(
+    //         title: Text('${deviceNames[deviceId]}'),
+    //       ),
+    //       body: Center(
+    //         child: SizedBox(
+    //           width: 300,
+    //           child: ThermostatInput(device: device),
+    //           // child: Stack(
+    //           //   children: [
+    //           //     const ShaderWidget(
+    //           //       'warning.frag',
+    //           //     ),
+    //           //     Center(
+    //           //         child: Column(
+    //           //       mainAxisSize: MainAxisSize.min,
+    //           //       children: [
+    //           //         Text('${deviceNames[deviceId]} - ${device?.localTemperature}°C'),
+    //           //         const Icon(Icons.construction),
+    //           //         const Text('Implement graphs for list and detail page'),
+    //           //         // const ThermostatGraph(),
+    //           //       ],
+    //           //     )),
+    //           //   ],
+    //           // ),
+    //         ),
+    //       ),
+    //     ),
+    //     onWillPop: () async {
+    //       Navigator.pop(context);
+    //       return true;
+    //     },
+    //   );
   }
 }

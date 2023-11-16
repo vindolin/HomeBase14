@@ -15,7 +15,7 @@ class Meep extends _$Meep {
 }
 
 class MeepWidget extends ConsumerWidget {
-  const MeepWidget({Key? key}) : super(key: key);
+  const MeepWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -18,28 +18,26 @@ class HumiTempWidget extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Expanded(child: Text('HumiTemps:')),
-            ...payload.entries
-                .map(
-                  (e) => Card(
-                    color: Colors.grey[700],
-                    elevation: 5.0,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            deviceNames[e.key] ?? e.key,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Text('${e.value.humidity}%'),
-                          Text('${e.value.temperature}°C'),
-                        ],
+            ...payload.entries.map(
+              (e) => Card(
+                color: Colors.grey[700],
+                elevation: 5.0,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        deviceNames[e.key] ?? e.key,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                    ),
+                      Text('${e.value.humidity}%'),
+                      Text('${e.value.temperature}°C'),
+                    ],
                   ),
-                )
-                .toList()
+                ),
+              ),
+            )
           ],
         ),
       ),

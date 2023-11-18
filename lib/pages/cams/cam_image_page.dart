@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-
 // import '/widgets/refreshable_image_widget.dart';
 import '/pages/cams/mjpeg_cam_image.dart';
 import '/models/secrets.dart' as secrets;
@@ -23,10 +22,8 @@ class CamImagePage extends StatelessWidget {
         //   secrets.camData[camId]!['snapshotUrl']!,
         //   autoRefresh: true,
         // ),
-        child: Center(
-          child: MjpegCamImage(
-            secrets.camData[camId]!['mjpegUrlHigh']!,
-          ),
+        child: MjpegCamImage(
+          secrets.camData[camId]!['mjpegUrlHigh']!,
         ),
       ),
     );

@@ -23,19 +23,19 @@ Widget _camContainer(Widget child, BuildContext context, String camId) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => CamImagePage(camId: camId),
+          builder: (context) => CamVideoPage(camId: camId),
         ),
-        // MaterialPageRoute(
-        //   builder: (context) => MediaKitCamPage(camId: camId),
-        // ),
       );
     },
     onDoubleTap: () {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => CamVideoPage(camId: camId),
+          builder: (context) => CamImagePage(camId: camId),
         ),
+        // MaterialPageRoute(
+        //   builder: (context) => MediaKitCamPage(camId: camId),
+        // ),
       );
     },
   );

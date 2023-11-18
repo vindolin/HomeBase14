@@ -1,6 +1,8 @@
 import 'dart:io' show Platform, SecurityContext;
+import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+// import 'package:home_base_14/utils.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -12,6 +14,7 @@ import '/models/app_settings.dart';
 import '/models/mqtt_connection_state_provider.dart';
 import '/models/connectivity_provider.dart' as connectivity_rovider; // rename to avoid conflict with Connectivity class
 import '/models/mqtt_providers.dart';
+import '/models/generic_providers.dart';
 import '/pages/login_page.dart';
 import '/pages/home/home_page.dart';
 import '/widgets/brightness_button_widget.dart';
@@ -72,8 +75,18 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
         ref
             .read(connectivity_rovider.connectivityProvider.notifier)
             .setResult(await Connectivity().checkConnectivity());
+        // ref.read(appLogProvider.notifier).log('log init');
       },
     );
+
+    // the auto reconnect is not working reliable, so we try to reconnect every second
+    Timer.periodic(const Duration(seconds: 1), (timer) async {
+      final mqttConnectionState = ref.watch(mqttConnectionStateProvider);
+      if (![MqttConnectionState.connected, MqttConnectionState.connecting].contains(mqttConnectionState)) {
+        ref.read(appLogProvider.notifier).log('mqtt reconnect $mqttConnectionState');
+        ref.watch(mqttProvider.notifier).client.connect();
+      }
+    });
   }
 
   @override

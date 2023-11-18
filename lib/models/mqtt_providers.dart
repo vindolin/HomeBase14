@@ -38,6 +38,7 @@ const subscribeTopics = [
   'prusa/temp',
   'sma/tripower/totw',
   'sma/b3b461c9/total_w',
+  'tulpe/spray_last',
   'meep/#', // test device
 ];
 
@@ -155,8 +156,8 @@ class Mqtt extends _$Mqtt {
         appSettings.state.mqttPort,
       );
     }
+    // client.logging(on: true);
     client.autoReconnect = true;
-
     client.onConnected = onConnected;
     client.onDisconnected = onDisconnected;
 
@@ -236,9 +237,9 @@ class Mqtt extends _$Mqtt {
           payloadDecoded = message;
         }
 
+        // add all messages to this generic mqttMessages provider
         ref.read(mqttMessagesFamProvider(mqttReceivedMessage.topic).notifier).state = payloadDecoded;
 
-        // add all messages to this generic mqttMessages provider
         mqttMessages.state = mqttMessages.state.add(
           mqttReceivedMessage.topic,
           MqttMessage(

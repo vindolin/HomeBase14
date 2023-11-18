@@ -20,7 +20,7 @@ class MqttMessage with _$MqttMessage {
 
 @riverpod
 class MqttMessages extends _$MqttMessages {
-  late Function publishCallback; // get's injected by the mqtt class  // TODOs can this be done another way?
+  late Function publishCallback; // get's injected by the mqtt class  // TODO can this be done another way?
 
   @override
   IMap<String, MqttMessage> build() {

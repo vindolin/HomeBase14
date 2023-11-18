@@ -147,11 +147,26 @@ class ThomasPage extends ConsumerWidget {
             child: TextButton(
               onPressed: () async {
                 final player = AudioPlayer();
-                await player.play(AssetSource('sounds/pop.wav'));
                 ref.read(mqttProvider.notifier).publish('tulpe/spray', 'ON');
+                await player.play(AssetSource('sounds/pop.wav'));
               },
               child: const Text(
                 '🌿',
+                style: TextStyle(
+                  fontSize: 50,
+                ),
+              ),
+            ),
+          ),
+          Card(
+            child: TextButton(
+              onPressed: () async {
+                final player = AudioPlayer();
+                ref.read(mqttProvider.notifier).publish('bluekey/login', '1');
+                await player.play(AssetSource('sounds/pop.wav'));
+              },
+              child: const Text(
+                '👾',
                 style: TextStyle(
                   fontSize: 50,
                 ),

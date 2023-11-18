@@ -6,7 +6,12 @@ class PlaceholderPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      body: Container(color: Colors.green, child: const Text('placeholder')),
+      appBar: AppBar(
+        title: const Text('Placeholder'),
+      ),
+      body: const Center(
+        child: Text('Placeholder'),
+      ),
     );
   }
 }

@@ -149,7 +149,6 @@ class Mqtt extends _$Mqtt {
 
       client.securityContext = context;
       client.secure = true;
-      client.unsub
     } else {
       client = MqttServerClient.withPort(
         appSettings.state.mqttAddress,

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mqtt_client/mqtt_client.dart' as mqtt;
+import 'package:mqtt5_client/mqtt5_client.dart' as mqtt;
 
 typedef MqttConnectionState = mqtt.MqttConnectionState;
 

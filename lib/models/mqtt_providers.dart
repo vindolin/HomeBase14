@@ -7,8 +7,8 @@ import 'dart:io';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mqtt_client/mqtt_client.dart' as mqtt;
-import 'package:mqtt_client/mqtt_server_client.dart';
+import 'package:mqtt5_client/mqtt5_client.dart' as mqtt;
+import 'package:mqtt5_client/mqtt5_server_client.dart';
 import 'package:nanoid/nanoid.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -149,6 +149,7 @@ class Mqtt extends _$Mqtt {
 
       client.securityContext = context;
       client.secure = true;
+      client.unsub
     } else {
       client = MqttServerClient.withPort(
         appSettings.state.mqttAddress,
@@ -167,7 +168,7 @@ class Mqtt extends _$Mqtt {
     //   const Duration(milliseconds: 500),
     // );
 
-    mqtt.MqttClientConnectionStatus? mqttConnectionStatus =
+    mqtt.MqttConnectionStatus? mqttConnectionStatus =
         await client.connect(appSettings.state.mqttUsername, appSettings.state.mqttPassword).catchError(
       // await client.connect().catchError(
       (error) {
@@ -186,7 +187,7 @@ class Mqtt extends _$Mqtt {
   // generic publish function
   void publish(String topic, String payload, {bool retain = false}) {
     log('publishing $topic: $payload');
-    final builder = mqtt.MqttClientPayloadBuilder();
+    final builder = mqtt.MqttPayloadBuilder();
     builder.addString(payload);
     client.publishMessage(topic, mqtt.MqttQos.atLeastOnce, builder.payload!, retain: retain);
   }
@@ -194,7 +195,7 @@ class Mqtt extends _$Mqtt {
   // generic publish function with retain (for dependency injection)
   void publishRetained(String topic, String payload) {
     log('publishing $topic: $payload');
-    final builder = mqtt.MqttClientPayloadBuilder();
+    final builder = mqtt.MqttPayloadBuilder();
     builder.addString(payload);
     client.publishMessage(topic, mqtt.MqttQos.atLeastOnce, builder.payload!, retain: true);
   }
@@ -220,13 +221,13 @@ class Mqtt extends _$Mqtt {
       log('ping response client callback invoked');
     };
 
-    client.updates?.listen((List<mqtt.MqttReceivedMessage<mqtt.MqttMessage>> messages) {
+    client.updates.listen((List<mqtt.MqttReceivedMessage<mqtt.MqttMessage>> messages) {
       // iterate over all new messages
       for (mqtt.MqttReceivedMessage mqttReceivedMessage in messages) {
         ref.watch(counterProvider('mqtt_message').notifier).increment();
 
         final payload = mqttReceivedMessage.payload as mqtt.MqttPublishMessage;
-        final String message = const Utf8Decoder().convert(payload.payload.message);
+        final String message = utf8.decode(payload.payload.message!);
 
         dynamic payloadDecoded;
         // try to parse the payload as json
@@ -241,15 +242,15 @@ class Mqtt extends _$Mqtt {
         ref.read(mqttMessagesFamProvider(mqttReceivedMessage.topic).notifier).state = payloadDecoded;
 
         mqttMessages.state = mqttMessages.state.add(
-          mqttReceivedMessage.topic,
+          mqttReceivedMessage.topic!,
           MqttMessage(
-            topic: mqttReceivedMessage.topic,
+            topic: mqttReceivedMessage.topic!,
             payload: message,
           ),
         );
 
         // look for topics that look like our schema zigbee2mqtt/curtain/i001 for devices and add them to the mqttDevices
-        RegExpMatch? match = RegExp(r'zigbee2mqtt/(?<type>\w+)/(?<id>i\d+)$').firstMatch(mqttReceivedMessage.topic);
+        RegExpMatch? match = RegExp(r'zigbee2mqtt/(?<type>\w+)/(?<id>i\d+)$').firstMatch(mqttReceivedMessage.topic!);
         if (match != null) {
           // it's a zigbee2mqtt message
           String deviceType = match.namedGroup('type')!; // e.g. curtain
@@ -323,9 +324,9 @@ class Mqtt extends _$Mqtt {
         } else if (mqttReceivedMessage.topic == 'zigbee2mqtt/bridge/devices') {
           /// we find the device name (description) in the zigbee2mqtt/bridge/devices message
           setDeviceNameMap(payloadDecoded);
-        } else if (mqttReceivedMessage.topic.startsWith('prusa/')) {
+        } else if (mqttReceivedMessage.topic!.startsWith('prusa/')) {
           /// Prusa i3 MK3S
-          final attribute = mqttReceivedMessage.topic.split('/').last;
+          final attribute = mqttReceivedMessage.topic!.split('/').last;
 
           Map<String, dynamic> data = switch (attribute) {
             'file' => {

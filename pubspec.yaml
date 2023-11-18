@@ -97,6 +97,9 @@ dependencies:
   ir_sensor_plugin: ^0.3.0
   flutter_spinbox: ^0.13.1
   audioplayers: ^5.2.0
+  media_kit: ^1.1.10+1
+  media_kit_video: ^1.2.4
+  media_kit_libs_video: ^1.0.4
 
   # cached_network_image: ^3.2.3
   # ext_video_player:

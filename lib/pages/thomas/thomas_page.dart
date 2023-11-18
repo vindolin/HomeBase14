@@ -136,43 +136,82 @@ class ThomasPage extends ConsumerWidget {
                 // final String result = await IrSensorPlugin.transmitString(pattern: samsungHex['power']!);
                 // final String result = await IrSensorPlugin.transmitString(pattern: samsungHex['volume_up']!);
                 // await IrSensorPlugin.setFrequencies(38000);
-                await IrSensorPlugin.transmitString(pattern: necHex['power']!);
+                // await IrSensorPlugin.transmitString(pattern: necHex['power']!);
+                await IrSensorPlugin.transmitString(pattern: samsungHex['power']!);
                 // transmit NEC pattern
                 // final String result = await IrSensorPlugin.transmitString(pattern: samsungHex['volume_up']!);
               },
               child: const Text('IR'),
             ),
           ),
-          Card(
-            child: TextButton(
-              onPressed: () async {
-                final player = AudioPlayer();
-                ref.read(mqttProvider.notifier).publish('tulpe/spray', 'ON');
-                await player.play(AssetSource('sounds/pop.wav'));
-              },
-              child: const Text(
-                '🌿',
-                style: TextStyle(
-                  fontSize: 50,
+          ...[
+            {
+              'topic': 'tulpe/spray',
+              'icon': '🌿',
+            },
+            {
+              'topic': 'tulpe/soda',
+              'icon': '💦',
+            },
+            {
+              'topic': 'bluekey/login',
+              'icon': '👾',
+            },
+            {
+              'topic': 'bluekey/escape',
+              'icon': '✖️',
+            },
+            {
+              'topic': 'bluekey/password',
+              'icon': '🔑',
+            },
+          ].map((e) {
+            return Card(
+              child: TextButton(
+                onPressed: () async {
+                  final player = AudioPlayer();
+                  ref.read(mqttProvider.notifier).publish(e['topic']!, 'ON');
+                  await player.play(AssetSource('sounds/pop.wav'));
+                },
+                child: Text(
+                  e['icon']!,
+                  style: const TextStyle(
+                    fontSize: 50,
+                  ),
                 ),
               ),
-            ),
-          ),
-          Card(
-            child: TextButton(
-              onPressed: () async {
-                final player = AudioPlayer();
-                ref.read(mqttProvider.notifier).publish('bluekey/login', '1');
-                await player.play(AssetSource('sounds/pop.wav'));
-              },
-              child: const Text(
-                '👾',
-                style: TextStyle(
-                  fontSize: 50,
-                ),
-              ),
-            ),
-          ),
+            );
+          }),
+          // Card(
+          //   child: TextButton(
+          //     onPressed: () async {
+          //       final player = AudioPlayer();
+          //       ref.read(mqttProvider.notifier).publish('tulpe/spray', 'ON');
+          //       await player.play(AssetSource('sounds/pop.wav'));
+          //     },
+          //     child: const Text(
+          //       '🌿',
+          //       style: TextStyle(
+          //         fontSize: 50,
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // Card(
+          //   child: TextButton(
+          //     onPressed: () async {
+          //       final player = AudioPlayer();
+          //       ref.read(mqttProvider.notifier).publish('bluekey/login', '1');
+          //       await player.play(AssetSource('sounds/pop.wav'));
+          //     },
+          //     child: const Text(
+          //       '👾',
+          //       style: TextStyle(
+          //         fontSize: 50,
+          //       ),
+          //     ),
+          //   ),
+          // ),
           // Card(
           //   // child: VideoPlayerTestWidget(),
           //   child: TextButton(

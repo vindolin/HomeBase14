@@ -6,20 +6,19 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_shadow/simple_shadow.dart';
 
-import '/pages/home/widgets/temperatures_widget.dart';
-import '/pages/home/armed_switch_buttons/armed_switch_buttons.dart';
-
+import '/styles/styles.dart';
 import '/models/app_settings.dart';
 import '/models/mqtt_providers.dart';
 import '/models/app_version_provider.dart';
-
 import '/widgets/stream_blinker_widget.dart';
 import '/widgets/connection_bar_widget.dart';
+import '/pages/home/widgets/temperatures_widget.dart';
+import '/pages/home/armed_switch_buttons/armed_switch_buttons.dart';
 
+import 'widgets/solar_watts_widget.dart';
 import 'device_group_slivers.dart';
 import 'thomas_group_slivers.dart';
 import 'cameras.dart';
-import 'widgets/solar_watts_widget.dart';
 import 'settings_form_widget.dart';
 
 class Delegate extends SliverPersistentHeaderDelegate {
@@ -97,22 +96,7 @@ class HomePage extends ConsumerWidget {
         },
         child: Container(
           // glance effect of background
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              stops: [0.0, 0.6, 1.0],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color.fromARGB(150, 0, 0, 0),
-                Color.fromARGB(10, 0, 0, 0),
-                Color.fromARGB(150, 0, 0, 0),
-              ],
-            ),
-            image: DecorationImage(
-              repeat: ImageRepeat.repeat,
-              image: AssetImage('assets/images/bg_pattern.png'),
-            ),
-          ),
+          decoration: fancyBackground,
           child: Stack(
             children: [
               StreamContainerBlinker(

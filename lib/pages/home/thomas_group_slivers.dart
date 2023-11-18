@@ -5,7 +5,7 @@ import 'package:format/format.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 // import '../../utils.dart';
-import '/styles/text_styles.dart';
+import '/styles/styles.dart';
 import '/pages/thomas/thomas_page.dart';
 import '/pages/grafana/grafana_page.dart';
 import '/pages/thomas/dropdown_select_widget.dart';

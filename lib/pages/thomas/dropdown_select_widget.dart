@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '/models/mqtt_devices.dart';
-import '/styles/text_styles.dart';
+import '/styles/styles.dart';
 
 class DropdownSelect extends ConsumerStatefulWidget {
   final String statTopic;

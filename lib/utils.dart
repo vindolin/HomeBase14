@@ -43,17 +43,6 @@ extension NameSorting<K, V> on Map<K, V> {
   }
 }
 
-List<T> sortByDeviceNameX<T>(List<T> list, Map<String, String> deviceNames) {
-  return List.from(
-    [...list]..sort(
-        // sort by device name
-        (a, b) => deviceNames[a]!.compareTo(
-          deviceNames[b]!,
-        ),
-      ),
-  );
-}
-
 typedef CompareFn<A, B> = int Function(A a, B b);
 
 List<T> sortByList<T>(List<T> list, List<CompareFn> compareFns) {

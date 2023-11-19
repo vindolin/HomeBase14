@@ -9,7 +9,7 @@
 // }) async {
 //   final bool? isConfirm = await showDialog<bool>(
 //     context: context,
-//     builder: (_) => WillPopScope(
+//     builder: (_) => PopScope(
 //       child: AlertDialog(
 //         title: title,
 //         content: content ?? const Text('Are you sure continue?'),
@@ -24,10 +24,6 @@
 //           ),
 //         ],
 //       ),
-//       onWillPop: () async {
-//         Navigator.pop(context, false);
-//         return true;
-//       },
 //     ),
 //   );
 

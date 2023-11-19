@@ -12,7 +12,7 @@ import '/pages/lights/widgets/lights_off_button_widget.dart';
 import '/pages/curtains/widgets/curtain_actions.dart';
 import '/pages/other/other_page.dart';
 import '/pages/other/widgets/doors_widget.dart';
-import '/pages/thermostats/thermostat_colors.dart';
+import '/pages/thermostats/widgets/thermostat_readings_widget.dart';
 
 class DeviceGroups extends ConsumerWidget {
   const DeviceGroups({super.key});

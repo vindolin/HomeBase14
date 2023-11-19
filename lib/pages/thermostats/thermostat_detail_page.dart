@@ -4,7 +4,7 @@ import 'package:flutter_spinbox/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
 import '/models/mqtt_devices.dart';
-import 'thermostat_colors.dart';
+import 'widgets/thermostat_readings_widget.dart';
 
 // import '/widgets/shader_widget.dart';
 // import 'graph_widget.dart';
@@ -84,40 +84,5 @@ class ThermostatDetailPage extends ConsumerWidget {
         ),
       ),
     );
-
-    //   return WillPopScope(
-    //     child: Scaffold(
-    //       appBar: AppBar(
-    //         title: Text('${deviceNames[deviceId]}'),
-    //       ),
-    //       body: Center(
-    //         child: SizedBox(
-    //           width: 300,
-    //           child: ThermostatInput(device: device),
-    //           // child: Stack(
-    //           //   children: [
-    //           //     const ShaderWidget(
-    //           //       'warning.frag',
-    //           //     ),
-    //           //     Center(
-    //           //         child: Column(
-    //           //       mainAxisSize: MainAxisSize.min,
-    //           //       children: [
-    //           //         Text('${deviceNames[deviceId]} - ${device?.localTemperature}°C'),
-    //           //         const Icon(Icons.construction),
-    //           //         const Text('Implement graphs for list and detail page'),
-    //           //         // const ThermostatGraph(),
-    //           //       ],
-    //           //     )),
-    //           //   ],
-    //           // ),
-    //         ),
-    //       ),
-    //     ),
-    //     onWillPop: () async {
-    //       Navigator.pop(context);
-    //       return true;
-    //     },
-    //   );
   }
 }

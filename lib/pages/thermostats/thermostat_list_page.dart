@@ -8,7 +8,7 @@ import '/utils.dart';
 import '/models/mqtt_devices.dart';
 import '/pages/thermostats/thermostat_detail_page.dart';
 import '/widgets/connection_bar_widget.dart';
-import 'thermostat_colors.dart';
+import 'widgets/thermostat_readings_widget.dart';
 
 /// Shows a list of all thermostats, sorted by name and temperature.
 class ThermostatListPage extends ConsumerWidget {

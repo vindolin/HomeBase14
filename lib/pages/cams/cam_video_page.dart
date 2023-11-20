@@ -18,7 +18,7 @@ class CamVideoPage extends ConsumerWidget {
       body: RotatedBox(
         quarterTurns: MediaQuery.of(context).orientation == Orientation.portrait ? 1 : 0,
         child: MediaKitVideoWidget(
-          videoUrl: secrets.camData[camId]!['rtspUrlHigh']!,
+          videoUrl: secrets.camData[camId]!['videoStreamUrl']!,
         ),
       ),
     );

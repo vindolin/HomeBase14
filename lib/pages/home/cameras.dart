@@ -59,15 +59,6 @@ class Cameras extends ConsumerWidget {
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
             final widgets = ['door', 'garden'].map(
-              // (camId) {
-              //   return _camContainer(
-              //     MjpegCamImage(
-              //       secrets.camData[camId]!['mjpegUrlLow']!,
-              //     ),
-              //     context,
-              //     camId,
-              //   );
-              // },
               (camId) {
                 return _camContainer(
                   RefreshableImage(

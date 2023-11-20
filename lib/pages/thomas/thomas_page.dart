@@ -185,68 +185,6 @@ class ThomasPage extends ConsumerWidget {
                 ),
               );
             }),
-            // Card(
-            //   child: TextButton(
-            //     onPressed: () async {
-            //       final player = AudioPlayer();
-            //       ref.read(mqttProvider.notifier).publish('tulpe/spray', 'ON');
-            //       await player.play(AssetSource('sounds/pop.wav'));
-            //     },
-            //     child: const Text(
-            //       '🌿',
-            //       style: TextStyle(
-            //         fontSize: 50,
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            // Card(
-            //   child: TextButton(
-            //     onPressed: () async {
-            //       final player = AudioPlayer();
-            //       ref.read(mqttProvider.notifier).publish('bluekey/login', '1');
-            //       await player.play(AssetSource('sounds/pop.wav'));
-            //     },
-            //     child: const Text(
-            //       '👾',
-            //       style: TextStyle(
-            //         fontSize: 50,
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            // Card(
-            //   // child: VideoPlayerTestWidget(),
-            //   child: TextButton(
-            //     onPressed: () {
-            //       Navigator.push(
-            //         context,
-            //         MaterialPageRoute(
-            //           builder: (context) => const VideoApp(),
-            //         ),
-            //       );
-            //     },
-            //     // child: const WebviewVideo(),
-            //     child: const Text('Video Player Test'),
-            //   ),
-            // ),
-            // Card(
-            //   // child: VideoPlayerTestWidget(),
-            //   child: TextButton(
-            //     onPressed: () {
-            //       Navigator.push(
-            //         context,
-            //         MaterialPageRoute(
-            //           builder: (context) => VideoScreen(
-            //             // url: 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4',
-            //             url: secrets.camData['door']!['videoUrl']!,
-            //           ),
-            //         ),
-            //       );
-            //     },
-            //     child: const Text('Video Player Test'),
-            //   ),
-            // ),
           ],
         ),
       ),

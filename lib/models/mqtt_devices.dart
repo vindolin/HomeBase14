@@ -1,27 +1,25 @@
 import 'dart:convert';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:meta/meta.dart';
 import 'package:tuple/tuple.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 import '/utils.dart';
 
 part 'mqtt_devices.g.dart';
-part 'mqtt_devices.freezed.dart';
 
-@freezed
-class MqttMessage with _$MqttMessage {
-  const factory MqttMessage({
-    required String topic,
-    required String payload,
-  }) = _MqttMessage;
+@immutable
+class MqttMessage {
+  final String topic;
+  final String payload;
+
+  const MqttMessage(this.topic, this.payload);
 }
 
 @riverpod
 class MqttMessages extends _$MqttMessages {
-  late Function publishCallback; // get's injected by the mqtt class  // TODO can this be done another way?
-
   @override
   IMap<String, MqttMessage> build() {
     return IMap();
@@ -125,17 +123,24 @@ class SingleCurtainDevices extends _$SingleCurtainDevices {
   }
 }
 
-@unfreezed
-class ArmedSwitchDevice with _$ArmedSwitchDevice {
-  factory ArmedSwitchDevice({
-    required final String topicState,
-    required final String topicSet,
-    required final String onState,
-    required final String offState,
-    @Default(null) final String? state,
-    @Default(false) bool transitioning,
-    @Default(null) final String? stateKey,
-  }) = _SwitchDevice;
+class ArmedSwitchDevice {
+  final String topicState;
+  final String topicSet;
+  final String onState;
+  final String offState;
+  final String? state;
+  final bool transitioning;
+  final String? stateKey;
+
+  ArmedSwitchDevice({
+    required this.topicState,
+    required this.topicSet,
+    required this.onState,
+    required this.offState,
+    this.state,
+    this.transitioning = false,
+    this.stateKey,
+  });
 }
 
 IMap<String, ArmedSwitchDevice> switchDevices = IMap({
@@ -199,15 +204,21 @@ class SwitchDevices extends _$SwitchDevices {
   }
 }
 
-@freezed
-class LightDevice with _$LightDevice {
-  const factory LightDevice({
-    required String id,
-    required String name,
-    required String topicGet,
-    required String topicSet,
-    required String state,
-  }) = _LightDevice;
+@immutable
+class LightDevice {
+  final String id;
+  final String name;
+  final String topicGet;
+  final String topicSet;
+  final String state;
+
+  const LightDevice({
+    required this.id,
+    required this.name,
+    required this.topicGet,
+    required this.topicSet,
+    required this.state,
+  });
 }
 
 IMap<String, LightDevice> lightDevices = IMap(const {
@@ -633,4 +644,9 @@ class HumiTempDevices extends _$HumiTempDevices {
   IMap<String, HumiTempDevice> build() {
     return IMap();
   }
+}
+
+@riverpod
+gunk(Ref ref) {
+  return 'blub';
 }

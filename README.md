@@ -1,5 +1,7 @@
 # HomeBase14 - a custom home automation app
 
+[![Flutter](https://github.com/vindolin/HomeBase14/actions/workflows/flutter.yaml/badge.svg)](https://github.com/vindolin/HomeBase14/actions/workflows/flutter.yaml)
+
 **Warning!** This app only works in my specific environment but maybe parts can be useful for beginners looking into writing a Flutter/Riverpod/MQTT app themselves.
 
 You can find a bare bones example here: https://github.com/vindolin/simple_mqtt_riverpod_example

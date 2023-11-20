@@ -53,7 +53,7 @@ class ThermostatListPage extends ConsumerWidget {
           // log(key);
           final tempColor = getTemperatureColor(
             device.localTemperature,
-            device.currentHeatingSetpoint,
+            device.currentHeatingSetpoint.toDouble(),
           );
 
           return ListTile(

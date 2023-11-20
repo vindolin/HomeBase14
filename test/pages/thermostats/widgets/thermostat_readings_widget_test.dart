@@ -8,15 +8,15 @@ void main() {
     () {
       testWidgets('Testing ThermostatReadings', (widgetTester) async {
         for (final e in [
-          {'currentHeatingSetpoint': 21, 'localTemperature': 21, 'expectedColor': Colors.green}, // just right
-          {'currentHeatingSetpoint': 21, 'localTemperature': 20, 'expectedColor': Colors.blue}, // too cold
-          {'currentHeatingSetpoint': 21, 'localTemperature': 22, 'expectedColor': Colors.orange}, // too hot
+          {'currentHeatingSetpoint': 21, 'localTemperature': 21.0, 'expectedColor': Colors.green}, // just right
+          {'currentHeatingSetpoint': 22, 'localTemperature': 21.0, 'expectedColor': Colors.blue}, // too cold
+          {'currentHeatingSetpoint': 19, 'localTemperature': 21.0, 'expectedColor': Colors.orange}, // too hot
         ]) {
           await widgetTester.pumpWidget(
             MaterialApp(
               home: Scaffold(
                 body: ThermostatReadings(
-                  currentHeatingSetpoint: e['currentHeatingSetpoint'] as double,
+                  currentHeatingSetpoint: e['currentHeatingSetpoint'] as int,
                   localTemperature: e['localTemperature'] as double,
                 ),
               ),
@@ -25,7 +25,8 @@ void main() {
 
           await widgetTester.pumpAndSettle();
           final found = find.text('21.0°C').evaluate().single.widget as Text;
-          expect(found.style!.color!.value, e['expectedColor'] as MaterialColor);
+          // check if the color matches
+          expect(found.style!.color, e['expectedColor'] as MaterialColor);
         }
       });
     },

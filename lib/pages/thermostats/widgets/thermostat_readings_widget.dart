@@ -17,14 +17,18 @@ MaterialColor? getTemperatureColor(double temperature, double setpoint) {
 
 class ThermostatReadings extends StatelessWidget {
   final double localTemperature;
-  final double currentHeatingSetpoint;
-  const ThermostatReadings({super.key, required this.localTemperature, required this.currentHeatingSetpoint});
+  final int currentHeatingSetpoint;
+  const ThermostatReadings({
+    super.key,
+    required this.localTemperature,
+    required this.currentHeatingSetpoint,
+  });
 
   @override
   Widget build(BuildContext context) {
     final tempColor = getTemperatureColor(
       localTemperature,
-      currentHeatingSetpoint,
+      currentHeatingSetpoint.toDouble(),
     );
 
     return Row(

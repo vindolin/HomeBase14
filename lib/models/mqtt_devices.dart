@@ -491,7 +491,7 @@ class DoorDevices extends _$DoorDevices {
 
 class ThermostatDevice extends AbstractMqttDevice {
   double localTemperature = 0;
-  double currentHeatingSetpoint = 0;
+  int currentHeatingSetpoint = 0;
 
   // @override
   // final dataMapping = [
@@ -513,7 +513,7 @@ class ThermostatDevice extends AbstractMqttDevice {
         localTemperature = value.toDouble();
         break;
       case 'current_heating_setpoint':
-        currentHeatingSetpoint = value.toDouble();
+        currentHeatingSetpoint = value;
         break;
     }
     super.readValue(key, value);

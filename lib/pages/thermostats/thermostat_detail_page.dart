@@ -34,7 +34,7 @@ class _ThermostatInputState extends ConsumerState<ThermostatInput> {
           direction: Axis.vertical,
           incrementIcon: const Icon(Icons.keyboard_arrow_up, size: 32),
           decrementIcon: const Icon(Icons.keyboard_arrow_down, size: 32),
-          value: widget.device.currentHeatingSetpoint,
+          value: widget.device.currentHeatingSetpoint.toDouble(),
           onChanged: (value) {
             setState(() {
               newHeatingSetpoint = value;
@@ -44,7 +44,7 @@ class _ThermostatInputState extends ConsumerState<ThermostatInput> {
         ElevatedButton(
           onPressed: newHeatingSetpoint != null
               ? () {
-                  widget.device.currentHeatingSetpoint = newHeatingSetpoint!;
+                  widget.device.currentHeatingSetpoint = newHeatingSetpoint!.toInt();
                   widget.device.publishState();
                 }
               : null,

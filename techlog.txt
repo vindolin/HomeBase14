@@ -1,0 +1,7 @@
+// compile freezed/riverpod parts
+dart run build_runner watch -v
+dart run build_runner watch -v --delete-conflicting-outputs
+
+// ignore changes to tracked file
+git update-index --assume-unchanged lib/models/secrets.dart
+

@@ -10,12 +10,14 @@ import '/utils.dart';
 part 'mqtt_devices.g.dart';
 part 'mqtt_devices.freezed.dart';
 
-@freezed
-class MqttMessage with _$MqttMessage {
-  const factory MqttMessage({
-    required String topic,
-    required String payload,
-  }) = _MqttMessage;
+class MqttMessage {
+  final String topic;
+  final String payload;
+
+  MqttMessage({
+    required this.topic,
+    required this.payload,
+  });
 }
 
 @riverpod

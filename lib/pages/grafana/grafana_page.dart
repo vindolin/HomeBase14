@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import '/models/secrets.dart' as secrets;
+import '/models/network_addresses.dart';
 
 class GrafanaPage extends StatefulWidget {
   const GrafanaPage({super.key});
@@ -35,7 +35,7 @@ class _GrafanaPageState extends State<GrafanaPage> {
           },
         ),
       )
-      ..loadRequest(Uri.parse(secrets.grafanaAdddress));
+      ..loadRequest(Uri.parse(grafanaAdddress));
   }
 
   @override

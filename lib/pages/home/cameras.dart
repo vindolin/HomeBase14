@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '/models/secrets.dart' as secrets;
 import '/widgets/refreshable_image_widget.dart';
 import '/models/mqtt_providers.dart'; //need this for doorAlarmProvider (not needed anymore)
 import '/pages/cams/cam_image_page.dart';
 import '/pages/cams/cam_video_page.dart';
+import '../../models/network_addresses.dart';
 // import '/pages/cams/media_kit_cam_page.dart';
 // import '/pages/cams/mjpeg_cam_image.dart';
 
@@ -62,7 +62,7 @@ class Cameras extends ConsumerWidget {
               (camId) {
                 return _camContainer(
                   RefreshableImage(
-                    secrets.camData[camId]!['snapshotUrl']!,
+                    camSettings[camId]!['snapshotUrl']!,
                     streamProvider: camId == 'door' ? doorAlarmProvider : null,
                     autoRefresh: true,
                   ),

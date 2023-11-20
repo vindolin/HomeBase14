@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import '/models/secrets.dart' as secrets;
+import '/models/network_addresses.dart';
 
 class DoorCamVideo extends StatefulWidget {
   const DoorCamVideo({super.key});
@@ -37,7 +37,7 @@ class _DoorCamVideoState extends State<DoorCamVideo> {
           },
         ),
       )
-      ..loadRequest(Uri.parse(secrets.doorVideoWebsocketUrl));
+      ..loadRequest(Uri.parse(doorVideoWebsocketUrl));
   }
 
   @override

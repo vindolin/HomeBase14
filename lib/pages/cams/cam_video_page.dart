@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import '/widgets/media_kit_video_widget.dart';
-import '/models/secrets.dart' as secrets;
+import '../../models/network_addresses.dart';
 
 class CamVideoPage extends ConsumerWidget {
   final String camId;
@@ -18,7 +18,7 @@ class CamVideoPage extends ConsumerWidget {
       body: RotatedBox(
         quarterTurns: MediaQuery.of(context).orientation == Orientation.portrait ? 1 : 0,
         child: MediaKitVideoWidget(
-          videoUrl: secrets.camData[camId]!['videoStreamUrl']!,
+          videoUrl: camSettings[camId]!['videoStreamUrl']!,
         ),
       ),
     );

@@ -4,11 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-// import 'package:raw_sound/raw_sound_platform.dart';
-// import 'package:raw_sound/raw_sound_player.dart';
-///https://pub.dev/packages/raw_sound
-
-import '/models/secrets.dart' as secrets;
+import '/models/network_addresses.dart';
 import 'shader_widget.dart';
 
 /// this widget draws a graph of the last 12 hours of solar and usage data
@@ -50,7 +46,7 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
   late Future<List<List<TimePoint>>> result;
 
   Future<List<List<TimePoint>>> fetchResult() async {
-    var url = secrets.influxdbAddress;
+    var url = influxdbAddress;
 
     final dio = Dio();
 

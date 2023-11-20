@@ -114,11 +114,18 @@ class HomePage extends ConsumerWidget {
                     leading: Container(),
                     title: Stack(
                       children: [
+                        // title
                         Text(
                           translate('app_bar.title'),
                           style: GoogleFonts.robotoCondensed(
+                            // style: GoogleFonts.koulen(
+                            // style: GoogleFonts.squadaOne(
+                            // style: GoogleFonts.londrinaSolid(
+                            // style: GoogleFonts.bakbakOne(
+                            // style: GoogleFonts.russoOne(
+                            // style: GoogleFonts.denkOne(
                             textStyle: const TextStyle(
-                              fontSize: 40,
+                              fontSize: 42,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                               shadows: [
@@ -131,6 +138,7 @@ class HomePage extends ConsumerWidget {
                             ),
                           ),
                         ),
+                        // 14 in a circle
                         Positioned(
                           right: 0,
                           top: -5,
@@ -152,7 +160,7 @@ class HomePage extends ConsumerWidget {
                           bottom: 0,
                           child: Text(
                             Platform.operatingSystemVersion,
-                            style: const TextStyle(fontSize: 8),
+                            style: const TextStyle(fontSize: 10),
                           ),
                         ),
                         Positioned(
@@ -164,7 +172,7 @@ class HomePage extends ConsumerWidget {
                               loading: () => '...',
                               error: (e, s) => '...',
                             ),
-                            style: const TextStyle(fontSize: 8, color: Colors.black, fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontSize: 10, color: Colors.black, fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],

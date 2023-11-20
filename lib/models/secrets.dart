@@ -34,12 +34,11 @@ Map<String, Map<String, String>> camData = {
   },
 };
 
-const doorVideoWebsocketUrl =
-    'https://secret.com:0000/mini.html'; // TODOs add nginx proxy but not used at the moment
+const doorVideoWebsocketUrl = 'https://secret.com:0000/mini.html'; // TODOs add nginx proxy but not used at the moment
 const grafanaAdddress = 'https://secret.com:0000/d/SECRET/homebase?orgId=1&refresh=10s&from=now-12h&to=now';
 
 const influxdbUser = 'app';
-const influxdbPassword = 'WhvjcUC95rVgXwxS5FQbYnaJe49x89nF';
+const influxdbPassword = 'SECRET';
 const influxdbAddress = 'https://$influxdbUser:$influxdbPassword@secret.com:0000/query?pretty=false';
 const influxdbDatabase = 'sensors';
 

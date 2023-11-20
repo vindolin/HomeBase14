@@ -4,4 +4,4 @@ dart run build_runner watch -v --delete-conflicting-outputs
 
 // ignore changes to tracked file
 git update-index --assume-unchanged lib/models/secrets.dart
-
+git update-index --no-assume-unchanged lib/models/secrets.dart

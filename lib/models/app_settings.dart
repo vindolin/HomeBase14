@@ -137,8 +137,11 @@ class AppSettings extends _$AppSettings {
     String? userPref = prefs.getString('settings');
     String appSettings;
     if (userPref != null) {
-      final encrypted = encrypt.Encrypted.fromBase64(userPref);
-      appSettings = encrypter.decrypt(encrypted, iv: iv);
+      // decrypt the connection data
+      appSettings = encrypter.decrypt(
+        encrypt.Encrypted.fromBase64(userPref),
+        iv: iv,
+      );
 
       try {
         state = AppSettingsCls.fromJson(jsonDecode(appSettings));

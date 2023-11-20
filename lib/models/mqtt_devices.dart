@@ -10,11 +10,12 @@ import '/utils.dart';
 part 'mqtt_devices.g.dart';
 part 'mqtt_devices.freezed.dart';
 
+@immutable
 class MqttMessage {
   final String topic;
   final String payload;
 
-  MqttMessage({
+  const MqttMessage({
     required this.topic,
     required this.payload,
   });

@@ -152,10 +152,10 @@ class ThomasPage extends ConsumerWidget {
                 'topic': 'tulpe/spray',
                 'icon': '🌿',
               },
-              {
-                'topic': 'tulpe/soda',
-                'icon': '💦',
-              },
+              // {
+              //   'topic': 'tulpe/soda',
+              //   'icon': '💦',
+              // },
               {
                 'topic': 'bluekey/login',
                 'icon': '👾',
@@ -173,7 +173,9 @@ class ThomasPage extends ConsumerWidget {
                 child: TextButton(
                   onPressed: () async {
                     final player = AudioPlayer();
-                    ref.read(mqttProvider.notifier).publish(e['topic']!, 'ON');
+                    ref
+                        .read(mqttProvider.notifier)
+                        .publish(e['topic']!, e.containsKey('message') ? e['message']! : 'ON');
                     await player.play(AssetSource('sounds/pop.wav'));
                   },
                   child: Text(

@@ -1,12 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:ir_sensor_plugin/ir_sensor_plugin.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 import '/models/mqtt_providers.dart';
 import '/styles/styles.dart';
-import '/utils.dart';
-import '/widgets/mqtt_switch_widget.dart';
 
 class SoundboardPage extends ConsumerWidget {
   const SoundboardPage({super.key});

@@ -5,7 +5,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 
 import '/utils.dart';
 import 'widgets/lights_off_button_widget.dart';
-import '../../widgets/slider_widget.dart';
+import '/widgets/slider_widget.dart';
 import '/models/mqtt_devices.dart';
 import '/widgets/connection_bar_widget.dart';
 
@@ -120,26 +120,28 @@ class LightPage extends ConsumerWidget {
                         minColor: const Color.fromARGB(255, 109, 109, 109),
                         maxColor: Colors.white,
                         inactiveColor: Colors.grey.shade600,
-                        value: device.brightness.toDouble(),
-                        max: 255,
+                        value: mapValue(device.brightness.toDouble(), 0.0, 254.0, 0.0, 100.0),
+                        max: 100,
                         divisions: 20,
                         onChangeEnd: (double value) {
-                          device.brightness = value.toInt();
+                          device.brightness = mapValue(value, 0.0, 100.0, 0.0, 254.0).toInt();
                           device.publishState();
                         },
                       ),
-                      SliderWidget(
-                        minColor: const Color.fromARGB(255, 155, 173, 255),
-                        maxColor: Colors.amber,
-                        inactiveColor: Colors.grey.shade600,
-                        value: device.colorTemp.toDouble(),
-                        max: 500,
-                        divisions: 20,
-                        onChangeEnd: (double value) {
-                          device.colorTemp = value.toInt();
-                          device.publishState();
-                        },
-                      ),
+                      if (device.colorTemp >= 250) ...[
+                        SliderWidget(
+                          minColor: const Color.fromARGB(255, 155, 173, 255),
+                          maxColor: Colors.amber,
+                          inactiveColor: Colors.grey.shade600,
+                          value: mapValue(device.colorTemp.toDouble(), 250.0, 454.0, 0.0, 100.0),
+                          max: 100,
+                          divisions: 20,
+                          onChangeEnd: (double value) {
+                            device.colorTemp = mapValue(value, 0.0, 100.0, 250.0, 454.0).toInt();
+                            device.publishState();
+                          },
+                        )
+                      ],
                     ],
                   ),
                 ),

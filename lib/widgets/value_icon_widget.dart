@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-
-double mapValue(double value, double istart, double istop, double ostart, double ostop) {
-  return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
-}
+import '/utils.dart';
 
 enum IconType {
   // cellular, // 0-4

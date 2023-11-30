@@ -102,3 +102,7 @@ Color colorClamp3(double actual, double target, colors) {
 T valueToItem<T, N extends num>(List<T> items, N value, N max) {
   return items[(value * (items.length - 1) / max).round()];
 }
+
+double mapValue(double value, double inMin, double inMax, double outMin, double outMax) {
+  return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+}

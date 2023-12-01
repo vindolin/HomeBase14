@@ -18,11 +18,11 @@ class ThermostatListPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final deviceNames = ref.watch(deviceNamesProvider);
 
-    final thermostatDevicesUnfiltered = ref.watch(thermostatDevicesProvider);
+    final unsortedThermostatDevices = ref.watch(thermostatDevicesProvider);
     final thermostatDevices = ref.watch(
       Provider<IMap<String, ThermostatDevice>>(
         (ref) {
-          return thermostatDevicesUnfiltered.sortByList(
+          return unsortedThermostatDevices.sortByList(
             [
               // sort by names
               (a, b) => deviceNames[a.key]!.compareTo(
@@ -123,28 +123,3 @@ class ThermostatListPage extends ConsumerWidget {
     );
   }
 }
-
-
-// ListTile(
-//   leading: Icon(
-//     Icons.thermostat,
-//     color: tempColor,
-//   ),
-//   key: Key(key),
-//   title: Text(
-//     deviceNames[key]!,
-//   ),
-//   subtitle: ThermostatReadings(
-//     currentHeatingSetpoint: device.currentHeatingSetpoint,
-//     localTemperature: device.localTemperature,
-//   ),
-//   onTap: () {
-//     log('tapped $key');
-//     Navigator.push(
-//       context,
-//       MaterialPageRoute(
-//         builder: (context) => ThermostatDetailPage(deviceId: key),
-//       ),
-//     );
-//   },
-// ),

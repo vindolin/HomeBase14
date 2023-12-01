@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 import '/utils.dart';
 import 'widgets/lights_off_button_widget.dart';
@@ -26,7 +27,21 @@ class LightPage extends ConsumerWidget {
 
     final deviceNames = ref.watch(deviceNamesProvider);
     final lightDevices = ref.watch(lightDevicesProvider);
-    final smartBulbDevices = ref.watch(smartBulbDevicesProvider);
+
+    final smartBulbDevices = ref.watch(
+      Provider<IMap<String, SmartBulbDevice>>(
+        (ref) {
+          return ref.watch(smartBulbDevicesProvider).sortByList(
+            [
+              // sort by names
+              (a, b) => deviceNames[a.key]!.compareTo(
+                    deviceNames[b.key]!,
+                  ),
+            ],
+          );
+        },
+      ),
+    );
 
     int onLightCount = lightDevices.values.where((device) => device.state == 'ON').length;
 
@@ -68,13 +83,11 @@ class LightPage extends ConsumerWidget {
 
     int onSmartLightCount = smartBulbDevices.values.where((device) => device.state == 'ON').length;
 
-    final sortedKeys = smartBulbDevices.keys.toList()..sort();
-
-    // print(smartBulbDevices['bulb/i001']!.state);
     final smartBulbDeviceTiles = List<Widget>.from(
-      sortedKeys.map(
-        (key) {
-          final device = smartBulbDevices[key]!;
+      smartBulbDevices.entries.map(
+        (entry) {
+          final key = entry.key;
+          final device = entry.value;
           final deviceName = deviceNames[device.deviceId] ?? device.deviceId;
 
           return ListTile(

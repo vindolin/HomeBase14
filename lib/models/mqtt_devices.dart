@@ -572,6 +572,11 @@ class SmartBulbDevice extends AbstractMqttDevice {
     super.readValue(key, value);
   }
 
+  void setState(String newState) {
+    state = newState;
+    publishState();
+  }
+
   void toggleState() {
     state == 'ON' ? 'OFF' : 'ON';
     publishState();
@@ -598,9 +603,25 @@ class SmartBulbDevice extends AbstractMqttDevice {
 
 @Riverpod(keepAlive: true)
 class SmartBulbDevices extends _$SmartBulbDevices {
+  late Function publishCallback; // get's injected by the mqtt class
+
   @override
   IMap<String, SmartBulbDevice> build() {
     return IMap();
+  }
+
+  void allOff() {
+    state.forEach((key, value) {
+      if (value.state == 'ON') {
+        toggleState(key);
+      }
+    });
+  }
+
+  void toggleState(key) {
+    SmartBulbDevice smartBulbDevice = state[key]!;
+    String newState = smartBulbDevice.state == 'ON' ? 'OFF' : 'ON';
+    smartBulbDevice.setState(newState);
   }
 }
 

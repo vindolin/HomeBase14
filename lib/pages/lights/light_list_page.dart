@@ -66,7 +66,7 @@ class LightPage extends ConsumerWidget {
       ),
     );
 
-    // int onSmartLightCount = smartBulbDevices.values.where((device) => device.state == 'ON').length;
+    int onSmartLightCount = smartBulbDevices.values.where((device) => device.state == 'ON').length;
 
     final sortedKeys = smartBulbDevices.keys.toList()..sort();
 
@@ -80,37 +80,24 @@ class LightPage extends ConsumerWidget {
           return ListTile(
             // because the smart bulps are switched on/off with the wall switch, we don't know the state of the bulb like with the simple lights
             // can be enabled when I replace the wall switch with a smart switch
-            // leading: smartBulbDevices[key]!.state == 'ON'
-            //     ? const Icon(
-            //         Icons.lightbulb,
-            //         color: Colors.amber,
-            //       )
-            //     : const Icon(
-            //         Icons.lightbulb_outline,
-            //         color: Colors.white,
-            //       ),
+            leading: smartBulbDevices[key]!.state == 'ON'
+                ? const Icon(
+                    Icons.lightbulb,
+                    color: Colors.amber,
+                  )
+                : const Icon(
+                    Icons.lightbulb_outline,
+                    color: Colors.white,
+                  ),
+            onTap: () {
+              device.state = device.state == 'ON' ? 'OFF' : 'ON';
+              device.publishState();
+            },
             key: Key(key),
+
             visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
             title: Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: IconButton(
-                    icon: device.state == 'ON'
-                        ? const Icon(
-                            Icons.lightbulb,
-                            color: Colors.amber,
-                          )
-                        : const Icon(
-                            Icons.lightbulb_outline,
-                            color: Colors.white,
-                          ),
-                    onPressed: () {
-                      device.state = device.state == 'ON' ? 'OFF' : 'ON';
-                      device.publishState();
-                    },
-                  ),
-                ),
                 Expanded(
                   flex: 1,
                   child: Text(
@@ -153,9 +140,6 @@ class LightPage extends ConsumerWidget {
                 ),
               ],
             ),
-            onTap: () {
-              // ref.read(smartBulbDevicesProvider.notifier).toggleState(key);
-            },
           );
         },
       ),
@@ -176,13 +160,13 @@ class LightPage extends ConsumerWidget {
       ...lightDeviceTiles,
 
       // header smart lights
-      const ListTile(
+      ListTile(
         tileColor: Colors.black26,
-        title: Text(
+        title: const Text(
           'Smart Lampen',
           style: TextStyle(color: Colors.white),
         ),
-        // trailing: onSmartLightCount > 0 ? const LightsOffButton() : null,  // TODOs implement
+        trailing: onSmartLightCount > 0 ? const SmartLightsOffButton() : null, // TODOs implement
       ),
 
       // smart lights

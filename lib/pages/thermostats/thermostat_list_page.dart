@@ -94,6 +94,7 @@ class ThermostatListPage extends ConsumerWidget {
                     Icon(
                       Icons.thermostat,
                       color: tempColor,
+                      size: 36,
                     ),
                     Expanded(
                       child: Column(

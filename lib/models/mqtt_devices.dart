@@ -297,7 +297,7 @@ abstract class AbstractMqttDevice {
 
   @protected
   void readValue(String key, dynamic value) {
-    log('$key> $value');
+    // log('$key> $value');
   }
 
   // TODOs find a better way to cast the values, mirror system?

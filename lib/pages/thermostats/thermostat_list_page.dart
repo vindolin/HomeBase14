@@ -43,46 +43,92 @@ class ThermostatListPage extends ConsumerWidget {
         title: Text(translate('device_names.thermostats')),
         actions: const [ConnectionBar()],
       ),
-      body: ListView.separated(
-        separatorBuilder: (context, index) => const Divider(),
-        itemCount: thermostatDevices.length,
-        itemBuilder: (context, index) {
-          final key = thermostatDevices.keys.elementAt(index);
-          final device = thermostatDevices.values.elementAt(index);
+      body: GridView.count(
+        childAspectRatio: 2.3,
+        crossAxisCount: 2,
+        crossAxisSpacing: 4,
+        mainAxisSpacing: 4,
+        padding: const EdgeInsets.all(4),
+        children: thermostatDevices.entries.map(
+          (entry) {
+            final key = entry.key;
+            final device = entry.value;
 
-          // log(key);
-          final tempColor = getTemperatureColor(
-            device.localTemperature,
-            device.currentHeatingSetpoint.toDouble(),
-          );
-
-          return ListTile(
-            leading: Icon(
-              Icons.thermostat,
-              color: tempColor,
-              grade: 0.2,
-            ),
-            key: Key(key),
-            visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-            title: Text(
-              deviceNames[key]!,
-            ),
-            subtitle: ThermostatReadings(
-              currentHeatingSetpoint: device.currentHeatingSetpoint,
-              localTemperature: device.localTemperature,
-            ),
-            onTap: () {
-              log('tapped $key');
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ThermostatDetailPage(deviceId: key),
+            final tempColor = getTemperatureColor(
+              device.localTemperature,
+              device.currentHeatingSetpoint.toDouble(),
+            );
+            return Card(
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: InkWell(
+                onTap: () {
+                  log('tapped $key');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ThermostatDetailPage(deviceId: key),
+                    ),
+                  );
+                },
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.thermostat,
+                      color: tempColor,
+                    ),
+                    Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            deviceNames[key]!,
+                            style: Theme.of(context).textTheme.titleMedium,
+                            overflow: TextOverflow.fade,
+                            softWrap: true,
+                          ),
+                          ThermostatReadings(
+                            currentHeatingSetpoint: device.currentHeatingSetpoint,
+                            localTemperature: device.localTemperature,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              );
-            },
-          );
-        },
+              ),
+            );
+          },
+        ).toList(),
       ),
     );
   }
 }
+
+
+// ListTile(
+//   leading: Icon(
+//     Icons.thermostat,
+//     color: tempColor,
+//   ),
+//   key: Key(key),
+//   title: Text(
+//     deviceNames[key]!,
+//   ),
+//   subtitle: ThermostatReadings(
+//     currentHeatingSetpoint: device.currentHeatingSetpoint,
+//     localTemperature: device.localTemperature,
+//   ),
+//   onTap: () {
+//     log('tapped $key');
+//     Navigator.push(
+//       context,
+//       MaterialPageRoute(
+//         builder: (context) => ThermostatDetailPage(deviceId: key),
+//       ),
+//     );
+//   },
+// ),

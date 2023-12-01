@@ -38,9 +38,25 @@ class ThermostatListPage extends ConsumerWidget {
       ),
     );
 
+    final localTemperatureAvg =
+        thermostatDevices.values.averageBy((thermostatDevice) => thermostatDevice.localTemperature);
+    final currentHeatingSetpointAvg =
+        thermostatDevices.values.averageBy((thermostatDevice) => thermostatDevice.currentHeatingSetpoint);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(translate('device_names.thermostats')),
+        title: Row(
+          children: [
+            Text(translate('device_names.thermostats')),
+            const Spacer(),
+            Text(
+              '${localTemperatureAvg.toStringAsFixed(1)}°C⌀',
+              style: const TextStyle().copyWith(
+                color: getTemperatureColor(localTemperatureAvg, currentHeatingSetpointAvg),
+              ),
+            )
+          ],
+        ),
         actions: const [ConnectionBar()],
       ),
       body: GridView.count(

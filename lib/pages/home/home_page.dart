@@ -115,66 +115,93 @@ class HomePage extends ConsumerWidget {
                     title: Stack(
                       children: [
                         // title
-                        Text(
-                          translate('app_bar.title'),
-                          style: GoogleFonts.robotoCondensed(
-                            // style: GoogleFonts.koulen(
-                            // style: GoogleFonts.squadaOne(
-                            // style: GoogleFonts.londrinaSolid(
-                            // style: GoogleFonts.bakbakOne(
-                            // style: GoogleFonts.russoOne(
-                            // style: GoogleFonts.denkOne(
-                            textStyle: const TextStyle(
-                              fontSize: 42,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              shadows: [
-                                Shadow(
-                                  blurRadius: 3.0,
-                                  color: Colors.black54,
-                                  offset: Offset(2.0, 2.0),
+                        Stack(
+                          children: [
+                            Text(
+                              translate('app_bar.title'),
+                              style: GoogleFonts.robotoCondensed(
+                                // style: GoogleFonts.koulen(
+                                // style: GoogleFonts.squadaOne(
+                                // style: GoogleFonts.londrinaSolid(
+                                // style: GoogleFonts.bakbakOne(
+                                // style: GoogleFonts.russoOne(
+                                // style: GoogleFonts.denkOne(
+                                textStyle: const TextStyle(
+                                  fontSize: 42,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  shadows: [
+                                    Shadow(
+                                      blurRadius: 3.0,
+                                      color: Colors.black54,
+                                      offset: Offset(2.0, 2.0),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            // 14 in a circle
+                            Positioned(
+                              right: 0,
+                              top: -5,
+                              child: Transform.rotate(
+                                angle: 0.4,
+                                child: SimpleShadow(
+                                  opacity: 1.0,
+                                  offset: const Offset(2, 2),
+                                  child: SvgPicture.asset(
+                                    'assets/images/svg/14.svg',
+                                    colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                                    width: 42,
+                                    height: 42,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          child: RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: Platform.operatingSystemVersion,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    shadows: [
+                                      Shadow(
+                                        blurRadius: 2.0,
+                                        offset: Offset(2.0, 2.0),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                const WidgetSpan(child: SizedBox(width: 15)),
+                                TextSpan(
+                                  text: appVersion.when(
+                                      data: (value) => 'b:${RegExp(r'\d\d+').firstMatch(value)?.group(0)}',
+                                      loading: () => '...',
+                                      error: (e, s) => '...'),
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.white,
+                                    shadows: [
+                                      Shadow(
+                                        blurRadius: 2.0,
+                                        offset: Offset(2.0, 2.0),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
                           ),
                         ),
-                        // 14 in a circle
-                        Positioned(
-                          right: 0,
-                          top: -5,
-                          child: Transform.rotate(
-                            angle: 0.4,
-                            child: SimpleShadow(
-                              opacity: 1.0,
-                              offset: const Offset(2, 2),
-                              child: SvgPicture.asset(
-                                'assets/images/svg/14.svg',
-                                colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                                width: 42,
-                                height: 42,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          child: Text(
-                            Platform.operatingSystemVersion,
-                            style: const TextStyle(fontSize: 10),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          right: 0,
-                          child: Text(
-                            appVersion.when(
-                              data: (value) => value,
-                              loading: () => '...',
-                              error: (e, s) => '...',
-                            ),
-                            style: const TextStyle(fontSize: 10, color: Colors.black, fontWeight: FontWeight.bold),
-                          ),
-                        ),
+                        const SizedBox(
+                          width: double.maxFinite, // forces the stack to fill the available space
+                          height: 56,
+                        )
                       ],
                     ),
                     forceElevated: true,

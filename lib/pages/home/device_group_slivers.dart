@@ -68,26 +68,27 @@ class DeviceGroups extends ConsumerWidget {
         ),
         const Divider(),
         ListTile(
-            title: Text(
-              translate('device_names.thermostats'),
-              style: titleStyle,
-            ),
-            leading: const Icon(Icons.thermostat),
-            visualDensity: visualDensity,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ThermostatListPage(),
-                ),
-              );
-            },
-            trailing: Text(
-              ' ${localTemperatureAvg.toStringAsFixed(1)}°C⌀',
-              style: titleStyle.copyWith(
-                color: getTemperatureColor(localTemperatureAvg, currentHeatingSetpointAvg),
+          title: Text(
+            translate('device_names.thermostats'),
+            style: titleStyle,
+          ),
+          leading: const Icon(Icons.thermostat),
+          visualDensity: visualDensity,
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ThermostatListPage(),
               ),
-            )),
+            );
+          },
+          trailing: Text(
+            ' ${localTemperatureAvg.toStringAsFixed(1)}°C⌀',
+            style: titleStyle.copyWith(
+              color: getTemperatureColor(localTemperatureAvg, currentHeatingSetpointAvg),
+            ),
+          ),
+        ),
         const Divider(),
         ListTile(
           title: Text(

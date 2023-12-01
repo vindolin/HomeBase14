@@ -52,6 +52,7 @@ class ThermostatListPage extends ConsumerWidget {
             Text(
               '${localTemperatureAvg.toStringAsFixed(1)}°C⌀',
               style: const TextStyle().copyWith(
+                fontWeight: FontWeight.bold,
                 color: getTemperatureColor(localTemperatureAvg, currentHeatingSetpointAvg),
               ),
             )

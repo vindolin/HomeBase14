@@ -31,7 +31,11 @@ class LightPage extends ConsumerWidget {
     int onLightCount = lightDevices.values.where((device) => device.state == 'ON').length;
 
     // no divider for first and last items
-    List<int> noDividerIndices = [0, lightDevices.length, smartBulbDevices.length];
+    List<int> noDividerIndices = [
+      0,
+      lightDevices.length,
+      lightDevices.length + 1,
+    ];
 
     final lightDeviceTiles = List<Widget>.from(
       lightDevices.keys.map(
@@ -64,15 +68,17 @@ class LightPage extends ConsumerWidget {
 
     // int onSmartLightCount = smartBulbDevices.values.where((device) => device.state == 'ON').length;
 
+    final sortedKeys = smartBulbDevices.keys.toList()..sort();
+
     // print(smartBulbDevices['bulb/i001']!.state);
     final smartBulbDeviceTiles = List<Widget>.from(
-      smartBulbDevices.keys.map(
+      sortedKeys.map(
         (key) {
           final device = smartBulbDevices[key]!;
           final deviceName = deviceNames[device.deviceId] ?? device.deviceId;
 
           return ListTile(
-            // because the smart bulps ares witched on/off with the wall switch, we don't know the state of the bulb like with the simple lights
+            // because the smart bulps are switched on/off with the wall switch, we don't know the state of the bulb like with the simple lights
             // can be enabled when I replace the wall switch with a smart switch
             // leading: smartBulbDevices[key]!.state == 'ON'
             //     ? const Icon(
@@ -128,12 +134,12 @@ class LightPage extends ConsumerWidget {
                           device.publishState();
                         },
                       ),
-                      if (device.colorTemp >= 250) ...[
+                      if (device.colorTemp != null && device.colorTemp! >= 250) ...[
                         SliderWidget(
                           minColor: const Color.fromARGB(255, 155, 173, 255),
                           maxColor: Colors.amber,
                           inactiveColor: Colors.grey.shade600,
-                          value: mapValue(device.colorTemp.toDouble(), 250.0, 454.0, 0.0, 100.0),
+                          value: mapValue(device.colorTemp!.toDouble(), 250.0, 454.0, 0.0, 100.0),
                           max: 100,
                           divisions: 20,
                           onChangeEnd: (double value) {

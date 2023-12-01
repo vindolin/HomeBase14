@@ -297,7 +297,7 @@ abstract class AbstractMqttDevice {
 
   @protected
   void readValue(String key, dynamic value) {
-    // log('$key> $value');
+    log('$key> $value');
   }
 
   // TODOs find a better way to cast the values, mirror system?
@@ -547,7 +547,7 @@ class ThermostatDevices extends _$ThermostatDevices {
 class SmartBulbDevice extends AbstractMqttDevice {
   String state = 'OFF';
   int brightness = 0;
-  int colorTemp = 0;
+  int? colorTemp;
 
   SmartBulbDevice(
     super.deviceId,
@@ -584,7 +584,7 @@ class SmartBulbDevice extends AbstractMqttDevice {
       {
         'state': state,
         'brightness': brightness.toInt(),
-        'color_temp': colorTemp.toInt(),
+        ...colorTemp != null ? {'color_temp': colorTemp!.toInt()} : {} // some bulbs only support brightness
       },
     );
     log('publish> $deviceId $json');

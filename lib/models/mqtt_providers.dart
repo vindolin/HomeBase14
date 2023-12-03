@@ -40,6 +40,7 @@ const subscribeTopics = [
   'sma/b3b461c9/total_w',
   'tulpe/spray_last',
   'meep/#', // test device
+  'irrigator/#', // test device
 ];
 
 // generate a random mqtt client identifier
@@ -409,7 +410,7 @@ class Mqtt extends _$Mqtt {
   }
 }
 
-/// filter a the messageProvider by topic
+/// filter the messageProvider by topic
 /// TODOs use the family provider
 dynamic getMessage(ProviderBase provider, WidgetRef ref, String topic) {
   dynamic payload;

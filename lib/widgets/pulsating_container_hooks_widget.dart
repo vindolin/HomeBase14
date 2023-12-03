@@ -23,10 +23,7 @@ class PulsatingContainer extends HookWidget {
 
     useAnimation(
       animationController.drive(
-        Tween(
-          begin: 0.0,
-          end: 1.0,
-        ),
+        ColorTween(),
       ),
     );
     return Container(

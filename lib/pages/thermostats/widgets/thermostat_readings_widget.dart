@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-const heatingSetpointColor = Color.fromARGB(255, 100, 100, 100);
+const heatingSetpointColor = Colors.grey;
 const temperatureColors = {
   'perfect': Colors.green,
   'tooCold': Colors.blue,
   'tooHot': Colors.orange,
 };
 
-MaterialColor? getTemperatureColor(double temperature, double setpoint) {
+Color? getTemperatureColor(double temperature, double setpoint) {
   return temperature == setpoint
       ? temperatureColors['perfect']
       : temperature < setpoint

@@ -221,13 +221,13 @@ IMap<String, LightDevice> lightDevices = IMap(const {
     topicSet: 'cmnd/dose2/POWER',
     state: 'OFF',
   ),
-  'sofa': LightDevice(
-    id: 'sofa',
-    name: 'Sofa',
-    topicGet: 'stat/dose3/POWER',
-    topicSet: 'cmnd/dose3/POWER',
-    state: 'OFF',
-  ),
+  // 'sofa': LightDevice(
+  //   id: 'sofa',
+  //   name: 'Sofa',
+  //   topicGet: 'stat/dose3/POWER',
+  //   topicSet: 'cmnd/dose3/POWER',
+  //   state: 'OFF',
+  // ),
   'esstisch': LightDevice(
     id: 'esstisch',
     name: 'Esstisch',

@@ -8,6 +8,7 @@ import '/utils.dart';
 import '/models/mqtt_devices.dart';
 import '/pages/thermostats/thermostat_detail_page.dart';
 import '/widgets/connection_bar_widget.dart';
+import '/widgets/pulsating_icon_hooks_widget.dart';
 import 'widgets/thermostat_readings_widget.dart';
 
 /// Shows a list of all thermostats, sorted by name and temperature.
@@ -52,7 +53,7 @@ class ThermostatListPage extends ConsumerWidget {
             Text(
               '${localTemperatureAvg.toStringAsFixed(1)}°C⌀',
               style: const TextStyle().copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w700,
                 color: getTemperatureColor(localTemperatureAvg, currentHeatingSetpointAvg),
               ),
             )
@@ -61,7 +62,7 @@ class ThermostatListPage extends ConsumerWidget {
         actions: const [ConnectionBar()],
       ),
       body: GridView.count(
-        childAspectRatio: 2.3,
+        childAspectRatio: 2.1,
         crossAxisCount: 2,
         crossAxisSpacing: 4,
         mainAxisSpacing: 4,
@@ -92,11 +93,16 @@ class ThermostatListPage extends ConsumerWidget {
                 },
                 child: Row(
                   children: [
-                    Icon(
-                      Icons.thermostat,
-                      color: tempColor,
-                      size: 36,
-                    ),
+                    device.localTemperature < device.currentHeatingSetpoint
+                        ? PulsatingIcon(
+                            iconData: Icons.thermostat,
+                            color: tempColor!,
+                          )
+                        : Icon(
+                            Icons.thermostat,
+                            color: tempColor!,
+                            size: 36,
+                          ),
                     Expanded(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,

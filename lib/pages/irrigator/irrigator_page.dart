@@ -28,6 +28,8 @@ class IrrigatorPage extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text('Coffee bush irrigation 🌧️', style: Theme.of(context).textTheme.titleLarge),
+              const SizedBox(height: 8),
               Text('Soil moisture: $soilMoisture'),
               Text('Set target moisture: ${target != null ? target.toInt() : "???"}'),
               SliderWidget(

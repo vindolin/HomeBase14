@@ -7,7 +7,7 @@ Map<String, Map<String, String>> camSettings = {
         'https://$doorCamUser:$doorCamPassword@$serverAddress:$doorCamSnapshotPort/livestream/13?action=play&media=mjpeg&user=$doorCamUser&pwd=$doorCamPassword',
     'mjpegUrlHigh':
         'https://$doorCamUser:$doorCamPassword@$serverAddress:$doorCamSnapshotPort/livestream/11?action=play&media=mjpeg&user=$doorCamUser&pwd=$doorCamPassword',
-    'videoStreamUrl': 'rtsp://$doorCamUser:$doorCamPassword@$serverAddress:$doorCamVideoPort/12',
+    'videoStreamUrl': 'rtsp://$doorCamUser:$doorCamPassword@$serverAddress:$doorCamVideoPort/livestream/12',
   },
   'garden': {
     'snapshotUrl': 'http://$serverAddress:$snapshotPort/cam_image_garden.jpg',

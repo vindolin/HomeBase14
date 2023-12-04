@@ -16,6 +16,8 @@ class SliderWidget extends StatelessWidget {
   final Color? minColor;
   final Color? maxColor;
   final Color? inactiveColor;
+  final double? secondaryTrackValue;
+  final Color? secondaryActiveColor;
 
   const SliderWidget({
     required this.value,
@@ -29,6 +31,8 @@ class SliderWidget extends StatelessWidget {
     this.minColor,
     this.maxColor,
     this.inactiveColor,
+    this.secondaryTrackValue,
+    this.secondaryActiveColor,
     super.key,
   });
 
@@ -46,6 +50,8 @@ class SliderWidget extends StatelessWidget {
       minColor: minColor,
       maxColor: maxColor,
       inactiveColor: inactiveColor,
+      secondaryTrackValue: secondaryTrackValue,
+      secondaryActiveColor: secondaryActiveColor,
     );
   }
 }
@@ -127,6 +133,7 @@ class RiverSliderHook extends HookWidget {
   final Color? minColor;
   final Color? maxColor;
   final Color? inactiveColor;
+  final double? secondaryTrackValue;
   final Color? secondaryActiveColor;
 
   const RiverSliderHook({
@@ -141,6 +148,7 @@ class RiverSliderHook extends HookWidget {
     this.minColor,
     this.maxColor,
     this.inactiveColor,
+    this.secondaryTrackValue,
     this.secondaryActiveColor,
     super.key,
   });
@@ -162,6 +170,8 @@ class RiverSliderHook extends HookWidget {
       label: currentValue.value.round().toString(),
       activeColor: Color.lerp(minColor, maxColor, currentValue.value / max),
       inactiveColor: inactiveColor,
+      secondaryTrackValue: secondaryTrackValue,
+      secondaryActiveColor: secondaryActiveColor,
     );
   }
 }

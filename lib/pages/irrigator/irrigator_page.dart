@@ -33,8 +33,13 @@ class IrrigatorPage extends ConsumerWidget {
               SliderWidget(
                 value: target ?? 0,
                 min: 0,
-                max: 100,
+                max: 50,
+                minColor: Colors.grey,
+                maxColor: Colors.blue,
                 divisions: 20,
+                inactiveColor: Colors.grey,
+                secondaryActiveColor: Colors.red,
+                secondaryTrackValue: soilMoisture?.toDouble() ?? 0,
                 onChangeEnd: (value) {
                   ref.read(mqttProvider.notifier).publish(
                         'irrigator/setTargetMoisture',

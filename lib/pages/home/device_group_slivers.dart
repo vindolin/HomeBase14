@@ -21,6 +21,7 @@ class DeviceGroups extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final lightDevices = ref.watch(lightDevicesProvider);
+    final smrartBulbDevices = ref.watch(smartBulbDevicesProvider);
 
     final thermostatDevices = ref.watch(thermostatDevicesProvider);
 
@@ -30,7 +31,8 @@ class DeviceGroups extends ConsumerWidget {
         thermostatDevices.values.averageBy((thermostatDevice) => thermostatDevice.currentHeatingSetpoint);
 
     // color the icon yellow if any lights are on
-    int onLightCount = lightDevices.values.where((lightDevice) => lightDevice.state == 'ON').length;
+    int onLightCount = lightDevices.values.where((lightDevice) => lightDevice.state == 'ON').length +
+        smrartBulbDevices.values.where((smartBulbDevice) => smartBulbDevice.state == 'ON').length;
 
     final brightness = Theme.of(context).brightness;
     TextStyle titleStyle = textStyleShadowOne.copyWith(
@@ -96,7 +98,7 @@ class DeviceGroups extends ConsumerWidget {
             style: titleStyle,
           ),
           leading: const Icon(Icons.lightbulb),
-          trailing: onLightCount > 0 ? const LightsOffButton() : null,
+          trailing: onLightCount > 0 ? const CombinedLIghtsOffButton() : null,
           visualDensity: visualDensity,
           onTap: () {
             Navigator.push(

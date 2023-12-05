@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '/models/network_addresses.dart';
-import 'shader_widget.dart';
+import '/widgets/shader_widget.dart';
 
 /// this widget draws a graph of the last 12 hours of solar and usage data
 class InfluxdbWidget extends StatefulWidget {

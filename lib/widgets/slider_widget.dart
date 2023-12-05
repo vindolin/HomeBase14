@@ -9,7 +9,7 @@ class SliderWidget extends StatelessWidget {
   final double value;
   final Function? onChanged;
   final Function? onChangeEnd;
-  final double? min;
+  final double min;
   final double max;
   final int? divisions;
   final String? label;
@@ -59,11 +59,11 @@ class SliderWidget extends StatelessWidget {
 // Stateful widget version
 class RiverSliderWrapped extends StatefulWidget {
   final double value;
-  final double max;
   final Function? onChanged;
   final Function? onChangeEnd;
 
-  final double? min;
+  final double min;
+  final double max;
   final Color? minColor;
   final Color? maxColor;
   final Color? inactiveColor;
@@ -126,7 +126,7 @@ class RiverSliderHook extends HookWidget {
   final Function? onChanged;
   final Function? onChangeEnd;
 
-  final double? min;
+  final double min;
   final double max;
   final int? divisions;
   final String? label;
@@ -165,6 +165,7 @@ class RiverSliderHook extends HookWidget {
       onChangeEnd: (double value) {
         if (onChangeEnd != null) onChangeEnd!(currentValue.value);
       },
+      min: min,
       max: max,
       divisions: divisions,
       label: currentValue.value.round().toString(),

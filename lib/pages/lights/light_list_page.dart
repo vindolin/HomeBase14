@@ -5,9 +5,10 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 import '/utils.dart';
+import '/models/mqtt_devices.dart';
+import '/models/app_settings.dart';
 import 'widgets/lights_off_button_widget.dart';
 import '/widgets/slider_widget.dart';
-import '/models/mqtt_devices.dart';
 import '/widgets/connection_bar_widget.dart';
 
 abstract class ListItem {
@@ -27,6 +28,7 @@ class LightPage extends ConsumerWidget {
 
     final deviceNames = ref.watch(deviceNamesProvider);
     final lightDevices = ref.watch(lightDevicesProvider);
+    final appSettings = ref.watch(appSettingsProvider);
 
     final smartBulbDevices = ref.watch(
       Provider<IMap<String, SmartBulbDevice>>(
@@ -68,9 +70,18 @@ class LightPage extends ConsumerWidget {
                   ),
             key: Key(key),
             visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-            title: Row(
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(lightDevice.name),
+                if (appSettings.user == User.thomas)
+                  Text(
+                    lightDevice.topicSet,
+                    style: TextStyle(
+                      color: Colors.grey.shade600,
+                      fontSize: 12,
+                    ),
+                  )
               ],
             ),
             onTap: () {
@@ -89,6 +100,19 @@ class LightPage extends ConsumerWidget {
           final key = entry.key;
           final device = entry.value;
           final deviceName = deviceNames[device.deviceId] ?? device.deviceId;
+
+          // we need to prepare the brightness value for clamping it to 5.0
+          final brightness = mapValue(device.brightness.toDouble(), 0.0, 254.0, 0.0, 100.0);
+
+          final lidlBulbDevices = ['bulb/i011']; // buy more Ikea bulbs 🙄
+          final isLidlBulb = lidlBulbDevices.contains(device.deviceId);
+          const minColorIkea = 250.0;
+          const maxColorIkea = 454.0;
+          const minColorLidl = 153.0;
+          const maxColorLidl = 500.0;
+
+          final minBulbColor = isLidlBulb ? minColorLidl : minColorIkea;
+          final maxBulbColor = isLidlBulb ? maxColorLidl : maxColorIkea;
 
           return ListTile(
             // because the smart bulps are switched on/off with the wall switch, we don't know the state of the bulb like with the simple lights
@@ -113,9 +137,22 @@ class LightPage extends ConsumerWidget {
               children: [
                 Expanded(
                   flex: 1,
-                  child: Text(
-                    deviceName,
-                    overflow: TextOverflow.ellipsis,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        deviceName,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      if (appSettings.user == User.thomas)
+                        Text(
+                          device.deviceId,
+                          style: TextStyle(
+                            color: Colors.grey.shade600,
+                            fontSize: 12,
+                          ),
+                        )
+                    ],
                   ),
                 ),
                 Expanded(
@@ -126,7 +163,8 @@ class LightPage extends ConsumerWidget {
                         minColor: const Color.fromARGB(255, 109, 109, 109),
                         maxColor: Colors.white,
                         inactiveColor: Colors.grey.shade600,
-                        value: mapValue(device.brightness.toDouble(), 0.0, 254.0, 0.0, 100.0),
+                        value: brightness < 5.0 ? 5.0 : brightness,
+                        min: 5,
                         max: 100,
                         divisions: 20,
                         onChangeEnd: (double value) {
@@ -134,16 +172,16 @@ class LightPage extends ConsumerWidget {
                           device.publishState();
                         },
                       ),
-                      if (device.colorTemp != null && device.colorTemp! >= 250) ...[
+                      if (device.colorTemp != null && device.colorTemp! >= minBulbColor) ...[
                         SliderWidget(
                           minColor: const Color.fromARGB(255, 155, 173, 255),
                           maxColor: Colors.amber,
                           inactiveColor: Colors.grey.shade600,
-                          value: mapValue(device.colorTemp!.toDouble(), 250.0, 454.0, 0.0, 100.0),
+                          value: mapValue(device.colorTemp!.toDouble(), minBulbColor, maxBulbColor, 0.0, 100.0),
                           max: 100,
                           divisions: 20,
                           onChangeEnd: (double value) {
-                            device.colorTemp = mapValue(value, 0.0, 100.0, 250.0, 454.0).toInt();
+                            device.colorTemp = mapValue(value, 0.0, 100.0, minBulbColor, maxBulbColor).toInt();
                             device.publishState();
                           },
                         )
@@ -166,7 +204,7 @@ class LightPage extends ConsumerWidget {
           'Lampen',
           style: TextStyle(color: Colors.white),
         ),
-        trailing: onLightCount > 0 ? const LightsOffButton() : null,
+        trailing: onLightCount > 0 ? const LightDevicesOffButton() : null,
       ),
 
       // simple lights
@@ -179,7 +217,7 @@ class LightPage extends ConsumerWidget {
           'Smart Lampen',
           style: TextStyle(color: Colors.white),
         ),
-        trailing: onSmartLightCount > 0 ? const SmartLightsOffButton() : null, // TODOs implement
+        trailing: onSmartLightCount > 0 ? const SmartBulbsOffButton() : null, // TODOs implement
       ),
 
       // smart lights

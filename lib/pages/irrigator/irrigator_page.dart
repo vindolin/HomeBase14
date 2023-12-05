@@ -45,7 +45,7 @@ class IrrigatorPage extends ConsumerWidget {
                 secondaryTrackValue: soilMoisture?.toDouble() ?? 0,
                 onChangeEnd: (value) {
                   ref.read(mqttProvider.notifier).publish(
-                        'irrigator/setTargetMoisture',
+                        'irrigator/set/targetMoisture',
                         value.toInt().toString(),
                       );
                 },

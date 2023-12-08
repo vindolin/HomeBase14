@@ -1,15 +1,91 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_spinbox/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 import '/utils.dart';
 import '/models/mqtt_devices.dart';
-import '/pages/thermostats/thermostat_detail_page.dart';
 import '/widgets/connection_bar_widget.dart';
 import '/widgets/pulsating_icon_hooks_widget.dart';
 import 'widgets/thermostat_readings_widget.dart';
+
+class ThermostatInput extends ConsumerStatefulWidget {
+  final ThermostatDevice device;
+  final Function closeAction;
+  const ThermostatInput({required this.device, required this.closeAction, super.key});
+
+  @override
+  ConsumerState<ThermostatInput> createState() => _ThermostatInputState();
+}
+
+class _ThermostatInputState extends ConsumerState<ThermostatInput> {
+  double? newHeatingSetpoint;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ThermostatReadings(
+          currentHeatingSetpoint: widget.device.currentHeatingSetpoint,
+          localTemperature: widget.device.localTemperature,
+        ),
+        SpinBox(
+          min: 0,
+          max: 30,
+          direction: Axis.vertical,
+          incrementIcon: const Icon(Icons.keyboard_arrow_up, size: 32),
+          decrementIcon: const Icon(Icons.keyboard_arrow_down, size: 32),
+          value: widget.device.currentHeatingSetpoint.toDouble(),
+          onChanged: (value) {
+            setState(() {
+              newHeatingSetpoint = value;
+            });
+          },
+        ),
+        ElevatedButton(
+          onPressed: newHeatingSetpoint != null
+              ? () {
+                  widget.device.currentHeatingSetpoint = newHeatingSetpoint!.toInt();
+                  widget.device.publishState();
+                  widget.closeAction();
+                }
+              : null,
+          child: Text(translate('thermostats.submit_button_text')),
+        ),
+      ],
+    );
+  }
+}
+
+showOverlayModal(context, device, deviceName) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        child: Container(
+          constraints: const BoxConstraints(maxHeight: 350),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('$deviceName', style: Theme.of(context).textTheme.titleLarge),
+                const SizedBox(height: 16),
+                ThermostatInput(
+                  device: device,
+                  closeAction: () => Navigator.of(context).pop(),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
 
 /// Shows a list of all thermostats, sorted by name and temperature.
 class ThermostatListPage extends ConsumerWidget {
@@ -83,13 +159,7 @@ class ThermostatListPage extends ConsumerWidget {
               ),
               child: InkWell(
                 onTap: () {
-                  log('tapped $key');
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ThermostatDetailPage(deviceId: key),
-                    ),
-                  );
+                  showOverlayModal(context, device, deviceNames[key]!);
                 },
                 child: Row(
                   children: [

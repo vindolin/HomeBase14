@@ -10,10 +10,12 @@ class IrrigatorPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final soilMoisture = ref.watch(mqttMessagesFamProvider('irrigator/soil'));
+    final soilMoistureProvider = ref.watch(mqttMessagesFamProvider('irrigator/soil'));
     final targetMoisture = ref.watch(mqttMessagesFamProvider('irrigator/target'));
 
-    double? target = targetMoisture != null && targetMoisture != '' ? targetMoisture.toDouble() : null;
+    // clamp values slider range
+    final target = (targetMoisture != null && targetMoisture != '' ? targetMoisture.toDouble() : null).clamp(0, 50);
+    double soilMoisture = (soilMoistureProvider?.toDouble() ?? 0).clamp(0, 50);
 
     return Scaffold(
       appBar: AppBar(
@@ -34,7 +36,7 @@ class IrrigatorPage extends ConsumerWidget {
               Text('Soil moisture: $soilMoisture'),
               Text('Set target moisture: ${target != null ? target.toInt() : "???"}'),
               SliderWidget(
-                value: target ?? 0,
+                value: target,
                 min: 0,
                 max: 50,
                 minColor: Colors.grey,
@@ -42,7 +44,7 @@ class IrrigatorPage extends ConsumerWidget {
                 divisions: 20,
                 inactiveColor: Colors.grey,
                 secondaryActiveColor: Colors.blue,
-                secondaryTrackValue: soilMoisture?.toDouble() ?? 0,
+                secondaryTrackValue: soilMoisture.toDouble(),
                 onChangeEnd: (value) {
                   ref.read(mqttProvider.notifier).publish(
                         'irrigator/set/targetMoisture',
@@ -51,6 +53,27 @@ class IrrigatorPage extends ConsumerWidget {
                 },
               ),
               const InfluxdbWidget(),
+              ElevatedButton(
+                  onPressed: () {
+                    ref.read(mqttProvider.notifier).publish('irrigator/measure', '');
+                  },
+                  child: const Text('Check now', style: TextStyle(fontSize: 20))),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        ref.read(mqttProvider.notifier).publish('irrigator/openValve', '');
+                      },
+                      child: const Text('Open valve', style: TextStyle(fontSize: 20))),
+                  ElevatedButton(
+                      onPressed: () {
+                        ref.read(mqttProvider.notifier).publish('irrigator/closeValve', '');
+                      },
+                      child: const Text('Close valve', style: TextStyle(fontSize: 20))),
+                ],
+              ),
             ],
           ),
         ),

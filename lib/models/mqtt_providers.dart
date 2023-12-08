@@ -41,6 +41,7 @@ const subscribeTopics = [
   'tulpe/spray_last',
   'meep/#', // test device
   'irrigator/#', // test device
+  'z2mSwitch/#', // test device
 ];
 
 // generate a random mqtt client identifier

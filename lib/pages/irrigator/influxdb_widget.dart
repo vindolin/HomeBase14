@@ -7,7 +7,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import '/models/network_addresses.dart';
 import '/widgets/shader_widget.dart';
 
-/// this widget draws a graph of the last 12 hours of solar and usage data
+/// this widget draws a graph of the last 12 hours of soil moisture
 class InfluxdbWidget extends StatefulWidget {
   const InfluxdbWidget({super.key});
 
@@ -73,13 +73,50 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
       );
 
       resultList.add(
-        response.data['results'][0]['series'][0]['values'].map<TimePoint>(
-          (e) {
-            e[1] ??= 0;
-            return TimePoint(DateTime.parse(e[0]), e[1].toDouble());
-          },
-        ).toList(),
+        response.data['results'][0]['series'][0]['values']
+            .map<TimePoint>(
+              (e) {
+                e[1] ??= 0; // replace null with 0
+                return TimePoint(DateTime.parse(e[0]), e[1].toDouble());
+              },
+            )
+            .toList()
+            .sublist(1), // remove first value because it is always null
       );
+    }
+
+    // ignore: dead_code
+    if (false) {
+      var response2 = await dio.post(
+        url,
+        data: FormData.fromMap(
+          {
+            'db': 'sensors',
+            'q': '''
+        SELECT *
+        FROM irrigator
+        WHERE sensor != 'valve'
+        AND (time >= now() - 12h)
+      ''',
+          },
+        ),
+      );
+
+      List<List<TimePoint>> resultList2 = [[], []];
+
+      final fieldNames = ['target', 'soil'];
+      for (var element in response2.data['results'][0]['series'][0]['values']) {
+        // final fieldName = element[1];
+        final [time, fieldName, value] = element;
+        resultList2[fieldNames.indexOf(fieldName)].add(
+          TimePoint(
+            DateTime.parse(time),
+            value.toDouble(),
+          ),
+        );
+      }
+      // this results in a broken graph, investigate!
+      return resultList2;
     }
 
     return resultList;

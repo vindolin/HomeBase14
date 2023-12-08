@@ -118,7 +118,7 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 153, 4, 145),
+          seedColor: Colors.blue,
           brightness: brightness,
         ),
       ),

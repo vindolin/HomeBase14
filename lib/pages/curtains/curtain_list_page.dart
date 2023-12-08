@@ -18,7 +18,7 @@ import '/widgets/connection_bar_widget.dart';
 showOverlayModal(context, device, deviceName) {
   showDialog(
     context: context,
-    builder: (BuildContext context) {
+    builder: (_) {
       return Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         child: Padding(

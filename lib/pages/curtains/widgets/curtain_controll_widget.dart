@@ -24,30 +24,36 @@ class CurtainControll extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
-      VerticalSlider(
-        percentage,
-        setValueEndFunc,
-        invert: true,
-        divisions: 10,
-      ),
-      Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-        FloatingActionButton(
-          onPressed: openFunc,
-          heroTag: null,
-          child: const Icon(Icons.arrow_upward),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        VerticalSlider(
+          percentage,
+          setValueEndFunc,
+          invert: true,
+          divisions: 10,
         ),
-        FloatingActionButton(
-          onPressed: stopFunc,
-          heroTag: null,
-          child: const Icon(Icons.pause),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            FloatingActionButton(
+              onPressed: openFunc,
+              heroTag: null,
+              child: const Icon(Icons.arrow_upward),
+            ),
+            FloatingActionButton(
+              onPressed: stopFunc,
+              heroTag: null,
+              child: const Icon(Icons.pause),
+            ),
+            FloatingActionButton(
+              onPressed: closeFunc,
+              heroTag: null,
+              child: const Icon(Icons.arrow_downward),
+            ),
+          ],
         ),
-        FloatingActionButton(
-          onPressed: closeFunc,
-          heroTag: null,
-          child: const Icon(Icons.arrow_downward),
-        ),
-      ]),
-    ]);
+      ],
+    );
   }
 }

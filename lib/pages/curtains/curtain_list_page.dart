@@ -7,12 +7,30 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import '/utils.dart';
 
 import '/models/mqtt_devices.dart';
-import '/pages/curtains/curtain_detail_page.dart';
-import '/pages/curtains/dual_curtain_detail_page.dart';
 
 import 'widgets/curtain_actions.dart';
 import 'widgets/curtain_icon_widgets.dart';
+import 'widgets/curtain_widget.dart';
+import 'widgets/dual_curtain_widget.dart';
+
 import '/widgets/connection_bar_widget.dart';
+
+showOverlayModal(context, device, deviceName) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: device is DualCurtainDevice
+              ? DualCurtainWidget(deviceId: device.deviceId)
+              : CurtainWidget(deviceId: device.deviceId),
+        ),
+      );
+    },
+  );
+}
 
 class CurtainListPage extends ConsumerWidget {
   const CurtainListPage({super.key});
@@ -94,14 +112,15 @@ class CurtainListPage extends ConsumerWidget {
               ],
             ),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => device is DualCurtainDevice
-                      ? DualCurtainDetailPage(deviceId: device.deviceId)
-                      : CurtainDetailPage(deviceId: device.deviceId),
-                ),
-              );
+              showOverlayModal(context, device, deviceNames[device.deviceId] ?? device.deviceId);
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => device is DualCurtainDevice
+              //         ? DualCurtainDetailPage(deviceId: device.deviceId)
+              //         : CurtainDetailPage(deviceId: device.deviceId),
+              //   ),
+              // );
             },
             trailing: Row(
               mainAxisSize: MainAxisSize.min,

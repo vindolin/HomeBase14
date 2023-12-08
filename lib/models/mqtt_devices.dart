@@ -215,25 +215,18 @@ class LightDevice with _$LightDevice {
 
 IMap<String, LightDevice> lightDevices = IMap(
   const {
+    'esstisch': LightDevice(
+      id: 'esstisch',
+      name: 'Esstisch',
+      topicGet: 'stat/dose11/POWER',
+      topicSet: 'cmnd/dose11/POWER',
+      state: 'OFF',
+    ),
     'kamin': LightDevice(
       id: 'kamin',
       name: 'Kamin',
       topicGet: 'stat/dose2/POWER',
       topicSet: 'cmnd/dose2/POWER',
-      state: 'OFF',
-    ),
-    // 'sofa': LightDevice(
-    //   id: 'sofa',
-    //   name: 'Sofa',
-    //   topicGet: 'stat/dose3/POWER',
-    //   topicSet: 'cmnd/dose3/POWER',
-    //   state: 'OFF',
-    // ),
-    'wohnzimmerdecke': LightDevice(
-      id: 'wohnzimmerdecke',
-      name: 'Wohnzimmer Decke',
-      topicGet: 'z2mSwitch/i010/get',
-      topicSet: 'zigbee2mqtt/switch/i010/set',
       state: 'OFF',
     ),
     'keller': LightDevice(
@@ -244,11 +237,11 @@ IMap<String, LightDevice> lightDevices = IMap(
       topicSet: 'zigbee2mqtt/switch/i012/set',
       state: 'OFF',
     ),
-    'esstisch': LightDevice(
-      id: 'esstisch',
-      name: 'Esstisch',
-      topicGet: 'stat/dose11/POWER',
-      topicSet: 'cmnd/dose11/POWER',
+    'wohnzimmerdecke': LightDevice(
+      id: 'wohnzimmerdecke',
+      name: 'Wohnzimmer Decke',
+      topicGet: 'z2mSwitch/i010/get',
+      topicSet: 'zigbee2mqtt/switch/i010/set',
       state: 'OFF',
     ),
   },

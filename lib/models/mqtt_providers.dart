@@ -241,22 +241,26 @@ class Mqtt extends _$Mqtt {
           payloadDecoded = message;
         }
 
+        final topic = mqttReceivedMessage.topic!;
+
         // send the message to the message stream (used by the log)
-        messageController.sink.add((topic: mqttReceivedMessage.topic!, payload: payloadDecoded));
+        if (!topic.contains('/_info/')) {
+          messageController.sink.add((topic: topic, payload: payloadDecoded.toString()));
+        }
 
         // add all messages to this generic mqttMessages provider
-        ref.read(mqttMessagesFamProvider(mqttReceivedMessage.topic).notifier).state = payloadDecoded;
+        ref.read(mqttMessagesFamProvider(topic).notifier).state = payloadDecoded;
 
         mqttMessages.state = mqttMessages.state.add(
-          mqttReceivedMessage.topic!,
+          topic,
           MqttMessage(
-            topic: mqttReceivedMessage.topic!,
+            topic: topic,
             payload: message,
           ),
         );
 
         // look for topics that look like our schema zigbee2mqtt/curtain/i001 for devices and add them to the mqttDevices
-        RegExpMatch? match = RegExp(r'zigbee2mqtt/(?<type>\w+)/(?<id>i\d+)$').firstMatch(mqttReceivedMessage.topic!);
+        RegExpMatch? match = RegExp(r'zigbee2mqtt/(?<type>\w+)/(?<id>i\d+)$').firstMatch(topic);
         if (match != null) {
           // it's a zigbee2mqtt message
           String deviceType = match.namedGroup('type')!; // e.g. curtain
@@ -310,7 +314,7 @@ class Mqtt extends _$Mqtt {
               HumiTempDevice(deviceId, deviceType, payloadDecoded, publishZ2M),
             );
           }
-        } else if (mqttReceivedMessage.topic == 'instar/10D1DC228582/status/alarm/triggered/object') {
+        } else if (topic == 'instar/10D1DC228582/status/alarm/triggered/object') {
           doorMovementController.sink.add(
             int.parse(payloadDecoded['val']),
           );
@@ -319,12 +323,12 @@ class Mqtt extends _$Mqtt {
           if (objectValue != 0) {
             doorAlarmController.sink.add(objectValue);
           }
-        } else if (mqttReceivedMessage.topic == 'zigbee2mqtt/bridge/devices') {
+        } else if (topic == 'zigbee2mqtt/bridge/devices') {
           /// we find the device name (description) in the zigbee2mqtt/bridge/devices message
           setDeviceNameMap(payloadDecoded);
-        } else if (mqttReceivedMessage.topic!.startsWith('prusa/')) {
+        } else if (topic.startsWith('prusa/')) {
           /// Prusa i3 MK3S
-          final attribute = mqttReceivedMessage.topic!.split('/').last;
+          final attribute = topic.split('/').last;
 
           Map<String, dynamic> data = switch (attribute) {
             'file' => {
@@ -343,12 +347,12 @@ class Mqtt extends _$Mqtt {
 
           prusa.state = prusa.state.addAll(IMap(data));
         } else {
-          // print(mqttReceivedMessage.topic);
+          // print(topic);
         }
 
         // tasmota switches, plugs, bulps, etc
         lightDevices.state.forEach((key, lightDevice) {
-          if (lightDevice.topicGet == mqttReceivedMessage.topic) {
+          if (lightDevice.topicGet == topic) {
             lightDevices.state = lightDevices.state.add(
               key,
               lightDevice.copyWith(state: message),
@@ -358,7 +362,7 @@ class Mqtt extends _$Mqtt {
 
         // armed switches like garage door
         switchDevices.state.forEach((key, switchDevice) {
-          if (switchDevice.topicState == mqttReceivedMessage.topic) {
+          if (switchDevice.topicState == topic) {
             dynamic devicePayload = message;
 
             // if the device has a stateKey, we need to parse the json and set the payload to that key's value (e.g. zigbee2mqtt plugs)

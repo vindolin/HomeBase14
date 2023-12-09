@@ -11,6 +11,7 @@ import '/pages/grafana/grafana_page.dart';
 import '/pages/thomas/dropdown_select_widget.dart';
 import '/pages/soundboard/soundboard_page.dart';
 import '/pages/irrigator/irrigator_page.dart';
+import '/pages/incubator/incubator_page.dart';
 // import '/pages/placeholder_page.dart';
 import '/models/mqtt_providers.dart';
 // import '/models/generic_providers.dart';
@@ -196,6 +197,23 @@ class ThomasGroups extends ConsumerWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => const IrrigatorPage(),
+              ),
+            );
+          },
+        ),
+        const Divider(),
+        ListTile(
+          title: Text(
+            'Incubator',
+            style: titleStyle.copyWith(),
+          ),
+          leading: Icon(Icons.egg, color: Theme.of(context).listTileTheme.iconColor),
+          visualDensity: visualDensity,
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const IncubatorPage(),
               ),
             );
           },

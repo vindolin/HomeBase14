@@ -40,7 +40,8 @@ const subscribeTopics = [
   'sma/b3b461c9/total_w',
   'tulpe/spray_last',
   'meep/#', // test device
-  'irrigator/#', // test device
+  'irrigator/+', // test device
+  'incubator/+', // test device
   'z2mSwitch/#', // test device
 ];
 

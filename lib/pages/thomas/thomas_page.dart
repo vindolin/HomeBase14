@@ -5,6 +5,8 @@ import 'package:audioplayers/audioplayers.dart';
 
 import '/models/mqtt_providers.dart';
 import '/styles/styles.dart';
+// import '/pages/placeholder_page.dart';
+import '/pages/mqtt_log_page.dart';
 import '/utils.dart';
 import '/widgets/mqtt_switch_widget.dart';
 import '/widgets/connection_bar_widget.dart';
@@ -187,6 +189,26 @@ class ThomasPage extends ConsumerWidget {
                 ),
               );
             }),
+            Card(
+              // child: VideoPlayerTestWidget(),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MqttLogPage(),
+                    ),
+                  );
+                },
+                // child: const WebviewVideo(),
+                child: const Text(
+                  'Log',
+                  style: TextStyle(
+                    fontSize: 50,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

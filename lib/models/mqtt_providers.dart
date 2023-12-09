@@ -44,12 +44,17 @@ const subscribeTopics = [
   'z2mSwitch/#', // test device
 ];
 
+typedef Message = ({
+  String topic,
+  dynamic payload,
+});
+
 // generate a random mqtt client identifier
 final clientIdentifier = 'HB14${nanoid()}';
 
 // used for the flashing message icon
-StreamController<Map<String, dynamic>> messageController = StreamController<Map<String, dynamic>>.broadcast();
-final messageProvider = StreamProvider<Map<String, dynamic>>((ref) async* {
+StreamController<Message> messageController = StreamController<Message>.broadcast();
+final messageProvider = StreamProvider<Message>((ref) async* {
   await for (final message in messageController.stream) {
     yield message;
   }
@@ -239,6 +244,13 @@ class Mqtt extends _$Mqtt {
           payloadDecoded = message;
         }
 
+        // send the message to the message stream (used by the log)
+        Message m = (
+          topic: mqttReceivedMessage.topic!,
+          payload: payloadDecoded,
+        );
+        messageController.sink.add(m);
+
         // add all messages to this generic mqttMessages provider
         ref.read(mqttMessagesFamProvider(mqttReceivedMessage.topic).notifier).state = payloadDecoded;
 
@@ -305,14 +317,6 @@ class Mqtt extends _$Mqtt {
               HumiTempDevice(deviceId, deviceType, payloadDecoded, publishZ2M),
             );
           }
-
-          // send the message to the message stream
-          messageController.sink.add({
-            deviceId: {
-              '_device_type': deviceType,
-              ...payloadDecoded,
-            },
-          });
         } else if (mqttReceivedMessage.topic == 'instar/10D1DC228582/status/alarm/triggered/object') {
           doorMovementController.sink.add(
             int.parse(payloadDecoded['val']),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:home_base_14/widgets/slider_widget.dart';
+import '/widgets/slider_widget.dart';
 import '/models/mqtt_providers.dart';
 import '/models/mqtt_devices.dart';
 import 'influxdb_widget.dart';

@@ -44,13 +44,10 @@ const subscribeTopics = [
   'z2mSwitch/#', // test device
 ];
 
-typedef Message = ({
-  String topic,
-  dynamic payload,
-});
-
 // generate a random mqtt client identifier
 final clientIdentifier = 'HB14${nanoid()}';
+
+typedef Message = ({String topic, String payload});
 
 // used for the flashing message icon
 StreamController<Message> messageController = StreamController<Message>.broadcast();
@@ -245,11 +242,7 @@ class Mqtt extends _$Mqtt {
         }
 
         // send the message to the message stream (used by the log)
-        Message m = (
-          topic: mqttReceivedMessage.topic!,
-          payload: payloadDecoded,
-        );
-        messageController.sink.add(m);
+        messageController.sink.add((topic: mqttReceivedMessage.topic!, payload: payloadDecoded));
 
         // add all messages to this generic mqttMessages provider
         ref.read(mqttMessagesFamProvider(mqttReceivedMessage.topic).notifier).state = payloadDecoded;

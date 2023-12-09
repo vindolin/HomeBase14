@@ -25,40 +25,34 @@ class MqttLog extends ConsumerWidget {
         );
 
     // return Text of last 100 messages
-    return Container(
-      color: Colors.black,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView.builder(
-          itemCount: messageQueue.length,
-          itemBuilder: (context, index) {
-            // newest message first
-            int reverseIndex = messageQueue.length - 1 - index;
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${messageQueue.elementAt(reverseIndex)?.topic}',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.green,
-                  ),
+    return ListView.builder(
+      itemCount: messageQueue.length,
+      itemBuilder: (context, index) {
+        // newest message first
+        int reverseIndex = messageQueue.length - 1 - index;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '${messageQueue.elementAt(reverseIndex)?.topic}',
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.green,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text(
+                '${messageQueue.elementAt(reverseIndex)?.payload}',
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: Colors.greenAccent,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text(
-                    '${messageQueue.elementAt(reverseIndex)?.payload}',
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.greenAccent,
-                    ),
-                  ),
-                ),
-              ],
-            );
-          },
-        ),
-      ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -71,8 +65,14 @@ class MqttLogPage extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('MQTT Message Log'),
       ),
-      body: const Center(
-        child: MqttLog(),
+      body: Center(
+        child: Container(
+          color: Colors.black,
+          child: const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: MqttLog(),
+          ),
+        ),
       ),
     );
   }

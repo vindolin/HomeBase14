@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:tuple/tuple.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 import '/utils.dart';
@@ -283,8 +282,14 @@ final mqttDeviceMap = IMap(const {
 // publish callback typedef
 typedef F = void Function(String deviceId, String payload);
 
+typedef DataMapping = ({
+  dynamic item1,
+  dynamic item2,
+  dynamic type,
+});
+
 abstract class AbstractMqttDevice {
-  late List<Tuple3<String, String, dynamic>> dataMapping = [];
+  // late List<DataMapping> dataMapping = [];
   late Map<String, dynamic> data = {};
 
   late String deviceId;
@@ -306,37 +311,34 @@ abstract class AbstractMqttDevice {
   }
 
   @protected
-  void readValue(String key, dynamic value) {
-    // log('$key> $value');
-  }
+  void readValue(String key, dynamic value) {}
 
-  // TODOs find a better way to cast the values, mirror system?
-  void parseData(key, value) {
-    try {
-      final mapping = dataMapping.firstWhere((element) => element.item1 == key);
+  // // TODOs find a better way to cast the values, mirror system?
+  // void parseData(key, value) {
+  //   try {
+  //     final mapping = dataMapping.firstWhere((element) => element.item1 == key);
+  //     print(mapping.item1);
 
-      data[mapping.item2] = switch (mapping.item3) {
-        double _ => value.toDouble(),
-        int _ => value.toInt(),
-        String _ => value.toString(),
-        bool _ => value.toString() == 'true',
-        _ => value,
-      };
-    } catch (_) {}
-  }
+  //     data[mapping.item2] = switch (mapping.type) {
+  //       double _ => value.toDouble(),
+  //       int _ => value.toInt(),
+  //       String _ => value.toString(),
+  //       bool _ => value.toString() == 'true',
+  //       _ => value,
+  //     };
+  //   } catch (_) {}
+  // }
 
   @protected
   void readValues(Map<String, dynamic> payload) {
     mqttPayload = payload;
-    // print(followUpMessage);
     if (followUpMessage) {
       followUpMessage = false;
       return;
     }
 
+    // unpack the payload, one level deep
     payload.forEach((key, value) {
-      // parseData(key, value);
-
       switch (key) {
         case 'linkquality':
           linkQuality = value;

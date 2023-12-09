@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 import '/utils.dart';
+import '/ui_helpers.dart';
 
 import '/models/mqtt_devices.dart';
 
@@ -14,23 +17,6 @@ import 'widgets/curtain_widget.dart';
 import 'widgets/dual_curtain_widget.dart';
 
 import '/widgets/connection_bar_widget.dart';
-
-showOverlayModal(context, device, deviceName) {
-  showDialog(
-    context: context,
-    builder: (_) {
-      return Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: device is DualCurtainDevice
-              ? DualCurtainWidget(deviceId: device.deviceId)
-              : CurtainWidget(deviceId: device.deviceId),
-        ),
-      );
-    },
-  );
-}
 
 class CurtainListPage extends ConsumerWidget {
   const CurtainListPage({super.key});
@@ -112,15 +98,12 @@ class CurtainListPage extends ConsumerWidget {
               ],
             ),
             onTap: () {
-              showOverlayModal(context, device, deviceNames[device.deviceId] ?? device.deviceId);
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => device is DualCurtainDevice
-              //         ? DualCurtainDetailPage(deviceId: device.deviceId)
-              //         : CurtainDetailPage(deviceId: device.deviceId),
-              //   ),
-              // );
+              modalDialog(
+                context,
+                device is DualCurtainDevice
+                    ? DualCurtainWidget(deviceId: device.deviceId)
+                    : CurtainWidget(deviceId: device.deviceId),
+              );
             },
             trailing: Row(
               mainAxisSize: MainAxisSize.min,

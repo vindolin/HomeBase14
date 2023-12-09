@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,39 +7,12 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 import '/utils.dart';
+import '/ui_helpers.dart';
 import '/models/mqtt_devices.dart';
 import '/widgets/connection_bar_widget.dart';
 import '/widgets/pulsating_icon_hooks_widget.dart';
 import 'widgets/thermostat_readings_widget.dart';
 import 'widgets/thermostat_settings_widget.dart';
-
-showOverlayModal(context, device, deviceName) {
-  showDialog(
-    context: context,
-    builder: (BuildContext _) {
-      return Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxHeight: 350),
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('$deviceName', style: Theme.of(context).textTheme.titleLarge),
-                const SizedBox(height: 16),
-                ThermostatInput(
-                  deviceId: device.deviceId,
-                  closeAction: () => Navigator.of(context).pop(),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    },
-  );
-}
 
 /// Shows a list of all thermostats, sorted by name and temperature.
 class ThermostatListPage extends ConsumerWidget {
@@ -111,7 +86,21 @@ class ThermostatListPage extends ConsumerWidget {
               ),
               child: InkWell(
                 onTap: () {
-                  showOverlayModal(context, device, deviceNames[key]!);
+                  modalDialog(
+                    context,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(deviceNames[key]!, style: Theme.of(context).textTheme.titleLarge),
+                        const SizedBox(height: 16),
+                        ThermostatInput(
+                          deviceId: device.deviceId,
+                          closeAction: () => Navigator.of(context).pop(),
+                        ),
+                      ],
+                    ),
+                    constraints: const BoxConstraints(maxHeight: 300),
+                  );
                 },
                 child: Row(
                   children: [

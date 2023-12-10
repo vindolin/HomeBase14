@@ -13,6 +13,7 @@ class IncubatorPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final tempProvider = ref.watch(mqttMessagesFamProvider('incubator/temp'));
     final targetTemp = ref.watch(mqttMessagesFamProvider('incubator/target_temp'));
+    final heaterDutyCycle = ref.watch(mqttMessagesFamProvider('incubator/heater'));
 
     // print('tempProvider: $tempProvider');
     // print('targetTemp: $targetTemp');
@@ -53,11 +54,14 @@ class IncubatorPage extends ConsumerWidget {
                 secondaryTrackValue: temperature.toDouble(),
                 onChangeEnd: (value) {
                   ref.read(mqttProvider.notifier).publish(
-                        'irrigator/set/targetMoisture',
+                        'incubator/set/target_temp',
                         value.toInt().toString(),
                       );
                 },
               ),
+              const SizedBox(height: 8),
+              Text('Heater duty cycle: ${heaterDutyCycle ?? "???"}%'),
+              const SizedBox(height: 8),
               const InfluxdbWidget(),
               MqttSwitchWidget(
                 title: ref.watch(mqttMessagesFamProvider('incubator/on_state')).toString(),

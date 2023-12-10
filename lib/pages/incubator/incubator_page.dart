@@ -60,16 +60,26 @@ class IncubatorPage extends ConsumerWidget {
                 },
               ),
               const SizedBox(height: 8),
+              const InfluxdbWidget(),
+              LinearProgressIndicator(
+                value: heaterDutyCycle != null ? heaterDutyCycle / 100 : 0,
+                borderRadius: BorderRadius.circular(10),
+                minHeight: 12,
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  Color.lerp(Colors.blue, Colors.red, heaterDutyCycle / 100)!,
+                ),
+                backgroundColor: Colors.grey.withAlpha(100),
+              ),
+              const SizedBox(height: 8),
               Text('Heater duty cycle: ${heaterDutyCycle ?? "???"}%'),
               const SizedBox(height: 8),
-              const InfluxdbWidget(),
               MqttSwitchWidget(
                 title: ref.watch(mqttMessagesFamProvider('incubator/on_state')).toString(),
                 statTopic: 'incubator/on_state',
                 setTopic: 'incubator/set/on_state',
                 optimistic: true,
                 orientation: MqttSwitchWidgetOrientation.horizontal,
-              )
+              ),
             ],
           ),
         ),

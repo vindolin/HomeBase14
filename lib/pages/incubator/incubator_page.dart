@@ -60,7 +60,7 @@ class IncubatorPage extends ConsumerWidget {
                 },
               ),
               const SizedBox(height: 8),
-              InfluxdbWidget(
+              InfluxChartWidget(
                 measurement: 'incubator',
                 timeSpan: '12h',
                 groupTime: '10m',

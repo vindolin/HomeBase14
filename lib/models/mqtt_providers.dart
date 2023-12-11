@@ -222,7 +222,7 @@ class Mqtt extends _$Mqtt {
     }
 
     client.pongCallback = () {
-      log('ping response client callback invoked');
+      // log('ping response client callback invoked');
     };
 
     client.updates.listen((List<mqtt.MqttReceivedMessage<mqtt.MqttMessage>> messages) {

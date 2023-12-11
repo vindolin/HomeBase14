@@ -12,7 +12,7 @@ import '/widgets/shader_widget.dart';
 // typedef Fields = Map<String, Field>;
 
 /// this widget draws a graph of the last 12 hours of soil moisture
-class InfluxdbWidget extends ConsumerStatefulWidget {
+class InfluxChartWidget extends ConsumerStatefulWidget {
   final String measurement;
   final dynamic fields;
   final String timeSpan;
@@ -22,7 +22,7 @@ class InfluxdbWidget extends ConsumerStatefulWidget {
   final Function? titleFormat;
   final double? minimum;
   final double? maximum;
-  const InfluxdbWidget({
+  const InfluxChartWidget({
     super.key,
     required this.measurement,
     required this.fields,
@@ -36,10 +36,10 @@ class InfluxdbWidget extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<InfluxdbWidget> createState() => _InfluxdbWidgetState();
+  ConsumerState<InfluxChartWidget> createState() => _InfluxdbWidgetState();
 }
 
-class _InfluxdbWidgetState extends ConsumerState<InfluxdbWidget> {
+class _InfluxdbWidgetState extends ConsumerState<InfluxChartWidget> {
   Timer? timer;
 
   void setTimer(int seconds) {

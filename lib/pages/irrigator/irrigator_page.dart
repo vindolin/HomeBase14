@@ -52,7 +52,7 @@ class IrrigatorPage extends ConsumerWidget {
                       );
                 },
               ),
-              InfluxdbWidget(
+              InfluxChartWidget(
                 measurement: 'irrigator',
                 timeSpan: '12h',
                 groupTime: '10m',

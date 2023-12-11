@@ -49,6 +49,8 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
     var url = influxdbAddress;
 
     final dio = Dio();
+    const timeSpan = '12h';
+    const groupTime = '5m';
 
     // solar watt
     var response = await dio.post(
@@ -57,13 +59,20 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
         {
           'db': 'sensors',
           'q': '''
-        SELECT
-        mean(value)
-        FROM sma WHERE
-        (sensor = 'totw')
-        AND  (time >= now() - 12h)
-        GROUP BY time(5m)
-      ''',
+            SELECT
+            mean(value)
+            FROM sma WHERE
+            (sensor = 'totw')
+            AND  (time >= now() - $timeSpan)
+            GROUP BY time($groupTime);
+
+            SELECT
+            mean(value)
+            FROM sma WHERE
+            (sensor = 'total_w')
+            AND  (time >= now() - $timeSpan)
+            GROUP BY time($groupTime)
+          ''',
         },
       ),
     );
@@ -80,27 +89,7 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
       },
     ).toList();
 
-    // usage watt
-    response = await dio.post(
-      url,
-      data: FormData.fromMap(
-        {
-          'db': 'sensors',
-          'q': '''
-        SELECT
-        mean(value)
-        FROM sma WHERE
-        (sensor = 'total_w')
-        AND  (time >= now() - 12h)
-        GROUP BY time(5m)
-      ''',
-        },
-      ),
-    );
-
-    // await Future.delayed(const Duration(seconds: 1), () {});
-
-    final usage = response.data['results'][0]['series'][0]['values'].map<TimePoint>(
+    final usage = response.data['results'][1]['series'][0]['values'].map<TimePoint>(
       (e) {
         if (e[1] == null) {
           e[1] = 0;

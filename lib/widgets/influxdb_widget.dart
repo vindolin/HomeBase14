@@ -1,21 +1,45 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '/models/network_addresses.dart';
 import '/widgets/shader_widget.dart';
 
-/// this widget draws a graph of the last 12 hours of solar and usage data
-class InfluxdbWidget extends StatefulWidget {
-  const InfluxdbWidget({super.key});
+// typedef Field = ({String name, Color color, Function nameFormat});
+// typedef Fields = Map<String, Field>;
+
+/// this widget draws a graph of the last 12 hours of soil moisture
+class InfluxdbWidget extends ConsumerStatefulWidget {
+  final String measurement;
+  final dynamic fields;
+  final String timeSpan;
+  final String groupTime;
+  final String? labelFormat;
+  final String? numberFormat;
+  final Function? titleFormat;
+  final double? minimum;
+  final double? maximum;
+  const InfluxdbWidget({
+    super.key,
+    required this.measurement,
+    required this.fields,
+    required this.timeSpan,
+    required this.groupTime,
+    this.labelFormat,
+    this.numberFormat,
+    this.titleFormat,
+    this.minimum,
+    this.maximum,
+  });
 
   @override
-  State<InfluxdbWidget> createState() => _InfluxdbWidgetState();
+  ConsumerState<InfluxdbWidget> createState() => _InfluxdbWidgetState();
 }
 
-class _InfluxdbWidgetState extends State<InfluxdbWidget> {
+class _InfluxdbWidgetState extends ConsumerState<InfluxdbWidget> {
   Timer? timer;
 
   void setTimer(int seconds) {
@@ -32,9 +56,10 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
 
   @override
   void initState() {
+    super.initState();
+
     setTimer(5);
     result = fetchResult();
-    super.initState();
   }
 
   @override
@@ -50,73 +75,45 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
 
     final dio = Dio();
 
-    // solar watt
+    List<List<TimePoint>> resultList = [];
+    var queries = '';
+    // concatenate multiple queries into one request, so we can get the mean of the fields and make the Syncfusion chart happy
+    for (var fieldName in widget.fields.keys) {
+      queries += '''
+        SELECT
+        MEAN(value)
+        FROM ${widget.measurement} WHERE
+        (sensor = '$fieldName')
+        AND  (time >= NOW() - ${widget.timeSpan})
+        GROUP BY TIME(${widget.groupTime})
+        FILL(previous);
+      ''';
+    }
+
+    // print(queries);
+
     var response = await dio.post(
       url,
       data: FormData.fromMap(
         {
           'db': 'sensors',
-          'q': '''
-        SELECT
-        mean(value)
-        FROM sma WHERE
-        (sensor = 'totw')
-        AND  (time >= now() - 12h)
-        GROUP BY time(5m)
-      ''',
+          'q': queries,
         },
       ),
     );
 
-    // await Future.delayed(const Duration(seconds: 1), () {});
-
-    final solar = response.data['results'][0]['series'][0]['values'].map<TimePoint>(
-      (e) {
-        // -2147483647 is an error value from the Tripower inverter
-        if (e[1] == null || e[1] == -2147483648) {
-          e[1] = 0;
-        }
-        return TimePoint(DateTime.parse(e[0]), e[1].toDouble() / 1000);
-      },
-    ).toList();
-
-    // usage watt
-    response = await dio.post(
-      url,
-      data: FormData.fromMap(
-        {
-          'db': 'sensors',
-          'q': '''
-        SELECT
-        mean(value)
-        FROM sma WHERE
-        (sensor = 'total_w')
-        AND  (time >= now() - 12h)
-        GROUP BY time(5m)
-      ''',
+    for (var i = 0; i < widget.fields.keys.length; i++) {
+      resultList.add(response.data['results'][i]['series'][0]['values'].map<TimePoint>(
+        (e) {
+          e[1] ??= 0; // replace null with 0
+          return TimePoint(DateTime.parse(e[0]), e[1].toDouble());
         },
-      ),
-    );
-
-    // await Future.delayed(const Duration(seconds: 1), () {});
-
-    final usage = response.data['results'][0]['series'][0]['values'].map<TimePoint>(
-      (e) {
-        if (e[1] == null) {
-          e[1] = 0;
-        }
-        return TimePoint(DateTime.parse(e[0]), e[1].toDouble() / 1000);
-      },
-    ).toList();
-
-    // xTODO solar can be empty, fix!
-    for (int i = 0; i < usage.length; i++) {
-      var usageValue = solar[i].value - usage[i].value;
-      if (usageValue < 0) usageValue = 0.0; // correct error values
-      usage[i].value = usageValue;
+      ).toList()
+          // .sublist(1), // remove first value because it is always null
+          );
     }
 
-    return [solar, usage];
+    return resultList;
   }
 
   @override
@@ -128,40 +125,30 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final data = snapshot.data!;
-
           return Center(
             child: SfCartesianChart(
-              title: ChartTitle(text: 'Solar Watt ☀️ ${snapshot.data![0].last.value.toStringAsFixed(1)} kW'),
+              title: widget.titleFormat != null ? ChartTitle(text: widget.titleFormat!(data[0].last.value)) : null,
               primaryXAxis: CategoryAxis(),
-              primaryYAxis: NumericAxis(numberFormat: NumberFormat('#0.0 kW')),
+              primaryYAxis: NumericAxis(
+                numberFormat: NumberFormat(widget.numberFormat),
+                labelFormat: widget.labelFormat,
+                minimum: widget.minimum,
+                maximum: widget.maximum,
+              ),
               legend: const Legend(isVisible: true, alignment: ChartAlignment.near, position: LegendPosition.bottom),
-              series: <LineSeries<TimePoint, String>>[
-                LineSeries<TimePoint, String>(
-                    name: 'Solar ${snapshot.data![0].last.value.toStringAsFixed(1)} kW',
-                    // animationDuration: 0,
-                    color: Colors.orange,
-                    width: 3,
-                    enableTooltip: true,
-                    // onPointTap: (pointInteractionDetails) =>
-                    //     print(pointInteractionDetails.dataPoints![pointInteractionDetails.pointIndex!].y),
-                    dataSource: data[0],
+              series: [
+                ...data.map((e) {
+                  final key = widget.fields.keys.elementAt(data.indexOf(e));
+                  final fieldData = widget.fields[key];
 
-                    // markerSettings: MarkerSettings(isVisible: true),
-                    xValueMapper: (TimePoint points, _) => format.format(points.time),
-                    yValueMapper: (TimePoint points, _) => points.value),
-                LineSeries<TimePoint, String>(
-                    name: 'Verbrauch ${(snapshot.data![1].last.value * 1000).toStringAsFixed(1)} W',
-                    // animationDuration: 0,
-                    color: Colors.pink,
-                    width: 3,
-                    enableTooltip: true,
-                    // onPointTap: (pointInteractionDetails) =>
-                    //     print(pointInteractionDetails.dataPoints![pointInteractionDetails.pointIndex!].y),
-                    dataSource: data[1],
-
-                    // markerSettings: MarkerSettings(isVisible: true),
-                    xValueMapper: (TimePoint points, _) => format.format(points.time),
-                    yValueMapper: (TimePoint points, _) => points.value)
+                  return LineSeries<TimePoint, String>(
+                    name: fieldData['name'],
+                    dataSource: e,
+                    color: fieldData['color'],
+                    xValueMapper: (TimePoint tp, _) => format.format(tp.time),
+                    yValueMapper: (TimePoint tp, _) => tp.value,
+                  );
+                })
               ],
             ),
           );

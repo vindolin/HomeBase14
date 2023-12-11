@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/widgets/slider_widget.dart';
 import '/models/mqtt_providers.dart';
 import '/models/mqtt_devices.dart';
-import 'influxdb_widget.dart';
+import '/widgets/influxdb_widget.dart';
 
 class IrrigatorPage extends ConsumerWidget {
   const IrrigatorPage({super.key});
@@ -52,7 +52,25 @@ class IrrigatorPage extends ConsumerWidget {
                       );
                 },
               ),
-              const InfluxdbWidget(),
+              InfluxdbWidget(
+                measurement: 'irrigator',
+                timeSpan: '12h',
+                groupTime: '10m',
+                numberFormat: '#0',
+                labelFormat: '{value} %',
+                fields: {
+                  'target': {
+                    'name': 'Target moisture',
+                    'color': Colors.blue,
+                    'nameFormat': (value) => 'Aktuell ${value.toStringAsFixed(0)} %',
+                  },
+                  'soil': {
+                    'name': 'Soil moisture',
+                    'color': Colors.red,
+                    'nameFormat': (value) => 'Ziel ${value.toStringAsFixed(0)} %',
+                  },
+                },
+              ),
               ElevatedButton(
                   onPressed: () {
                     ref.read(mqttProvider.notifier).publish('irrigator/measure', '');

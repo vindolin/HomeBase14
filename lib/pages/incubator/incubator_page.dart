@@ -4,7 +4,7 @@ import '/widgets/mqtt_switch_widget.dart';
 import '/widgets/slider_widget.dart';
 import '/models/mqtt_providers.dart';
 import '/models/mqtt_devices.dart';
-import 'influxdb_widget.dart';
+import '/widgets/influxdb_widget.dart';
 
 class IncubatorPage extends ConsumerWidget {
   const IncubatorPage({super.key});
@@ -14,6 +14,7 @@ class IncubatorPage extends ConsumerWidget {
     final tempProvider = ref.watch(mqttMessagesFamProvider('incubator/temp'));
     final targetTemp = ref.watch(mqttMessagesFamProvider('incubator/target_temp'));
     final heaterDutyCycle = ref.watch(mqttMessagesFamProvider('incubator/heater'));
+    final humidity = ref.watch(mqttMessagesFamProvider('home/humidity')).toInt();
 
     // print('tempProvider: $tempProvider');
     // print('targetTemp: $targetTemp');
@@ -48,7 +49,7 @@ class IncubatorPage extends ConsumerWidget {
                 max: 46,
                 minColor: Colors.grey,
                 maxColor: Colors.red,
-                divisions: 20,
+                divisions: 26,
                 inactiveColor: Colors.grey,
                 secondaryActiveColor: Colors.blue,
                 secondaryTrackValue: temperature.toDouble(),
@@ -60,18 +61,42 @@ class IncubatorPage extends ConsumerWidget {
                 },
               ),
               const SizedBox(height: 8),
-              const InfluxdbWidget(),
-              LinearProgressIndicator(
-                value: heaterDutyCycle != null ? heaterDutyCycle / 100 : 0,
-                borderRadius: BorderRadius.circular(10),
-                minHeight: 12,
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  Color.lerp(Colors.blue, Colors.red, heaterDutyCycle / 100)!,
-                ),
-                backgroundColor: Colors.grey.withAlpha(100),
+              InfluxdbWidget(
+                measurement: 'incubator',
+                timeSpan: '12h',
+                groupTime: '10m',
+                minimum: 20,
+                maximum: 45,
+                numberFormat: '#0',
+                labelFormat: '{value}°C',
+                fields: {
+                  'temp': {
+                    'name': 'Current Temperature',
+                    'color': Colors.blue,
+                    'nameFormat': (value) => 'Aktuell ${value.toStringAsFixed(0)}°C',
+                  },
+                  'target_temp': {
+                    'name': 'Target Temperature',
+                    'color': Colors.red,
+                    'nameFormat': (value) => 'Ziel ${value.toStringAsFixed(0)}°C',
+                  },
+                },
               ),
-              const SizedBox(height: 8),
               Text('Heater duty cycle: ${heaterDutyCycle ?? "???"}%'),
+              const SizedBox(height: 4),
+              Flexible(
+                child: LinearProgressIndicator(
+                  value: heaterDutyCycle != null ? heaterDutyCycle / 100 : 0,
+                  borderRadius: BorderRadius.circular(10),
+                  minHeight: 12,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    Color.lerp(Colors.blue, Colors.red, heaterDutyCycle / 100)!,
+                  ),
+                  backgroundColor: Colors.grey.withAlpha(100),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text('Humidity: ${humidity ?? "???"}%'),
               const SizedBox(height: 8),
               MqttSwitchWidget(
                 title: ref.watch(mqttMessagesFamProvider('incubator/on_state')).toString(),

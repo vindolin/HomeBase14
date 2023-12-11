@@ -103,14 +103,17 @@ class _InfluxdbWidgetState extends ConsumerState<InfluxChartWidget> {
     );
 
     for (var i = 0; i < widget.fields.keys.length; i++) {
-      resultList.add(response.data['results'][i]['series'][0]['values'].map<TimePoint>(
-        (e) {
-          e[1] ??= 0; // replace null with 0
-          return TimePoint(DateTime.parse(e[0]), e[1].toDouble());
-        },
-      ).toList()
-          // .sublist(1), // remove first value because it is always null
-          );
+      resultList.add(
+        response.data['results'][i]['series'][0]['values']
+            .map<TimePoint>(
+              (e) {
+                e[1] ??= 0; // replace null with 0
+                return TimePoint(DateTime.parse(e[0]), e[1].toDouble());
+              },
+            )
+            .toList()
+            .sublist(1), // remove first value because it is always null
+      );
     }
 
     return resultList;

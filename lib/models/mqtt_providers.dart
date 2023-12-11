@@ -399,7 +399,7 @@ class Mqtt extends _$Mqtt {
         if (description != mqttDescriptions.state[device['friendly_name']]) {
           deviceNames[device['friendly_name']] = description;
         }
-        log('${device['friendly_name']}: ${device['description']}');
+        // log('${device['friendly_name']}: ${device['description']}');
       } catch (_) {
         //
       }

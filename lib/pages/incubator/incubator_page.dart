@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../utils.dart';
 import '/widgets/mqtt_switch_widget.dart';
 import '/widgets/slider_widget.dart';
 import '/models/mqtt_providers.dart';
@@ -16,14 +17,9 @@ class IncubatorPage extends ConsumerWidget {
     final heaterDutyCycle = ref.watch(mqttMessagesFamProvider('incubator/heater'));
     final humidity = ref.watch(mqttMessagesFamProvider('home/humidity')).toInt();
 
-    // print('tempProvider: $tempProvider');
-    // print('targetTemp: $targetTemp');
-
     // clamp values slider range
     final target = (targetTemp != null && targetTemp != '' ? targetTemp.toDouble() : null).clamp(20, 45);
     double temperature = (tempProvider?.toDouble() ?? 0).clamp(20, 45);
-    // double temperature = 20;
-    // double target = 30;
 
     return Scaffold(
       appBar: AppBar(

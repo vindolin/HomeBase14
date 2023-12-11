@@ -22,27 +22,27 @@ import 'mqtt_devices.dart';
 part 'mqtt_providers.g.dart';
 
 const subscribeTopics = [
-  'zigbee2mqtt/#', // all the zigbee devices registered in zigbee2mqtt
-  'stat/#', // all the tasmota devices
   'garagedoor/state', // an esp32 controlling the garage door
-  'home/#', // node-red controlling the burglar alarm
   'garden/cistern_pump/get', // node-red controlling the cistern pump
-  'kittycam/privacy', // node-red controlling the privacy mode of the cat cam
-  'instar/10D1DC228582/status/alarm/triggered/object', // motion detection of the door cam
-  'leech/#', // a node red flow controlling a python/mqtt daemon running on leech, setting the sleep mode to sleep or hibernate, or selects the display
+  'greenhouse/humidity',
   'greenhouse/temp_inside',
   'greenhouse/temp_outside',
-  'greenhouse/humidity',
-  'prusa/progress',
-  'prusa/file',
-  'prusa/temp',
-  'sma/tripower/totw',
-  'sma/b3b461c9/total_w',
-  'tulpe/spray_last',
+  'home/#', // node-red controlling the burglar alarm
+  'incubator/+',
+  'instar/10D1DC228582/status/alarm/triggered/object', // motion detection of the door cam
+  'irrigator/+',
+  'kittycam/privacy', // node-red controlling the privacy mode of the cat cam
+  'leech/#', // a node red flow controlling a python/mqtt daemon running on leech, setting the sleep mode to sleep or hibernate, or selects the display
   'meep/#', // test device
-  'irrigator/+', // test device
-  'incubator/+', // test device
-  'z2mSwitch/#', // test device
+  'prusa/file',
+  'prusa/progress',
+  'prusa/temp',
+  'sma/b3b461c9/total_w',
+  'sma/tripower/totw',
+  'stat/#', // all the tasmota devices
+  'tulpe/spray_last',
+  'z2mSwitch/#',
+  'zigbee2mqtt/#', // all the zigbee devices registered in zigbee2mqtt
 ];
 
 // generate a random mqtt client identifier

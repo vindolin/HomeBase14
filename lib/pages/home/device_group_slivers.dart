@@ -85,7 +85,7 @@ class DeviceGroups extends ConsumerWidget {
             );
           },
           trailing: Text(
-            ' ${localTemperatureAvg.toStringAsFixed(1)}°C⌀',
+            '⌀${localTemperatureAvg.toStringAsFixed(1)}°C',
             style: titleStyle.copyWith(
               color: getTemperatureColor(localTemperatureAvg, currentHeatingSetpointAvg),
             ),

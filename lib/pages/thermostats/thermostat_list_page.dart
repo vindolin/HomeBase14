@@ -52,7 +52,7 @@ class ThermostatListPage extends ConsumerWidget {
             Text(translate('device_names.thermostats')),
             const Spacer(),
             Text(
-              '${localTemperatureAvg.toStringAsFixed(1)}°C⌀',
+              '⌀${localTemperatureAvg.toStringAsFixed(1)}°C',
               style: const TextStyle().copyWith(
                 fontWeight: FontWeight.w700,
                 color: getTemperatureColor(localTemperatureAvg, currentHeatingSetpointAvg),

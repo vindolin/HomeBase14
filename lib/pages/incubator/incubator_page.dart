@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../utils.dart';
 import '/widgets/mqtt_switch_widget.dart';
 import '/widgets/slider_widget.dart';
 import '/models/mqtt_providers.dart';
@@ -23,7 +22,11 @@ class IncubatorPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Incubator'),
+        title: const Text(
+          'Incubator',
+          // 'Incubator \uf499',
+          // style: TextStyle(fontFamily: 'UbuntuMono Nerd Font'),
+        ),
       ),
       body: Card(
         elevation: 8,

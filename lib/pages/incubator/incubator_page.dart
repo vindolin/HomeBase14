@@ -28,83 +28,120 @@ class IncubatorPage extends ConsumerWidget {
           // style: TextStyle(fontFamily: 'UbuntuMono Nerd Font'),
         ),
       ),
-      body: Card(
-        elevation: 8,
-        margin: const EdgeInsets.all(16),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Fermentation Incubator', style: Theme.of(context).textTheme.titleLarge),
-              const SizedBox(height: 8),
-              Text('Temperature: $temperature°C'),
-              Text('Set target temperature: ${target != null ? target.toInt() : "???"}°C'),
-              SliderWidget(
-                value: target,
-                min: 20,
-                max: 46,
-                minColor: Colors.grey,
-                maxColor: Colors.red,
-                divisions: 26,
-                inactiveColor: Colors.grey,
-                secondaryActiveColor: Colors.blue,
-                secondaryTrackValue: temperature.toDouble(),
-                onChangeEnd: (value) {
-                  ref.read(mqttProvider.notifier).publish(
-                        'incubator/set/target_temp',
-                        value.toInt().toString(),
-                      );
-                },
-              ),
-              const SizedBox(height: 8),
-              InfluxChartWidget(
-                measurement: 'incubator',
-                timeSpan: '12h',
-                groupTime: '10m',
-                minimum: 20,
-                maximum: 45,
-                numberFormat: '#0',
-                labelFormat: '{value}°C',
-                fields: {
-                  'temp': {
-                    'name': 'Current Temperature',
-                    'color': Colors.blue,
-                    'nameFormat': (value) => 'Aktuell ${value.toStringAsFixed(0)}°C',
+      body: SingleChildScrollView(
+        child: Card(
+          elevation: 8,
+          margin: const EdgeInsets.all(16),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Fermentation Incubator', style: Theme.of(context).textTheme.titleLarge),
+                const SizedBox(height: 8),
+                Text('Temperature: $temperature°C'),
+                Text('Set target temperature: ${target != null ? target.toInt() : "???"}°C'),
+                SliderWidget(
+                  value: target,
+                  min: 20,
+                  max: 46,
+                  minColor: Colors.grey,
+                  maxColor: Colors.red,
+                  divisions: 26,
+                  inactiveColor: Colors.grey,
+                  secondaryActiveColor: Colors.blue,
+                  secondaryTrackValue: temperature.toDouble(),
+                  onChangeEnd: (value) {
+                    ref.read(mqttProvider.notifier).publish(
+                          'incubator/set/target_temp',
+                          value.toInt().toString(),
+                        );
                   },
-                  'target_temp': {
-                    'name': 'Target Temperature',
-                    'color': Colors.red,
-                    'nameFormat': (value) => 'Ziel ${value.toStringAsFixed(0)}°C',
-                  },
-                },
-              ),
-              Text('Heater duty cycle: ${heaterDutyCycle ?? "???"}%'),
-              const SizedBox(height: 4),
-              Flexible(
-                child: LinearProgressIndicator(
-                  value: heaterDutyCycle != null ? heaterDutyCycle / 100 : 0,
-                  borderRadius: BorderRadius.circular(10),
-                  minHeight: 12,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    Color.lerp(Colors.blue, Colors.red, heaterDutyCycle / 100)!,
-                  ),
-                  backgroundColor: Colors.grey.withAlpha(100),
                 ),
-              ),
-              const SizedBox(height: 16),
-              Text('Humidity: ${humidity ?? "???"}%'),
-              const SizedBox(height: 8),
-              MqttSwitchWidget(
-                title: ref.watch(mqttMessagesFamProvider('incubator/on_state')).toString(),
-                statTopic: 'incubator/on_state',
-                setTopic: 'incubator/set/on_state',
-                optimistic: true,
-                orientation: MqttSwitchWidgetOrientation.horizontal,
-              ),
-            ],
+                const SizedBox(height: 8),
+                InfluxChartWidget(
+                  measurement: 'incubator',
+                  timeSpan: '12h',
+                  groupTime: '10m',
+                  minimum: 20,
+                  maximum: 45,
+                  numberFormat: '#0',
+                  labelFormat: '{value}°C',
+                  fields: {
+                    'temp': {
+                      'name': 'Current',
+                      'color': Colors.blue,
+                      'nameFormat': (value) => 'Aktuell ${value.toStringAsFixed(0)}°C',
+                    },
+                    'target_temp': {
+                      'name': 'Target',
+                      'color': Colors.red,
+                      'nameFormat': (value) => 'Ziel ${value.toStringAsFixed(0)}°C',
+                    },
+                  },
+                ),
+                Text('Heater duty cycle: ${heaterDutyCycle ?? "???"}%'),
+                const SizedBox(height: 4),
+                Flexible(
+                  child: LinearProgressIndicator(
+                    value: heaterDutyCycle != null ? heaterDutyCycle / 100 : 0,
+                    borderRadius: BorderRadius.circular(10),
+                    minHeight: 12,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Color.lerp(Colors.blue, Colors.red, heaterDutyCycle / 100)!,
+                    ),
+                    backgroundColor: Colors.grey.withAlpha(100),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text('Humidity: ${humidity ?? "???"}%'),
+                const SizedBox(height: 8),
+                MqttSwitchWidget(
+                  title: ref.watch(mqttMessagesFamProvider('incubator/on_state')).toString(),
+                  statTopic: 'incubator/on_state',
+                  setTopic: 'incubator/set/on_state',
+                  optimistic: true,
+                  orientation: MqttSwitchWidgetOrientation.horizontal,
+                ),
+                const SizedBox(height: 8),
+                Card(
+                  color: Colors.grey.shade800,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Wrap(
+                      spacing: 8.0,
+                      runSpacing: 8.0,
+                      children: [
+                        Text('Presets:',
+                            style: TextStyle(color: Colors.grey.shade300, fontWeight: FontWeight.bold, fontSize: 20)),
+                        Divider(
+                          color: Colors.grey.shade700,
+                          height: 8,
+                          thickness: 2,
+                        ),
+                        ...{
+                          'koji': {'name': 'Koji', 'temp': 30},
+                          'natto': {'name': 'Natto', 'temp': 42},
+                          'tempeh': {'name': 'Tempeh', 'temp': 34},
+                          'lactobazillus': {'name': 'Milchsauer', 'temp': 21},
+                        }.entries.map(
+                              (e) => ElevatedButton(
+                                onPressed: () {
+                                  ref
+                                      .read(mqttProvider.notifier)
+                                      .publish('incubator/set/target_temp', e.value['temp'].toString());
+                                },
+                                child: Text('${e.value['name']} @ ${e.value['temp']}°C'),
+                              ),
+                            ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

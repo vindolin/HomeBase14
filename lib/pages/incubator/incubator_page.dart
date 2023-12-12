@@ -23,7 +23,7 @@ class IncubatorPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Incubator',
+          'Incubator 🦠',
           // 'Incubator \uf499',
           // style: TextStyle(fontFamily: 'UbuntuMono Nerd Font'),
         ),
@@ -110,32 +110,33 @@ class IncubatorPage extends ConsumerWidget {
                   color: Colors.grey.shade800,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Wrap(
-                      spacing: 8.0,
-                      runSpacing: 8.0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('Presets:',
                             style: TextStyle(color: Colors.grey.shade300, fontWeight: FontWeight.bold, fontSize: 20)),
-                        Divider(
-                          color: Colors.grey.shade700,
-                          height: 8,
-                          thickness: 2,
+                        const SizedBox(height: 8),
+                        Wrap(
+                          spacing: 8.0,
+                          runSpacing: 8.0,
+                          children: [
+                            ...{
+                              'koji': {'name': 'Koji', 'temp': 30},
+                              'natto': {'name': 'Natto', 'temp': 42},
+                              'tempeh': {'name': 'Tempeh', 'temp': 34},
+                              'lactobazillus': {'name': 'Milchsauer', 'temp': 21},
+                            }.entries.map(
+                                  (e) => ElevatedButton(
+                                    onPressed: () {
+                                      ref
+                                          .read(mqttProvider.notifier)
+                                          .publish('incubator/set/target_temp', e.value['temp'].toString());
+                                    },
+                                    child: Text('${e.value['name']} @ ${e.value['temp']}°C'),
+                                  ),
+                                ),
+                          ],
                         ),
-                        ...{
-                          'koji': {'name': 'Koji', 'temp': 30},
-                          'natto': {'name': 'Natto', 'temp': 42},
-                          'tempeh': {'name': 'Tempeh', 'temp': 34},
-                          'lactobazillus': {'name': 'Milchsauer', 'temp': 21},
-                        }.entries.map(
-                              (e) => ElevatedButton(
-                                onPressed: () {
-                                  ref
-                                      .read(mqttProvider.notifier)
-                                      .publish('incubator/set/target_temp', e.value['temp'].toString());
-                                },
-                                child: Text('${e.value['name']} @ ${e.value['temp']}°C'),
-                              ),
-                            ),
                       ],
                     ),
                   ),

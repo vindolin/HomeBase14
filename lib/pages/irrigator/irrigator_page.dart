@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:gap/gap.dart';
+
 import '/widgets/slider_widget.dart';
 import '/models/mqtt_providers.dart';
 import '/models/mqtt_devices.dart';
@@ -33,7 +36,7 @@ class IrrigatorPage extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Coffee bush irrigation', style: Theme.of(context).textTheme.titleLarge),
-                const SizedBox(height: 8),
+                const Gap(8),
                 Text('Soil moisture: $soilMoisture'),
                 Text('Set target moisture: ${target != null ? target.toInt() : "???"}'),
                 SliderWidget(
@@ -81,7 +84,7 @@ class IrrigatorPage extends ConsumerWidget {
                       children: [
                         Text('Actions:',
                             style: TextStyle(color: Colors.grey.shade300, fontWeight: FontWeight.bold, fontSize: 20)),
-                        const SizedBox(height: 8),
+                        const Gap(8),
                         ElevatedButton(
                             onPressed: () {
                               ref.read(mqttProvider.notifier).publish('irrigator/measure', '');
@@ -90,7 +93,7 @@ class IrrigatorPage extends ConsumerWidget {
                               padding: EdgeInsets.all(4.0),
                               child: Text('Check now', style: TextStyle(fontSize: 18)),
                             )),
-                        const SizedBox(height: 8),
+                        const Gap(8),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

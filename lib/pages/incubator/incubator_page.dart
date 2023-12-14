@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:gap/gap.dart';
+
 import '/widgets/mqtt_switch_widget.dart';
 import '/widgets/slider_widget.dart';
 import '/models/mqtt_providers.dart';
@@ -41,7 +43,7 @@ class IncubatorPage extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Fermentation Incubator', style: Theme.of(context).textTheme.titleLarge),
-                const SizedBox(height: 8),
+                const Gap(8),
                 Text('Temperature: $temperature°C'),
                 Text('Set target temperature: ${target != null ? target.toInt() : "???"}°C'),
                 SliderWidget(
@@ -61,7 +63,7 @@ class IncubatorPage extends ConsumerWidget {
                         );
                   },
                 ),
-                const SizedBox(height: 8),
+                const Gap(8),
                 InfluxChartWidget(
                   measurement: 'incubator',
                   timeSpan: '12h',
@@ -101,9 +103,9 @@ class IncubatorPage extends ConsumerWidget {
                     backgroundColor: Colors.grey.withAlpha(100),
                   ),
                 ),
-                const SizedBox(height: 16),
+                const Gap(16),
                 Text('Humidity: ${humidity ?? "???"}%'),
-                const SizedBox(height: 8),
+                const Gap(8),
                 MqttSwitchWidget(
                   title: ref.watch(mqttMessagesFamProvider('incubator/on_state')).toString(),
                   statTopic: 'incubator/on_state',
@@ -111,7 +113,7 @@ class IncubatorPage extends ConsumerWidget {
                   optimistic: true,
                   orientation: MqttSwitchWidgetOrientation.horizontal,
                 ),
-                const SizedBox(height: 8),
+                const Gap(8),
                 Card(
                   color: Colors.grey.shade800,
                   child: Padding(
@@ -121,7 +123,7 @@ class IncubatorPage extends ConsumerWidget {
                       children: [
                         Text('Presets:',
                             style: TextStyle(color: Colors.grey.shade300, fontWeight: FontWeight.bold, fontSize: 20)),
-                        const SizedBox(height: 8),
+                        const Gap(8),
                         Wrap(
                           spacing: 8.0,
                           runSpacing: 8.0,

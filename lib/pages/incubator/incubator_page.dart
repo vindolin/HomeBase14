@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 import '/widgets/mqtt_switch_widget.dart';
 import '/widgets/slider_widget.dart';
 import '/models/mqtt_providers.dart';
@@ -77,13 +78,18 @@ class IncubatorPage extends ConsumerWidget {
                     },
                     'target_temp': {
                       'name': 'Target',
-                      'color': Colors.red,
+                      'color': Colors.orange,
                       'nameFormat': (value) => 'Ziel ${value.toStringAsFixed(0)}°C',
+                    },
+                    'heater': {
+                      'name': 'Heater Duty Cycle',
+                      'color': Colors.red.withAlpha(50),
+                      'nameFormat': (value) => 'Duty Cycle ${value.toStringAsFixed(0)}%',
                     },
                   },
                 ),
                 Text('Heater duty cycle: ${heaterDutyCycle ?? "???"}%'),
-                const SizedBox(height: 4),
+                const Gap(8),
                 Flexible(
                   child: LinearProgressIndicator(
                     value: heaterDutyCycle != null ? heaterDutyCycle / 100 : 0,

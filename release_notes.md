@@ -1,0 +1,2 @@
+Added silence button.
+// New thermostat screen for setting the heatpoint of a device.

@@ -27,7 +27,7 @@ class RemotesPage extends ConsumerWidget {
         child: Center(
           child: Text(
             text,
-            style: const TextStyle(fontFamily: 'UbuntuMono Nerd Font', fontSize: 30),
+            style: const TextStyle(fontFamily: 'NerdFont', fontSize: 30),
           ),
         ),
       ),

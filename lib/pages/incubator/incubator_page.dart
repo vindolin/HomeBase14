@@ -28,7 +28,7 @@ class IncubatorPage extends ConsumerWidget {
         title: const Text(
           'Incubator 🦠',
           // 'Incubator \uf499',
-          // style: TextStyle(fontFamily: 'UbuntuMono Nerd Font'),
+          // style: TextStyle(fontFamily: 'NerdFont'),
         ),
       ),
       body: SingleChildScrollView(

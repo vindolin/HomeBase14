@@ -44,7 +44,7 @@ class ThomasPage extends ConsumerWidget {
                     ),
                   );
                 },
-                child: const Text('󰻅', style: TextStyle(fontFamily: 'UbuntuMono Nerd Font', fontSize: 50)),
+                child: const Text('󰻅', style: TextStyle(fontFamily: 'NerdFont', fontSize: 50)),
               ),
             ),
             Card(
@@ -62,7 +62,7 @@ class ThomasPage extends ConsumerWidget {
                 child: const Text(
                   '',
                   style: TextStyle(
-                    fontFamily: 'UbuntuMono Nerd Font',
+                    fontFamily: 'NerdFont',
                     fontSize: 50,
                   ),
                 ),

@@ -68,6 +68,28 @@ class ThomasPage extends ConsumerWidget {
                 ),
               ),
             ),
+            const Card(
+              child: Center(
+                child: MqttSwitchWidget(
+                  title: 'Prusa MK3S',
+                  statTopic: 'stat/dose13/POWER',
+                  setTopic: 'cmnd/dose13/POWER',
+                  optimistic: false,
+                  orientation: MqttSwitchWidgetOrientation.vertical,
+                ),
+              ),
+            ),
+            const Card(
+              child: Center(
+                child: MqttSwitchWidget(
+                  title: 'Flashforge CP',
+                  statTopic: 'stat/dose10/POWER',
+                  setTopic: 'cmnd/dose10/POWER',
+                  optimistic: false,
+                  orientation: MqttSwitchWidgetOrientation.vertical,
+                ),
+              ),
+            ),
             ...[
               {
                 'topic': 'tulpe/spray',

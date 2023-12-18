@@ -10,7 +10,11 @@ void main() {
         for (final e in [
           {'currentHeatingSetpoint': 21, 'localTemperature': 21.0, 'expectedColor': Colors.green}, // just right
           {'currentHeatingSetpoint': 22, 'localTemperature': 21.0, 'expectedColor': Colors.blue}, // too cold
-          {'currentHeatingSetpoint': 19, 'localTemperature': 21.0, 'expectedColor': Colors.orange}, // too hot
+          {
+            'currentHeatingSetpoint': 19,
+            'localTemperature': 21.0,
+            'expectedColor': const Color.fromARGB(0xff, 0xfc, 0x87, 0x0a)
+          }, // too hot
         ]) {
           await widgetTester.pumpWidget(
             MaterialApp(
@@ -26,7 +30,7 @@ void main() {
           await widgetTester.pumpAndSettle();
           final found = find.text('21.0°C').evaluate().single.widget as Text;
           // check if the color matches
-          expect(found.style!.color, e['expectedColor'] as MaterialColor);
+          expect(found.style!.color, e['expectedColor'] as Color);
         }
       });
     },

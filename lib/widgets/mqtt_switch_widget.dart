@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:gap/gap.dart';
+
 import '/models/mqtt_providers.dart';
 import '/models/mqtt_devices.dart';
 
@@ -46,6 +49,7 @@ class _MqttSwitchWidgetState extends ConsumerState<MqttSwitchWidget> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(widget.title),
+              const Gap(8),
               child,
             ],
           )
@@ -53,6 +57,7 @@ class _MqttSwitchWidgetState extends ConsumerState<MqttSwitchWidget> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(widget.title),
+              const Gap(8),
               child,
             ],
           );

@@ -1,5 +1,5 @@
 name: home_base_14
-description: A new Flutter project.
+description: Home sweet home.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.4.0+34
+version: 1.4.2+36
 
 environment:
   # sdk: '>=2.19.2 <3.0.0'
@@ -58,6 +58,7 @@ dependencies:
   http: any
   intl: any
 
+  # workmanager: ^0.5.2
   bordered_text: ^2.0.0
   google_fonts: ^4.0.3
   simple_shadow: ^0.3.1
@@ -203,6 +204,9 @@ flutter:
     - family: NerdFont
       fonts:
         - asset: fonts/UbuntuMonoNerdFont-Regular.ttf
+    - family: RobotoNerd
+      fonts:
+        - asset: fonts/RobotoNerdFont-Regular.ttf
 
 flutter_icons:
     android: "launcher_icon"

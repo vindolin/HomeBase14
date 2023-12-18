@@ -5,6 +5,7 @@ const temperatureColors = {
   'perfect': Colors.green,
   'tooCold': Colors.blue,
   'tooHot': Colors.orange,
+  'wayTooHot': Colors.red,
 };
 
 Color? getTemperatureColor(double temperature, double setpoint) {
@@ -12,7 +13,11 @@ Color? getTemperatureColor(double temperature, double setpoint) {
       ? temperatureColors['perfect']
       : temperature < setpoint
           ? temperatureColors['tooCold']
-          : temperatureColors['tooHot'];
+          : Color.lerp(
+              temperatureColors['tooHot'],
+              temperatureColors['wayTooHot'],
+              (temperature - setpoint) / 10,
+            );
 }
 
 class ThermostatReadings extends StatelessWidget {

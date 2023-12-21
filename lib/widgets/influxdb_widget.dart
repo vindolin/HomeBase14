@@ -132,8 +132,10 @@ class _InfluxdbWidgetState extends ConsumerState<InfluxChartWidget> {
           final data = snapshot.data!;
           return Center(
             child: SfCartesianChart(
-              title: widget.titleFormat != null ? ChartTitle(text: widget.titleFormat!(data[0].last.value)) : null,
-              primaryXAxis: CategoryAxis(),
+              title: widget.titleFormat != null
+                  ? ChartTitle(text: widget.titleFormat!(data[0].last.value))
+                  : const ChartTitle(),
+              primaryXAxis: const CategoryAxis(),
               primaryYAxis: NumericAxis(
                 numberFormat: NumberFormat(widget.numberFormat),
                 labelFormat: widget.labelFormat,

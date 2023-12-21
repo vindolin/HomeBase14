@@ -121,7 +121,7 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
           return Center(
             child: SfCartesianChart(
               title: ChartTitle(text: 'Solar Watt ☀️ ${snapshot.data![0].last.value.toStringAsFixed(1)} kW'),
-              primaryXAxis: CategoryAxis(),
+              primaryXAxis: const CategoryAxis(),
               primaryYAxis: NumericAxis(
                 numberFormat: NumberFormat('#0.0 kW'),
               ),

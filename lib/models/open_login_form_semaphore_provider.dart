@@ -1,9 +1,9 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'open_connection_data_form_provider.g.dart';
+part 'open_login_form_semaphore_provider.g.dart';
 
 @Riverpod(keepAlive: true)
-class OpenConnectionDataForm extends _$OpenConnectionDataForm {
+class OpenLoginFormSemaphore extends _$OpenLoginFormSemaphore {
   @override
   bool build() {
     return false;

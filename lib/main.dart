@@ -2,6 +2,7 @@ import 'dart:io' show Platform, SecurityContext;
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:home_base_14/widgets/pulsating_icon_hooks_widget.dart';
 // import 'package:workmanager/workmanager.dart';
 // import 'package:home_base_14/utils.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
@@ -14,7 +15,7 @@ import 'package:flutter_portal/flutter_portal.dart';
 
 import '/models/app_settings.dart';
 import '/models/mqtt_connection_state_provider.dart';
-import 'models/open_connection_data_form_provider.dart';
+import '/models/open_login_form_semaphore_provider.dart';
 import '/models/connectivity_provider.dart' as connectivity_rovider; // rename to avoid conflict with Connectivity class
 import '/models/mqtt_providers.dart';
 // import '/models/generic_providers.dart';
@@ -123,7 +124,7 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
     // this can happen if the app was in the background for a long time
     Timer.periodic(const Duration(seconds: 5), (timer) async {
       // connection data form is open, don't reconnect
-      if (ref.watch(openConnectionDataFormProvider)) {
+      if (ref.watch(openLoginFormSemaphoreProvider)) {
         return;
       }
       final lastMessageTime = ref.watch(lastMessageTimeProvider);
@@ -136,9 +137,10 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
       }
     });
 
-    Timer(const Duration(seconds: 10), () {
-      ref.read(mqttProvider.notifier).disconnect();
-    });
+    // used to simulate a disconnect for testing
+    // Timer(const Duration(seconds: 10), () {
+    //   ref.read(mqttProvider.notifier).disconnect();
+    // });
   }
 
   @override
@@ -166,7 +168,7 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
         home: PortalTarget(
           visible:
               // show only if not connected and when the connection page is not open
-              ref.watch(openConnectionDataFormProvider) == false &&
+              ref.watch(openLoginFormSemaphoreProvider) == false &&
                   ref.watch(mqttConnectionStateProvider) != MqttConnectionState.connected,
           portalFollower: Container(
             color: Colors.black45,
@@ -180,16 +182,17 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
                       ),
                     _ => GestureDetector(
                         onTap: () {
-                          ref.watch(openConnectionDataFormProvider.notifier).set(true);
+                          ref.watch(openLoginFormSemaphoreProvider.notifier).set(true);
                         },
-                        child: const Icon(
-                          Icons.wifi_off,
-                          size: 120,
-                        )),
+                        child: const PulsatingIcon(
+                          iconData: Icons.wifi_off,
+                          color: Colors.red,
+                          size: 100,
+                        ))
                   }),
             ),
           ),
-          child: ref.watch(openConnectionDataFormProvider) ? LoginFormPage() : const HomePage(),
+          child: ref.watch(openLoginFormSemaphoreProvider) ? LoginFormPage() : const HomePage(),
         ),
         theme: ThemeData(
           useMaterial3: true,

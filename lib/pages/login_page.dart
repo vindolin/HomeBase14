@@ -7,7 +7,9 @@ import '/utils.dart';
 import '/models/app_settings.dart';
 import '/models/mqtt_providers.dart';
 import '/widgets/password_input_widget.dart';
-import '../models/open_connection_data_form_provider.dart';
+import '../models/open_login_form_semaphore_provider.dart';
+
+// TODO catch the back action and return to the home page instead of exiting the app
 
 final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
@@ -50,7 +52,8 @@ class LoginFormPage extends ConsumerWidget {
         // if the connection was successful, persist the connection data
         if (mqttConnectionState == MqttConnectionState.connected) {
           // affects the overlay widget in main.dart
-          ref.watch(openConnectionDataFormProvider.notifier).set(false);
+          // if this is false, the home page will be shown instead of the connection form
+          ref.watch(openLoginFormSemaphoreProvider.notifier).set(false);
 
           await appSettings.persistAppSettings();
 

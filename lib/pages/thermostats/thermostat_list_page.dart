@@ -106,6 +106,7 @@ class ThermostatListPage extends ConsumerWidget {
                         ? PulsatingIcon(
                             iconData: Icons.thermostat,
                             color: tempColor!,
+                            size: 36,
                           )
                         : Icon(
                             Icons.thermostat,

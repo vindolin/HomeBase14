@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/models/app_settings.dart';
 import '/models/mqtt_providers.dart';
 import '/models/mqtt_connection_state_provider.dart';
+import '/models/open_login_form_semaphore_provider.dart';
 import '/widgets/message_blinker_widget.dart';
 import '/widgets/brightness_button_widget.dart';
 
@@ -30,7 +31,10 @@ class ConnectionBar extends ConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: GestureDetector(
-                    onTap: () => mqttProviderNotifier.disconnect(),
+                    onTap: () {
+                      ref.watch(openLoginFormSemaphoreProvider.notifier).set(true);
+                      // mqttProviderNotifier.disconnect();
+                    },
                     child: const Icon(
                       color: Colors.green,
                       Icons.wifi,
@@ -41,7 +45,9 @@ class ConnectionBar extends ConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: GestureDetector(
-                    onTap: () => mqttProviderNotifier.connect(),
+                    onTap: () {
+                      mqttProviderNotifier.connect();
+                    },
                     child: const Icon(
                       color: Colors.red,
                       Icons.wifi_off,

@@ -58,8 +58,6 @@ class ArmedSwitchButton extends ConsumerStatefulWidget {
 }
 
 class _ArmedSwitchState extends ConsumerState<ArmedSwitchButton> {
-  bool transitioning = false;
-
   @override
   Widget build(BuildContext context) {
     final switchDevice = ref.watch(

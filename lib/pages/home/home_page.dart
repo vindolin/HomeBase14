@@ -18,6 +18,7 @@ import '/pages/home/armed_switch_buttons/armed_switch_buttons.dart';
 import 'widgets/solar_watts_widget.dart';
 import 'device_group_slivers.dart';
 import 'thomas_group_slivers.dart';
+// import '/pages/mona/mona_group_slivers.dart';
 import 'cameras.dart';
 import 'settings_form_widget.dart';
 
@@ -221,7 +222,8 @@ class HomePage extends ConsumerWidget {
                     const ArmedButtons(),
                     const DeviceGroups(),
                     const Cameras(),
-                    appSettings.user == User.thomas ? const ThomasGroups() : const MonaGroups(),
+                    // appSettings.user == User.thomas ? const ThomasGroups() : const MonaGroups(),
+                    if (appSettings.user == User.thomas) const ThomasGroups(),
                   ],
                 ),
               ],

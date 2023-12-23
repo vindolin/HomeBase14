@@ -73,7 +73,7 @@ class SliverHeader extends StatelessWidget {
 
 @immutable
 class HomePage extends ConsumerWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, connecting});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -99,130 +99,132 @@ class HomePage extends ConsumerWidget {
           decoration: fancyBackground,
           child: Stack(
             children: [
-              StreamContainerBlinker(
-                doorMovementProvider, // flash background on object detection on front door cam
-                vibrate: true,
-                ignoreFirstBuild: true,
-                color: Colors.pink.withOpacity(0.1),
-              ),
-              CustomScrollView(
-                slivers: [
-                  SliverAppBar(
-                    iconTheme: const IconThemeData(color: Colors.black),
-                    titleSpacing: 0.0,
-                    leadingWidth: 10.0,
-                    leading: Container(),
-                    title: Stack(
-                      children: [
-                        // title
-                        Stack(
-                          children: [
-                            Text(
-                              translate('app_bar.title'),
-                              style: GoogleFonts.robotoCondensed(
-                                // style: GoogleFonts.koulen(
-                                // style: GoogleFonts.squadaOne(
-                                // style: GoogleFonts.londrinaSolid(
-                                // style: GoogleFonts.bakbakOne(
-                                // style: GoogleFonts.russoOne(
-                                // style: GoogleFonts.denkOne(
-                                textStyle: const TextStyle(
-                                  fontSize: 42,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  shadows: [
-                                    Shadow(
-                                      blurRadius: 3.0,
-                                      color: Colors.black54,
-                                      offset: Offset(2.0, 2.0),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            // 14 in a circle
-                            Positioned(
-                              right: 0,
-                              top: -5,
-                              child: Transform.rotate(
-                                angle: 0.4,
-                                child: SimpleShadow(
-                                  opacity: 1.0,
-                                  offset: const Offset(2, 2),
-                                  child: SvgPicture.asset(
-                                    'assets/images/svg/14.svg',
-                                    colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                                    width: 42,
-                                    height: 42,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          child: RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: Platform.operatingSystemVersion,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    shadows: [
-                                      Shadow(
-                                        blurRadius: 2.0,
-                                        offset: Offset(2.0, 2.0),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                const WidgetSpan(child: SizedBox(width: 15)),
-                                TextSpan(
-                                  text: appVersion.when(
-                                      data: (value) => 'b:${RegExp(r'\d\d+').firstMatch(value)?.group(0)}',
-                                      loading: () => '...',
-                                      error: (e, s) => '...'),
-                                  style: const TextStyle(
-                                    fontSize: 12,
+              ...[
+                StreamContainerBlinker(
+                  doorMovementProvider, // flash background on object detection on front door cam
+                  vibrate: true,
+                  ignoreFirstBuild: true,
+                  color: Colors.pink.withOpacity(0.1),
+                ),
+                CustomScrollView(
+                  slivers: [
+                    SliverAppBar(
+                      iconTheme: const IconThemeData(color: Colors.black),
+                      titleSpacing: 0.0,
+                      leadingWidth: 10.0,
+                      leading: Container(),
+                      title: Stack(
+                        children: [
+                          // title
+                          Stack(
+                            children: [
+                              Text(
+                                translate('app_bar.title'),
+                                style: GoogleFonts.robotoCondensed(
+                                  // style: GoogleFonts.koulen(
+                                  // style: GoogleFonts.squadaOne(
+                                  // style: GoogleFonts.londrinaSolid(
+                                  // style: GoogleFonts.bakbakOne(
+                                  // style: GoogleFonts.russoOne(
+                                  // style: GoogleFonts.denkOne(
+                                  textStyle: const TextStyle(
+                                    fontSize: 42,
+                                    fontWeight: FontWeight.bold,
                                     color: Colors.white,
                                     shadows: [
                                       Shadow(
-                                        blurRadius: 2.0,
+                                        blurRadius: 3.0,
+                                        color: Colors.black54,
                                         offset: Offset(2.0, 2.0),
-                                      )
+                                      ),
                                     ],
                                   ),
                                 ),
-                              ],
+                              ),
+                              // 14 in a circle
+                              Positioned(
+                                right: 0,
+                                top: -5,
+                                child: Transform.rotate(
+                                  angle: 0.4,
+                                  child: SimpleShadow(
+                                    opacity: 1.0,
+                                    offset: const Offset(2, 2),
+                                    child: SvgPicture.asset(
+                                      'assets/images/svg/14.svg',
+                                      colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                                      width: 42,
+                                      height: 42,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            child: RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: Platform.operatingSystemVersion,
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      shadows: [
+                                        Shadow(
+                                          blurRadius: 2.0,
+                                          offset: Offset(2.0, 2.0),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  const WidgetSpan(child: SizedBox(width: 15)),
+                                  TextSpan(
+                                    text: appVersion.when(
+                                        data: (value) => 'b:${RegExp(r'\d\d+').firstMatch(value)?.group(0)}',
+                                        loading: () => '...',
+                                        error: (e, s) => '...'),
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.white,
+                                      shadows: [
+                                        Shadow(
+                                          blurRadius: 2.0,
+                                          offset: Offset(2.0, 2.0),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
+                          const SizedBox(
+                            width: double.maxFinite, // forces the stack to fill the available space
+                            height: 56,
+                          )
+                        ],
+                      ),
+                      forceElevated: true,
+                      pinned: true,
+                      floating: true,
+                      expandedHeight: 80.0,
+                      flexibleSpace: const FlexibleSpaceBar(
+                        background: Image(
+                          image: AssetImage('assets/images/homebase.jpg'),
+                          fit: BoxFit.cover,
+                          filterQuality: FilterQuality.medium,
                         ),
-                        const SizedBox(
-                          width: double.maxFinite, // forces the stack to fill the available space
-                          height: 56,
-                        )
-                      ],
-                    ),
-                    forceElevated: true,
-                    pinned: true,
-                    floating: true,
-                    expandedHeight: 80.0,
-                    flexibleSpace: const FlexibleSpaceBar(
-                      background: Image(
-                        image: AssetImage('assets/images/homebase.jpg'),
-                        fit: BoxFit.cover,
-                        filterQuality: FilterQuality.medium,
                       ),
                     ),
-                  ),
-                  // const SliverHeader(Colors.red, 'SliverPersistentHeader 1'),
-                  const ArmedButtons(),
-                  const DeviceGroups(),
-                  const Cameras(),
-                  if (appSettings.user == User.thomas) const ThomasGroups(),
-                ],
-              ),
+                    // const SliverHeader(Colors.red, 'SliverPersistentHeader 1'),
+                    const ArmedButtons(),
+                    const DeviceGroups(),
+                    const Cameras(),
+                    appSettings.user == User.thomas ? const ThomasGroups() : const MonaGroups(),
+                  ],
+                ),
+              ],
             ],
           ),
         ),

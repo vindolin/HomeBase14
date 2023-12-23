@@ -74,6 +74,18 @@ final doorAlarmProvider = StreamProvider<int>((ref) async* {
   }
 });
 
+@Riverpod(keepAlive: true)
+class LastMessageTime extends _$LastMessageTime {
+  @override
+  DateTime build() {
+    return DateTime.now();
+  }
+
+  void update() {
+    state = DateTime.now();
+  }
+}
+
 // wraps the whole mqtt client and and connection callbacks
 @riverpod
 class Mqtt extends _$Mqtt {
@@ -169,7 +181,7 @@ class Mqtt extends _$Mqtt {
     ref.read(mqttConnectionStateProvider.notifier).state = mqtt.MqttConnectionState.connecting;
 
     // await Future.delayed(
-    //   const Duration(milliseconds: 500),
+    //   const Duration(seconds: 5),
     // );
 
     mqtt.MqttConnectionStatus? mqttConnectionStatus =
@@ -229,6 +241,7 @@ class Mqtt extends _$Mqtt {
       // iterate over all new messages
       for (mqtt.MqttReceivedMessage mqttReceivedMessage in messages) {
         ref.watch(counterProvider('mqtt_message').notifier).increment();
+        ref.watch(lastMessageTimeProvider.notifier).update();
 
         final payload = mqttReceivedMessage.payload as mqtt.MqttPublishMessage;
         final String message = utf8.decode(payload.payload.message!);

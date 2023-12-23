@@ -7,6 +7,7 @@ import '/utils.dart';
 import '/models/app_settings.dart';
 import '/models/mqtt_providers.dart';
 import '/widgets/password_input_widget.dart';
+import '../models/open_connection_data_form_provider.dart';
 
 final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
@@ -48,8 +49,13 @@ class LoginFormPage extends ConsumerWidget {
 
         // if the connection was successful, persist the connection data
         if (mqttConnectionState == MqttConnectionState.connected) {
+          // affects the overlay widget in main.dart
+          ref.watch(openConnectionDataFormProvider.notifier).set(false);
+
           await appSettings.persistAppSettings();
+
           log('persisted connection data');
+
           rootScaffoldMessengerKey.currentState
             ?..hideCurrentSnackBar(
                 reason: SnackBarClosedReason.dismiss) // TODO_ check why this is needed to really hide the snackbar

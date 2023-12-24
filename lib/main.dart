@@ -122,7 +122,7 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
 
     // if we don't receive a message for 10 seconds, we try to reconnect
     // this can happen if the app was in the background for a long time
-    Timer.periodic(const Duration(seconds: 5), (timer) async {
+    Timer.periodic(const Duration(seconds: 1), (timer) async {
       // connection data form is open, don't reconnect
       if (ref.watch(openLoginFormSemaphoreProvider)) {
         return;

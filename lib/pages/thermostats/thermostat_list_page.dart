@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -107,6 +109,10 @@ class ThermostatListPage extends ConsumerWidget {
                             iconData: Icons.thermostat,
                             color: tempColor!,
                             size: 36,
+                            lowerBound: 0.1,
+                            initialValue: (1.0 - 0.1) *
+                                Random()
+                                    .nextDouble(), // randomize the initial value to avoid all icons pulsating in sync
                           )
                         : Icon(
                             Icons.thermostat,

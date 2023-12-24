@@ -7,6 +7,7 @@ class PulsatingIcon extends HookWidget {
   final double size;
   final int durationSeconds;
   final double lowerBound;
+  final double? initialValue;
 
   const PulsatingIcon({
     super.key,
@@ -15,13 +16,15 @@ class PulsatingIcon extends HookWidget {
     required this.size,
     this.durationSeconds = 1000,
     this.lowerBound = 0.5,
+    this.initialValue,
   });
 
   @override
   Widget build(BuildContext context) {
     final animationController = useAnimationController(
+      initialValue: initialValue ?? lowerBound,
       duration: Duration(milliseconds: durationSeconds),
-      lowerBound: 0.5,
+      lowerBound: lowerBound,
       upperBound: 1.0,
     );
 

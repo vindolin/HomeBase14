@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:video_player/video_player.dart';
 // import '/models/secrets.dart' as secrets;
 
-void main() => runApp(const VideoApp());
+void main() => runApp(const ProviderScope(child: VideoApp()));
 
 /// Stateful widget to fetch and then display video content.
 class VideoApp extends StatefulWidget {

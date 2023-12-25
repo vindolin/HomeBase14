@@ -12,6 +12,7 @@ import '/models/mqtt_providers.dart';
 import '/models/app_version_provider.dart';
 import '/widgets/stream_blinker_widget.dart';
 import '/widgets/connection_bar_widget.dart';
+import '/pages/remotes/remotes_page.dart';
 import '/pages/home/widgets/temperatures_widget.dart';
 import '/pages/home/armed_switch_buttons/armed_switch_buttons.dart';
 
@@ -222,6 +223,34 @@ class HomePage extends ConsumerWidget {
                     const ArmedButtons(),
                     const DeviceGroups(),
                     const Cameras(),
+                    SliverList(
+                        delegate: SliverChildListDelegate([
+                      Row(
+                        children: [
+                          const Divider(),
+                          // icon button to the remote page
+                          Expanded(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const RemotesPage(),
+                                      ),
+                                    );
+                                  },
+                                  child: const Text('󰻅', style: TextStyle(fontFamily: 'NerdFont', fontSize: 40)),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                    ])),
                     // appSettings.user == User.thomas ? const ThomasGroups() : const MonaGroups(),
                     if (appSettings.user == User.thomas) const ThomasGroups(),
                   ],

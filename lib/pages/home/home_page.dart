@@ -6,6 +6,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_shadow/simple_shadow.dart';
 
+import '/ui_helpers.dart';
 import '/styles/styles.dart';
 import '/models/app_settings.dart';
 import '/models/mqtt_providers.dart';
@@ -14,6 +15,7 @@ import '/widgets/stream_blinker_widget.dart';
 import '/widgets/connection_bar_widget.dart';
 import '/pages/remotes/remotes_page.dart';
 import '/pages/home/widgets/temperatures_widget.dart';
+import '../remotes/remotes_widget.dart';
 import '/pages/home/armed_switch_buttons/armed_switch_buttons.dart';
 
 import 'widgets/solar_watts_widget.dart';
@@ -236,11 +238,10 @@ class HomePage extends ConsumerWidget {
                               children: [
                                 TextButton(
                                   onPressed: () {
-                                    Navigator.push(
+                                    modalDialog(
                                       context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const RemotesPage(),
-                                      ),
+                                      const RemotesWidget(),
+                                      constraints: const BoxConstraints(maxHeight: 400),
                                     );
                                   },
                                   child: const Text('󰻅', style: TextStyle(fontFamily: 'NerdFont', fontSize: 40)),

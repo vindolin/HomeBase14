@@ -13,9 +13,8 @@ import '/models/mqtt_providers.dart';
 import '/models/app_version_provider.dart';
 import '/widgets/stream_blinker_widget.dart';
 import '/widgets/connection_bar_widget.dart';
-import '/pages/remotes/remotes_page.dart';
 import '/pages/home/widgets/temperatures_widget.dart';
-import '../remotes/remotes_widget.dart';
+import '/pages/remotes/remotes_widget.dart';
 import '/pages/home/armed_switch_buttons/armed_switch_buttons.dart';
 
 import 'widgets/solar_watts_widget.dart';

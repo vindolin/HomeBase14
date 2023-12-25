@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 import 'package:ir_sensor_plugin/ir_sensor_plugin.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -7,9 +8,11 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '/utils.dart';
 
 class RemotesWidget extends ConsumerWidget {
-  const RemotesWidget({super.key});
+  final String? soundFile;
 
-  Container createIconButton(String text, String hexCode) {
+  const RemotesWidget({super.key, this.soundFile});
+
+  Container createIconButton(String text, String hexCode, {String soundFile = 'button1.mp3'}) {
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: const BoxDecoration(
@@ -21,6 +24,8 @@ class RemotesWidget extends ConsumerWidget {
           borderRadius: BorderRadius.circular(16),
         ),
         onTap: () async {
+          final player = AudioPlayer();
+          await player.play(AssetSource('sounds/$soundFile'));
           await IrSensorPlugin.transmitString(pattern: hexCode);
         },
         child: Center(

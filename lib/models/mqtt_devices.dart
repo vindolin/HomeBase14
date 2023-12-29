@@ -1,3 +1,4 @@
+// ignore_for_file: avoid_public_notifier_properties
 import 'dart:convert';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -37,6 +38,10 @@ class MqttMessagesFam extends _$MqttMessagesFam {
   @override
   dynamic build(topic) {
     return null;
+  }
+
+  void set(String payload) {
+    state = payload;
   }
 }
 
@@ -614,6 +619,7 @@ class SmartBulbDevice extends AbstractMqttDevice {
 }
 
 @Riverpod(keepAlive: true)
+// @riverpod
 class SmartBulbDevices extends _$SmartBulbDevices {
   late Function publishCallback; // get's injected by the mqtt class
 

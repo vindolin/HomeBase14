@@ -9,6 +9,7 @@ class Toggler extends _$Toggler {
   bool build(String key) => false;
 
   void toggle() => state = !state;
+  void set(bool value) => state = value;
 }
 
 @Riverpod(keepAlive: true)

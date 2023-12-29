@@ -25,7 +25,7 @@ class RemotesWidget extends ConsumerWidget {
         ),
         onTap: () async {
           final player = AudioPlayer();
-          player.setVolume(0.1);
+          player.setVolume(0.05);
           await player.play(AssetSource('sounds/$soundFile'));
           await IrSensorPlugin.transmitString(pattern: hexCode);
         },

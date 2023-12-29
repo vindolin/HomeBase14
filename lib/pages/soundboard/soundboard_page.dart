@@ -49,6 +49,7 @@ class SoundboardPage extends ConsumerWidget {
                     ref
                         .read(mqttProvider.notifier)
                         .publish(e['topic']!, e.containsKey('message') ? e['message']! : 'ON');
+                    player.setVolume(0.05);
                     await player.play(AssetSource('sounds/pop.wav'));
                   },
                   child: Text(

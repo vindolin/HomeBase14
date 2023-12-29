@@ -1,4 +1,4 @@
-// ignore_for_file: dead_code
+// ignore_for_file: dead_code, avoid_public_notifier_properties, avoid_manual_providers_as_generated_provider_dependency, protected_notifier_properties
 
 import 'dart:async';
 import 'dart:convert';
@@ -89,6 +89,7 @@ class LastMessageTime extends _$LastMessageTime {
 // wraps the whole mqtt client and and connection callbacks
 @riverpod
 class Mqtt extends _$Mqtt {
+  // TODO find a way to fix all these linter warnings,
   late MqttServerClient client;
   late SingleCurtainDevices curtainDevices;
   late DualCurtainDevices dualCurtainDevices;
@@ -100,10 +101,19 @@ class Mqtt extends _$Mqtt {
   late SwitchDevices switchDevices;
   late MqttMessages mqttMessages;
   late Prusa prusa;
+  late LastMessageTime lastMessageTime;
+  late Counter counter;
+  late MqttConnectionStateX mqttConnectionStateX;
+  late DeviceNames mqttDescriptions;
 
   @override
   build() {
     log('building mqtt');
+    mqttConnectionStateX = ref.read(mqttConnectionStateProvider.notifier);
+    lastMessageTime = ref.watch(lastMessageTimeProvider.notifier);
+    counter = ref.watch(counterProvider('mqtt_message').notifier);
+    mqttDescriptions = ref.watch(deviceNamesProvider.notifier);
+
     lightDevices = ref.watch(lightDevicesProvider.notifier);
     ikeaBulbDevices = ref.watch(smartBulbDevicesProvider.notifier);
     switchDevices = ref.watch(switchDevicesProvider.notifier);
@@ -155,7 +165,7 @@ class Mqtt extends _$Mqtt {
         context.useCertificateChainBytes(clientCrt.buffer.asInt8List());
         context.usePrivateKeyBytes(clientKey.codeUnits);
 
-        ref.read(togglerProvider('ssl').notifier).state = true;
+        ref.read(togglerProvider('ssl').notifier).set(true);
 
         log('SSL enabled');
       } catch (_) {
@@ -178,7 +188,7 @@ class Mqtt extends _$Mqtt {
     client.onConnected = onConnected;
     client.onDisconnected = onDisconnected;
 
-    ref.read(mqttConnectionStateProvider.notifier).state = mqtt.MqttConnectionState.connecting;
+    mqttConnectionStateX.state = mqtt.MqttConnectionState.connecting;
 
     // await Future.delayed(
     //   const Duration(seconds: 5),
@@ -240,8 +250,8 @@ class Mqtt extends _$Mqtt {
     client.updates.listen((List<mqtt.MqttReceivedMessage<mqtt.MqttMessage>> messages) {
       // iterate over all new messages
       for (mqtt.MqttReceivedMessage mqttReceivedMessage in messages) {
-        ref.watch(counterProvider('mqtt_message').notifier).increment();
-        ref.watch(lastMessageTimeProvider.notifier).update();
+        counter.increment();
+        lastMessageTime.update();
 
         final payload = mqttReceivedMessage.payload as mqtt.MqttPublishMessage;
         final String message = utf8.decode(payload.payload.message!);
@@ -398,8 +408,6 @@ class Mqtt extends _$Mqtt {
 
   /// get the device names from the zigbee2mqtt/bridge/devices message
   void setDeviceNameMap(List devices) {
-    final mqttDescriptions = ref.watch(deviceNamesProvider.notifier);
-
     Map<String, String> deviceNames = {}; // temporary map to hold the changed device names
 
     for (final device in devices) {
@@ -422,6 +430,7 @@ class Mqtt extends _$Mqtt {
 
   void onDisconnected() {
     log('disconnected');
+
     ref.read(mqttConnectionStateProvider.notifier).state = mqtt.MqttConnectionState.disconnected;
   }
 }

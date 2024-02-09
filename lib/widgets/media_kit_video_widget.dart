@@ -4,7 +4,9 @@ import 'package:media_kit_video/media_kit_video.dart';
 
 class MediaKitVideoWidget extends StatefulWidget {
   final String videoUrl;
-  const MediaKitVideoWidget({super.key, required this.videoUrl});
+  final bool muted;
+
+  const MediaKitVideoWidget({super.key, required this.videoUrl, this.muted = false});
   @override
   State<MediaKitVideoWidget> createState() => MediaKitVideoWidgetState();
 }
@@ -22,6 +24,9 @@ class MediaKitVideoWidgetState extends State<MediaKitVideoWidget> {
     // player.open(
     //     Media('https://user-images.githubusercontent.com/28951144/229373695-22f88f13-d18f-4288-9bf1-c3e078d83722.mp4'));
     player.open(Media(widget.videoUrl));
+    if (widget.muted) {
+      player.setVolume(0);
+    }
   }
 
   @override

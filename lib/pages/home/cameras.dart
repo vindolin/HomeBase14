@@ -1,5 +1,8 @@
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '/widgets/media_kit_video_widget.dart';
 import '/widgets/refreshable_image_widget.dart';
 import '/models/mqtt_providers.dart'; //need this for doorAlarmProvider (not needed anymore)
 import '/pages/cams/cam_image_page.dart';
@@ -8,7 +11,7 @@ import '../../models/network_addresses.dart';
 // import '/pages/cams/media_kit_cam_page.dart';
 // import '/pages/cams/mjpeg_cam_image.dart';
 
-Widget _camContainer(Widget child, BuildContext context, String camId) {
+Widget _camContainerMobile(Widget child, BuildContext context, String camId) {
   return InkWell(
     child: Card(
       margin: EdgeInsets.zero,
@@ -60,15 +63,19 @@ class Cameras extends ConsumerWidget {
           (BuildContext context, int index) {
             final widgets = ['door', 'garden'].map(
               (camId) {
-                return _camContainer(
-                  RefreshableImage(
-                    camSettings[camId]!['snapshotUrl']!,
-                    streamProvider: camId == 'door' ? doorAlarmProvider : null,
-                    autoRefresh: true,
-                  ),
-                  context,
-                  camId,
-                );
+                if (Platform.isWindows) {
+                  return MediaKitVideoWidget(videoUrl: camSettings[camId]!['videoStreamUrl']!, muted: true);
+                } else {
+                  return _camContainerMobile(
+                    RefreshableImage(
+                      camSettings[camId]!['snapshotUrl']!,
+                      streamProvider: camId == 'door' ? doorAlarmProvider : null,
+                      autoRefresh: true,
+                    ),
+                    context,
+                    camId,
+                  );
+                }
               },
             ).toList();
             return index >= widgets.length ? null : widgets[index];

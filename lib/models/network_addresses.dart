@@ -23,5 +23,6 @@ const doorVideoWebsocketUrl =
     'https://$serverAddress:3001/mini.html'; // TODOs add nginx proxy but not used at the moment
 
 const grafanaAdddress =
-    'https://$serverAddress:3000/d/$grafanaProjectHash/homebase?orgId=1&refresh=10s&from=now-12h&to=now';
+    'https://$grafanaAddress/d/$grafanaProjectHash/homebase?orgId=1&refresh=10s&from=now-12h&to=now';
+
 const influxdbAddress = 'https://$influxdbUser:$influxdbPassword@$serverAddress:8085/query?pretty=false';

@@ -1,7 +1,8 @@
 const encryptionKey = 'SECRET=';
 
-const serverAddress = 'hombase.server.com';
+const serverAddress = 'homebase.server.com';
 const snapshotPort = 0000;
+const grafanaAddress = 'homebase.server.com';
 
 const doorCamUser = 'guest';
 const doorCamPassword = 'SECRET';

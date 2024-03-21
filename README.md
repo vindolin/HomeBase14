@@ -12,7 +12,7 @@ This project was initiated as a platform for me to acquire knowledge in Flutter/
 
 Being an enthusiast of open-source home automation and owning a variety of devices with diverse MQTT payloads, this project presented an excellent chance to substitute the multiple control programs with one that is custom-made for my requirements.
 
-I experimented with various reactive state frameworks before settling on Riverpod for data-binding. Initially, the multitude of providers and their notifiers were a source of frustration, but I am now content with this choice.
+I experimented with various reactive state frameworks before settling on Riverpod for data-binding.
 
 I have developed a fondness for Flutter’s declarative methodology and the stability of the app it produces.
 

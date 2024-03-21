@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '/styles/text_styles.dart';
 import '/utils.dart';
 import '/models/mqtt_devices.dart';
 import '/pages/solar/solar_page.dart';
 
-const smaErrorValue = -2147483648;
-const maxSolarWatt = 6000;
+const smaErrorValue = -2147483648; // magic number from SMA
+const maxSolarWatt = 6000; // eat this super nova!
 
-const shadow = Shadow(
-  offset: Offset(1.0, 1.0),
-  blurRadius: 2.0,
-  color: Colors.black,
-);
-
-const dividerText = TextSpan(
-  text: ' | ',
-  style: TextStyle(
-    color: Colors.white30,
-  ),
-);
+TextStyle titleTextStyle(Brightness brightness, {Color color = Colors.white}) {
+  if (color == Colors.white) {
+    color = brightness == Brightness.dark ? Colors.white : Colors.black;
+  }
+  return TextStyle(
+    color: color,
+    shadows: const [
+      Shadow(
+        offset: Offset(1.0, 1.0),
+        blurRadius: 1.0,
+        color: Colors.black,
+      )
+    ],
+  );
+}
 
 class SolarWatts extends ConsumerWidget {
   const SolarWatts({super.key});
@@ -30,12 +34,12 @@ class SolarWatts extends ConsumerWidget {
 
     final brightness = Theme.of(context).brightness;
 
-    String solarWatt_ = ref.watch(mqttMessagesFamProvider('sma/tripower/totw')).toString();
-    int solarWatt = int.parse(solarWatt_);
+    String solarWattString = ref.watch(mqttMessagesFamProvider('sma/tripower/totw')).toString();
+    int solarWatt = int.tryParse(solarWattString) ?? 0;
     if (solarWatt == smaErrorValue) solarWatt = 0;
 
-    String totalWatt_ = ref.watch(mqttMessagesFamProvider('sma/b3b461c9/total_w')).toString();
-    int totalWatt = double.parse(totalWatt_).toInt();
+    String totalWattString = ref.watch(mqttMessagesFamProvider('sma/b3b461c9/total_w')).toString();
+    int totalWatt = (double.tryParse(totalWattString) ?? 0.0).toInt();
 
     int useWatt = solarWatt - totalWatt;
 
@@ -54,7 +58,7 @@ class SolarWatts extends ConsumerWidget {
             : '🙁';
 
     final solarColor = Color.lerp(
-      Colors.white,
+      Colors.grey,
       Colors.amber,
       solarWatt / 5500,
     );
@@ -72,69 +76,45 @@ class SolarWatts extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           RichText(
+            textScaler: const TextScaler.linear(0.9),
             text: TextSpan(
-              style: const TextStyle(
-                fontSize: 13,
-                shadows: [
-                  Shadow(
-                    offset: Offset(1.0, 1.0),
-                    blurRadius: 1.0,
-                    color: Colors.black,
-                  )
-                ],
-              ),
+              style: titleTextStyle(brightness),
               children: [
                 const TextSpan(
                   text: 'Solar: ',
                 ),
                 TextSpan(
                   text: '${solarWatt}w $sunEmoji',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                  style: bold.copyWith(
                     color: solarColor,
                   ),
                 ),
                 const TextSpan(
                   text: ' - ',
                 ),
+                const TextSpan(
+                  text: 'Verbrauch: ',
+                ),
                 TextSpan(
-                    text: 'Verbrauch: ',
-                    style: TextStyle(
-                      color: brightness == Brightness.dark ? Colors.white : Colors.black,
-                    )),
-                TextSpan(
+                  style: bold,
                   text: '${useWatt}w',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: brightness == Brightness.dark ? Colors.white : Colors.black),
                 ),
               ],
             ),
           ),
           RichText(
+            textScaler: const TextScaler.linear(0.9),
             text: TextSpan(
-              style: const TextStyle(
-                fontSize: 13,
-                shadows: [
-                  Shadow(
-                    offset: Offset(1.0, 1.0),
-                    blurRadius: 1.0,
-                    color: Colors.black,
-                  )
-                ],
-              ),
+              style: titleTextStyle(brightness),
               children: [
-                TextSpan(
+                const TextSpan(
                   text: ' = ',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: brightness == Brightness.dark ? Colors.white : Colors.black),
                 ),
                 TextSpan(
-                  text: '${totalWatt > 0 ? '+' : ''}${totalWatt}w $happy',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: totalWatt > 0 ? Colors.green : Colors.red,
-                  ),
-                ),
+                    text: '${totalWatt > 0 ? '+' : ''}${totalWatt}w $happy',
+                    style: bold.copyWith(
+                      color: totalWatt > 0 ? Colors.green : Colors.red,
+                    )),
               ],
             ),
           ),

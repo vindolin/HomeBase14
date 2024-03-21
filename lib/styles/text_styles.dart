@@ -7,3 +7,5 @@ const textStyleShadowOne = TextStyle(shadows: [
     color: Colors.black,
   ),
 ]);
+
+const bold = TextStyle(fontWeight: FontWeight.bold);

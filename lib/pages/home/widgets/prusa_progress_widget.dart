@@ -5,7 +5,6 @@ import 'package:bordered_text/bordered_text.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 import '/models/mqtt_devices.dart';
-import '/models/watch_mqtt_message.dart';
 import 'prusa_nozzle_widget.dart';
 
 class PrusaProgress extends ConsumerWidget {
@@ -14,22 +13,14 @@ class PrusaProgress extends ConsumerWidget {
   Map<String, int?> getProgressData(ref) {
     Map<String, int?> retVal = {'percent_done': null, 'mins_remaining': null};
     try {
-      String payload = watchMqttMessage(mqttMessagesProvider, ref, 'prusa/progress');
+      String payload = ref.watch(
+        mqttMessagesFamProvider('prusa/progress'),
+      );
       Map<String, dynamic> payloadDecoded = jsonDecode(payload);
       retVal['percent_done'] = int.parse(payloadDecoded['percent_done']);
       retVal['mins_remaining'] = int.parse(payloadDecoded['mins_remaining']);
     } catch (_) {}
     return retVal;
-  }
-
-  String getFileName(ref) {
-    try {
-      String payload = watchMqttMessage(mqttMessagesProvider, ref, 'prusa/file');
-      Map<String, dynamic> payloadDecoded = jsonDecode(payload);
-      return payloadDecoded['file_name'];
-    } catch (_) {
-      return '';
-    }
   }
 
   @override

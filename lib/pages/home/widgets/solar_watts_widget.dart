@@ -1,8 +1,8 @@
+import 'dart:developer' as d;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '/utils.dart';
-import '/models/mqtt_providers.dart';
 import '/models/mqtt_devices.dart';
 import '/pages/solar/solar_page.dart';
 
@@ -27,24 +27,16 @@ class SolarWatts extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(mqttMessagesFamProvider('sma/tripower/totw'));
+
     final brightness = Theme.of(context).brightness;
 
-    int solarWatt = int.tryParse(
-          getMessage(mqttMessagesProvider, ref, 'sma/tripower/totw') ?? '',
-        ) ??
-        0;
-
+    String solarWatt_ = ref.watch(mqttMessagesFamProvider('sma/tripower/totw')).toString();
+    int solarWatt = int.parse(solarWatt_);
     if (solarWatt == smaErrorValue) solarWatt = 0;
 
-    int totalWatt = (double.tryParse(
-              getMessage(mqttMessagesProvider, ref, 'sma/b3b461c9/total_w') ?? '',
-            ) ??
-            0.0)
-        .round();
-
-    // solarWatt = 20;
-    // totalWatt = 400;
-    // print('solarWatt: $solarWatt, totalWatt: $totalWatt');
+    String totalWatt_ = ref.watch(mqttMessagesFamProvider('sma/b3b461c9/total_w')).toString();
+    int totalWatt = double.parse(totalWatt_).toInt();
 
     int useWatt = solarWatt - totalWatt;
 

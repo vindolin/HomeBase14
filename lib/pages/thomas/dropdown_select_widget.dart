@@ -20,15 +20,11 @@ class _DropdownSelectState extends ConsumerState<DropdownSelect> {
   @override
   Widget build(BuildContext context) {
     final mqttMessage = ref.watch(
-      mqttMessagesProvider.select(
-        (mqttMessages) {
-          return mqttMessages[widget.statTopic];
-        },
-      ),
+      mqttMessagesFamProvider(widget.statTopic),
     );
 
-    if (widget.options.keys.contains(mqttMessage?.payload)) {
-      dropdownValue = mqttMessage!.payload;
+    if (widget.options.keys.contains(mqttMessage)) {
+      dropdownValue = mqttMessage;
     }
 
     return DropdownButton<String>(

@@ -40,7 +40,7 @@ class MqttMessagesFam extends _$MqttMessagesFam {
     return null;
   }
 
-  void set(String payload) {
+  void set(dynamic payload) {
     state = payload;
   }
 }

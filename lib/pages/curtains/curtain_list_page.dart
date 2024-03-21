@@ -7,6 +7,7 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import '/utils.dart';
 import '/ui_helpers.dart';
 
+import '/models/abstract_devices.dart';
 import '/models/mqtt_devices.dart';
 
 import 'widgets/curtain_actions.dart';

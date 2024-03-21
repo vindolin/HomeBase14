@@ -14,7 +14,7 @@ Being an enthusiast of open-source home automation and owning a variety of devic
 
 I experimented with various reactive state frameworks before settling on Riverpod for data-binding.
 
-I have developed a fondness for Flutter’s declarative methodology and the stability of the app it produces.
+I really like Flutter's declarative approach and the robustness of the resulting app.
 
 The project is currently a work in progress, and with the knowledge I’ve gained about Flutter/Dart and the libraries I’m utilizing, there are numerous aspects I would approach differently now.
 

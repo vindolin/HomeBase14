@@ -22,7 +22,7 @@ The app currently runs in desktop mode under Linux/Windows/OSX and Android/iOS.
 
 The following devices can be controlled/monitored via MQTT messages:
 
-#### Zigbee
+#### Zigbee ([Zigbee2MQTT](https://www.zigbee2mqtt.io/))
 * Window blinds (single and dual)
 * Thermostats (underfloor heating)
 * Ikea smart bulbs (and other dump bulbs)
@@ -34,7 +34,7 @@ The following devices can be controlled/monitored via MQTT messages:
 
 #### Wifi
 * Garage door (ESP32 controlling a remote controll via transistor)
-* various Tasmota plugs
+* various [Tasmota](https://tasmota.github.io/docs/) plugs
 * Plant watering system for an always thirsty coffee bush (ESP8266, servo valve)
 * Incubator for Tempeh etc. (ESP32)
 

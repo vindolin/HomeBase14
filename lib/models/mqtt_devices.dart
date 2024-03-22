@@ -81,11 +81,6 @@ typedef DataMapping = ({
 class DoorDevice extends AbstractMqttDevice {
   double position = 0.0;
 
-  // @override
-  // final dataMapping = [
-  //   const Tuple3('position', 'position', double),
-  // ];
-
   DoorDevice(
     super.deviceId,
     super.deviceType,
@@ -131,12 +126,6 @@ class DoorDevices extends _$DoorDevices {
 class ThermostatDevice extends AbstractMqttDevice {
   double localTemperature = 0;
   int currentHeatingSetpoint = 0;
-
-  // @override
-  // final dataMapping = [
-  //   const Tuple3('local_temperature', 'localTemperature', double),
-  //   const Tuple3('current_heating_setpoint', 'currentHeatingSetpoint', double),
-  // ];
 
   ThermostatDevice(
     super.deviceId,

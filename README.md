@@ -41,7 +41,7 @@ This app let's me control/monitor the following devices via MQTT messages:
 * Metrics of my SMA Tripower solar controller (modbus)
 * Prusa I3 MK3s (USB Serial controller)
 * Sleep modes and output device of my main PC
-* Temperature sensors in my greenhouse (LoRa)
+* Greenhouse temperature sensors (LoRa)
 
 It also let me view the RTSP streams of two survailance cams ([media_kit](https://github.com/media-kit/media-kit))
 

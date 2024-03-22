@@ -45,7 +45,6 @@ Widget _camContainerMobile(Widget child, BuildContext context, String camId) {
 }
 
 // Shows the cameras side by side
-// The cameras are refreshed every n seconds depending on the connection (wifi or mobile)
 class Cameras extends ConsumerWidget {
   const Cameras({super.key});
 
@@ -64,7 +63,10 @@ class Cameras extends ConsumerWidget {
             final widgets = ['door', 'garden'].map(
               (camId) {
                 if (Platform.isWindows) {
-                  return MediaKitVideoWidget(videoUrl: camSettings[camId]!['videoStreamUrl']!, muted: true);
+                  return ClipRRect(
+                    borderRadius: BorderRadius.circular(5), // adjust the value as needed
+                    child: MediaKitVideoWidget(videoUrl: camSettings[camId]!['videoStreamUrl']!, muted: true),
+                  );
                 } else {
                   return _camContainerMobile(
                     RefreshableImage(

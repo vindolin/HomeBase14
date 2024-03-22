@@ -2,31 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 
+import '/widgets/shader_widget.dart';
+
 class MediaKitVideoWidget extends StatefulWidget {
   final String videoUrl;
   final bool muted;
 
   const MediaKitVideoWidget({super.key, required this.videoUrl, this.muted = false});
   @override
-  State<MediaKitVideoWidget> createState() => MediaKitVideoWidgetState();
+  MediaKitVideoWidgetState createState() => MediaKitVideoWidgetState();
 }
 
 class MediaKitVideoWidgetState extends State<MediaKitVideoWidget> {
-  // Create a [Player] to control playback.
   late final player = Player();
-  // Create a [VideoController] to handle video output from [Player].
   late final controller = VideoController(player);
+  bool isBuffering = true;
 
   @override
   void initState() {
     super.initState();
-    // Play a [Media] or [Playlist].
-    // player.open(
-    //     Media('https://user-images.githubusercontent.com/28951144/229373695-22f88f13-d18f-4288-9bf1-c3e078d83722.mp4'));
     player.open(Media(widget.videoUrl));
     if (widget.muted) {
       player.setVolume(0);
     }
+    player.stream.buffering.listen((buffering) {
+      if (mounted) {
+        setState(() {
+          isBuffering = buffering;
+        });
+      }
+    });
   }
 
   @override
@@ -42,7 +47,7 @@ class MediaKitVideoWidgetState extends State<MediaKitVideoWidget> {
         // width: MediaQuery.of(context).size.width,
         // height: MediaQuery.of(context).size.width * 9.0 / 16.0,
         // Use [Video] widget to display video output.
-        child: Video(controller: controller),
+        child: isBuffering ? const ShaderWidget('tv_static.frag') : Video(controller: controller),
       ),
     );
   }

@@ -64,6 +64,14 @@ class SettingsForm extends ConsumerWidget {
           title: const Text('Bright/Dark anzeigen'),
           selected: appSettings.showBrightness,
         ),
+        CheckboxListTile(
+          value: appSettings.showVideo,
+          onChanged: (value) {
+            ref.read(appSettingsProvider.notifier).saveShowVideo(value == true);
+          },
+          title: const Text('Live video on home'),
+          selected: appSettings.showBrightness,
+        ),
         ListTile(
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

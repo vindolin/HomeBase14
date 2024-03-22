@@ -43,6 +43,7 @@ class AppSettingsCls with _$AppSettingsCls {
     required bool showBrightness,
     required int camRefreshRateWifi,
     required int camRefreshRateMobile,
+    required bool showVideo,
     // required int showVideo,
   }) = _AppSettingsCls;
   factory AppSettingsCls.fromJson(Map<String, dynamic> json) => _$AppSettingsClsFromJson(json);
@@ -63,6 +64,7 @@ class AppSettings extends _$AppSettings {
       showBrightness: false,
       camRefreshRateWifi: 5,
       camRefreshRateMobile: 20,
+      showVideo: true,
       // showVideo: true,
     );
   }
@@ -108,12 +110,12 @@ class AppSettings extends _$AppSettings {
     await persistAppSettings();
   }
 
-  // void saveShowVideo(bool value) async {
-  //   state = state.copyWith(
-  //     showVideo: value,
-  //   );
-  //   await persistAppSettings();
-  // }
+  void saveShowVideo(bool value) async {
+    state = state.copyWith(
+      showVideo: value,
+    );
+    await persistAppSettings();
+  }
 
   void saveMqttLoginForm(Map<String, dynamic> data) {
     state = state.copyWith(

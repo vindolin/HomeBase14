@@ -1,5 +1,3 @@
-import 'dart:io' show Platform;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/models/app_settings.dart';
@@ -63,7 +61,7 @@ class Cameras extends ConsumerWidget {
           (BuildContext context, int index) {
             final widgets = ['door', 'garden'].map(
               (camId) {
-                if (showVideo || Platform.isWindows) {
+                if (showVideo) {
                   return ClipRRect(
                     borderRadius: BorderRadius.circular(5), // adjust the value as needed
                     child: MediaKitVideoWidget(videoUrl: camSettings[camId]!['videoStreamUrl']!, muted: true),

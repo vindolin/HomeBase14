@@ -2,12 +2,13 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '/models/app_settings.dart';
+import '/models/mqtt_providers.dart'; //need this for doorAlarmProvider (not needed anymore)
+import '/models/network_addresses.dart';
 import '/widgets/media_kit_video_widget.dart';
 import '/widgets/refreshable_image_widget.dart';
-import '/models/mqtt_providers.dart'; //need this for doorAlarmProvider (not needed anymore)
 import '/pages/cams/cam_image_page.dart';
 import '/pages/cams/cam_video_page.dart';
-import '../../models/network_addresses.dart';
 // import '/pages/cams/media_kit_cam_page.dart';
 // import '/pages/cams/mjpeg_cam_image.dart';
 
@@ -62,7 +63,7 @@ class Cameras extends ConsumerWidget {
           (BuildContext context, int index) {
             final widgets = ['door', 'garden'].map(
               (camId) {
-                if (Platform.isWindows) {
+                if (showVideo || Platform.isWindows) {
                   return ClipRRect(
                     borderRadius: BorderRadius.circular(5), // adjust the value as needed
                     child: MediaKitVideoWidget(videoUrl: camSettings[camId]!['videoStreamUrl']!, muted: true),

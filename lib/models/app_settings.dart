@@ -19,6 +19,7 @@ enum User {
 
 bool onlyPortrait = true;
 bool showBrightness = true;
+bool showVideo = false; // todo activate
 
 final encrypter = encrypt.Encrypter(
   encrypt.Salsa20(
@@ -42,6 +43,7 @@ class AppSettingsCls with _$AppSettingsCls {
     required bool showBrightness,
     required int camRefreshRateWifi,
     required int camRefreshRateMobile,
+    // required int showVideo,
   }) = _AppSettingsCls;
   factory AppSettingsCls.fromJson(Map<String, dynamic> json) => _$AppSettingsClsFromJson(json);
 }
@@ -61,6 +63,7 @@ class AppSettings extends _$AppSettings {
       showBrightness: false,
       camRefreshRateWifi: 5,
       camRefreshRateMobile: 20,
+      // showVideo: true,
     );
   }
 
@@ -104,6 +107,13 @@ class AppSettings extends _$AppSettings {
     );
     await persistAppSettings();
   }
+
+  // void saveShowVideo(bool value) async {
+  //   state = state.copyWith(
+  //     showVideo: value,
+  //   );
+  //   await persistAppSettings();
+  // }
 
   void saveMqttLoginForm(Map<String, dynamic> data) {
     state = state.copyWith(

@@ -33,7 +33,7 @@ This app let's me control/monitor the following devices via MQTT messages:
 #### Wifi
 * Garage door (ESP32 controlling a remote controll via transistor)
 * various Tasmota plugs
-* Plant watering system for a coffee bush (ESP8266, servo valve)
+* Plant watering system for an always thirsty coffee bush (ESP8266, servo valve)
 * Incubator for Tempeh etc. (ESP32)
 
 #### Other

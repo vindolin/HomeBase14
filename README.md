@@ -18,7 +18,9 @@ The project is currently a work in progress, and with the knowledge I’ve gaine
 
 I am continually refactoring past errors and incorporating new devices as they become part of our household.
 
-This app let's me control/monitor the following devices via MQTT messages:
+The app currently runs in desktop mode under Linux/Windows/OSX and Android/iOS.
+
+The following devices can be controlled/monitored via MQTT messages:
 
 #### Zigbee
 * Window blinds (single and dual)

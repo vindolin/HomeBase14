@@ -49,6 +49,9 @@ class Cameras extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final showVideo = ref.watch(
+      appSettingsProvider.select((appSettings) => appSettings.showVideo),
+    );
     return SliverPadding(
       padding: const EdgeInsets.all(8.0),
       sliver: SliverGrid(

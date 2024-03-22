@@ -17,10 +17,6 @@ enum User {
   mona,
 }
 
-bool onlyPortrait = true;
-bool showBrightness = true;
-bool showVideo = false; // todo activate
-
 final encrypter = encrypt.Encrypter(
   encrypt.Salsa20(
     encrypt.Key.fromUtf8(secrets.encryptionKey),

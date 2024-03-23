@@ -1,4 +1,4 @@
-# HomeBase14 - a custom home automation app
+# HomeBase14 - a personal home automation app
 
 [![Flutter](https://github.com/vindolin/HomeBase14/actions/workflows/flutter.yaml/badge.svg)](https://github.com/vindolin/HomeBase14/actions/workflows/flutter.yaml)
 

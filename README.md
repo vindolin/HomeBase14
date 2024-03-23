@@ -3,7 +3,7 @@
 [![Flutter](https://github.com/vindolin/HomeBase14/actions/workflows/flutter.yaml/badge.svg)](https://github.com/vindolin/HomeBase14/actions/workflows/flutter.yaml)
 
 > [!WARNING]
-> This app is tailored to my specific environment and does not work as a general home automation app!
+> This app is tailored to my specific environment and is not intended as a general home automation app!
 
 
 This project was initiated as a platform for me to acquire knowledge in Flutter/Dart, providing a practical scenario to refine my skills.

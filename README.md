@@ -8,7 +8,7 @@
 
 This project was initiated as a platform for me to acquire knowledge in Flutter/Dart, providing a practical scenario to refine my skills.
 
-Being an enthusiast of open-source home automation and owning a variety of devices with diverse MQTT payloads, this project presented an excellent chance to substitute the multiple control programs with one that is custom-made for my requirements.
+Being an enthusiast of open-source home automation and owning a variety of devices with different MQTT payload structures, this project presented an excellent chance to substitute the multiple control programs with one that is custom-made for my requirements.
 
 I experimented with various reactive state frameworks before settling on Riverpod for data-binding.
 

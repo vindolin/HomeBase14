@@ -17,7 +17,8 @@ import 'package:flutter_portal/flutter_portal.dart';
 import '/models/app_settings.dart';
 import '/models/mqtt_connection_state_provider.dart';
 import '/models/open_login_form_semaphore_provider.dart';
-import '/models/connectivity_provider.dart' as connectivity_rovider; // rename to avoid conflict with Connectivity class
+import '/models/connectivity_provider.dart'
+    as connectivity_provider; // rename to avoid conflict with Connectivity class
 import '/models/mqtt_providers.dart';
 // import '/models/generic_providers.dart';
 import '/pages/login_page.dart';
@@ -91,7 +92,7 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
 
     // listen to changes in connectivity state
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-      ref.read(connectivity_rovider.connectivityProvider.notifier).setResult(result);
+      ref.read(connectivity_provider.connectivityProvider.notifier).setResult(result);
     });
 
     // load connection data from shared preferences
@@ -105,7 +106,7 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
       () async {
         // get initial connectivity state
         ref
-            .read(connectivity_rovider.connectivityProvider.notifier)
+            .read(connectivity_provider.connectivityProvider.notifier)
             .setResult(await Connectivity().checkConnectivity());
         // ref.read(appLogProvider.notifier).log('log init');
       },

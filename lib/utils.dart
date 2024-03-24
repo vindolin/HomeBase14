@@ -1,8 +1,11 @@
+import 'dart:io';
 import 'dart:developer' as d;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:stack_trace/stack_trace.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+
+// todo split into own libraries
 
 // const bool debug = true;
 const bool debug = false;
@@ -109,3 +112,5 @@ T valueToItem<T, N extends num>(List<T> items, N value, N max) {
 double mapValue(double value, double inMin, double inMax, double outMin, double outMax) {
   return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
 }
+
+bool platformIsDesktop = Platform.isWindows || Platform.isLinux || Platform.isMacOS;

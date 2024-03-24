@@ -1,7 +1,8 @@
-import 'dart:io' show Platform, SecurityContext;
+import 'dart:io' show SecurityContext;
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:home_base_14/utils.dart';
 import 'package:home_base_14/widgets/pulsating_icon_hooks_widget.dart';
 // import 'package:workmanager/workmanager.dart';
 // import 'package:home_base_14/utils.dart';
@@ -66,7 +67,7 @@ void main() async {
   ByteData data = await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
   SecurityContext.defaultContext.setTrustedCertificatesBytes(data.buffer.asUint8List());
 
-  if (Platform.isAndroid) {
+  if (!platformIsDesktop) {
     KeepScreenOn.turnOn();
   }
 

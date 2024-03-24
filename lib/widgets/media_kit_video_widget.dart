@@ -1,15 +1,14 @@
-import 'dart:io' show Platform;
-
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 
+import '/utils.dart';
 import '/pages/cams/fullscreen_video_page.dart';
 import '/widgets/shader_widget.dart';
 
 void portaitOrientation() {
-  if (Platform.isAndroid) {
+  if (!platformIsDesktop) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
@@ -17,7 +16,7 @@ void portaitOrientation() {
 }
 
 void landscapeOrientation() {
-  if (Platform.isAndroid) {
+  if (!platformIsDesktop) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,

@@ -12,6 +12,7 @@ import 'package:mqtt5_client/mqtt5_server_client.dart';
 import 'package:nanoid/nanoid.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '/models/secrets.dart';
 import '/models/encrypted_key.dart';
 import '/utils.dart';
 import 'app_settings.dart';
@@ -141,20 +142,23 @@ class Mqtt extends _$Mqtt {
   FutureOr<mqtt.MqttConnectionState> connect() async {
     log('connecting');
 
-    final appSettings = ref.watch(appSettingsProvider.notifier);
+    final secrets = ref.watch(secretsProvider);
 
-    bool useCerts = true;
+    // bool useCerts = true;
+    bool useCerts = secrets['network'] == networkTypeMobile;
+    print('use certs $useCerts');
 
     if (useCerts) {
       client = MqttServerClient.withPort(
-        appSettings.state.mqttAddress,
+        secrets['mqttAddress'],
         clientIdentifier,
-        appSettings.state.mqttPort,
+        secrets['mqttPort'],
       );
 
       final cert = await rootBundle.load('assets/certs/ca.crt');
       final clientCrt = await rootBundle.load('assets/certs/homebase14.crt');
       // final clientKey = await rootBundle.load('assets/certs/homebase14.key');
+
       final clientKey = encrypter.decrypt64(hbk, iv: iv);
       SecurityContext context;
 
@@ -178,9 +182,9 @@ class Mqtt extends _$Mqtt {
       client.secure = true;
     } else {
       client = MqttServerClient.withPort(
-        appSettings.state.mqttAddress,
+        secrets['mqttAddress'],
         clientIdentifier,
-        appSettings.state.mqttPort,
+        secrets['mqttPort'],
       );
     }
     // client.logging(on: true);
@@ -195,7 +199,7 @@ class Mqtt extends _$Mqtt {
     // );
 
     mqtt.MqttConnectionStatus? mqttConnectionStatus =
-        await client.connect(appSettings.state.mqttUsername, appSettings.state.mqttPassword).catchError(
+        await client.connect(secrets['mqttUsername'], secrets['mqttPassword']).catchError(
       // await client.connect().catchError(
       (error) {
         ref.read(appSettingsProvider.notifier).setValid(false);

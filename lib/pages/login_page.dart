@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mqtt5_client/mqtt5_client.dart';
 
@@ -22,10 +21,7 @@ class LoginFormPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final AppSettingsCls appSettingsCls = ref.watch(appSettingsProvider);
     final Map<String, dynamic> formData = {
-      'mqttUsername': appSettingsCls.mqttUsername,
-      'mqttPassword': appSettingsCls.mqttPassword,
-      'mqttAddress': appSettingsCls.mqttAddress,
-      'mqttPort': appSettingsCls.mqttPort,
+      'encryptionKey': appSettingsCls.encryptionKey,
     };
 
     log('login form build');
@@ -45,7 +41,7 @@ class LoginFormPage extends ConsumerWidget {
         );
         _formKey.currentState?.save();
         log('form submit');
-        appSettings.saveMqttLoginForm(formData);
+        appSettings.saveEncryptionKey(formData['encryptionKey']);
 
         final MqttConnectionState mqttConnectionState = await mqttProviderNotifier.connect();
 
@@ -88,77 +84,16 @@ class LoginFormPage extends ConsumerWidget {
       body: Form(
         key: _formKey,
         child: Column(children: [
-          TextFormField(
-            key: UniqueKey(),
-            decoration: const InputDecoration(
-              filled: true,
-              labelText: 'Username',
-              hintText: 'Enter your username',
-            ),
-            inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'\s'))],
-            initialValue: appSettingsCls.mqttUsername,
-            onSaved: (String? value) {
-              log(value);
-              formData['mqttUsername'] = value;
-            },
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'please enter a username';
-              }
-              return null;
-            },
-            onFieldSubmitted: (value) => submitForm(),
-          ),
           PasswordField(
             key: UniqueKey(),
-            labelText: 'Password',
-            maxLength: 20,
-            initialValue: appSettingsCls.mqttPassword,
+            labelText: 'Encryption Key',
+            initialValue: appSettingsCls.encryptionKey,
             onSaved: (String? value) {
-              formData['mqttPassword'] = value;
+              formData['encryptionKey'] = value;
             },
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'please enter a password';
-              }
-              return null;
-            },
-            onFieldSubmitted: (value) => submitForm(),
-          ),
-          TextFormField(
-            key: UniqueKey(),
-            decoration: const InputDecoration(
-              filled: true,
-              labelText: 'Server Address',
-              hintText: 'Enter your MQTT server address',
-            ),
-            initialValue: appSettingsCls.mqttAddress,
-            onSaved: (String? value) {
-              formData['mqttAddress'] = value;
-            },
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'please enter a server address';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            key: UniqueKey(),
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              filled: true,
-              labelText: 'Server Port',
-              hintText: 'Enter your MQTT server port',
-            ),
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-            initialValue: appSettingsCls.mqttPort.toString(),
-            onSaved: (String? value) {
-              formData['mqttPort'] = int.parse(value!);
-            },
-            validator: (value) {
-              if (value == null || value.isEmpty || value == '0' || int.parse(value) > 65535) {
-                return 'please enter a valid port number (1-65535)';
               }
               return null;
             },

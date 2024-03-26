@@ -19,7 +19,7 @@ enum User {
 
 final encrypter = encrypt.Encrypter(
   encrypt.Salsa20(
-    encrypt.Key.fromUtf8(secrets.encryptionKey),
+    encrypt.Key.fromUtf8(secrets.certEncryptionKey),
   ),
 );
 
@@ -29,10 +29,7 @@ final iv = encrypt.IV.fromBase64('4ygMAg7aRyw=');
 @freezed
 class AppSettingsCls with _$AppSettingsCls {
   const factory AppSettingsCls({
-    required String mqttUsername,
-    required String mqttPassword,
-    required String mqttAddress,
-    required int mqttPort,
+    required String encryptionKey,
     required User user,
     required bool valid,
     required bool onlyPortrait,
@@ -50,10 +47,7 @@ class AppSettings extends _$AppSettings {
   @override
   AppSettingsCls build() {
     return const AppSettingsCls(
-      mqttUsername: secrets.mqttUsername,
-      mqttPassword: secrets.mqttPassword,
-      mqttAddress: secrets.mqttAddress,
-      mqttPort: secrets.mqttPort,
+      encryptionKey: secrets.certEncryptionKey,
       user: User.thomas,
       valid: false,
       onlyPortrait: true,
@@ -113,12 +107,9 @@ class AppSettings extends _$AppSettings {
     await persistAppSettings();
   }
 
-  void saveMqttLoginForm(Map<String, dynamic> data) {
+  void saveEncryptionKey(String encryptionKey) {
     state = state.copyWith(
-      mqttUsername: data['mqttUsername'],
-      mqttPassword: data['mqttPassword'],
-      mqttAddress: data['mqttAddress'],
-      mqttPort: data['mqttPort'],
+      encryptionKey: encryptionKey,
     );
   }
 

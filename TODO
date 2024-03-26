@@ -1,6 +1,7 @@
+☐ consolidate mqtt_providers/mqtt_devices
 ☐ fix all riverpod linter warnings (damn, if only I had a linter before)
 ☐ Mona Page (mo. do.)
 ☐ add documentation
 ☐ add tests
-☐ change to google video player when it supports RTSP
+~~☐ change to google video player when it supports RTSP~~
 ☐ ...

@@ -86,7 +86,6 @@ dependencies:
       ref: master
   flutter_mjpeg: ^2.0.4
   package_info_plus: ^5.0.1
-  video_player: ^2.8.2
   ir_sensor_plugin: ^0.3.0
   flutter_spinbox: ^0.13.1
   audioplayers: ^5.2.1

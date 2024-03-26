@@ -13,7 +13,7 @@ import '/widgets/connection_bar_widget.dart';
 import 'dropdown_select_widget.dart';
 // import 'test_page.dart';
 // import 'video_player_test_widget.dart';
-import 'video_player_test_page.dart';
+import '/pages/home/dummy_page.dart';
 
 /// Random stuff for Thomas
 class ThomasPage extends ConsumerWidget {
@@ -202,7 +202,7 @@ class ThomasPage extends ConsumerWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const VideoApp(),
+                      builder: (context) => const DummyPage(),
                     ),
                   );
                 },

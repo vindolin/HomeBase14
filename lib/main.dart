@@ -16,7 +16,7 @@ import '/models/mqtt_connection_state_provider.dart';
 import '/models/open_login_form_semaphore_provider.dart';
 import '/models/connectivity_provider.dart'
     as connectivity_provider; // rename to avoid conflict with Connectivity class
-import '/pages/login_page.dart';
+import 'pages/encryption_key_form_page.dart';
 import '/pages/home/home_page.dart';
 import '/widgets/brightness_button_widget.dart';
 import '/widgets/pulsating_icon_hooks_widget.dart';
@@ -174,16 +174,15 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
         home: PortalTarget(
           visible:
               // show only if not connected and when the connection page is not open
-              ref.watch(openLoginFormSemaphoreProvider) == false &&
-                  ref.watch(mqttConnectionStateProvider) != MqttConnectionState.connected,
+              !ref.watch(openLoginFormSemaphoreProvider) && !ref.watch(appSettingsProvider).isValid,
           portalFollower: Container(
             color: Colors.black45,
             child: Center(
               child: SizedBox(
                   width: 100,
                   height: 100,
-                  child: switch (ref.watch(mqttConnectionStateProvider)) {
-                    MqttConnectionState.connecting => const CircularProgressIndicator(
+                  child: switch (ref.watch(appSettingsProvider).isValid) {
+                    false => const CircularProgressIndicator(
                         strokeWidth: 10,
                       ),
                     _ => GestureDetector(
@@ -198,7 +197,7 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
                   }),
             ),
           ),
-          child: ref.watch(openLoginFormSemaphoreProvider) ? LoginFormPage() : const HomePage(),
+          child: ref.watch(openLoginFormSemaphoreProvider) ? EncryptionKeyFormPage() : const HomePage(),
         ),
         theme: ThemeData(
           useMaterial3: true,

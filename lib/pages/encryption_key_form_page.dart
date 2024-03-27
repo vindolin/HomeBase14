@@ -12,8 +12,8 @@ import '../models/open_login_form_semaphore_provider.dart';
 
 final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
-class LoginFormPage extends ConsumerWidget {
-  LoginFormPage({super.key});
+class EncryptionKeyFormPage extends ConsumerWidget {
+  EncryptionKeyFormPage({super.key});
 
   final _formKey = GlobalKey<FormState>();
 

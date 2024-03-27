@@ -4,9 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '/utils.dart';
 import '/models/app_settings.dart';
-import '/models/mqtt_providers.dart';
 import '/widgets/password_input_widget.dart';
-import '../models/open_login_form_semaphore_provider.dart';
+import '/models/open_login_form_semaphore_provider.dart';
 
 // TODO catch the back action and return to the home page instead of exiting the app
 
@@ -26,7 +25,6 @@ class EncryptionKeyFormPage extends ConsumerWidget {
 
     log('login form build');
 
-    final Mqtt mqttProviderNotifier = ref.watch(mqttProvider.notifier);
     final AppSettings appSettings = ref.read(appSettingsProvider.notifier);
 
     void submitForm() async {
@@ -45,7 +43,7 @@ class EncryptionKeyFormPage extends ConsumerWidget {
         log('form submit');
 
         final saveResult = appSettings.saveEncryptionKey(formData['encryptionKey']);
-        log(saveResult.toString());
+        // log(saveResult.toString());
 
         if (saveResult) {
           // affects the overlay widget in main.dart
@@ -65,7 +63,6 @@ class EncryptionKeyFormPage extends ConsumerWidget {
                 duration: Duration(seconds: 3),
               ),
             );
-          await mqttProviderNotifier.connect();
         } else {
           rootScaffoldMessengerKey.currentState
             ?..hideCurrentSnackBar(reason: SnackBarClosedReason.dismiss)
@@ -76,44 +73,12 @@ class EncryptionKeyFormPage extends ConsumerWidget {
               ),
             );
         }
-
-        // final MqttConnectionState mqttConnectionState = await mqttProviderNotifier.connect();
-
-        // if the connection was successful, persist the connection data
-        // if (mqttConnectionState == MqttConnectionState.connected) {
-        //   // affects the overlay widget in main.dart
-        //   // if this is false, the home page will be shown instead of the connection form
-        //   ref.watch(openLoginFormSemaphoreProvider.notifier).set(false);
-
-        //   await appSettings.persistAppSettings();
-
-        //   log('persisted connection data');
-
-        //   rootScaffoldMessengerKey.currentState
-        //     ?..hideCurrentSnackBar(
-        //         reason: SnackBarClosedReason.dismiss) // TODO_ check why this is needed to really hide the snackbar
-        //     ..showSnackBar(
-        //       const SnackBar(
-        //         content: Text('connected successfully'),
-        //         duration: Duration(seconds: 3),
-        //       ),
-        //     );
-        // } else {
-        //   rootScaffoldMessengerKey.currentState
-        //     ?..hideCurrentSnackBar(reason: SnackBarClosedReason.dismiss)
-        //     ..showSnackBar(
-        //       const SnackBar(
-        //         content: Text('connection failed'),
-        //         duration: Duration(seconds: 3),
-        //       ),
-        //     );
-        // }
       }
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('MQTT Login'),
+        title: const Text('Decrypt Settings'),
       ),
       body: Form(
         key: _formKey,
@@ -127,7 +92,7 @@ class EncryptionKeyFormPage extends ConsumerWidget {
             },
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'please enter a password';
+                return 'please enter the encryption key';
               }
               return null;
             },

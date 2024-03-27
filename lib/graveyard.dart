@@ -472,3 +472,38 @@
 //     );
 //   }
 // }
+
+// reconnect
+
+
+// TODOs for later
+// the auto reconnect is not working reliable, so we try to reconnect every second
+// Timer.periodic(const Duration(seconds: 1), (timer) async {
+//   final mqttConnectionState = ref.watch(mqttConnectionStateProvider);
+//   if (![MqttConnectionState.connected, MqttConnectionState.connecting].contains(mqttConnectionState)) {
+//     ref.read(appLogProvider.notifier).log('mqtt reconnect $mqttConnectionState');
+//     ref.watch(mqttProvider.notifier).client.connect();
+//   }
+// });
+
+// if we don't receive a message for 10 seconds, we try to reconnect
+// this can happen if the app was in the background for a long time
+// Timer.periodic(const Duration(seconds: 1), (timer) async {
+// connection data form is open, don't reconnect
+// if (ref.watch(openLoginFormSemaphoreProvider)) {
+//   return;
+// }
+// final lastMessageTime = ref.watch(lastMessageTimeProvider);
+// if (DateTime.now().difference(lastMessageTime).inSeconds > 5) {
+//   if (ref.watch(mqttConnectionStateProvider) != MqttConnectionState.connecting) {
+//     ref.read(mqttProvider.notifier).disconnect();
+//     ref.read(mqttProvider.notifier).connect();
+//   }
+//   ref.read(lastMessageTimeProvider.notifier).update();
+// }
+// });
+
+// used to simulate a disconnect for testing
+// Timer(const Duration(seconds: 10), () {
+//   ref.read(mqttProvider.notifier).disconnect();
+// });

@@ -7,6 +7,7 @@ import '/models/mqtt_connection_state_provider.dart';
 import '/models/open_login_form_semaphore_provider.dart';
 import '/widgets/message_blinker_widget.dart';
 import '/widgets/brightness_button_widget.dart';
+import '/models/secrets.dart';
 
 class ConnectionBar extends ConsumerWidget {
   final List<Widget>? children;
@@ -16,6 +17,7 @@ class ConnectionBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final mqttConnectionState = ref.watch(mqttConnectionStateProvider);
     final mqttProviderNotifier = ref.watch(mqttProvider.notifier);
+    final secrets = ref.watch(secretsProvider);
     final appSettings = ref.watch(appSettingsProvider);
 
     return Padding(
@@ -46,7 +48,7 @@ class ConnectionBar extends ConsumerWidget {
                   padding: const EdgeInsets.all(4.0),
                   child: GestureDetector(
                     onTap: () {
-                      mqttProviderNotifier.connect();
+                      mqttProviderNotifier.connect(secrets);
                     },
                     child: const Icon(
                       color: Colors.red,

@@ -1,5 +1,4 @@
 import 'dart:io' show SecurityContext;
-import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
@@ -12,7 +11,6 @@ import 'package:flutter_portal/flutter_portal.dart';
 
 import '/utils.dart';
 import '/models/app_settings.dart';
-import '/models/mqtt_connection_state_provider.dart';
 import '/models/open_login_form_semaphore_provider.dart';
 import '/models/connectivity_provider.dart'
     as connectivity_provider; // rename to avoid conflict with Connectivity class
@@ -85,66 +83,25 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
   @override
   void initState() {
     super.initState();
+    loadAppSettings(ref);
+  }
 
+  void loadAppSettings(ref) async {
     final connectivityProviderNotifier = connectivity_provider.connectivityProvider.notifier;
 
-    // load connection data from shared preferences
-    ref.read(appSettingsProvider.notifier).loadAppSettings().then(
-      (_) async {
-        // ref.watch(mqttProvider.notifier).connect();
+    await ref.read(appSettingsProvider.notifier).loadAppSettings();
 
-        await Future(
-          () async {
-            // get initial connectivity state
-            final result = await Connectivity().checkConnectivity();
-            log('connectivityResult: $result');
-            ref.read(connectivityProviderNotifier).setResult(
-                  result,
-                );
-            // ref.read(appLogProvider.notifier).log('log init');
-          },
-        ).then((value) {
-          log('init done');
+    // get initial connectivity state
+    final result = await Connectivity().checkConnectivity();
+    log('connectivityResult: $result');
+    ref.read(connectivityProviderNotifier).setResult(result);
 
-          // // listen to changes in connectivity state in the future
-          // Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-          //   ref.read(connectivityProviderNotifier).setResult(result);
-          // });
-        });
-      },
-    );
+    log('init done');
 
-    // TODOs for later
-    // the auto reconnect is not working reliable, so we try to reconnect every second
-    // Timer.periodic(const Duration(seconds: 1), (timer) async {
-    //   final mqttConnectionState = ref.watch(mqttConnectionStateProvider);
-    //   if (![MqttConnectionState.connected, MqttConnectionState.connecting].contains(mqttConnectionState)) {
-    //     ref.read(appLogProvider.notifier).log('mqtt reconnect $mqttConnectionState');
-    //     ref.watch(mqttProvider.notifier).client.connect();
-    //   }
-    // });
-
-    // if we don't receive a message for 10 seconds, we try to reconnect
-    // this can happen if the app was in the background for a long time
-    // Timer.periodic(const Duration(seconds: 1), (timer) async {
-    // connection data form is open, don't reconnect
-    // if (ref.watch(openLoginFormSemaphoreProvider)) {
-    //   return;
-    // }
-    // final lastMessageTime = ref.watch(lastMessageTimeProvider);
-    // if (DateTime.now().difference(lastMessageTime).inSeconds > 5) {
-    //   if (ref.watch(mqttConnectionStateProvider) != MqttConnectionState.connecting) {
-    //     ref.read(mqttProvider.notifier).disconnect();
-    //     ref.read(mqttProvider.notifier).connect();
-    //   }
-    //   ref.read(lastMessageTimeProvider.notifier).update();
-    // }
-    // });
-
-    // used to simulate a disconnect for testing
-    // Timer(const Duration(seconds: 10), () {
-    //   ref.read(mqttProvider.notifier).disconnect();
-    // });
+    // listen to changes in connectivity state in the future
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      ref.read(connectivityProviderNotifier).setResult(result);
+    });
   }
 
   @override
@@ -152,7 +109,6 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
     final brightness = ref.watch(brightnessSettingProvider);
     final appSettings = ref.watch(appSettingsProvider);
 
-    log(appSettings.encryptionKey);
     // set orientation according to app settings
     if (appSettings.onlyPortrait) {
       SystemChrome.setPreferredOrientations([
@@ -166,15 +122,20 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
       ]);
     }
 
+    log('loginOpen: ${ref.watch(openLoginFormSemaphoreProvider)}');
+    log('isValid: ${ref.watch(appSettingsProvider).isValid}');
     return Portal(
       child: MaterialApp(
         scaffoldMessengerKey: rootScaffoldMessengerKey,
         title: 'HomeBase14',
         debugShowCheckedModeBanner: false,
         home: PortalTarget(
-          visible:
-              // show only if not connected and when the connection page is not open
-              !ref.watch(openLoginFormSemaphoreProvider) && !ref.watch(appSettingsProvider).isValid,
+          visible: false,
+          // visible: ref.watch(openLoginFormSemaphoreProvider) == false &&
+          //     ref.watch(mqttConnectionStateProvider) != MqttConnectionState.connected,
+
+          // // show the form only if not connected and when the connection page is not open
+          // !ref.watch(openLoginFormSemaphoreProvider) && !ref.watch(appSettingsProvider).isValid,
           portalFollower: Container(
             color: Colors.black45,
             child: Center(

@@ -6,7 +6,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '/utils.dart';
-// import 'secrets.dart' as secrets;
 import '/models/encryption.dart' as encryption;
 
 part 'app_settings.g.dart';
@@ -100,7 +99,7 @@ class AppSettings extends _$AppSettings {
   }
 
   bool saveEncryptionKey(String encryptionKey) {
-    log(encryptionKey);
+    // log(encryptionKey);
     state = state.copyWith(
       encryptionKey: encryptionKey,
     );
@@ -141,23 +140,25 @@ class AppSettings extends _$AppSettings {
 
     String? userPref = prefs.getString('settings');
     String appSettings;
-    log('userprefs: $userPref');
     if (userPref != null) {
-      // decrypt the connection data
-      log('userprefs: $userPref');
+      // log('userprefs: $userPref');
 
+      // decrypt the connection data
       appSettings = encryption.decrypt(
         settingsEncryptionKey,
         userPref,
       );
 
-      log('appsettings: $appSettings');
+      // log('appsettings: $appSettings');
 
-      final json = jsonDecode(appSettings);
-      log('json: $json');
-      state = AppSettingsCls.fromJson(json);
-      log('state: $state');
+      try {
+        final json = jsonDecode(appSettings);
+        state = AppSettingsCls.fromJson(json);
+      } catch (e) {
+        log('error loading settings: $e');
+      }
     } else {
+      // ref.watch(openLoginFormSemaphoreProvider.notifier).set(false);s
       log('no settings found');
     }
   }

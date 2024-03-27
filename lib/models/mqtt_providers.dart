@@ -13,7 +13,8 @@ import 'package:nanoid/nanoid.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '/models/app_settings.dart';
-import '/models/secrets.dart';
+// import '/models/secrets.dart';
+import '/models/network_type_provider.dart';
 import '/models/encrypted_key.dart';
 import '/models/encryption.dart' as encryption;
 import '/utils.dart';
@@ -140,11 +141,11 @@ class Mqtt extends _$Mqtt {
     return null;
   }
 
-  FutureOr<mqtt.MqttConnectionState> connect() async {
+  FutureOr<mqtt.MqttConnectionState> connect(dynamic secrets) async {
     final appSettings = ref.read(appSettingsProvider);
     log('connecting...');
 
-    final secrets = ref.watch(secretsProvider);
+    // final secrets = ref.watch(secretsProvider);
 
     bool useCerts = secrets['networkType'] == networkTypeMobile;
     log('use certs $useCerts');

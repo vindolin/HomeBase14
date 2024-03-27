@@ -145,10 +145,8 @@ class Mqtt extends _$Mqtt {
     log('connecting...');
 
     final secrets = ref.watch(secretsProvider);
-    log('secrets: ${secrets['network']["mqttAddress"]}');
 
-    // bool useCerts = true;
-    bool useCerts = secrets['network'] == networkTypeMobile;
+    bool useCerts = secrets['networkType'] == networkTypeMobile;
     log('use certs $useCerts');
 
     if (useCerts) {

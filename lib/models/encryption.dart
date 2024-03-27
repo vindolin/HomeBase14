@@ -28,7 +28,5 @@ String encrypt(String key, String input) {
 }
 
 bool testEncryption(String key, String encrypted, String decrypted) {
-  print(decrypted);
-  print(decrypt(key, encrypted));
   return decrypt(key, encrypted) == decrypted;
 }

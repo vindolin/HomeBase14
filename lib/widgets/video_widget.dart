@@ -2,7 +2,7 @@
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 
-// import '/models/secrets.dart' as secrets;
+// import '/models/xsecrets.dart' as secrets;
 
 // /// widget that displays a video stream from a camera using VLC
 // /// TODOs move to Google's video player when it finally supports RTSP

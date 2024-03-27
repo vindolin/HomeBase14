@@ -12,8 +12,8 @@ insert mqtt cert key here
 
 void main(List<String> args) {
   final key = args[0];
-  const payload = certKey;
-  // String payload = jsonEncode(secrets.secretsMap);
+  // const payload = certKey;
+  String payload = jsonEncode(secrets.secretsMap);
   final encrypted = encryption.encrypt(key, payload);
   print(encrypted);
 }

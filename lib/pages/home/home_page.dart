@@ -6,6 +6,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_shadow/simple_shadow.dart';
 
+import '/utils.dart';
 import '/ui_helpers.dart';
 import '/styles/styles.dart';
 import '/models/app_settings.dart';
@@ -223,34 +224,35 @@ class HomePage extends ConsumerWidget {
                     // const SliverHeader(Colors.red, 'SliverPersistentHeader 1'),
                     const ArmedButtons(),
                     const DeviceGroups(),
-                    const Cameras(),
-                    SliverList(
-                        delegate: SliverChildListDelegate([
-                      Row(
-                        children: [
-                          const Divider(),
-                          // icon button to the remote page
-                          Expanded(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                TextButton(
-                                  onPressed: () {
-                                    modalDialog(
-                                      context,
-                                      const RemotesWidget(),
-                                      constraints: const BoxConstraints(maxHeight: 400),
-                                    );
-                                  },
-                                  child: const Text('󰻅', style: TextStyle(fontFamily: 'NerdFont', fontSize: 40)),
-                                ),
-                              ],
+                    if (appSettings.isValid) const Cameras(),
+                    if (!platformIsDesktop)
+                      SliverList(
+                          delegate: SliverChildListDelegate([
+                        Row(
+                          children: [
+                            const Divider(),
+                            // icon button to the remote page
+                            Expanded(
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  TextButton(
+                                    onPressed: () {
+                                      modalDialog(
+                                        context,
+                                        const RemotesWidget(),
+                                        constraints: const BoxConstraints(maxHeight: 400),
+                                      );
+                                    },
+                                    child: const Text('󰻅', style: TextStyle(fontFamily: 'NerdFont', fontSize: 40)),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      )
-                    ])),
+                          ],
+                        )
+                      ])),
                     // appSettings.user == User.thomas ? const ThomasGroups() : const MonaGroups(),
                     if (appSettings.user == User.thomas) const ThomasGroups(),
                   ],

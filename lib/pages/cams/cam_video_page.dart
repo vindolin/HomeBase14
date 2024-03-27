@@ -11,6 +11,8 @@ class CamVideoPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final camSettings = ref.watch(camSettingsProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(translate('cams.$camId')),

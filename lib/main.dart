@@ -2,10 +2,6 @@ import 'dart:io' show SecurityContext;
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:home_base_14/utils.dart';
-import 'package:home_base_14/widgets/pulsating_icon_hooks_widget.dart';
-// import 'package:workmanager/workmanager.dart';
-// import 'package:home_base_14/utils.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -14,17 +10,16 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 
+import '/utils.dart';
 import '/models/app_settings.dart';
 import '/models/mqtt_connection_state_provider.dart';
 import '/models/open_login_form_semaphore_provider.dart';
 import '/models/connectivity_provider.dart'
     as connectivity_provider; // rename to avoid conflict with Connectivity class
-import '/models/mqtt_providers.dart';
-import '/models/secrets.dart';
-// import '/models/generic_providers.dart';
 import '/pages/login_page.dart';
 import '/pages/home/home_page.dart';
 import '/widgets/brightness_button_widget.dart';
+import '/widgets/pulsating_icon_hooks_widget.dart';
 
 const simplePeriodicTask = 'be.tramckrijte.workmanagerExample.simplePeriodicTask';
 

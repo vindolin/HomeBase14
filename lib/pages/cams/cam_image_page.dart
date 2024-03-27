@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 // import '/widgets/refreshable_image_widget.dart';
-import '/pages/cams/mjpeg_cam_image.dart';
-import '../../models/network_addresses.dart';
 
 class CamImagePage extends StatelessWidget {
   final String camId;
@@ -22,9 +20,10 @@ class CamImagePage extends StatelessWidget {
         //   secrets.camData[camId]!['snapshotUrl']!,
         //   autoRefresh: true,
         // ),
-        child: MjpegCamImage(
-          camSettings[camId]!['mjpegUrlHigh']!,
-        ),
+        // child: MjpegCamImage(
+        //   camSettings[camId]!['mjpegUrlHigh']!,
+        // ),
+        child: const Card(),
       ),
     );
   }

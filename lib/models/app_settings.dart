@@ -24,6 +24,7 @@ enum User {
 @freezed
 class AppSettingsCls with _$AppSettingsCls {
   const factory AppSettingsCls({
+    required bool isValid,
     required String encryptionKey,
     required User user,
     required bool onlyPortrait,
@@ -41,6 +42,7 @@ class AppSettings extends _$AppSettings {
   @override
   AppSettingsCls build() {
     return const AppSettingsCls(
+      isValid: false,
       encryptionKey: '',
       user: User.thomas,
       onlyPortrait: true,
@@ -48,8 +50,11 @@ class AppSettings extends _$AppSettings {
       camRefreshRateWifi: 5,
       camRefreshRateMobile: 20,
       showVideo: true,
-      // showVideo: true,
     );
+  }
+
+  void setIsValid(bool isValid) {
+    state = state.copyWith(isValid: isValid);
   }
 
   void saveUser(User user) async {
@@ -101,16 +106,17 @@ class AppSettings extends _$AppSettings {
     );
 
     log('----');
-    log(encryption.decrypt(
-      encryptionKey,
-      secretEncrypted,
-    ));
-
-    return encryption.testEncryption(
+    final encryptionTest = encryption.testEncryption(
       encryptionKey,
       secretEncrypted,
       secretDecrypted,
     );
+
+    if (encryptionTest) {
+      setIsValid(true);
+    }
+
+    return encryptionTest;
   }
 
   Future<void> persistAppSettings() async {

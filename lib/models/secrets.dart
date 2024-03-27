@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:home_base_14/models/mqtt_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '/utils.dart';
 import '/models/app_settings.dart';
 import '/models/encryption.dart' as encryption;
 
@@ -64,7 +65,6 @@ class Secrets extends _$Secrets {
 
     Map<String, dynamic> decryptedSecrets = jsonDecode(decrypted);
 
-    final mqttProviderNotifier = ref.watch(mqttProvider.notifier);
     // todo use typed template map and populate with decryptedSecrets
 
     dynamic secrets = {
@@ -72,10 +72,11 @@ class Secrets extends _$Secrets {
       'general': decryptedSecrets['general'],
       'network': decryptedSecrets[network],
     };
+    log(secrets);
 
     // now we have everything needed to start the mqtt connection
     // todo pass typed secrets
-    mqttProviderNotifier.connect(secrets);
+    ref.read(mqttProvider.notifier).connect(secrets);
     return secrets;
   }
 
@@ -84,9 +85,9 @@ class Secrets extends _$Secrets {
       key,
       _encryptedSecrets,
     );
-    Map<String, dynamic> decryptedSecrets = jsonDecode(decrypted);
-    // log('decryptedSecrets: $decryptedSecrets');
 
+    Map<String, dynamic> decryptedSecrets = jsonDecode(decrypted);
     state = decryptedSecrets;
+    // log('decryptedSecrets: $decryptedSecrets');
   }
 }

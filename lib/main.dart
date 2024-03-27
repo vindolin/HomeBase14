@@ -21,23 +21,6 @@ import '/widgets/pulsating_icon_hooks_widget.dart';
 
 const simplePeriodicTask = 'be.tramckrijte.workmanagerExample.simplePeriodicTask';
 
-// @pragma('vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
-// void callbackDispatcher() {
-//   Workmanager().executeTask((task, inputData) async {
-//     switch (task) {
-//       case simplePeriodicTask:
-//         try {
-//           print('$simplePeriodicTask was executed');
-//           break;
-//         } catch (e) {
-//           print('Error in $simplePeriodicTask: $e');
-//         }
-//     }
-
-//     return Future.value(true);
-//   });
-// }
-
 void main() async {
   var delegate = await LocalizationDelegate.create(
     fallbackLocale: 'de_DE',
@@ -45,14 +28,6 @@ void main() async {
   );
 
   initializeDateFormatting('de_DE', null);
-
-  // if (Platform.isAndroid) {
-  //   Workmanager().registerPeriodicTask(
-  //     simplePeriodicTask,
-  //     simplePeriodicTask,
-  //     frequency: const Duration(minutes: 1),
-  //   );
-  // }
 
   WidgetsFlutterBinding.ensureInitialized();
   MediaKit.ensureInitialized();

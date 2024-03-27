@@ -507,3 +507,29 @@
 // Timer(const Duration(seconds: 10), () {
 //   ref.read(mqttProvider.notifier).disconnect();
 // });
+
+
+// @pragma('vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
+// void callbackDispatcher() {
+//   Workmanager().executeTask((task, inputData) async {
+//     switch (task) {
+//       case simplePeriodicTask:
+//         try {
+//           print('$simplePeriodicTask was executed');
+//           break;
+//         } catch (e) {
+//           print('Error in $simplePeriodicTask: $e');
+//         }
+//     }
+
+//     return Future.value(true);
+//   });
+// }
+
+// if (Platform.isAndroid) {
+//   Workmanager().registerPeriodicTask(
+//     simplePeriodicTask,
+//     simplePeriodicTask,
+//     frequency: const Duration(minutes: 1),
+//   );
+// }

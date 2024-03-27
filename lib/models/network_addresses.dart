@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import 'secrets.dart';
+import '/models/secrets.dart';
 
 part 'network_addresses.g.dart';
 

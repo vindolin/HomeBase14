@@ -36,7 +36,7 @@ class AppSettingsCls with _$AppSettingsCls {
   factory AppSettingsCls.fromJson(Map<String, dynamic> json) => _$AppSettingsClsFromJson(json);
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 class AppSettings extends _$AppSettings {
   @override
   AppSettingsCls build() {
@@ -99,7 +99,7 @@ class AppSettings extends _$AppSettings {
   }
 
   bool saveEncryptionKey(String encryptionKey) {
-    // log(encryptionKey);
+    log('saving encryptionKey: $encryptionKey');
     state = state.copyWith(
       encryptionKey: encryptionKey,
     );

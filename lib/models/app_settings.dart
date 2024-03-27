@@ -120,9 +120,6 @@ class AppSettings extends _$AppSettings {
 
   Future<void> persistAppSettings() async {
     log('persistSettings...');
-    await Future.delayed(
-      const Duration(milliseconds: 500),
-    );
 
     String plainText = jsonEncode(state);
 

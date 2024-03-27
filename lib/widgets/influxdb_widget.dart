@@ -42,13 +42,13 @@ class InfluxChartWidget extends ConsumerStatefulWidget {
 class _InfluxdbWidgetState extends ConsumerState<InfluxChartWidget> {
   Timer? timer;
 
-  void setTimer(int seconds) {
+  void setTimer(int seconds, String url) {
     timer?.cancel();
     timer = Timer.periodic(
       Duration(seconds: seconds),
       (Timer t) => setState(
         () {
-          result = fetchResult();
+          result = fetchResult(url);
         },
       ),
     );
@@ -56,10 +56,11 @@ class _InfluxdbWidgetState extends ConsumerState<InfluxChartWidget> {
 
   @override
   void initState() {
-    super.initState();
+    final networkAddress = ref.watch(networkAddressesProvider)['influxdb'];
 
-    setTimer(5);
-    result = fetchResult();
+    setTimer(5, networkAddress);
+    result = fetchResult(networkAddress);
+    super.initState();
   }
 
   @override
@@ -70,9 +71,7 @@ class _InfluxdbWidgetState extends ConsumerState<InfluxChartWidget> {
 
   late Future<List<List<TimePoint>>> result;
 
-  Future<List<List<TimePoint>>> fetchResult() async {
-    var url = influxdbAddress;
-
+  Future<List<List<TimePoint>>> fetchResult(String url) async {
     final dio = Dio();
 
     List<List<TimePoint>> resultList = [];

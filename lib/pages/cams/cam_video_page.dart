@@ -11,7 +11,7 @@ class CamVideoPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final camSettings = ref.watch(camSettingsProvider);
+    final networkAddresses = ref.watch(networkAddressesProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -20,7 +20,7 @@ class CamVideoPage extends ConsumerWidget {
       body: RotatedBox(
         quarterTurns: MediaQuery.of(context).orientation == Orientation.portrait ? 1 : 0,
         child: MediaKitVideoWidget(
-          videoUrl: camSettings[camId]!['videoStreamUrl']!,
+          videoUrl: networkAddresses[camId]!['videoStreamUrl']!,
         ),
       ),
     );

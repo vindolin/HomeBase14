@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '/models/network_addresses.dart';
 
-class GrafanaPage extends StatefulWidget {
+class GrafanaPage extends ConsumerStatefulWidget {
   const GrafanaPage({super.key});
 
   @override
-  State<GrafanaPage> createState() => _GrafanaPageState();
+  ConsumerState<GrafanaPage> createState() => _GrafanaPageState();
 }
 
-class _GrafanaPageState extends State<GrafanaPage> {
+class _GrafanaPageState extends ConsumerState<GrafanaPage> {
   late final WebViewController controller;
 
   @override
   void initState() {
     super.initState();
+
+    final networkAddresses = ref.watch(networkAddressesProvider);
 
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
@@ -35,7 +38,7 @@ class _GrafanaPageState extends State<GrafanaPage> {
           },
         ),
       )
-      ..loadRequest(Uri.parse(grafanaAdddress));
+      ..loadRequest(Uri.parse(networkAddresses['grafana']));
   }
 
   @override

@@ -4,16 +4,11 @@ import 'secrets.dart';
 
 part 'network_addresses.g.dart';
 
-const doorVideoWebsocketUrl =
-    'https://$serverAddress:3001/mini.html'; // TODOs add nginx proxy but not used at the moment
-
-const grafanaAdddress =
-    'https://$grafanaAddress/d/$grafanaProjectHash/homebase?orgId=1&refresh=10s&from=now-12h&to=now';
-
-const influxdbAddress = 'https://$influxdbUser:$influxdbPassword@$serverAddress:8085/query?pretty=false';
+// const doorVideoWebsocketUrl =
+//     'https://$serverAddress:3001/mini.html'; // TODOs add nginx proxy but not used at the moment
 
 @riverpod
-class CamSettings extends _$CamSettings {
+class NetworkAddresses extends _$NetworkAddresses {
   @override
   Map<String, dynamic> build() {
     final secrets = ref.watch(secretsProvider);
@@ -31,6 +26,8 @@ class CamSettings extends _$CamSettings {
     final gardenCamSnapshotPort = secrets['general']['gardenCamSnapshotPort'];
 
     return {
+      'grafana': 'https://$grafanaAddress/d/$grafanaProjectHash/homebase?orgId=1&refresh=10s&from=now-12h&to=now',
+      'influxdb': 'https://$influxdbUser:$influxdbPassword@$serverAddress:8085/query?pretty=false',
       'door': {
         'snapshotUrl': 'http://$serverAddress:$snapshotPort/cam_image_door.jpg',
         'mjpegUrlLow':

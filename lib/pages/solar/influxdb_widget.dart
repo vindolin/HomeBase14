@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -8,23 +9,23 @@ import '/models/network_addresses.dart';
 import '/widgets/shader_widget.dart';
 
 /// this widget draws a graph of the last 12 hours of solar and usage data
-class InfluxdbWidget extends StatefulWidget {
+class InfluxdbWidget extends ConsumerStatefulWidget {
   const InfluxdbWidget({super.key});
 
   @override
-  State<InfluxdbWidget> createState() => _InfluxdbWidgetState();
+  ConsumerState<InfluxdbWidget> createState() => _InfluxdbWidgetState();
 }
 
-class _InfluxdbWidgetState extends State<InfluxdbWidget> {
+class _InfluxdbWidgetState extends ConsumerState<InfluxdbWidget> {
   Timer? timer;
 
-  void setTimer(int seconds) {
+  void setTimer(int seconds, String url) {
     timer?.cancel();
     timer = Timer.periodic(
       Duration(seconds: seconds),
       (Timer t) => setState(
         () {
-          result = fetchResult();
+          result = fetchResult(url);
         },
       ),
     );
@@ -32,8 +33,10 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
 
   @override
   void initState() {
-    setTimer(5);
-    result = fetchResult();
+    final networkAddress = ref.watch(networkAddressesProvider)['influxdb'];
+
+    setTimer(5, networkAddress);
+    result = fetchResult(networkAddress);
     super.initState();
   }
 
@@ -45,9 +48,7 @@ class _InfluxdbWidgetState extends State<InfluxdbWidget> {
 
   late Future<List<List<TimePoint>>> result;
 
-  Future<List<List<TimePoint>>> fetchResult() async {
-    var url = influxdbAddress;
-
+  Future<List<List<TimePoint>>> fetchResult(String url) async {
     final dio = Dio();
     const timeSpan = '12h';
     const groupTime = '5m';

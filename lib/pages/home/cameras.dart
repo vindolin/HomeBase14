@@ -49,7 +49,7 @@ class Cameras extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final camSettings = ref.watch(camSettingsProvider);
+    final camSettings = ref.watch(networkAddressesProvider);
     final showVideo = ref.watch(
       appSettingsProvider.select((appSettings) => appSettings.showVideo),
     );

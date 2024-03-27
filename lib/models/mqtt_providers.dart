@@ -89,7 +89,7 @@ class LastMessageTime extends _$LastMessageTime {
   }
 }
 
-// wraps the whole mqtt client and and connection callbacks
+// wraps the whole mqtt client and connection callbacks
 @riverpod
 class Mqtt extends _$Mqtt {
   // TODO find a way to fix all these linter warnings,

@@ -4,34 +4,28 @@ import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:encrypt/encrypt.dart' as encrypt;
 
 import '/utils.dart';
-import 'secrets.dart' as secrets;
+// import 'secrets.dart' as secrets;
+import '/models/encryption.dart' as encryption;
 
 part 'app_settings.g.dart';
 part 'app_settings.freezed.dart';
+
+const settingsEncryptionKey = 'LwZoBvGNmA46wQ0M5ExyFF7pzoHyaCs6//Sptpa6hMk=';
+const secretEncrypted = 'E6uORLgS';
+const secretDecrypted = 'secret';
 
 enum User {
   thomas,
   mona,
 }
 
-final encrypter = encrypt.Encrypter(
-  encrypt.Salsa20(
-    encrypt.Key.fromUtf8(secrets.certEncryptionKey),
-  ),
-);
-
-// final iv = encrypt.IV.fromLength(8);
-final iv = encrypt.IV.fromBase64('4ygMAg7aRyw=');
-
 @freezed
 class AppSettingsCls with _$AppSettingsCls {
   const factory AppSettingsCls({
     required String encryptionKey,
     required User user,
-    required bool valid,
     required bool onlyPortrait,
     required bool showBrightness,
     required int camRefreshRateWifi,
@@ -42,14 +36,13 @@ class AppSettingsCls with _$AppSettingsCls {
   factory AppSettingsCls.fromJson(Map<String, dynamic> json) => _$AppSettingsClsFromJson(json);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class AppSettings extends _$AppSettings {
   @override
   AppSettingsCls build() {
     return const AppSettingsCls(
-      encryptionKey: secrets.certEncryptionKey,
+      encryptionKey: '',
       user: User.thomas,
-      valid: false,
       onlyPortrait: true,
       showBrightness: false,
       camRefreshRateWifi: 5,
@@ -57,12 +50,6 @@ class AppSettings extends _$AppSettings {
       showVideo: true,
       // showVideo: true,
     );
-  }
-
-  // TODOs add certificate upload (currently hardcoded in mqtt_providers.dart)
-
-  void setValid(bool valid) {
-    state = state.copyWith(valid: valid);
   }
 
   void saveUser(User user) async {
@@ -107,9 +94,22 @@ class AppSettings extends _$AppSettings {
     await persistAppSettings();
   }
 
-  void saveEncryptionKey(String encryptionKey) {
+  bool saveEncryptionKey(String encryptionKey) {
+    log(encryptionKey);
     state = state.copyWith(
       encryptionKey: encryptionKey,
+    );
+
+    log('----');
+    log(encryption.decrypt(
+      encryptionKey,
+      secretEncrypted,
+    ));
+
+    return encryption.testEncryption(
+      encryptionKey,
+      secretEncrypted,
+      secretDecrypted,
     );
   }
 
@@ -122,11 +122,11 @@ class AppSettings extends _$AppSettings {
     String plainText = jsonEncode(state);
 
     // encrypt the connection data
-    final encrypted = encrypter.encrypt(plainText, iv: iv);
+    final encrypted = encryption.encrypt(settingsEncryptionKey, plainText);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    await prefs.setString('settings', encrypted.base64);
+    await prefs.setString('settings', encrypted);
   }
 
   Future<void> loadAppSettings() async {
@@ -135,18 +135,24 @@ class AppSettings extends _$AppSettings {
 
     String? userPref = prefs.getString('settings');
     String appSettings;
+    log('userprefs: $userPref');
     if (userPref != null) {
       // decrypt the connection data
-      appSettings = encrypter.decrypt(
-        encrypt.Encrypted.fromBase64(userPref),
-        iv: iv,
+      log('userprefs: $userPref');
+
+      appSettings = encryption.decrypt(
+        settingsEncryptionKey,
+        userPref,
       );
 
-      try {
-        state = AppSettingsCls.fromJson(jsonDecode(appSettings));
-      } catch (e) {
-        log('Error: $e');
-      }
-    } else {}
+      log('appsettings: $appSettings');
+
+      final json = jsonDecode(appSettings);
+      log('json: $json');
+      state = AppSettingsCls.fromJson(json);
+      log('state: $state');
+    } else {
+      log('no settings found');
+    }
   }
 }

@@ -32,6 +32,7 @@ class LoginFormPage extends ConsumerWidget {
     void submitForm() async {
       // I'm not sure why, but the snackbar doesn't hide on the first press without this and the hideCurrentSnackBar()'s below
       rootScaffoldMessengerKey.currentState?.hideCurrentSnackBar(reason: SnackBarClosedReason.dismiss);
+
       if (_formKey.currentState!.validate()) {
         rootScaffoldMessengerKey.currentState?.showSnackBar(
           const SnackBar(
@@ -39,14 +40,14 @@ class LoginFormPage extends ConsumerWidget {
             duration: Duration(seconds: 3),
           ),
         );
+
         _formKey.currentState?.save();
         log('form submit');
-        appSettings.saveEncryptionKey(formData['encryptionKey']);
 
-        final MqttConnectionState mqttConnectionState = await mqttProviderNotifier.connect();
+        final saveResult = appSettings.saveEncryptionKey(formData['encryptionKey']);
+        log(saveResult.toString());
 
-        // if the connection was successful, persist the connection data
-        if (mqttConnectionState == MqttConnectionState.connected) {
+        if (saveResult) {
           // affects the overlay widget in main.dart
           // if this is false, the home page will be shown instead of the connection form
           ref.watch(openLoginFormSemaphoreProvider.notifier).set(false);
@@ -64,6 +65,7 @@ class LoginFormPage extends ConsumerWidget {
                 duration: Duration(seconds: 3),
               ),
             );
+          await mqttProviderNotifier.connect();
         } else {
           rootScaffoldMessengerKey.currentState
             ?..hideCurrentSnackBar(reason: SnackBarClosedReason.dismiss)
@@ -74,6 +76,38 @@ class LoginFormPage extends ConsumerWidget {
               ),
             );
         }
+
+        // final MqttConnectionState mqttConnectionState = await mqttProviderNotifier.connect();
+
+        // if the connection was successful, persist the connection data
+        // if (mqttConnectionState == MqttConnectionState.connected) {
+        //   // affects the overlay widget in main.dart
+        //   // if this is false, the home page will be shown instead of the connection form
+        //   ref.watch(openLoginFormSemaphoreProvider.notifier).set(false);
+
+        //   await appSettings.persistAppSettings();
+
+        //   log('persisted connection data');
+
+        //   rootScaffoldMessengerKey.currentState
+        //     ?..hideCurrentSnackBar(
+        //         reason: SnackBarClosedReason.dismiss) // TODO_ check why this is needed to really hide the snackbar
+        //     ..showSnackBar(
+        //       const SnackBar(
+        //         content: Text('connected successfully'),
+        //         duration: Duration(seconds: 3),
+        //       ),
+        //     );
+        // } else {
+        //   rootScaffoldMessengerKey.currentState
+        //     ?..hideCurrentSnackBar(reason: SnackBarClosedReason.dismiss)
+        //     ..showSnackBar(
+        //       const SnackBar(
+        //         content: Text('connection failed'),
+        //         duration: Duration(seconds: 3),
+        //       ),
+        //     );
+        // }
       }
     }
 

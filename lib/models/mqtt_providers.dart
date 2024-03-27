@@ -12,10 +12,11 @@ import 'package:mqtt5_client/mqtt5_server_client.dart';
 import 'package:nanoid/nanoid.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '/models/app_settings.dart';
 import '/models/secrets.dart';
 import '/models/encrypted_key.dart';
+import '/models/encryption.dart' as encryption;
 import '/utils.dart';
-import 'app_settings.dart';
 import 'generic_providers.dart';
 import 'mqtt_connection_state_provider.dart';
 import 'mqtt_devices.dart';
@@ -140,26 +141,28 @@ class Mqtt extends _$Mqtt {
   }
 
   FutureOr<mqtt.MqttConnectionState> connect() async {
-    log('connecting');
+    final appSettings = ref.read(appSettingsProvider);
+    log('connecting...');
 
     final secrets = ref.watch(secretsProvider);
+    log('secrets: ${secrets['network']["mqttAddress"]}');
 
     // bool useCerts = true;
     bool useCerts = secrets['network'] == networkTypeMobile;
-    print('use certs $useCerts');
+    log('use certs $useCerts');
 
     if (useCerts) {
       client = MqttServerClient.withPort(
-        secrets['mqttAddress'],
+        secrets['network']['mqttAddress'],
         clientIdentifier,
-        secrets['mqttPort'],
+        secrets['network']['mqttPort'],
       );
 
       final cert = await rootBundle.load('assets/certs/ca.crt');
       final clientCrt = await rootBundle.load('assets/certs/homebase14.crt');
       // final clientKey = await rootBundle.load('assets/certs/homebase14.key');
 
-      final clientKey = encrypter.decrypt64(hbk, iv: iv);
+      final clientKey = encryption.decrypt(appSettings.encryptionKey, hbk);
       SecurityContext context;
 
       try {
@@ -182,9 +185,9 @@ class Mqtt extends _$Mqtt {
       client.secure = true;
     } else {
       client = MqttServerClient.withPort(
-        secrets['mqttAddress'],
+        secrets['network']['mqttAddress'],
         clientIdentifier,
-        secrets['mqttPort'],
+        secrets['network']['mqttPort'],
       );
     }
     // client.logging(on: true);
@@ -199,16 +202,13 @@ class Mqtt extends _$Mqtt {
     // );
 
     mqtt.MqttConnectionStatus? mqttConnectionStatus =
-        await client.connect(secrets['mqttUsername'], secrets['mqttPassword']).catchError(
+        await client.connect(secrets['network']['mqttUsername'], secrets['network']['mqttPassword']).catchError(
       // await client.connect().catchError(
       (error) {
-        ref.read(appSettingsProvider.notifier).setValid(false);
         ref.read(mqttConnectionStateProvider.notifier).state = mqtt.MqttConnectionState.faulted;
         return null;
       },
     );
-
-    ref.read(appSettingsProvider.notifier).setValid(mqttConnectionStatus?.state == mqtt.MqttConnectionState.connected);
 
     return mqttConnectionStatus?.state ?? mqtt.MqttConnectionState.faulted;
     // .connected is set in the onConnected handler

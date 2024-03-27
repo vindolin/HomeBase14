@@ -7,10 +7,10 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 // todo split into own libraries
 
-// const bool debug = true;
-const bool debug = false;
-// const bool debugTrace = true;
-const bool debugTrace = false;
+const bool debug = true;
+// const bool debug = false;
+const bool debugTrace = true;
+// const bool debugTrace = false;
 
 // logs a message with the file and line number
 void log(dynamic message) {

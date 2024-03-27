@@ -20,6 +20,7 @@ import '/models/open_login_form_semaphore_provider.dart';
 import '/models/connectivity_provider.dart'
     as connectivity_provider; // rename to avoid conflict with Connectivity class
 import '/models/mqtt_providers.dart';
+import '/models/secrets.dart';
 // import '/models/generic_providers.dart';
 import '/pages/login_page.dart';
 import '/pages/home/home_page.dart';
@@ -90,25 +91,31 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
   void initState() {
     super.initState();
 
-    // listen to changes in connectivity state
-    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-      ref.read(connectivity_provider.connectivityProvider.notifier).setResult(result);
-    });
+    final connectivityProviderNotifier = connectivity_provider.connectivityProvider.notifier;
 
     // load connection data from shared preferences
     ref.read(appSettingsProvider.notifier).loadAppSettings().then(
       (_) async {
-        ref.watch(mqttProvider.notifier).connect();
-      },
-    );
+        // ref.watch(mqttProvider.notifier).connect();
 
-    Future(
-      () async {
-        // get initial connectivity state
-        ref
-            .read(connectivity_provider.connectivityProvider.notifier)
-            .setResult(await Connectivity().checkConnectivity());
-        // ref.read(appLogProvider.notifier).log('log init');
+        await Future(
+          () async {
+            // get initial connectivity state
+            final result = await Connectivity().checkConnectivity();
+            log('connectivityResult: $result');
+            ref.read(connectivityProviderNotifier).setResult(
+                  result,
+                );
+            // ref.read(appLogProvider.notifier).log('log init');
+          },
+        ).then((value) {
+          log('init done');
+
+          // // listen to changes in connectivity state in the future
+          // Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+          //   ref.read(connectivityProviderNotifier).setResult(result);
+          // });
+        });
       },
     );
 
@@ -124,20 +131,20 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
 
     // if we don't receive a message for 10 seconds, we try to reconnect
     // this can happen if the app was in the background for a long time
-    Timer.periodic(const Duration(seconds: 1), (timer) async {
-      // connection data form is open, don't reconnect
-      // if (ref.watch(openLoginFormSemaphoreProvider)) {
-      //   return;
-      // }
-      // final lastMessageTime = ref.watch(lastMessageTimeProvider);
-      // if (DateTime.now().difference(lastMessageTime).inSeconds > 5) {
-      //   if (ref.watch(mqttConnectionStateProvider) != MqttConnectionState.connecting) {
-      //     ref.read(mqttProvider.notifier).disconnect();
-      //     ref.read(mqttProvider.notifier).connect();
-      //   }
-      //   ref.read(lastMessageTimeProvider.notifier).update();
-      // }
-    });
+    // Timer.periodic(const Duration(seconds: 1), (timer) async {
+    // connection data form is open, don't reconnect
+    // if (ref.watch(openLoginFormSemaphoreProvider)) {
+    //   return;
+    // }
+    // final lastMessageTime = ref.watch(lastMessageTimeProvider);
+    // if (DateTime.now().difference(lastMessageTime).inSeconds > 5) {
+    //   if (ref.watch(mqttConnectionStateProvider) != MqttConnectionState.connecting) {
+    //     ref.read(mqttProvider.notifier).disconnect();
+    //     ref.read(mqttProvider.notifier).connect();
+    //   }
+    //   ref.read(lastMessageTimeProvider.notifier).update();
+    // }
+    // });
 
     // used to simulate a disconnect for testing
     // Timer(const Duration(seconds: 10), () {
@@ -149,6 +156,8 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
   Widget build(BuildContext context) {
     final brightness = ref.watch(brightnessSettingProvider);
     final appSettings = ref.watch(appSettingsProvider);
+
+    log(appSettings.encryptionKey);
     // set orientation according to app settings
     if (appSettings.onlyPortrait) {
       SystemChrome.setPreferredOrientations([
@@ -187,7 +196,7 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
                           ref.watch(openLoginFormSemaphoreProvider.notifier).set(true);
                         },
                         child: const PulsatingIcon(
-                          iconData: Icons.wifi_off,
+                          iconData: Icons.lock,
                           color: Colors.red,
                           size: 100,
                         ))

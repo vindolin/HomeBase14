@@ -6,7 +6,7 @@ part 'open_login_form_semaphore_provider.g.dart';
 class OpenLoginFormSemaphore extends _$OpenLoginFormSemaphore {
   @override
   bool build() {
-    return true;
+    return false;
   }
 
   void set(bool value) {

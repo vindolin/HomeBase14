@@ -4,7 +4,7 @@ part 'network_type_provider.g.dart';
 const networkTypeLocal = 'local';
 const networkTypeMobile = 'mobile';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class NetworkType extends _$NetworkType {
   @override
   String build() {

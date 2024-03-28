@@ -46,7 +46,7 @@ const secretsTemplate = {
   },
 };
 
-@riverpod
+@Riverpod(keepAlive: true)
 class Secrets extends _$Secrets {
   // output of encrypt_secrets.dart
   final _encryptedSecrets =

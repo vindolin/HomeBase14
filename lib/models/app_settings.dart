@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '/utils.dart';
 import '/models/encryption.dart' as encryption;
+import '/models/open_login_form_semaphore_provider.dart';
 
 part 'app_settings.g.dart';
 part 'app_settings.freezed.dart';
@@ -36,7 +37,7 @@ class AppSettingsCls with _$AppSettingsCls {
   factory AppSettingsCls.fromJson(Map<String, dynamic> json) => _$AppSettingsClsFromJson(json);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class AppSettings extends _$AppSettings {
   @override
   AppSettingsCls build() {
@@ -48,7 +49,7 @@ class AppSettings extends _$AppSettings {
       showBrightness: false,
       camRefreshRateWifi: 5,
       camRefreshRateMobile: 20,
-      showVideo: true,
+      showVideo: false,
     );
   }
 
@@ -151,11 +152,11 @@ class AppSettings extends _$AppSettings {
       try {
         final json = jsonDecode(appSettings);
         state = AppSettingsCls.fromJson(json);
+        ref.watch(openLoginFormSemaphoreProvider.notifier).set(false);
       } catch (e) {
         log('error loading settings: $e');
       }
     } else {
-      // ref.watch(openLoginFormSemaphoreProvider.notifier).set(false);s
       log('no settings found');
     }
   }

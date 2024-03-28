@@ -11,7 +11,7 @@ import 'package:flutter_portal/flutter_portal.dart';
 
 import '/utils.dart';
 import '/models/app_settings.dart';
-import '/models/open_login_form_semaphore_provider.dart';
+import '/models/mqtt_connection_state_provider.dart';
 import '/models/connectivity_provider.dart'
     as connectivity_provider; // rename to avoid conflict with Connectivity class
 import 'pages/encryption_key_form_page.dart';
@@ -97,43 +97,38 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
       ]);
     }
 
-    log('loginOpen: ${ref.watch(openLoginFormSemaphoreProvider)}');
-    log('isValid: ${ref.watch(appSettingsProvider).isValid}');
+    final appSettingsValid = ref.watch(appSettingsProvider.select((value) => value.isValid));
+
+    // log('loginOpen: $appSettingsValid');
+    // log('isValid: ${ref.watch(appSettingsProvider).isValid}');
     return Portal(
       child: MaterialApp(
         scaffoldMessengerKey: rootScaffoldMessengerKey,
         title: 'HomeBase14',
         debugShowCheckedModeBanner: false,
         home: PortalTarget(
-          visible: false,
-          // visible: ref.watch(openLoginFormSemaphoreProvider) == false &&
-          //     ref.watch(mqttConnectionStateProvider) != MqttConnectionState.connected,
-
-          // // show the form only if not connected and when the connection page is not open
-          // !ref.watch(openLoginFormSemaphoreProvider) && !ref.watch(appSettingsProvider).isValid,
+          visible: ref.watch(mqttConnectionStateProvider.select((value) => value != MqttConnectionState.connected)) &&
+              appSettingsValid,
           portalFollower: Container(
             color: Colors.black45,
             child: Center(
               child: SizedBox(
                   width: 100,
                   height: 100,
-                  child: switch (ref.watch(appSettingsProvider).isValid) {
+                  child: switch (appSettingsValid) {
                     false => const CircularProgressIndicator(
                         strokeWidth: 10,
                       ),
                     _ => GestureDetector(
-                        onTap: () {
-                          ref.watch(openLoginFormSemaphoreProvider.notifier).set(true);
-                        },
-                        child: const PulsatingIcon(
-                          iconData: Icons.lock,
-                          color: Colors.red,
-                          size: 100,
-                        ))
+                          child: const PulsatingIcon(
+                        iconData: Icons.lock,
+                        color: Colors.red,
+                        size: 100,
+                      ))
                   }),
             ),
           ),
-          child: ref.watch(openLoginFormSemaphoreProvider) ? EncryptionKeyFormPage() : const HomePage(),
+          child: !appSettingsValid ? EncryptionKeyFormPage() : const HomePage(),
         ),
         theme: ThemeData(
           useMaterial3: true,

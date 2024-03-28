@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:focus_detector/focus_detector.dart';
 
-import '/utils.dart' as d;
-import '/models/app_settings.dart';
+// import '/utils.dart' as d;
+import '/models/app_settings_provider.dart';
 import '/models/connectivity_provider.dart';
 import 'image_fade_refresh.dart';
 
@@ -38,7 +38,7 @@ class _RefreshableImageState extends ConsumerState<RefreshableImage> {
   int? _refreshRate;
 
   void startTimer() {
-    d.log('RefreshableImage: startTimer()');
+    // d.log('RefreshableImage: startTimer()');
     _timer?.cancel();
 
     _timer = Timer(

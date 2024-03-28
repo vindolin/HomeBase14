@@ -12,7 +12,7 @@ import 'package:mqtt5_client/mqtt5_server_client.dart';
 import 'package:nanoid/nanoid.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '/models/app_settings.dart';
+import '/models/app_settings_provider.dart';
 import '/models/network_type_provider.dart';
 import '/models/encrypted_key.dart';
 import '/models/encryption.dart' as encryption;

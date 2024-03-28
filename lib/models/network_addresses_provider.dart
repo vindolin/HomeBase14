@@ -1,13 +1,13 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '/models/secrets.dart';
+import '/models/secrets_provider.dart';
 
-part 'network_addresses.g.dart';
+part 'network_addresses_provider.g.dart';
 
 // const doorVideoWebsocketUrl =
 //     'https://$serverAddress:3001/mini.html'; // TODOs add nginx proxy but not used at the moment
 
-@riverpod
+@Riverpod(keepAlive: true)
 class NetworkAddresses extends _$NetworkAddresses {
   @override
   Map<String, dynamic> build() {

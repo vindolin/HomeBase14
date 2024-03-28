@@ -10,10 +10,13 @@ import 'package:media_kit/media_kit.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 
 import '/utils.dart';
-import '/models/app_settings.dart';
+import '/models/app_settings_provider.dart';
 import '/models/mqtt_connection_state_provider.dart';
+import '/models/mqtt_providers.dart';
 import '/models/connectivity_provider.dart'
     as connectivity_provider; // rename to avoid conflict with Connectivity class
+// import '/models/secrets_provider.dart';
+import '/models/secrets_provider.dart';
 import 'pages/encryption_key_form_page.dart';
 import '/pages/home/home_page.dart';
 import '/widgets/brightness_button_widget.dart';
@@ -81,8 +84,17 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = ref.watch(brightnessSettingProvider);
     final appSettings = ref.watch(appSettingsProvider);
+    final secrets = ref.watch(secretsProvider);
+
+    if (secrets.entries.isNotEmpty) {
+      if (ref.read(mqttConnectionStateProvider) != MqttConnectionState.connected) {
+        Future(() => ref.read(mqttProvider.notifier).connect(secrets));
+      }
+    }
+    final brightness = ref.watch(brightnessSettingProvider);
+    // final secrets = ref.watch(secretsProvider);
+    // log(secrets);
 
     // set orientation according to app settings
     if (appSettings.onlyPortrait) {

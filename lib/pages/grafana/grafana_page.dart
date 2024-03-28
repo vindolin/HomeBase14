@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import '/models/network_addresses.dart';
+import '/models/network_addresses_provider.dart';
 
 class GrafanaPage extends ConsumerStatefulWidget {
   const GrafanaPage({super.key});

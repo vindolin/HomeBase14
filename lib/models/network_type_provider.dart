@@ -8,6 +8,7 @@ const networkTypeMobile = 'mobile';
 class NetworkType extends _$NetworkType {
   @override
   String build() {
-    return networkTypeMobile;
+    return networkTypeLocal;
+    // return networkTypeMobile;
   }
 }

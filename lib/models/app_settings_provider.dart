@@ -7,9 +7,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '/utils.dart';
 import '/models/encryption.dart' as encryption;
+import '/models/encryption_key_provider.dart';
 
-part 'app_settings.g.dart';
-part 'app_settings.freezed.dart';
+part 'app_settings_provider.g.dart';
+part 'app_settings_provider.freezed.dart';
 
 const settingsEncryptionKey = 'LwZoBvGNmA46wQ0M5ExyFF7pzoHyaCs6//Sptpa6hMk=';
 const secretEncrypted = 'E6uORLgS';
@@ -112,6 +113,7 @@ class AppSettings extends _$AppSettings {
     );
 
     if (encryptionTest) {
+      ref.read(encryptionKeyProvider.notifier).setEncryptionKey(encryptionKey);
       setIsValid(true);
     }
 
@@ -145,12 +147,12 @@ class AppSettings extends _$AppSettings {
         settingsEncryptionKey,
         userPref,
       );
-
       // log('appsettings: $appSettings');
-
       try {
         final json = jsonDecode(appSettings);
         state = AppSettingsCls.fromJson(json);
+        ref.read(encryptionKeyProvider.notifier).setEncryptionKey(state.encryptionKey);
+        log('settings loaded: $state');
       } catch (e) {
         log('error loading settings: $e');
       }

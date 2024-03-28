@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
-import '/models/app_settings.dart';
+import '/models/app_settings_provider.dart';
 
 class SettingsForm extends ConsumerWidget {
   const SettingsForm({super.key});

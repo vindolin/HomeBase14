@@ -6,7 +6,7 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 import '/utils.dart';
 import '/models/mqtt_devices.dart';
-import '/models/app_settings.dart';
+import '/models/app_settings_provider.dart';
 import 'widgets/lights_off_button_widget.dart';
 import '/widgets/slider_widget.dart';
 import '/widgets/connection_bar_widget.dart';

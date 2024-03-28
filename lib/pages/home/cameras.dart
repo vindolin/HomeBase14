@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '/models/app_settings.dart';
+import '/models/app_settings_provider.dart';
 import '/models/mqtt_providers.dart'; //need this for doorAlarmProvider (not needed anymore)
-import '/models/network_addresses.dart';
+import '/models/network_addresses_provider.dart';
 import '/widgets/media_kit_video_widget.dart';
 import '/widgets/refreshable_image_widget.dart';
 import '/pages/cams/cam_image_page.dart';

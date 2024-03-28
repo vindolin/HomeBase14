@@ -9,7 +9,7 @@ import 'package:simple_shadow/simple_shadow.dart';
 import '/utils.dart';
 import '/ui_helpers.dart';
 import '/styles/styles.dart';
-import '/models/app_settings.dart';
+import '/models/app_settings_provider.dart';
 import '/models/mqtt_providers.dart';
 import '/models/app_version_provider.dart';
 import '/widgets/stream_blinker_widget.dart';

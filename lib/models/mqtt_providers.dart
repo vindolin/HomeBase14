@@ -187,6 +187,7 @@ class Mqtt extends _$Mqtt {
         clientIdentifier,
         secrets['network']['mqttPort'],
       );
+      ref.read(togglerProvider('ssl').notifier).set(false);
     }
     // client.logging(on: true);
     client.autoReconnect = true;
@@ -234,7 +235,7 @@ class Mqtt extends _$Mqtt {
   }
 
   void disconnect() {
-    log('disconnected');
+    log('disconnect');
     client.disconnect();
   }
 
@@ -246,7 +247,7 @@ class Mqtt extends _$Mqtt {
     }
 
     client.pongCallback = () {
-      // log('ping response client callback invoked');
+      log('ping response client callback invoked');
     };
 
     client.updates.listen((List<mqtt.MqttReceivedMessage<mqtt.MqttMessage>> messages) {

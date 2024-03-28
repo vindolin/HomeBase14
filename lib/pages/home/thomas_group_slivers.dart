@@ -4,7 +4,6 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:format/format.dart';
 import 'package:audioplayers/audioplayers.dart';
 
-// import '../../utils.dart';
 import '/styles/styles.dart';
 import '/pages/thomas/thomas_page.dart';
 import '/pages/grafana/grafana_page.dart';
@@ -12,9 +11,7 @@ import '/pages/thomas/dropdown_select_widget.dart';
 import '/pages/soundboard/soundboard_page.dart';
 import '/pages/irrigator/irrigator_page.dart';
 import '/pages/incubator/incubator_page.dart';
-// import '/pages/placeholder_page.dart';
 import '/models/mqtt_providers.dart';
-// import '/models/generic_providers.dart';
 import '/models/mqtt_devices.dart';
 
 String lastSprayDuration(String timestamp) {

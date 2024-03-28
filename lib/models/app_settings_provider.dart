@@ -105,7 +105,6 @@ class AppSettings extends _$AppSettings {
       encryptionKey: encryptionKey,
     );
 
-    log('----');
     final encryptionTest = encryption.testEncryption(
       encryptionKey,
       secretEncrypted,
@@ -139,6 +138,7 @@ class AppSettings extends _$AppSettings {
 
     String? userPref = prefs.getString('settings');
     String appSettings;
+
     if (userPref != null) {
       // log('userprefs: $userPref');
 
@@ -152,7 +152,7 @@ class AppSettings extends _$AppSettings {
         final json = jsonDecode(appSettings);
         state = AppSettingsCls.fromJson(json);
         ref.read(encryptionKeyProvider.notifier).setEncryptionKey(state.encryptionKey);
-        log('settings loaded: $state');
+        // log('settings loaded: $state');
       } catch (e) {
         log('error loading settings: $e');
       }

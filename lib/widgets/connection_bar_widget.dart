@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:home_base_14/models/secrets_provider.dart';
 
 import '/models/app_settings_provider.dart';
 import '/models/mqtt_providers.dart';
@@ -28,11 +30,16 @@ class ConnectionBar extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               if (mqttConnectionState == MqttConnectionState.connected) ...[
-                const Padding(
-                  padding: EdgeInsets.all(4.0),
-                  child: Icon(
-                    color: Colors.green,
-                    Icons.wifi,
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      ref.read(networkTypeProvider.notifier).toggleNetworkType();
+                    },
+                    child: const Icon(
+                      color: Colors.green,
+                      Icons.wifi,
+                    ),
                   ),
                 )
               ] else if (mqttConnectionState == MqttConnectionState.disconnected) ...[

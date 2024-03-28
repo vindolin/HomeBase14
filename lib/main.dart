@@ -15,7 +15,7 @@ import '/models/mqtt_connection_state_provider.dart';
 import '/models/mqtt_providers.dart';
 import '/models/connectivity_provider.dart'
     as connectivity_provider; // rename to avoid conflict with Connectivity class
-// import '/models/secrets_provider.dart';
+import '/models/network_type_provider.dart';
 import '/models/secrets_provider.dart';
 import 'pages/encryption_key_form_page.dart';
 import '/pages/home/home_page.dart';
@@ -58,6 +58,7 @@ class HomeBase14App extends ConsumerStatefulWidget {
 }
 
 class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
+  String lastNetworkType = networkTypeLocal;
   @override
   void initState() {
     super.initState();
@@ -86,16 +87,20 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
   Widget build(BuildContext context) {
     final appSettings = ref.watch(appSettingsProvider);
     final secrets = ref.watch(secretsProvider);
+    final networkType = ref.watch(networkTypeProvider);
 
-    if (secrets.entries.isNotEmpty) {
-      if (ref.read(mqttConnectionStateProvider) != MqttConnectionState.connected) {
-        Future(() => ref.read(mqttProvider.notifier).connect(secrets));
-      }
+    if (networkType != lastNetworkType) {
+      log('networkType changed: $networkType');
+      lastNetworkType = networkType;
+      Future(() => ref.read(mqttProvider.notifier).disconnect());
     }
-    final brightness = ref.watch(brightnessSettingProvider);
-    // final secrets = ref.watch(secretsProvider);
-    // log(secrets);
 
+    // connect to mqtt broker if secrets are available and not already connected
+    if (secrets.entries.isNotEmpty && ref.read(mqttConnectionStateProvider) != MqttConnectionState.connected) {
+      Future(() => ref.read(mqttProvider.notifier).connect(secrets));
+    }
+
+    final brightness = ref.watch(brightnessSettingProvider);
     // set orientation according to app settings
     if (appSettings.onlyPortrait) {
       SystemChrome.setPreferredOrientations([
@@ -111,8 +116,6 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
 
     final appSettingsValid = ref.watch(appSettingsProvider.select((value) => value.isValid));
 
-    // log('loginOpen: $appSettingsValid');
-    // log('isValid: ${ref.watch(appSettingsProvider).isValid}');
     return Portal(
       child: MaterialApp(
         scaffoldMessengerKey: rootScaffoldMessengerKey,

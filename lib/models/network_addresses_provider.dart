@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '/utils.dart';
+// import '/utils.dart';
 import '/models/secrets_provider.dart';
 
 part 'network_addresses_provider.g.dart';
@@ -59,7 +59,7 @@ class NetworkAddresses extends _$NetworkAddresses {
       },
     };
 
-    log(networkAddresses);
+    // log(networkAddresses);
     return networkAddresses;
   }
 }

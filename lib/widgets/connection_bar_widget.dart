@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:home_base_14/models/secrets_provider.dart';
 
+import '/models/secrets_provider.dart';
 import '/models/app_settings_provider.dart';
 import '/models/mqtt_providers.dart';
 import '/models/mqtt_connection_state_provider.dart';
@@ -17,7 +16,6 @@ class ConnectionBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final mqttConnectionState = ref.watch(mqttConnectionStateProvider);
     ref.watch(mqttProvider.notifier);
-    // ref.watch(secretsProvider);
     final appSettings = ref.watch(appSettingsProvider);
 
     return Padding(

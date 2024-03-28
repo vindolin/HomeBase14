@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import '/utils.dart';
 import '/models/app_settings_provider.dart';
 import '/models/mqtt_providers.dart'; //need this for doorAlarmProvider (not needed anymore)
 import '/models/network_addresses_provider.dart';
@@ -50,6 +51,7 @@ class Cameras extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final camSettings = ref.watch(networkAddressesProvider);
+    // log(camSettings['door']['videoStreamUrlLow']);
     final showVideo = ref.watch(
       appSettingsProvider.select((appSettings) => appSettings.showVideo),
     );

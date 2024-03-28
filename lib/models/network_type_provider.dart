@@ -12,8 +12,8 @@ const networkTypes = [networkTypeLocal, networkTypeMobile];
 class NetworkType extends _$NetworkType {
   @override
   String build() {
-    return networkTypeLocal;
-    // return networkTypeMobile;
+    // return networkTypeLocal;
+    return networkTypeMobile;
   }
 
   void toggleNetworkType() {

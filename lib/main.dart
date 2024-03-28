@@ -15,7 +15,6 @@ import '/models/mqtt_connection_state_provider.dart';
 import '/models/mqtt_providers.dart';
 import '/models/connectivity_provider.dart'
     as connectivity_provider; // rename to avoid conflict with Connectivity class
-import '/models/network_type_provider.dart';
 import '/models/secrets_provider.dart';
 import 'pages/encryption_key_form_page.dart';
 import '/pages/home/home_page.dart';

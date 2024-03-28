@@ -20,7 +20,7 @@ class CamVideoPage extends ConsumerWidget {
       body: RotatedBox(
         quarterTurns: MediaQuery.of(context).orientation == Orientation.portrait ? 1 : 0,
         child: MediaKitVideoWidget(
-          videoUrl: networkAddresses[camId]!['videoStreamUrl']!,
+          videoUrl: networkAddresses[camId]!['videoStreamUrlHigh']!,
         ),
       ),
     );

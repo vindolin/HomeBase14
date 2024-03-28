@@ -68,7 +68,7 @@ class Cameras extends ConsumerWidget {
                 if (showVideo) {
                   return ClipRRect(
                     borderRadius: BorderRadius.circular(5), // adjust the value as needed
-                    child: MediaKitVideoWidget(videoUrl: camSettings[camId]!['videoStreamUrl']!, muted: true),
+                    child: MediaKitVideoWidget(videoUrl: camSettings[camId]!['videoStreamUrlLow']!, muted: true),
                   );
                 } else {
                   return _camContainerMobile(

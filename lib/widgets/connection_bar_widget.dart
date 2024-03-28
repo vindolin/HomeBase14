@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// import '/models/secrets.dart';
 import '/models/app_settings.dart';
 import '/models/mqtt_providers.dart';
 import '/models/mqtt_connection_state_provider.dart';
 import '/widgets/message_blinker_widget.dart';
 import '/widgets/brightness_button_widget.dart';
-// import '/models/secrets.dart';
 
 class ConnectionBar extends ConsumerWidget {
   final List<Widget>? children;

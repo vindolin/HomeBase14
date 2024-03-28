@@ -1,4 +1,5 @@
-import 'dart:io' show SecurityContext;
+import 'dart:async';
+import 'dart:io' show SecurityContext, Socket;
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
@@ -9,6 +10,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 
+import '/configuration.dart' as config;
 import '/utils.dart';
 import '/models/app_settings_provider.dart';
 import '/models/mqtt_connection_state_provider.dart';
@@ -22,6 +24,16 @@ import '/widgets/brightness_button_widget.dart';
 import '/widgets/pulsating_icon_hooks_widget.dart';
 
 const simplePeriodicTask = 'be.tramckrijte.workmanagerExample.simplePeriodicTask';
+
+/// check if we are running on a local or mobile network
+void testLocalNetwork(WidgetRef ref) async {
+  await Socket.connect('192.168.178.113', 80, timeout: const Duration(seconds: 10)).then((socket) {
+    socket.destroy();
+    ref.read(networkTypeProvider.notifier).setNetworkType(networkTypeLocal);
+  }).catchError((error) {
+    ref.read(networkTypeProvider.notifier).setNetworkType(networkTypeMobile);
+  });
+}
 
 void main() async {
   var delegate = await LocalizationDelegate.create(
@@ -57,14 +69,18 @@ class HomeBase14App extends ConsumerStatefulWidget {
 }
 
 class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
-  String lastNetworkType = networkTypeLocal;
+  Timer? _timer;
+  String lastNetworkType = config.defaultNetworkType;
   @override
   void initState() {
+    testLocalNetwork(ref);
+
     super.initState();
+    _timer = Timer.periodic(const Duration(seconds: config.testNetworkIntervalSec), (Timer t) => testLocalNetwork(ref));
     loadAppSettings(ref);
   }
 
-  void loadAppSettings(ref) async {
+  void loadAppSettings(WidgetRef ref) async {
     final connectivityProviderNotifier = connectivity_provider.connectivityProvider.notifier;
 
     await ref.read(appSettingsProvider.notifier).loadAppSettings();
@@ -153,5 +169,11 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 }

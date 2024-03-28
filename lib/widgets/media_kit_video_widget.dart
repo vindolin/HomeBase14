@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 
+import '/configuration.dart' as config;
 import '/utils.dart';
 import '/pages/cams/fullscreen_video_page.dart';
 import '/widgets/shader_widget.dart';
@@ -28,24 +29,32 @@ class MediaKitVideoWidget extends StatefulWidget {
   final String videoUrl;
   final bool muted;
 
-  const MediaKitVideoWidget({super.key, required this.videoUrl, this.muted = false});
+  const MediaKitVideoWidget({
+    super.key,
+    required this.videoUrl,
+    this.muted = false,
+  });
   @override
   MediaKitVideoWidgetState createState() => MediaKitVideoWidgetState();
 }
 
 class MediaKitVideoWidgetState extends State<MediaKitVideoWidget> {
-  late final player = Player();
-  late final controller = VideoController(player);
+  late final _player = Player(
+    configuration: const PlayerConfiguration(
+      logLevel: config.mediakitPlayerLogLevl,
+    ),
+  );
+  late final controller = VideoController(_player);
   bool isBuffering = true;
 
   @override
   void initState() {
     super.initState();
-    player.open(Media(widget.videoUrl));
+    _player.open(Media(widget.videoUrl));
     if (widget.muted) {
-      player.setVolume(0);
+      _player.setVolume(0);
     }
-    player.stream.buffering.listen((buffering) {
+    _player.stream.buffering.listen((buffering) {
       if (mounted) {
         setState(() {
           isBuffering = buffering;
@@ -56,7 +65,7 @@ class MediaKitVideoWidgetState extends State<MediaKitVideoWidget> {
 
   @override
   void dispose() {
-    player.dispose();
+    _player.dispose();
     super.dispose();
   }
 
@@ -73,11 +82,11 @@ class MediaKitVideoWidgetState extends State<MediaKitVideoWidget> {
                 child: Video(
                   controller: controller,
                   onEnterFullscreen: () async {
-                    player.setVolume(0.5);
+                    _player.setVolume(0.5);
                     landscapeOrientation();
                   },
                   onExitFullscreen: () async {
-                    player.setVolume(0.0);
+                    _player.setVolume(0.0);
                     portaitOrientation();
                   },
                   controls: NoVideoControls,

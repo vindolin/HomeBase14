@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 
+import '/configuration.dart' as config;
 import '/utils.dart';
 
 class FullscreenVideo extends StatefulWidget {
@@ -14,7 +15,11 @@ class FullscreenVideo extends StatefulWidget {
 }
 
 class FullscreenVideoState extends State<FullscreenVideo> {
-  late final player = Player();
+  late final player = Player(
+    configuration: const PlayerConfiguration(
+      logLevel: config.mediakitPlayerLogLevl,
+    ),
+  );
   late final controller = VideoController(player);
 
   @override

@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/models/app_settings.dart';
 import '/models/mqtt_providers.dart';
 import '/models/mqtt_connection_state_provider.dart';
-import '/models/open_login_form_semaphore_provider.dart';
 import '/widgets/message_blinker_widget.dart';
 import '/widgets/brightness_button_widget.dart';
 // import '/models/secrets.dart';
@@ -31,30 +30,19 @@ class ConnectionBar extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               if (mqttConnectionState == MqttConnectionState.connected) ...[
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      ref.watch(openLoginFormSemaphoreProvider.notifier).set(true);
-                      // mqttProviderNotifier.disconnect();
-                    },
-                    child: const Icon(
-                      color: Colors.green,
-                      Icons.wifi,
-                    ),
+                const Padding(
+                  padding: EdgeInsets.all(4.0),
+                  child: Icon(
+                    color: Colors.green,
+                    Icons.wifi,
                   ),
                 )
               ] else if (mqttConnectionState == MqttConnectionState.disconnected) ...[
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      // mqttProviderNotifier.connect(secrets);
-                    },
-                    child: const Icon(
-                      color: Colors.red,
-                      Icons.wifi_off,
-                    ),
+                const Padding(
+                  padding: EdgeInsets.all(4.0),
+                  child: Icon(
+                    color: Colors.red,
+                    Icons.wifi_off,
                   ),
                 )
               ] else if (mqttConnectionState == MqttConnectionState.faulted) ...[

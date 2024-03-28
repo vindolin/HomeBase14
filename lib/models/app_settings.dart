@@ -7,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '/utils.dart';
 import '/models/encryption.dart' as encryption;
-import '/models/open_login_form_semaphore_provider.dart';
 
 part 'app_settings.g.dart';
 part 'app_settings.freezed.dart';
@@ -152,7 +151,6 @@ class AppSettings extends _$AppSettings {
       try {
         final json = jsonDecode(appSettings);
         state = AppSettingsCls.fromJson(json);
-        ref.watch(openLoginFormSemaphoreProvider.notifier).set(false);
       } catch (e) {
         log('error loading settings: $e');
       }

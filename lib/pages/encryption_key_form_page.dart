@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/utils.dart';
 import '/models/app_settings.dart';
 import '/widgets/password_input_widget.dart';
-import '/models/open_login_form_semaphore_provider.dart';
 
 // TODO catch the back action and return to the home page instead of exiting the app
 
@@ -46,10 +45,6 @@ class EncryptionKeyFormPage extends ConsumerWidget {
         // log(saveResult.toString());
 
         if (saveResult) {
-          // affects the overlay widget in main.dart
-          // if this is false, the home page will be shown instead of the connection form
-          ref.watch(openLoginFormSemaphoreProvider.notifier).set(false);
-
           await appSettings.persistAppSettings();
 
           log('persisted connection data');

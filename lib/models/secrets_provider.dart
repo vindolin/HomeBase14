@@ -76,9 +76,7 @@ class Secrets extends _$Secrets {
     };
     // log(secrets);
 
-    // now we have everything needed to start the mqtt connection
     // todo pass typed secrets
-    // ref.read(mqttProvider.notifier).connect(secrets);
     return secrets;
   }
 

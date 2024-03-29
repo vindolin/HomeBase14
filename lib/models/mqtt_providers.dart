@@ -13,7 +13,6 @@ import 'package:nanoid/nanoid.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '/models/app_settings_provider.dart';
-import '/models/network_type_provider.dart';
 import '/models/encrypted_key.dart';
 import '/models/encryption.dart' as encryption;
 import '/utils.dart';
@@ -144,12 +143,10 @@ class Mqtt extends _$Mqtt {
     final appSettings = ref.read(appSettingsProvider);
     log('connecting...');
 
-    String networkType = ref.read(networkTypeProvider);
-    bool useCerts = networkType == networkTypeMobile;
-    log('use certs $useCerts');
+    final useEncryption = secrets['network']['mqttEncrypt'];
 
-    // log(secrets);
-    if (useCerts) {
+    if (useEncryption) {
+      log('mqtt encrypted');
       client = MqttServerClient.withPort(
         secrets['network']['mqttAddress'],
         clientIdentifier,
@@ -160,6 +157,7 @@ class Mqtt extends _$Mqtt {
       final clientCrt = await rootBundle.load('assets/certs/homebase14.crt');
 
       final clientKey = encryption.decrypt(appSettings.encryptionKey, hbk);
+      // log(clientKey);
       SecurityContext context;
 
       try {
@@ -181,6 +179,7 @@ class Mqtt extends _$Mqtt {
       client.securityContext = context;
       client.secure = true;
     } else {
+      log('mqtt unencrypted');
       client = MqttServerClient.withPort(
         secrets['network']['mqttAddress'],
         clientIdentifier,
@@ -203,6 +202,7 @@ class Mqtt extends _$Mqtt {
         await client.connect(secrets['network']['mqttUsername'], secrets['network']['mqttPassword']).catchError(
       // await client.connect().catchError(
       (error) {
+        log('error connecting: $error');
         ref.read(mqttConnectionStateProvider.notifier).state = mqtt.MqttConnectionState.faulted;
         return null;
       },

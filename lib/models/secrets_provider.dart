@@ -32,6 +32,7 @@ const secretsTemplate = {
     'mqttPassword': '',
     'mqttAddress': '',
     'mqttPort': 0000,
+    'mqttEncrypt': false,
   },
   networkTypeMobile: {
     'serverAddress': '',
@@ -41,6 +42,7 @@ const secretsTemplate = {
     'mqttPassword': '',
     'mqttAddress': '',
     'mqttPort': 0000,
+    'mqttEncrypt': true,
   },
 };
 
@@ -48,7 +50,7 @@ const secretsTemplate = {
 class Secrets extends _$Secrets {
   // output of encrypt_secrets.dart
   final _encryptedSecrets =
-      r'G+yKU7MDVC2rnVM5GyQDd2tm90L/YEWZHLQPhlCzqHOZhjHdZvVGRPo9/UxynjcfUzNBOihBarqfZT5K64im5s5jUzdQBcZuUx9FwIJbb6wPBIBIc2zhr4dR6ag0KCmFPHDdcgvdnqnL6bA2PHxdDBXrWBlEhfFnBbawJQtwGQdJr5mAmM8euaZ9pn10IMZ99CX5aGTIUKx+BELFPthCO316ztffAnRpdrlV7fpiZMQNlVRJCaxWm/fLbtY8suBWceOMPmBpgJTlVyDF3zK2iRhB8bcDMHg0PmBhXAPPTfe1pACuhPDt1DCOfGYL7TTWtk/LKk3DbuJDE4WivsDkXhUDpTtp8HL1e7Cds4vETlrMJ+f04y+vwsTwBEgI9ZS2Cn9TCrsNK0W/0Go4uww8tDzwodOAFmfSsVEt2UrRaZdKhEX2dLlC8V2tguCAmzgWG1WTCSxFbJ+1s0kiMkNIyjPhbNpmzjdRiV/zmNgVJtL0Ogqe36KyOxV4IMWlkJuIeROWLfaiL4qRc0I5i+ju3vrTL7C3xI0ylvkZf+mMOurd8oAQjEVpU63WNpLoBdU+ZNUrzPMO1chwLfvGyVHGvbvwOWLXFUgTTAzrhzmpD03KZyGoEoTNitg1vg//xfhHp49HnAhZWY5h/YvIW2rOLerUU96j757/jqiFpFdN3tniBmpu+5dIex8xFwdDgB/xcUud7so/yBdWD0EgrQZI9LHwTMi6eDCj2ywV4zFmK9xtbDAtHNnxHN0chvMMMa/2NY6r1StuwQnznu6BRvGkSTomHUxFD3pxPnK0kVm+81J9ABW2sYJICkvKyQ5ICyD87fJKCBr13Fv8Xp/Wz9qwvaf2tg1D6cUKxu1E4Dz/9eJRrfeKlB6As+WDhFDX0SGQl8nxRLxibt7MWijWtmkneGBEIs+1PGaxHKlctZqOtLW/G1z+tRqhSFIkWebFixM3DY+RMsmnB0nIdVm1nY3k8L6ix0mn0fEp8pY6xnu7dhLyO1XQq25rwEw0Vo1pbD9COjfpp2H8edupg5EJVYI4nCWCWCXNS08i6zRg426nv4R+eatSbk0feEuZ8IOCV6zF9oVMEuTsi4zQv5qCwSI3b515xC34Uo/gwDb3xdBFMbrFmMsrXbOyVe6ucalyJk3SlqRZtt4l8Xl8RAM8uTvBiR6ca6Xar5OR4DZyueS+SgwSeNXTS5fBWPRVxnnkTWzxqio5ShknJZyqbwlVirNAMvLItn52n4/EmIwpIwl8Z8SYzCpou3ikThHIFhQBGD2H';
+      r'G+yKU7MDVC2rnVM5GyQDd2tm90L/YEWZHLQPhlCzqHOZhjHdZvVGRPo9/UxynjcfUzNBOihBarqfZT5K64im5s5jUzdQBcZuUx9FwIJbb6wPBIBIc2zhr4dR6ag0KCmFPHDdcgvdnqnL6bA2PHxdDBXrWBlEhfFnBbawJQtwGQdJr5mAmM8euaZ9pn10IMZ99CX5aGTIUKx+BELFPthCO316ztffAnRpdrlV7fpiZMQNlVRJCaxWm/fLbtY8suBWceOMPmBpgJTlVyDF3zK2iRhB8bcDMHg0PmBhXAPPTfe1pACuhPDt1DCOfGYL7TTWtk/LKk3DbuJDE4WivsDkXhUDpTtp8HL1e7Cds4vETlrMJ+f04y+vwsTwBEgI9ZS2Cn9TCrsNK0W/0Go4uww8tDzwodOAFmfSsVEt2UrRaZdKhEX2dLlC8V2tguCAmzgWG1WTCSxFbJ+1s0kiMkNIyjPhbNpmzjdRiV/zmNgVJtL0Ogqe36KyOxV4eZP628jfMliWLvS/LouSa10ryL2+hL3SC6al05oAgb9ROPKQdbWdospHk0B9R6GDbsW0d4VgEJBtzfMgw+9jJd7cjw6LzeamZTaSXkQYWQX8hCOoG1nGMnn/TvaY16xw+A7/+uV2ssArwFkIGvxp7o2OBDG4eKugXdu05Lr1qbuNgU0LgZSSWzwyr9IDdxQkHhBAmh/lZUfLuIB1nE0kTABUowNf/4Txfd31FGzyinJpri5jfZINKmFuXprxCItS5eMdL7rgZICzmmsjh3ej26XYGLT4RTE1ZiU8THVjcz7Dzh6h7EdkJFPo4bRYEQS/pAEFSmfz/fVbaU+kgw7+XY+ApZfoguS2/UA1r9tNiP4KoHmx/bEfooWClAvE6LPa/QCfgSmSkJ+OCLd/esvaGWHH9Sh4NnxWf4L7d3mxTOVC5byYsaG7Bk6d61y7QkwyVb2TjBE7GsOUJI66EReUKhvG3syQ6r+13m2x9Oco84Brj3vpOxf4eFGKpXdl3wMiHcsgbHcPMSrFtE/LfemliKQJZpJ+1HXEHzfbS0As9DUr7Fmpv7NlM6pYDQVZbkGF8eLZGJLD/4UNI//xks+YpMvT0yI3b515xC34Uo/gwDb3xdBUOqzD34JtSr2hEaOuZfNnB1HahbgWv94l53lIRhk1kxrlyl/ob7DLtJOf4TEn7KPvXAcccPPDRZn1cuVEyGbpTnT/5TY8SkMHNZe1awgIzOxAc6HRsyRjvpPMi5BmKgl8ccSm3jZxpFixGB/QQ11NWBCbF0XM2VU+A/kVIpHoMCNzE1sYo6hXiUmJwj+zR2SN7Y9Ma8VqVcpF9ZiqTokFjKFj3TqqWaBvrGQmKEdb';
 
   @override
   Map<String, dynamic> build() {

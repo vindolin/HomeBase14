@@ -6,7 +6,6 @@ import '/models/encryption.dart' as encryption;
 
 import '/models/encryption_key_provider.dart';
 import '/models/network_type_provider.dart';
-export '/models/network_type_provider.dart';
 
 part 'secrets_provider.g.dart';
 

@@ -2,12 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:focus_detector/focus_detector.dart';
+import 'package:home_base_14/models/network_type_provider.dart';
 
 // import '/utils.dart' as d;
 import '/models/app_settings_provider.dart';
-import '/models/connectivity_provider.dart';
 import 'image_fade_refresh.dart';
 
 const refreshTimeMobile = 120;
@@ -55,14 +54,14 @@ class _RefreshableImageState extends ConsumerState<RefreshableImage> {
 
   @override
   Widget build(BuildContext context) {
+    final networkType = ref.watch(networkTypeProvider);
     final camRefreshRateMobile = ref.watch(
       appSettingsProvider.select((appSettings) => appSettings.camRefreshRateMobile),
     );
     final camRefreshRateWifi = ref.watch(
       appSettingsProvider.select((appSettings) => appSettings.camRefreshRateWifi),
     );
-    final conn = ref.watch(connectivityProvider);
-    _refreshRate = conn == ConnectivityResult.mobile ? camRefreshRateMobile : camRefreshRateWifi;
+    _refreshRate = networkType == networkTypeMobile ? camRefreshRateMobile : camRefreshRateWifi;
 
     // this timer triggers a build() which in turn starts the timer again
     // this way the timer can instantly react to changes of the refresh rate

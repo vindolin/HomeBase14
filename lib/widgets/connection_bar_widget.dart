@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '/models/secrets_provider.dart';
+import '/models/network_type_provider.dart';
 import '/models/app_settings_provider.dart';
 import '/models/mqtt_providers.dart';
 import '/models/mqtt_connection_state_provider.dart';

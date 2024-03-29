@@ -16,6 +16,7 @@ import '/models/mqtt_connection_state_provider.dart';
 import '/models/mqtt_providers.dart';
 import '/models/connectivity_provider.dart'
     as connectivity_provider; // rename to avoid conflict with Connectivity class
+import '/models/network_type_provider.dart';
 import '/models/secrets_provider.dart';
 import '/pages/encryption_key_form_page.dart';
 import '/pages/home/home_page.dart';
@@ -82,19 +83,18 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
     log('init done');
 
     // listen to changes in connectivity state in the future
-    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) async {
+    Connectivity().onConnectivityChanged.listen((List<ConnectivityResult> result) async {
       log('connectivity changed: $result');
 
-      if (result != ConnectivityResult.none) {
-        ref.read(networkTypeProvider.notifier).setNetworkType(await inLocalNetwork() ? 'local' : 'mobile');
+      if (result.isNotEmpty) {
+        // give the network time to settle before testing
+        Future.delayed(
+          const Duration(seconds: 5),
+          () async {
+            ref.read(networkTypeProvider.notifier).setNetworkType(await inLocalNetwork() ? 'local' : 'mobile');
+          },
+        );
       }
-      // give the network time to settle before testing
-      Future.delayed(
-        const Duration(seconds: 5),
-        () {
-          // ref.read(networkTypeProvider.notifier).setNetworkType(config.defaultNetworkType);
-        },
-      );
       ref.read(connectivityProviderNotifier).setResult(result);
     });
   }

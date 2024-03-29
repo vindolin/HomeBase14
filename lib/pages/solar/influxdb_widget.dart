@@ -1,10 +1,14 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+import '/configuration.dart' as config;
+// import '/utils.dart';
 import '/models/network_addresses_provider.dart';
 import '/widgets/shader_widget.dart';
 
@@ -33,7 +37,8 @@ class _InfluxdbWidgetState extends ConsumerState<InfluxdbWidget> {
 
   @override
   void initState() {
-    final networkAddress = ref.watch(networkAddressesProvider)['influxdb'];
+    final networkAddresses = ref.read(networkAddressesProvider);
+    final networkAddress = networkAddresses['influxdb'];
 
     setTimer(5, networkAddress);
     result = fetchResult(networkAddress);
@@ -52,6 +57,15 @@ class _InfluxdbWidgetState extends ConsumerState<InfluxdbWidget> {
     final dio = Dio();
     const timeSpan = '12h';
     const groupTime = '5m';
+
+    // accept self signed certs for local server
+    if (url.contains(config.localServer)) {
+      (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
+        final client = HttpClient();
+        client.badCertificateCallback = (cert, host, port) => true;
+        return client;
+      };
+    }
 
     // solar watt
     var response = await dio.post(
@@ -77,6 +91,8 @@ class _InfluxdbWidgetState extends ConsumerState<InfluxdbWidget> {
         },
       ),
     );
+
+    // log(response);
 
     // await Future.delayed(const Duration(seconds: 1), () {});
 

@@ -1,10 +1,14 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+import '/configuration.dart' as config;
+// import '/utils.dart';
 import '/models/network_addresses_provider.dart';
 import '/widgets/shader_widget.dart';
 
@@ -56,7 +60,7 @@ class _InfluxdbWidgetState extends ConsumerState<InfluxChartWidget> {
 
   @override
   void initState() {
-    final networkAddress = ref.watch(networkAddressesProvider)['influxdb'];
+    final networkAddress = ref.read(networkAddressesProvider)['influxdb'];
 
     setTimer(5, networkAddress);
     result = fetchResult(networkAddress);
@@ -73,6 +77,15 @@ class _InfluxdbWidgetState extends ConsumerState<InfluxChartWidget> {
 
   Future<List<List<TimePoint>>> fetchResult(String url) async {
     final dio = Dio();
+
+    // accept self signed certs for local server
+    if (url.contains(config.localServer)) {
+      (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
+        final client = HttpClient();
+        client.badCertificateCallback = (cert, host, port) => true;
+        return client;
+      };
+    }
 
     List<List<TimePoint>> resultList = [];
     var queries = '';
@@ -117,6 +130,7 @@ class _InfluxdbWidgetState extends ConsumerState<InfluxChartWidget> {
       }
     }
 
+    // log(resultList);
     return resultList;
   }
 

@@ -107,6 +107,7 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
 
     // TODO move the connect/disconnect into mqtt_providers.dart and wire the network type directly to the provider
 
+    // log('$networkType - $lastNetworkType');
     // the network type has changed
     if (networkType != lastNetworkType) {
       log('networkType changed: $networkType');

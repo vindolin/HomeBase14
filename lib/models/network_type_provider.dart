@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '/configuration.dart' as config;
 import '/utils.dart';
+
 part 'network_type_provider.g.dart';
 
 const networkTypeLocal = 'local';
@@ -13,13 +15,14 @@ bool inLocalNetworkB() {
   bool result = false;
   try {
     var socket = RawSynchronousSocket.connectSync(
-      InternetAddress('192.168.178.113'),
+      InternetAddress(config.localServer),
       80,
     );
     socket.closeSync();
     // homebase14 responds, so we are on a local network
     result = true;
   } catch (error) {
+    log(error);
     // nah, we're not in Kansas anymore
   }
   return result;
@@ -27,7 +30,7 @@ bool inLocalNetworkB() {
 
 Future inLocalNetwork() async {
   bool result = false;
-  await Socket.connect('192.168.178.113', 80, timeout: const Duration(seconds: 10)).then((socket) {
+  await Socket.connect(config.localServer, 80, timeout: const Duration(seconds: 10)).then((socket) {
     socket.destroy();
     // homebase14 responds, so we are on a local network
     result = true;
@@ -61,6 +64,5 @@ class NetworkType extends _$NetworkType {
 
   void toggleNetworkType() {
     state = state == networkTypeLocal ? networkTypeMobile : networkTypeLocal;
-    log('networkTypeProvider: $state');
   }
 }

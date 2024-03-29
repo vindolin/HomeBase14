@@ -52,10 +52,16 @@ class SolarWatts extends ConsumerWidget {
     String happy = totalWatt == 0.0
         ? '😐'
         : totalWatt > 0.0
-            ? totalWatt > 3000
-                ? '😎'
+            ? totalWatt > 2000
+                ? totalWatt > 3000
+                    ? '🤩'
+                    : '😎'
                 : '😃'
-            : '🙁';
+            : totalWatt < -1000
+                ? '😭'
+                : totalWatt < -500
+                    ? '😢'
+                    : '🙁';
 
     final solarColor = Color.lerp(
       Colors.grey,

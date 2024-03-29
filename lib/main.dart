@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:io' show SecurityContext, Socket;
+import 'dart:io' show SecurityContext;
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
@@ -10,7 +10,6 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 
-import '/configuration.dart' as config;
 import '/utils.dart';
 import '/models/app_settings_provider.dart';
 import '/models/mqtt_connection_state_provider.dart';
@@ -18,22 +17,10 @@ import '/models/mqtt_providers.dart';
 import '/models/connectivity_provider.dart'
     as connectivity_provider; // rename to avoid conflict with Connectivity class
 import '/models/secrets_provider.dart';
-import 'pages/encryption_key_form_page.dart';
+import '/pages/encryption_key_form_page.dart';
 import '/pages/home/home_page.dart';
 import '/widgets/brightness_button_widget.dart';
 import '/widgets/pulsating_icon_hooks_widget.dart';
-
-const simplePeriodicTask = 'be.tramckrijte.workmanagerExample.simplePeriodicTask';
-
-/// check if we are running on a local or mobile network
-void testLocalNetwork(WidgetRef ref) async {
-  await Socket.connect('192.168.178.113', 80, timeout: const Duration(seconds: 10)).then((socket) {
-    socket.destroy();
-    ref.read(networkTypeProvider.notifier).setNetworkType(networkTypeLocal);
-  }).catchError((error) {
-    ref.read(networkTypeProvider.notifier).setNetworkType(networkTypeMobile);
-  });
-}
 
 void main() async {
   var delegate = await LocalizationDelegate.create(
@@ -51,6 +38,7 @@ void main() async {
   ByteData data = await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
   SecurityContext.defaultContext.setTrustedCertificatesBytes(data.buffer.asUint8List());
 
+  // keep screen on when app is in foreground
   if (!platformIsDesktop) {
     KeepScreenOn.turnOn();
   }
@@ -70,13 +58,14 @@ class HomeBase14App extends ConsumerStatefulWidget {
 
 class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
   Timer? _timer;
-  String lastNetworkType = config.defaultNetworkType;
+  String lastNetworkType = '';
   @override
   void initState() {
-    testLocalNetwork(ref);
-
+    lastNetworkType = ref.read(initialNetworkTypeProvider);
     super.initState();
-    _timer = Timer.periodic(const Duration(seconds: config.testNetworkIntervalSec), (Timer t) => testLocalNetwork(ref));
+    // this was my first method for checking the network type but the ConnectivityResult way is more elegant
+    // I let this in here for the time being
+    // _timer = Timer.periodic(const Duration(seconds: config.testNetworkIntervalSec), (Timer t) => testLocalNetwork(ref));
     loadAppSettings(ref);
   }
 
@@ -87,13 +76,25 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
 
     // get initial connectivity state
     final result = await Connectivity().checkConnectivity();
-    log('connectivityResult: $result');
+    log('initial connectivity: $result');
     ref.read(connectivityProviderNotifier).setResult(result);
 
     log('init done');
 
     // listen to changes in connectivity state in the future
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      log('connectivity changed: $result');
+
+      if (result != ConnectivityResult.none) {
+        ref.read(networkTypeProvider.notifier).setNetworkType(inLocalNetwork() ? 'local' : 'mobile');
+      }
+      // give the network time to settle before testing
+      Future.delayed(
+        const Duration(seconds: 5),
+        () {
+          // ref.read(networkTypeProvider.notifier).setNetworkType(config.defaultNetworkType);
+        },
+      );
       ref.read(connectivityProviderNotifier).setResult(result);
     });
   }
@@ -104,9 +105,12 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
     final secrets = ref.watch(secretsProvider);
     final networkType = ref.watch(networkTypeProvider);
 
+    // the network type has changed
     if (networkType != lastNetworkType) {
       log('networkType changed: $networkType');
       lastNetworkType = networkType;
+      // disconnect on network change, will be reconnected in the next block
+      // future is needed, because providers can't be manipulated in the build() function
       Future(() => ref.read(mqttProvider.notifier).disconnect());
     }
 
@@ -115,7 +119,7 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
       Future(() => ref.read(mqttProvider.notifier).connect(secrets));
     }
 
-    final brightness = ref.watch(brightnessSettingProvider);
+    final brightness = ref.watch(brightnessSettingProvider); // TODO rename!
     // set orientation according to app settings
     if (appSettings.onlyPortrait) {
       SystemChrome.setPreferredOrientations([
@@ -128,8 +132,8 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
         DeviceOrientation.landscapeRight,
       ]);
     }
-
     final appSettingsValid = ref.watch(appSettingsProvider.select((value) => value.isValid));
+    // final encryptionKeyIsValid = ref.watch(encryptionKeyProvider.select((value) => value != null));
 
     return Portal(
       child: MaterialApp(
@@ -137,6 +141,7 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
         title: 'HomeBase14',
         debugShowCheckedModeBanner: false,
         home: PortalTarget(
+          // show a circular progress indicator if the connection is broken
           visible: ref.watch(mqttConnectionStateProvider.select((value) => value != MqttConnectionState.connected)) &&
               appSettingsValid,
           portalFollower: Container(
@@ -151,13 +156,14 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
                       ),
                     _ => GestureDetector(
                           child: const PulsatingIcon(
-                        iconData: Icons.lock,
+                        iconData: Icons.wifi_off,
                         color: Colors.red,
                         size: 100,
                       ))
                   }),
             ),
           ),
+          // open the form for the encryption key if not yet set
           child: !appSettingsValid ? EncryptionKeyFormPage() : const HomePage(),
         ),
         theme: ThemeData(

@@ -144,11 +144,12 @@ class Mqtt extends _$Mqtt {
     final appSettings = ref.read(appSettingsProvider);
     log('connecting...');
 
-    // final secrets = ref.watch(secretsProvider);
-
-    bool useCerts = secrets['networkType'] == networkTypeMobile;
+    String networkType = ref.read(networkTypeProvider);
+    bool useCerts = networkType == networkTypeMobile;
     log('use certs $useCerts');
 
+    log(secrets);
+    // log(secrets);
     if (useCerts) {
       client = MqttServerClient.withPort(
         secrets['network']['mqttAddress'],
@@ -158,7 +159,6 @@ class Mqtt extends _$Mqtt {
 
       final cert = await rootBundle.load('assets/certs/ca.crt');
       final clientCrt = await rootBundle.load('assets/certs/homebase14.crt');
-      // final clientKey = await rootBundle.load('assets/certs/homebase14.key');
 
       final clientKey = encryption.decrypt(appSettings.encryptionKey, hbk);
       SecurityContext context;
@@ -190,7 +190,7 @@ class Mqtt extends _$Mqtt {
       ref.read(togglerProvider('ssl').notifier).set(false);
     }
     // client.logging(on: true);
-    client.autoReconnect = true;
+    // client.autoReconnect = true;
     client.onConnected = onConnected;
     client.onDisconnected = onDisconnected;
 

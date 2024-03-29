@@ -70,7 +70,6 @@ class Secrets extends _$Secrets {
     // todo use typed template map and populate with decryptedSecrets
 
     dynamic secrets = {
-      'networkType': network,
       'general': decryptedSecrets['general'],
       'network': decryptedSecrets[network],
     };

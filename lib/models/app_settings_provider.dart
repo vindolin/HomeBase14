@@ -12,7 +12,7 @@ import '/models/encryption_key_provider.dart';
 part 'app_settings_provider.g.dart';
 part 'app_settings_provider.freezed.dart';
 
-const settingsEncryptionKey = 'LwZoBvGNmA46wQ0M5ExyFF7pzoHyaCs6//Sptpa6hMk=';
+const uiSettingsEncryptionKey = 'LwZoBvGNmA46wQ0M5ExyFF7pzoHyaCs6//Sptpa6hMk=';
 const secretEncrypted = 'E6uORLgS';
 const secretDecrypted = 'secret';
 
@@ -125,7 +125,7 @@ class AppSettings extends _$AppSettings {
     String plainText = jsonEncode(state);
 
     // encrypt the connection data
-    final encrypted = encryption.encrypt(settingsEncryptionKey, plainText);
+    final encrypted = encryption.encrypt(uiSettingsEncryptionKey, plainText);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -144,7 +144,7 @@ class AppSettings extends _$AppSettings {
 
       // decrypt the connection data
       appSettings = encryption.decrypt(
-        settingsEncryptionKey,
+        uiSettingsEncryptionKey,
         userPref,
       );
       // log('appsettings: $appSettings');

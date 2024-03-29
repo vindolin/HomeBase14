@@ -105,8 +105,8 @@ class IncubatorPage extends ConsumerWidget {
                 const Gap(16),
                 Text('Humidity: ${humidity ?? "???"}%'),
                 const Gap(8),
-                MqttSwitchWidget(
-                  title: ref.watch(mqttMessagesFamProvider('incubator/on_state')).toString(),
+                const MqttSwitchWidget(
+                  title: 'off/on',
                   statTopic: 'incubator/on_state',
                   setTopic: 'incubator/set/on_state',
                   optimistic: true,

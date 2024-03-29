@@ -114,36 +114,3 @@ double mapValue(double value, double inMin, double inMax, double outMin, double 
 }
 
 bool platformIsDesktop = Platform.isWindows || Platform.isLinux || Platform.isMacOS;
-
-/// check if we are running on a local or mobile network
-bool inLocalNetwork() {
-  bool result = false;
-  try {
-    // intentionally use a blocking call, because this is only called once at the beginning
-    var socket = RawSynchronousSocket.connectSync(
-      InternetAddress('192.168.178.113'),
-      80,
-    );
-    socket.closeSync();
-    // homebase14 responds, so we are on a local network
-    result = true;
-  } catch (error) {
-    // nah, we're not in Kansas anymore
-  }
-  return result;
-}
-
-// bool inLocalNetwork() {
-//   bool result = false;
-//   Socket.connect('192.168.178.113', 80, timeout: const Duration(seconds: 10)).then((socket) {
-//     socket.destroy();
-//     print('local!');
-//     // homebase14 responds, so we are on a local network
-//     result = true;
-//   }).catchError((error) {
-//     print('mobile!');
-//     // nah, we're not in Kansas anymore
-//   });
-
-//   return result;
-// }

@@ -82,11 +82,11 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
     log('init done');
 
     // listen to changes in connectivity state in the future
-    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) async {
       log('connectivity changed: $result');
 
       if (result != ConnectivityResult.none) {
-        ref.read(networkTypeProvider.notifier).setNetworkType(inLocalNetwork() ? 'local' : 'mobile');
+        ref.read(networkTypeProvider.notifier).setNetworkType(await inLocalNetwork() ? 'local' : 'mobile');
       }
       // give the network time to settle before testing
       Future.delayed(
@@ -104,6 +104,8 @@ class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
     final appSettings = ref.watch(appSettingsProvider);
     final secrets = ref.watch(secretsProvider);
     final networkType = ref.watch(networkTypeProvider);
+
+    // TODO move the connect/disconnect into mqtt_providers.dart and wire the network type directly to the provider
 
     // the network type has changed
     if (networkType != lastNetworkType) {

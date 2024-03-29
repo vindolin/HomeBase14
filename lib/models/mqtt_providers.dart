@@ -148,7 +148,6 @@ class Mqtt extends _$Mqtt {
     bool useCerts = networkType == networkTypeMobile;
     log('use certs $useCerts');
 
-    log(secrets);
     // log(secrets);
     if (useCerts) {
       client = MqttServerClient.withPort(

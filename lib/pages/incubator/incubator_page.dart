@@ -14,14 +14,13 @@ class IncubatorPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tempProvider = ref.watch(mqttMessagesFamProvider('incubator/temp'));
-    final targetTemp = ref.watch(mqttMessagesFamProvider('incubator/target_temp'));
-    final heaterDutyCycle = ref.watch(mqttMessagesFamProvider('incubator/heater'));
+    final heaterDutyCycle = (ref.watch(mqttMessagesFamProvider('incubator/heater')) ?? 0).toDouble();
     final humidity = ref.watch(mqttMessagesFamProvider('home/humidity')).toInt();
 
     // clamp values slider range
-    final target = (targetTemp != null && targetTemp != '' ? targetTemp.toDouble() : null).clamp(20, 45);
-    double temperature = (tempProvider?.toDouble() ?? 0).clamp(20, 45);
+
+    final target = (ref.watch(mqttMessagesFamProvider('incubator/target_temp')) ?? 0).toDouble().clamp(20, 45);
+    final temperature = (ref.watch(mqttMessagesFamProvider('incubator/temp')) ?? 0).toInt().clamp(20, 45);
 
     return Scaffold(
       appBar: AppBar(
@@ -45,9 +44,9 @@ class IncubatorPage extends ConsumerWidget {
                 Text('Fermentation Incubator', style: Theme.of(context).textTheme.titleLarge),
                 const Gap(8),
                 Text('Temperature: $temperature°C'),
-                Text('Set target temperature: ${target != null ? target.toInt() : "???"}°C'),
+                Text('Set target temperature: ${target != 0 ? target.toInt() : "???"}°C'),
                 SliderWidget(
-                  value: target,
+                  value: target.toDouble(),
                   min: 20,
                   max: 46,
                   minColor: Colors.grey,
@@ -98,7 +97,7 @@ class IncubatorPage extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(10),
                     minHeight: 12,
                     valueColor: AlwaysStoppedAnimation<Color>(
-                      Color.lerp(Colors.blue, Colors.red, heaterDutyCycle / 100)!,
+                      Color.lerp(Colors.blue, Colors.red, heaterDutyCycle.toDouble() / 100)!,
                     ),
                     backgroundColor: Colors.grey.withAlpha(100),
                   ),

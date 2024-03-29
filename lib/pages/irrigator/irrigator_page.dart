@@ -13,12 +13,9 @@ class IrrigatorPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final soilMoistureProvider = ref.watch(mqttMessagesFamProvider('irrigator/soil'));
-    final targetMoisture = ref.watch(mqttMessagesFamProvider('irrigator/target'));
-
-    // clamp values slider range
-    final target = (targetMoisture != null && targetMoisture != '' ? targetMoisture.toDouble() : null).clamp(0, 50);
-    double soilMoisture = (soilMoistureProvider?.toDouble() ?? 0).clamp(0, 50);
+    // normalize the values to 0.0 if not yet set
+    double soilMoisture = (ref.watch(mqttMessagesFamProvider('irrigator/soil')) ?? 0.0).toDouble().clamp(0, 50);
+    double targetMoisture = (ref.watch(mqttMessagesFamProvider('irrigator/target')) ?? 0.0).toDouble().clamp(0, 50);
 
     return Scaffold(
       appBar: AppBar(
@@ -38,9 +35,9 @@ class IrrigatorPage extends ConsumerWidget {
                 Text('Coffee bush irrigation', style: Theme.of(context).textTheme.titleLarge),
                 const Gap(8),
                 Text('Soil moisture: $soilMoisture'),
-                Text('Set target moisture: ${target != null ? target.toInt() : "???"}'),
+                Text('Set target moisture: ${targetMoisture != 0.0 ? targetMoisture.toInt() : "???"}'),
                 SliderWidget(
-                  value: target,
+                  value: targetMoisture,
                   min: 0,
                   max: 50,
                   minColor: Colors.grey,

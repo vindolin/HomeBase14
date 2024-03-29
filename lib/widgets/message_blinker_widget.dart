@@ -4,7 +4,8 @@ import '/models/generic_providers.dart';
 
 /// Lock symbol in the connection bar that binds to the message stream provider and blinks when a subscribed MQTT message is received
 class MessageBlinker extends ConsumerWidget {
-  const MessageBlinker({super.key});
+  final Color color;
+  const MessageBlinker({super.key, required this.color});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,7 +26,7 @@ class MessageBlinker extends ConsumerWidget {
     final sslStatus = ref.watch(togglerProvider('ssl'));
 
     // TODOs implicit animation?
-    flashColor = sslStatus ? Colors.green : Colors.red;
+    flashColor = sslStatus ? color : Colors.red;
 
     return FutureBuilder<void>(
       future: setColor(),

@@ -58,9 +58,11 @@ class ConnectionBar extends ConsumerWidget {
                 )
               ],
               if (appSettings.showBrightness) const BrightnessButton(),
-              const IgnorePointer(
+              IgnorePointer(
                 ignoring: true,
-                child: MessageBlinker(),
+                child: MessageBlinker(
+                  color: ref.watch(networkTypeProvider) == networkTypeLocal ? Colors.blue : Colors.green,
+                ),
               )
             ],
           )

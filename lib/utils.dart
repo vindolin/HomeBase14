@@ -125,11 +125,9 @@ bool inLocalNetwork() {
       80,
     );
     socket.closeSync();
-    print('local!');
     // homebase14 responds, so we are on a local network
     result = true;
   } catch (error) {
-    print('mobile!');
     // nah, we're not in Kansas anymore
   }
   return result;

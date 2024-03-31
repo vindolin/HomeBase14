@@ -15,7 +15,7 @@ class ConnectionBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mqttConnectionState = ref.watch(mqttConnectionStateProvider);
-    ref.watch(mqttProvider.notifier);
+    ref.watch(mqttProvider);
     final appSettings = ref.watch(appSettingsProvider);
 
     return Padding(

@@ -104,13 +104,11 @@ class Mqtt extends _$Mqtt {
   late Prusa prusa;
   late LastMessageTime lastMessageTime;
   late Counter counter;
-  late MqttConnectionStateX mqttConnectionStateX;
   late DeviceNames mqttDescriptions;
 
   @override
   build() {
     log('building mqtt');
-    mqttConnectionStateX = ref.read(mqttConnectionStateProvider.notifier);
     lastMessageTime = ref.watch(lastMessageTimeProvider.notifier);
     counter = ref.watch(counterProvider('mqtt_message').notifier);
     mqttDescriptions = ref.watch(deviceNamesProvider.notifier);
@@ -192,7 +190,7 @@ class Mqtt extends _$Mqtt {
     client.onConnected = onConnected;
     client.onDisconnected = onDisconnected;
 
-    mqttConnectionStateX.state = mqtt.MqttConnectionState.connecting;
+    ref.read(mqttConnectionStateProvider.notifier).state = mqtt.MqttConnectionState.connecting;
 
     // await Future.delayed(
     //   const Duration(seconds: 5),
@@ -371,7 +369,7 @@ class Mqtt extends _$Mqtt {
             _ => {},
           };
 
-          prusa.state = prusa.state.addAll(IMap(data));
+          prusa.addAll(data);
         } else {
           // print(topic);
         }

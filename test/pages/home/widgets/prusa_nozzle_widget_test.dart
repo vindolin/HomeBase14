@@ -20,6 +20,11 @@ class FakePrusa extends _$FakePrusa implements Prusa {
       'extruder_target': 200.0,
     });
   }
+
+  @override
+  void addAll(data) {
+    // TODO: implement addAll
+  }
 }
 
 void main() {

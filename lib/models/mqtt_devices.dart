@@ -70,6 +70,10 @@ class Prusa extends _$Prusa {
       'file_name': '',
     });
   }
+
+  void addAll(data) {
+    state = state.addAll(IMap(data));
+  }
 }
 
 typedef DataMapping = ({

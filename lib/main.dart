@@ -34,6 +34,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   MediaKit.ensureInitialized();
 
+  // this tries to access the homebase server to determine the initial network type before running the app
+  setInitialNetworkType();
+
   // I had certificate problems with the mjpeg file from my server, this solved it
   // https://stackoverflow.com/questions/54285172/how-to-solve-flutter-certificate-verify-failed-error-while-performing-a-post-req
   ByteData data = await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
@@ -59,10 +62,9 @@ class HomeBase14App extends ConsumerStatefulWidget {
 
 class _HomeBase14AppState extends ConsumerState<HomeBase14App> {
   Timer? _timer;
-  String lastNetworkType = '';
+  String lastNetworkType = initialNetworkType;
   @override
   void initState() {
-    lastNetworkType = ref.read(initialNetworkTypeProvider);
     super.initState();
     // this was my first method for checking the network type but the ConnectivityResult way is more elegant
     // I let this in here for the time being

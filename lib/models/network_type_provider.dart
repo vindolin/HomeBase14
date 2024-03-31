@@ -9,28 +9,16 @@ part 'network_type_provider.g.dart';
 const networkTypeLocal = 'local';
 const networkTypeMobile = 'mobile';
 
-/// check if we are running on a local or mobile network
-/// intentionally use a blocking socket because this is only called once at the beginning
-bool inLocalNetworkB() {
-  bool result = false;
-  try {
-    var socket = RawSynchronousSocket.connectSync(
-      InternetAddress(config.localServer),
-      80,
-    );
-    socket.closeSync();
-    // homebase14 responds, so we are on a local network
-    result = true;
-  } catch (error) {
-    log(error);
-    // nah, we're not in Kansas anymore
-  }
-  return result;
+String initialNetworkType = networkTypeMobile;
+
+void setInitialNetworkType() async {
+  initialNetworkType = await inLocalNetwork() ? networkTypeLocal : networkTypeMobile;
+  log('initialNetworkType: $initialNetworkType');
 }
 
 Future inLocalNetwork() async {
   bool result = false;
-  await Socket.connect(config.localServer, 80, timeout: const Duration(seconds: 10)).then((socket) {
+  await Socket.connect(config.localServer, 80, timeout: const Duration(seconds: 3)).then((socket) {
     socket.destroy();
     // homebase14 responds, so we are on a local network
     result = true;
@@ -41,20 +29,10 @@ Future inLocalNetwork() async {
   return result;
 }
 
-@riverpod
-class InitialNetworkType extends _$InitialNetworkType {
-  @override
-  String build() {
-    return inLocalNetworkB() ? networkTypeLocal : networkTypeMobile;
-  }
-}
-
 @Riverpod(keepAlive: true)
 class NetworkType extends _$NetworkType {
   @override
   String build() {
-    String initialNetworkType = ref.read(initialNetworkTypeProvider);
-    log('initial: $initialNetworkType');
     return initialNetworkType;
   }
 

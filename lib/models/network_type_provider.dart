@@ -11,7 +11,7 @@ const networkTypeMobile = 'mobile';
 
 String initialNetworkType = networkTypeMobile;
 
-void setInitialNetworkType() async {
+Future setInitialNetworkType() async {
   initialNetworkType = await inLocalNetwork() ? networkTypeLocal : networkTypeMobile;
   log('initialNetworkType: $initialNetworkType');
 }

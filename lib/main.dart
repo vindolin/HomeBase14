@@ -24,6 +24,9 @@ import '/widgets/brightness_button_widget.dart';
 import '/widgets/pulsating_icon_hooks_widget.dart';
 
 void main() async {
+  // this tries to access the homebase server to determine the initial network type before running the app
+  setInitialNetworkType();
+
   var delegate = await LocalizationDelegate.create(
     fallbackLocale: 'de_DE',
     supportedLocales: ['en_US', 'de_DE'],
@@ -33,9 +36,6 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   MediaKit.ensureInitialized();
-
-  // this tries to access the homebase server to determine the initial network type before running the app
-  setInitialNetworkType();
 
   // I had certificate problems with the mjpeg file from my server, this solved it
   // https://stackoverflow.com/questions/54285172/how-to-solve-flutter-certificate-verify-failed-error-while-performing-a-post-req

@@ -1,11 +1,9 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
-import '/widgets/shader_widget.dart';
 import 'armed_switch_button_widget.dart';
 import '../widgets/prusa_progress_widget.dart';
+import '../widgets/shader_button_widget.dart';
 
 class ArmedButtons extends StatelessWidget {
   const ArmedButtons({super.key});
@@ -91,24 +89,7 @@ class ArmedButtons extends StatelessWidget {
                 textOff: translate('armed_buttons.silence.text_off'),
                 confirm: false,
               ),
-              Random().nextDouble() > 0.5
-                  ? const ShaderBox(
-                      // 'raymarching_basic.frag',
-                      'plasma_cube.frag',
-                    )
-                  : const ShaderBox(
-                      'flubber.frag',
-                      parameters: [
-                        ...[0.16, 0.49, .24] /* light1 */,
-                        ...[.19, .9, .03] /* light2 */,
-                      ],
-                      slowDown: 6.0,
-                      // 'pulsing_guts.frag',
-                      // parameters: [
-                      //   ...[4.0, 2.0, 1.0] /* color */,
-                      // ],
-                      // slowDown: 3,
-                    ),
+              const ShaderButton(),
               const PrusaProgress(),
               // const Card(child: Text('BUMP')),
             ];

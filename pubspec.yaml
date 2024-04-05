@@ -145,7 +145,7 @@ flutter:
     - assets/sounds/
 
   shaders:
-    - shaders/*
+    - shaders/
 
     # - shaders/pixelation.frag
     # - shaders/plasma.frag

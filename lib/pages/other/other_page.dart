@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:gap/gap.dart';
 
 import '/utils.dart';
-import '/models/generic_providers.dart';
 import '/widgets/connection_bar_widget.dart';
+import 'widgets/interval_segment_widget.dart';
 import 'widgets/doors_widget.dart';
 import 'widgets/multiplug_widget.dart';
 import 'widgets/humitemps_widget.dart';
@@ -16,17 +17,16 @@ class OtherPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     log('OtherPage.build()');
-    final appLog = ref.watch(appLogProvider);
 
     return Scaffold(
       appBar: AppBar(
         title: Text(translate('device_names.other')),
         actions: const [ConnectionBar()],
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         child: Column(
           children: [
-            const Card(
+            Card(
               child: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Row(
@@ -41,27 +41,53 @@ class OtherPage extends ConsumerWidget {
                 ),
               ),
             ),
-            const Card(
+            Card(
               child: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: DoorsWidget(),
               ),
             ),
-            const Card(
+            Card(
               child: Row(
                 children: [
                   HumiTempWidget(),
                 ],
               ),
             ),
-            Card(
-              clipBehavior: Clip.antiAlias,
-              child: Text(
-                appLog.join('\n'),
-                overflow: TextOverflow.fade,
-              ),
-            ),
             // Text(appLog.length.toString()),
+            Card(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 8.0),
+                      child: Text('Bewegungsmelder'),
+                    ),
+                    Row(
+                      children: [
+                        Text('Terrasse'),
+                        Spacer(),
+                        AlarmIntervalSegmentButtons(
+                          topic: 'home/terraceMotionAlarmInterval',
+                        ),
+                      ],
+                    ),
+                    Divider(),
+                    Row(
+                      children: [
+                        Text('Keller'),
+                        Spacer(),
+                        AlarmIntervalSegmentButtons(
+                          topic: 'home/basementMotionAlarmInterval',
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),

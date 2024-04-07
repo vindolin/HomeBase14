@@ -145,7 +145,13 @@ flutter:
     - assets/sounds/
 
   shaders:
-    - shaders/
+    - shaders/flubber.frag
+    - shaders/raymarching_basic.frag
+    - shaders/pulsing_guts.frag
+    - shaders/tv_static.frag
+    - shaders/plasma_cube.frag
+
+    - shaders/warning.frag
 
     # - shaders/pixelation.frag
     # - shaders/plasma.frag

@@ -91,7 +91,7 @@ class HomePage extends ConsumerWidget {
       body: RefreshIndicator(
         // reload home page on pull down
         onRefresh: () async {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) => const HomePage(),

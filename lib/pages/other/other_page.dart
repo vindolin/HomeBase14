@@ -69,7 +69,7 @@ class OtherPage extends ConsumerWidget {
                         Text('Terrasse'),
                         Spacer(),
                         AlarmIntervalSegmentButtons(
-                          topic: 'home/terraceMotionAlarmInterval',
+                          topic: 'home/motion/alarmInterval/terrace',
                         ),
                       ],
                     ),
@@ -79,7 +79,7 @@ class OtherPage extends ConsumerWidget {
                         Text('Keller'),
                         Spacer(),
                         AlarmIntervalSegmentButtons(
-                          topic: 'home/basementMotionAlarmInterval',
+                          topic: 'home/motion/alarmInterval/basement',
                         ),
                       ],
                     ),

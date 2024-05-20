@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:gap/gap.dart';
 
 import '/utils.dart';
 import '/widgets/connection_bar_widget.dart';
@@ -24,6 +25,7 @@ class OtherPage extends ConsumerWidget {
       ),
       body: const SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Card(
               child: Padding(
@@ -64,20 +66,20 @@ class OtherPage extends ConsumerWidget {
                       padding: EdgeInsets.only(bottom: 8.0),
                       child: Text('Bewegungsmelder'),
                     ),
-                    Row(
+                    Column(
                       children: [
                         Text('Terrasse'),
-                        Spacer(),
+                        Gap(4),
                         AlarmIntervalSegmentButtons(
                           topic: 'home/motion/alarmInterval/terrace',
                         ),
                       ],
                     ),
-                    Divider(),
-                    Row(
+                    Gap(16),
+                    Column(
                       children: [
                         Text('Keller'),
-                        Spacer(),
+                        Gap(4),
                         AlarmIntervalSegmentButtons(
                           topic: 'home/motion/alarmInterval/basement',
                         ),

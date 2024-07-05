@@ -49,6 +49,7 @@ class SolarWatts extends ConsumerWidget {
       maxSolarWatt,
     );
 
+    // nested ternary operators, oh the humanity! (take that Go!)
     String happy = totalWatt == 0.0
         ? '😐'
         : totalWatt > 0.0

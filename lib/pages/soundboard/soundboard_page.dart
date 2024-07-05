@@ -28,18 +28,48 @@ class SoundboardPage extends ConsumerWidget {
               },
               {
                 'topic': 'homebase14/soundboard',
+                'message': 'wilhelm.wav',
+                'icon': '🐶',
+              },
+              {
+                'topic': 'homebase14/soundboard',
+                'message': 'wilhelm.wav',
+                'icon': '🦗',
+              },
+              {
+                'topic': 'homebase14/soundboard',
+                'message': 'wilhelm.wav',
+                'icon': '🦜',
+              },
+              {
+                'topic': 'homebase14/soundboard',
                 'message': 'alarm01.wav',
                 'icon': '🚨',
               },
               {
                 'topic': 'homebase14/soundboard',
                 'message': 'alarm02.wav',
-                'icon': '🚨',
+                'icon': '📯',
               },
               {
                 'topic': 'homebase14/soundboard',
                 'message': 'wilhelm.wav',
                 'icon': '🗡',
+              },
+              {
+                'topic': 'homebase14/soundboard',
+                'message': 'wilhelm.wav',
+                'icon': '🚀',
+              },
+              {
+                'topic': 'homebase14/soundboard',
+                'message': 'wilhelm.wav',
+                'icon': '🛸',
+              },
+              {
+                'topic': 'homebase14/soundboard',
+                'message': 'wilhelm.wav',
+                'icon': '📞',
               },
             ].map((e) {
               return Card(

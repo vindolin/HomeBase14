@@ -44,8 +44,9 @@ The following devices can be controlled/monitored via MQTT messages:
 * Prusa I3 MK3s (USB Serial controller)
 * Sleep modes and output device of my main PC
 * Greenhouse temperature sensors (LoRa)
+* Configuration data is stored in an encrypted file which is decrypted with a user provided key
 
-It also let me view the RTSP streams of two survailance cams ([media_kit](https://github.com/media-kit/media-kit))
+It also lets me view the RTSP streams of two survailance cams ([media_kit](https://github.com/media-kit/media-kit))
 
 > [!TIP]
 > You can find an example bare bones MQTT/Riverpod example that uses a family provider here: https://github.com/vindolin/simple_mqtt_riverpod_example

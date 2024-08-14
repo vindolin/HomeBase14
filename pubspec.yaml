@@ -44,7 +44,7 @@ dependencies:
   hooks_riverpod: ^2.4.10
   riverpod_annotation: ^2.3.4
   dio: ^5.4.0
-  event: ^2.1.2
+  event: ^3.0.1
   freezed_annotation: ^2.4.1
   json_annotation: ^4.8.1
   freezed: ^2.4.7
@@ -67,7 +67,7 @@ dependencies:
   connectivity_plus: ^6.0.1
   webview_flutter: ^4.5.0
   webview_flutter_android: ^3.15.0
-  syncfusion_flutter_charts: ^25.1.35
+  syncfusion_flutter_charts: ^26.1.42
   font_awesome_flutter: ^10.7.0
   decorated_icon: ^1.2.1
 

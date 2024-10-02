@@ -67,7 +67,7 @@ dependencies:
   connectivity_plus: ^6.0.1
   webview_flutter: ^4.5.0
   webview_flutter_android: ^3.15.0
-  syncfusion_flutter_charts: ^26.1.42
+  syncfusion_flutter_charts: ^27.1.51
   font_awesome_flutter: ^10.7.0
   decorated_icon: ^1.2.1
 
@@ -105,7 +105,7 @@ dependencies:
   # raw_sound: ^0.3.0+1
 
 dev_dependencies:
-  flutter_launcher_icons: "^0.13.1"
+  flutter_launcher_icons: ^0.14.1
   build_runner: ^2.4.8
   riverpod_generator: ^2.3.11
   custom_lint: ^0.6.0
@@ -118,7 +118,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
   json_serializable: ^6.7.1
   analyzer: ^6.2.0
 

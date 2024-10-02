@@ -32,7 +32,7 @@ IMap<String, LightDevice> lightDevices = IMap(
     ),
     'kamin': LightDevice(
       id: 'kamin',
-      name: 'Kamin',
+      name: 'Kamin (klein)',
       topicGet: 'stat/dose2/POWER',
       topicSet: 'cmnd/dose2/POWER',
       state: 'OFF',

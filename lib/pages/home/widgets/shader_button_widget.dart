@@ -5,7 +5,7 @@ import '/widgets/shader_widget.dart';
 
 const shaders = [
   ['plasma_cube.frag', <double>[], 1.0],
-  ['spiral.frag', <double>[], 1.0],
+  // ['spiral.frag', <double>[], 1.0],
   [
     'flubber.frag',
     [

@@ -6,5 +6,5 @@ flutter pub upgrade --major-versions
 
 
 // ignore changes to tracked file
-git update-index --assume-unchanged lib/models/secrets.dart
-git update-index --no-assume-unchanged lib/models/secrets.dart
+git update-index --assume-unchanged lib/models/secrets_new.dart
+git update-index --no-assume-unchanged lib/models/secrets_new.dart

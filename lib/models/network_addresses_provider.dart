@@ -15,7 +15,7 @@ class NetworkAddresses extends _$NetworkAddresses {
     final secrets = ref.watch(secretsProvider);
 
     final serverAddress = secrets['network']['serverAddress'];
-    final grafanaAddress = secrets['network']['serverAddress'];
+    final grafanaAddress = secrets['network']['grafanaAddress'];
     final influxdbUser = secrets['general']['influxdbUser'];
     final influxdbPassword = secrets['general']['influxdbPassword'];
     final snapshotPort = secrets['general']['snapshotPort'];

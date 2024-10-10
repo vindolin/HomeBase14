@@ -64,5 +64,4 @@ pubspec.lock
 .vscode/HomeBase14.code-workspace
 HomeBase14.code-workspace
 lib/decrypt_old_key.dart
-lib/models/secrets_new.dart
 .VSCodeCounter/

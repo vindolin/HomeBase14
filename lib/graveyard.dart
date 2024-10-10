@@ -533,3 +533,22 @@
 //     frequency: const Duration(minutes: 1),
 //   );
 // }
+
+
+// network_addresses
+
+// final gardenCamUser = secrets['general']['gardenCamUser'];
+// final gardenCamPassword = secrets['general']['gardenCamPassword'];
+// final gardenCamVideoAddress = secrets['network']['gardenCamVideoAddress'];
+// final gardenCamSnapshotPort = secrets['general']['gardenCamSnapshotPort'];
+
+// 'garden': {
+//   'snapshotUrl': 'http://$serverAddress:$snapshotPort/cam_image_garden.jpg',
+//   'mjpegUrlLow':
+//       'http://$gardenCamUser:$gardenCamPassword@$gardenCamVideoAddress:$gardenCamSnapshotPort/mjpegstream.cgi?-chn=13&-usr=$gardenCamUser&-pwd=$gardenCamPassword',
+//   'mjpegUrlHigh':
+//       'http://$gardenCamUser:$gardenCamPassword@$gardenCamVideoAddress:$gardenCamSnapshotPort/mjpegstream.cgi?-chn=11&-usr=$gardenCamUser&-pwd=$gardenCamPassword',
+//   'videoStreamUrlLow': 'rtsp://$gardenCamUser:$gardenCamPassword@$gardenCamVideoAddress:$gardenCamVideoPort/11',
+//   'videoStreamUrlHigh': 'rtsp://$gardenCamUser:$gardenCamPassword@$gardenCamVideoAddress:$gardenCamVideoPort/11',
+// },
+

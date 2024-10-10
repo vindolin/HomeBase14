@@ -51,11 +51,13 @@ class NetworkAddresses extends _$NetworkAddresses {
       'garden': {
         'snapshotUrl': 'http://$serverAddress:$snapshotPort/cam_image_garden.jpg',
         'mjpegUrlLow':
-            'http://$gardenCamUser:$gardenCamPassword@$gardenCamVideoAddress:$gardenCamSnapshotPort/mjpegstream.cgi?-chn=13&-usr=$gardenCamUser&-pwd=$gardenCamPassword',
+            'https://$gardenCamUser:$gardenCamPassword@$gardenCamVideoAddress:$gardenCamSnapshotPort/livestream/13?action=play&media=mjpeg&user=$gardenCamUser&pwd=$gardenCamPassword',
         'mjpegUrlHigh':
-            'http://$gardenCamUser:$gardenCamPassword@$gardenCamVideoAddress:$gardenCamSnapshotPort/mjpegstream.cgi?-chn=11&-usr=$gardenCamUser&-pwd=$gardenCamPassword',
-        'videoStreamUrlLow': 'rtsp://$gardenCamUser:$gardenCamPassword@$gardenCamVideoAddress:$gardenCamVideoPort/11',
-        'videoStreamUrlHigh': 'rtsp://$gardenCamUser:$gardenCamPassword@$gardenCamVideoAddress:$gardenCamVideoPort/11',
+            'https://$gardenCamUser:$gardenCamPassword@$gardenCamVideoAddress:$gardenCamSnapshotPort/livestream/11?action=play&media=mjpeg&user=$gardenCamUser&pwd=$gardenCamPassword',
+        'videoStreamUrlLow':
+            'rtsp://$gardenCamUser:$gardenCamPassword@$gardenCamVideoAddress:$gardenCamVideoPort/livestream/13',
+        'videoStreamUrlHigh':
+            'rtsp://$gardenCamUser:$gardenCamPassword@$gardenCamVideoAddress:$gardenCamVideoPort/livestream/12',
       },
     };
 

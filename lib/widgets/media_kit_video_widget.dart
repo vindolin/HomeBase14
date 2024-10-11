@@ -6,7 +6,6 @@ import 'package:media_kit_video/media_kit_video.dart';
 import '/configuration.dart' as config;
 import '/utils.dart';
 import '/pages/cams/fullscreen_video_page.dart';
-import '/widgets/shader_widget.dart';
 
 void portaitOrientation() {
   if (!platformIsDesktop) {
@@ -76,32 +75,35 @@ class MediaKitVideoWidgetState extends State<MediaKitVideoWidget> {
         // width: MediaQuery.of(context).size.width,
         // height: MediaQuery.of(context).size.width * 9.0 / 16.0,
         // Use [Video] widget to display video output.
-        child: isBuffering
-            ? const ShaderWidget('tv_static.frag')
-            : GestureDetector(
-                child: Video(
-                  controller: controller,
-                  onEnterFullscreen: () async {
-                    _player.setVolume(0.5);
-                    landscapeOrientation();
-                  },
-                  onExitFullscreen: () async {
-                    _player.setVolume(0.0);
-                    portaitOrientation();
-                  },
-                  controls: NoVideoControls,
-                ),
-                onTap: () {
-                  // set video to fullscreen
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FullscreenVideo(videoUrl: widget.videoUrl),
-                    ),
-                  );
-                },
+        child: GestureDetector(
+          child: Video(
+            controller: controller,
+            onEnterFullscreen: () async {
+              _player.setVolume(0.5);
+              landscapeOrientation();
+            },
+            onExitFullscreen: () async {
+              _player.setVolume(0.0);
+              portaitOrientation();
+            },
+            controls: NoVideoControls,
+          ),
+          onTap: () {
+            // set video to fullscreen
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => FullscreenVideo(videoUrl: widget.videoUrl),
               ),
+            );
+          },
+        ),
       ),
     );
   }
 }
+
+// import '/widgets/shader_widget.dart';
+// ShaderWidget was messing up the video display!!!
+// isBuffering ? const ShaderWidget('tv_static.frag') :
+// TODO use stack to overlay the shader on top of the video

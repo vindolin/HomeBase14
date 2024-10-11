@@ -52,6 +52,8 @@ class Cameras extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final camSettings = ref.watch(networkAddressesProvider);
     // log(camSettings['door']['videoStreamUrlLow']);
+    // showVideo is a boolean that determines whether to show the video stream or the snapshot
+    // configurable in the settings page
     final showVideo = ref.watch(
       appSettingsProvider.select((appSettings) => appSettings.showVideo),
     );

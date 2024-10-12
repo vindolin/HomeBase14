@@ -25,12 +25,12 @@ void landscapeOrientation() {
 }
 
 class MediaKitVideoWidget extends StatefulWidget {
-  final String videoUrl;
+  final Playlist videoUrls;
   final bool muted;
 
   const MediaKitVideoWidget({
     super.key,
-    required this.videoUrl,
+    required this.videoUrls,
     this.muted = false,
   });
   @override
@@ -49,7 +49,7 @@ class MediaKitVideoWidgetState extends State<MediaKitVideoWidget> {
   @override
   void initState() {
     super.initState();
-    _player.open(Media(widget.videoUrl));
+    _player.open(widget.videoUrls);
     if (widget.muted) {
       _player.setVolume(0);
     }
@@ -60,6 +60,7 @@ class MediaKitVideoWidgetState extends State<MediaKitVideoWidget> {
         });
       }
     });
+    _player.setPlaylistMode(PlaylistMode.loop);
   }
 
   @override
@@ -84,12 +85,16 @@ class MediaKitVideoWidgetState extends State<MediaKitVideoWidget> {
           },
           controls: NoVideoControls,
         ),
+        onTap: () {
+          // play next video in playlist
+          _player.next();
+        },
         onDoubleTap: () {
-          // set video to fullscreen
+          // open video in fullscreen mode
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => FullscreenVideo(videoUrl: widget.videoUrl),
+              builder: (context) => FullscreenVideo(videoUrls: widget.videoUrls),
             ),
           );
         },

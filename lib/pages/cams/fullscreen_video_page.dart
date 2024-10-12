@@ -7,8 +7,8 @@ import '/configuration.dart' as config;
 import '/utils.dart';
 
 class FullscreenVideo extends StatefulWidget {
-  final String videoUrl;
-  const FullscreenVideo({super.key, required this.videoUrl});
+  final Playlist videoUrls;
+  const FullscreenVideo({super.key, required this.videoUrls});
 
   @override
   State<FullscreenVideo> createState() => FullscreenVideoState();
@@ -20,14 +20,16 @@ class FullscreenVideoState extends State<FullscreenVideo> {
       logLevel: config.mediakitPlayerLogLevl,
     ),
   );
+
   late final controller = VideoController(player);
 
   @override
   void initState() {
     super.initState();
-    player.open(Media(
-      widget.videoUrl,
-    ));
+    player.open(
+      widget.videoUrls,
+    );
+    player.setPlaylistMode(PlaylistMode.loop);
   }
 
   @override
@@ -47,6 +49,7 @@ class FullscreenVideoState extends State<FullscreenVideo> {
           ? Video(
               controller: controller,
               controls: NoVideoControls,
+              // TODO:low wrap in gesture detector to play next video
             )
           : RotatedBox(
               quarterTurns: MediaQuery.of(context).orientation == Orientation.portrait ? 1 : 0,
@@ -55,7 +58,11 @@ class FullscreenVideoState extends State<FullscreenVideo> {
                   controller: controller,
                   controls: NoVideoControls,
                 ),
-                onTap: () => Navigator.pop(context),
+                // onTap: () => Navigator.pop(context),
+                onTap: () {
+                  // play next
+                  player.next();
+                },
               ),
             ),
     );

@@ -7,7 +7,7 @@ import '/configuration.dart' as config;
 import '/utils.dart';
 import '/pages/cams/fullscreen_video_page.dart';
 
-void portaitOrientation() {
+void portraitOrientation() {
   if (!platformIsDesktop) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -71,33 +71,28 @@ class MediaKitVideoWidgetState extends State<MediaKitVideoWidget> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: SizedBox(
-        // width: MediaQuery.of(context).size.width,
-        // height: MediaQuery.of(context).size.width * 9.0 / 16.0,
-        // Use [Video] widget to display video output.
-        child: GestureDetector(
-          child: Video(
-            controller: controller,
-            onEnterFullscreen: () async {
-              _player.setVolume(0.5);
-              landscapeOrientation();
-            },
-            onExitFullscreen: () async {
-              _player.setVolume(0.0);
-              portaitOrientation();
-            },
-            controls: NoVideoControls,
-          ),
-          onTap: () {
-            // set video to fullscreen
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => FullscreenVideo(videoUrl: widget.videoUrl),
-              ),
-            );
+      child: GestureDetector(
+        child: Video(
+          controller: controller,
+          onEnterFullscreen: () async {
+            _player.setVolume(0.5);
+            landscapeOrientation();
           },
+          onExitFullscreen: () async {
+            _player.setVolume(0.0);
+            portraitOrientation();
+          },
+          controls: NoVideoControls,
         ),
+        onDoubleTap: () {
+          // set video to fullscreen
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => FullscreenVideo(videoUrl: widget.videoUrl),
+            ),
+          );
+        },
       ),
     );
   }

@@ -6,8 +6,6 @@ import 'package:media_kit/media_kit.dart';
 import '/widgets/media_kit_video_widget.dart';
 import '/models/network_addresses_provider.dart';
 
-const allCameraIds = ['door', 'garden'];
-
 class CamVideoPage extends ConsumerWidget {
   final String camId;
 
@@ -20,7 +18,7 @@ class CamVideoPage extends ConsumerWidget {
     final thisCam = Media(networkAddresses[camId]!['videoStreamUrlHigh']!);
 
     // onTap cycles through all cameras
-    final otherCams = allCameraIds.where((id) {
+    final otherCams = networkAddresses['allCameraIds'].where((id) {
       return id != camId;
     }).map(
       (id) {

@@ -131,6 +131,7 @@ class IncubatorPage extends ConsumerWidget {
                               'koji': {'name': 'Koji', 'temp': 30},
                               'natto': {'name': 'Natto', 'temp': 42},
                               'tempeh': {'name': 'Tempeh', 'temp': 34},
+                              'yoghurt': {'name': 'Yoghurt', 'temp': 43},
                               'lactobazillus': {'name': 'Milchsauer', 'temp': 21},
                             }.entries.map(
                                   (e) => ElevatedButton(

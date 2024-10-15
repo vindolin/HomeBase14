@@ -52,50 +52,48 @@ class FullscreenCamVideoState extends State<FullscreenCamVideo> {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
-    return CallbackShortcuts(
-      // TODO: how can this be done globally?
-      bindings: <ShortcutActivator, VoidCallback>{
-        const SingleActivator(LogicalKeyboardKey.escape): () {
-          Navigator.pop(context);
-        },
-      },
-      child: Focus(
-        autofocus: true,
-        child: Scaffold(
-          body: Stack(
-            children: [
-              GestureDetector(
-                child: platformIsDesktop
-                    ? Video(
-                        controller: controller,
-                        controls: NoVideoControls,
-                      )
-                    : RotatedBox(
-                        quarterTurns: MediaQuery.of(context).orientation == Orientation.portrait ? 1 : 0,
+    return Scaffold(
+      body: Stack(
+        children: [
+          GestureDetector(
+            child: platformIsDesktop
+                ? CallbackShortcuts(
+                    // TODO: how can this be done globally?
+                    bindings: <ShortcutActivator, VoidCallback>{
+                        const SingleActivator(LogicalKeyboardKey.escape): () {
+                          Navigator.pop(context);
+                        },
+                      },
+                    child: Focus(
+                        autofocus: true,
                         child: Video(
                           controller: controller,
                           controls: NoVideoControls,
-                        ),
-                      ),
-                onTap: () {
-                  player.next();
-                },
-                onDoubleTap: () => toggleMuted(),
-              ),
-              Positioned(
-                top: 5,
-                right: 5,
-                child: IconButton(
-                  icon: Icon(
-                    muted ? Icons.volume_off : Icons.volume_up,
-                    color: muted ? Colors.red : Colors.green,
+                        )))
+                : RotatedBox(
+                    quarterTurns: MediaQuery.of(context).orientation == Orientation.portrait ? 1 : 0,
+                    child: Video(
+                      controller: controller,
+                      controls: NoVideoControls,
+                    ),
                   ),
-                  onPressed: toggleMuted,
-                ),
-              ),
-            ],
+            onTap: () {
+              player.next();
+            },
+            onDoubleTap: () => toggleMuted(),
           ),
-        ),
+          Positioned(
+            top: 5,
+            right: 5,
+            child: IconButton(
+              icon: Icon(
+                muted ? Icons.volume_off : Icons.volume_up,
+                color: muted ? Colors.red : Colors.green,
+              ),
+              onPressed: toggleMuted,
+            ),
+          ),
+        ],
       ),
     );
   }

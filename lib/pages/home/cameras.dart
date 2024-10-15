@@ -7,9 +7,20 @@ import '/models/network_addresses_provider.dart';
 import '/widgets/media_kit_video_widget.dart';
 import '/widgets/refreshable_image_widget.dart';
 import '/pages/cams/cam_image_page.dart';
-import '/pages/cams/cam_video_page.dart';
+// import '/pages/cams/cam_video_page.dart';
+import '/pages/cams/fullscreen_cam_video_page.dart';
 
-Widget _camContainerMobile(Widget child, BuildContext context, String camId) {
+Widget _camContainerMobile(Widget child, BuildContext context, String camId, Map<String, dynamic> camSettings) {
+  final thisCam = Media(camSettings[camId]!['videoStreamUrlHigh']!);
+  final otherCams = camSettings['allCameraIds'].keys.where((id) {
+    return id != camId;
+  }).map(
+    (id) {
+      return Media(camSettings[id]!['videoStreamUrlHigh']!);
+    },
+  );
+  final playlist = Playlist([thisCam, ...otherCams]);
+
   return InkWell(
     child: Card(
       margin: EdgeInsets.zero,
@@ -24,7 +35,8 @@ Widget _camContainerMobile(Widget child, BuildContext context, String camId) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => CamVideoPage(camId: camId),
+          // builder: (context) => CamVideoPage(camId: camId),
+          builder: (context) => FullscreenCamVideo(videoUrls: playlist),
         ),
       );
     },
@@ -79,6 +91,7 @@ class Cameras extends ConsumerWidget {
                     ),
                     context,
                     camId,
+                    camSettings,
                   );
                 }
               },

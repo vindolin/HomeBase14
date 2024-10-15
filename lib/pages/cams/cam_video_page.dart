@@ -18,7 +18,7 @@ class CamVideoPage extends ConsumerWidget {
     final thisCam = Media(networkAddresses[camId]!['videoStreamUrlHigh']!);
 
     // onTap cycles through all cameras
-    final otherCams = networkAddresses['allCameraIds'].where((id) {
+    final otherCams = networkAddresses['allCameraIds'].keys.where((id) {
       return id != camId;
     }).map(
       (id) {

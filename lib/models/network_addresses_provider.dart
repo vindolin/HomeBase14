@@ -37,7 +37,10 @@ class NetworkAddresses extends _$NetworkAddresses {
     final networkAddresses = {
       'grafana': 'https://$grafanaAddress/d/$grafanaProjectHash/homebase?orgId=1&refresh=10s&from=now-12h&to=now',
       'influxdb': 'https://$influxdbUser:$influxdbPassword@$serverAddress:8085/query?pretty=false',
-      'allCameraIds': ['door', 'garden'],
+      'allCameraIds': {
+        'door': 'Door',
+        'garden': 'Garden',
+      },
       'door': {
         'snapshotUrl': 'http://$serverAddress:$snapshotPort/cam_image_door.jpg',
         'mjpegUrlLow':

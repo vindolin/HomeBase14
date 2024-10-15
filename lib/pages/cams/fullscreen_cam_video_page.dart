@@ -60,16 +60,18 @@ class FullscreenCamVideoState extends State<FullscreenCamVideo> {
                 ? CallbackShortcuts(
                     // TODO: how can this be done globally?
                     bindings: <ShortcutActivator, VoidCallback>{
-                        const SingleActivator(LogicalKeyboardKey.escape): () {
-                          Navigator.pop(context);
-                        },
+                      const SingleActivator(LogicalKeyboardKey.escape): () {
+                        Navigator.pop(context);
                       },
+                    },
                     child: Focus(
-                        autofocus: true,
-                        child: Video(
-                          controller: controller,
-                          controls: NoVideoControls,
-                        )))
+                      autofocus: true,
+                      child: Video(
+                        controller: controller,
+                        controls: NoVideoControls,
+                      ),
+                    ),
+                  )
                 : RotatedBox(
                     quarterTurns: MediaQuery.of(context).orientation == Orientation.portrait ? 1 : 0,
                     child: Video(

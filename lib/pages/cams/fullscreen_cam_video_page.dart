@@ -47,6 +47,28 @@ class FullscreenCamVideoState extends State<FullscreenCamVideo> {
     player.setVolume(muted ? 0.0 : 100.0);
   }
 
+  Widget buildVideoWidget() {
+    return Stack(
+      children: [
+        Video(
+          controller: controller,
+          controls: NoVideoControls,
+        ),
+        Positioned(
+          top: 5,
+          right: 5,
+          child: IconButton(
+            icon: Icon(
+              muted ? Icons.volume_off : Icons.volume_up,
+              color: muted ? Colors.red : Colors.green,
+            ),
+            onPressed: toggleMuted,
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -66,34 +88,17 @@ class FullscreenCamVideoState extends State<FullscreenCamVideo> {
                     },
                     child: Focus(
                       autofocus: true,
-                      child: Video(
-                        controller: controller,
-                        controls: NoVideoControls,
-                      ),
+                      child: buildVideoWidget(),
                     ),
                   )
                 : RotatedBox(
                     quarterTurns: MediaQuery.of(context).orientation == Orientation.portrait ? 1 : 0,
-                    child: Video(
-                      controller: controller,
-                      controls: NoVideoControls,
-                    ),
+                    child: buildVideoWidget(),
                   ),
             onTap: () {
               player.next();
             },
             onDoubleTap: () => toggleMuted(),
-          ),
-          Positioned(
-            top: 5,
-            right: 5,
-            child: IconButton(
-              icon: Icon(
-                muted ? Icons.volume_off : Icons.volume_up,
-                color: muted ? Colors.red : Colors.green,
-              ),
-              onPressed: toggleMuted,
-            ),
           ),
         ],
       ),

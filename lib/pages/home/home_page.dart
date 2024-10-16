@@ -82,7 +82,7 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appVersion = ref.watch(appVersionProvider);
+    final appVersion = ref.watch(appVersionProvider); // 1.11.3 (72))
     final appSettings = ref.watch(appSettingsProvider);
 
     return Scaffold(
@@ -186,7 +186,8 @@ class HomePage extends ConsumerWidget {
                                   const WidgetSpan(child: SizedBox(width: 15)),
                                   TextSpan(
                                     text: appVersion.when(
-                                        data: (value) => 'b:${RegExp(r'\d\d+').firstMatch(value)?.group(0)}',
+                                        data: (value) =>
+                                            'b:${RegExp(r'\d+\.\d+\.\d+ \((\d+)\)').firstMatch(value)?.group(1)}',
                                         loading: () => '...',
                                         error: (e, s) => '...'),
                                     style: const TextStyle(

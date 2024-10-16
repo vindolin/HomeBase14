@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:home_base_14/shortcut_wrapper.dart';
 
 import '/utils.dart';
 import '/models/mqtt_devices.dart';
@@ -224,19 +225,22 @@ class LightPage extends ConsumerWidget {
       ...smartBulbDeviceTiles,
     ];
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(translate('device_names.lights')),
-        actions: const [ConnectionBar()],
-      ),
-      body: ListView.separated(
-        separatorBuilder: (context, index) {
-          return !noDividerIndices.contains(index) ? const Divider() : Container();
-        },
-        itemCount: combinedListViewWidgets.length,
-        itemBuilder: (context, index) {
-          return combinedListViewWidgets[index];
-        },
+    return shortcutWrapper(
+      context,
+      Scaffold(
+        appBar: AppBar(
+          title: Text(translate('device_names.lights')),
+          actions: const [ConnectionBar()],
+        ),
+        body: ListView.separated(
+          separatorBuilder: (context, index) {
+            return !noDividerIndices.contains(index) ? const Divider() : Container();
+          },
+          itemCount: combinedListViewWidgets.length,
+          itemBuilder: (context, index) {
+            return combinedListViewWidgets[index];
+          },
+        ),
       ),
     );
   }

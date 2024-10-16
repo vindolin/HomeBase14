@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '/shortcut_wrapper.dart';
 import '/models/mqtt_providers.dart';
 
 final messageQueue = Queue();
@@ -77,16 +78,19 @@ class MqttLogPage extends ConsumerWidget {
   const MqttLogPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('MQTT Message Log'),
-      ),
-      body: Center(
-        child: Container(
-          color: Colors.black,
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: MqttLog(),
+    return shortcutWrapper(
+      context,
+      Scaffold(
+        appBar: AppBar(
+          title: const Text('MQTT Message Log'),
+        ),
+        body: Center(
+          child: Container(
+            color: Colors.black,
+            child: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: MqttLog(),
+            ),
           ),
         ),
       ),

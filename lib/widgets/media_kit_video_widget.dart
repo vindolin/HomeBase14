@@ -94,7 +94,9 @@ class MediaKitVideoWidgetState extends State<MediaKitVideoWidget> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => FullscreenVideo(videoUrls: widget.videoUrls),
+              builder: (context) => FullscreenVideo(
+                videoUrls: widget.videoUrls,
+              ),
             ),
           );
         },
@@ -102,8 +104,3 @@ class MediaKitVideoWidgetState extends State<MediaKitVideoWidget> {
     );
   }
 }
-
-// import '/widgets/shader_widget.dart';
-// ShaderWidget was messing up the video display!!!
-// isBuffering ? const ShaderWidget('tv_static.frag') :
-// TODO use stack to overlay the shader on top of the video

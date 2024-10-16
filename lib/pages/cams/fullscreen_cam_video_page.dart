@@ -39,7 +39,6 @@ class FullscreenCamVideoState extends State<FullscreenCamVideo> {
         });
       }
     });
-
     player.setPlaylistMode(PlaylistMode.loop);
     player.setVolume(0.0);
   }
@@ -80,7 +79,10 @@ class FullscreenCamVideoState extends State<FullscreenCamVideo> {
           Center(
             child: AspectRatio(
               aspectRatio: 16 / 9,
-              child: ShaderWidget('tv_static.frag'),
+              child: Opacity(
+                opacity: 0.7,
+                child: ShaderWidget('tv_static.frag'),
+              ),
             ),
           ),
       ],

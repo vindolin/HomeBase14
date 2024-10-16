@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 
-import '/configuration.dart' as config;
 import '/utils.dart';
+import '/shortcut_wrapper.dart';
+import '/widgets/shader_widget.dart';
+import '/configuration.dart' as config;
 
 class FullscreenCamVideo extends StatefulWidget {
   final Playlist videoUrls;
@@ -21,7 +23,8 @@ class FullscreenCamVideoState extends State<FullscreenCamVideo> {
     ),
   );
   late final controller = VideoController(player);
-  bool muted = true;
+  bool muted = true; // start video muted
+  bool isBuffering = true; // used to show tv static when buffering
 
   @override
   void initState() {
@@ -29,6 +32,14 @@ class FullscreenCamVideoState extends State<FullscreenCamVideo> {
     player.open(
       widget.videoUrls,
     );
+    player.stream.buffering.listen((buffering) {
+      if (mounted) {
+        setState(() {
+          isBuffering = buffering;
+        });
+      }
+    });
+
     player.setPlaylistMode(PlaylistMode.loop);
     player.setVolume(0.0);
   }
@@ -65,6 +76,13 @@ class FullscreenCamVideoState extends State<FullscreenCamVideo> {
             onPressed: toggleMuted,
           ),
         ),
+        if (isBuffering)
+          Center(
+            child: AspectRatio(
+              aspectRatio: 16 / 9,
+              child: ShaderWidget('tv_static.frag'),
+            ),
+          ),
       ],
     );
   }
@@ -74,33 +92,25 @@ class FullscreenCamVideoState extends State<FullscreenCamVideo> {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
-    return Scaffold(
-      body: Stack(
-        children: [
-          GestureDetector(
-            child: platformIsDesktop
-                ? CallbackShortcuts(
-                    // TODO: how can this be done globally?
-                    bindings: <ShortcutActivator, VoidCallback>{
-                      const SingleActivator(LogicalKeyboardKey.escape): () {
-                        Navigator.pop(context);
-                      },
-                    },
-                    child: Focus(
-                      autofocus: true,
+    return shortcutWrapper(
+      context,
+      Scaffold(
+        body: Stack(
+          children: [
+            GestureDetector(
+              child: platformIsDesktop
+                  ? buildVideoWidget()
+                  : RotatedBox(
+                      quarterTurns: MediaQuery.of(context).orientation == Orientation.portrait ? 1 : 0,
                       child: buildVideoWidget(),
                     ),
-                  )
-                : RotatedBox(
-                    quarterTurns: MediaQuery.of(context).orientation == Orientation.portrait ? 1 : 0,
-                    child: buildVideoWidget(),
-                  ),
-            onTap: () {
-              player.next();
-            },
-            onDoubleTap: () => toggleMuted(),
-          ),
-        ],
+              onTap: () {
+                player.next();
+              },
+              onDoubleTap: () => toggleMuted(),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 
-import '/pages/cams/fullscreen_video_page.dart';
 import '/configuration.dart' as config;
 import '/utils.dart';
+import '/pages/cams/fullscreen_video_page.dart';
 
 void portraitOrientation() {
   if (!platformIsDesktop) {

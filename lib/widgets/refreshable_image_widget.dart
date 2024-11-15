@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:focus_detector/focus_detector.dart';
-import 'package:home_base_14/models/network_type_provider.dart';
+import '/models/network_type_provider.dart';
 
 // import '/utils.dart' as d;
 import '/models/app_settings_provider.dart';

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:media_kit/media_kit.dart';
+// import 'package:media_kit_video/media_kit_video.dart';
+
 import '/models/app_settings_provider.dart';
 import '/models/mqtt_providers.dart'; //need this for doorAlarmProvider (not needed anymore)
 import '/models/network_addresses_provider.dart';
@@ -48,6 +50,14 @@ Widget _camContainerMobile(Widget child, BuildContext context, String camId, Map
         ),
       );
     },
+    // onSecondaryTap: () {
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //       builder: (context) => SideBySideCamsPage(camId: camId),
+    //     ),
+    //   );
+    // },
   );
 }
 
@@ -80,7 +90,16 @@ class Cameras extends ConsumerWidget {
                   return ClipRRect(
                     borderRadius: BorderRadius.circular(5), // adjust the value as needed
                     child: MediaKitVideoWidget(
-                        videoUrls: Playlist([Media(camSettings[camId]!['videoStreamUrlLow']!)]), muted: true),
+                      videoUrls: Playlist([Media(camSettings[camId]!['videoStreamUrlLow']!)]),
+                      muted: true,
+                      controls: (state) {
+                        return Icon(
+                          Icons.pause,
+                          size: 128,
+                          color: Colors.white,
+                        );
+                      },
+                    ),
                   );
                 } else {
                   return _camContainerMobile(

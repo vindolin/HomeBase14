@@ -27,11 +27,13 @@ void landscapeOrientation() {
 class MediaKitVideoWidget extends StatefulWidget {
   final Playlist videoUrls;
   final bool muted;
+  final dynamic controls;
 
   const MediaKitVideoWidget({
     super.key,
     required this.videoUrls,
     this.muted = false,
+    this.controls,
   });
   @override
   MediaKitVideoWidgetState createState() => MediaKitVideoWidgetState();
@@ -83,7 +85,7 @@ class MediaKitVideoWidgetState extends State<MediaKitVideoWidget> {
             _player.setVolume(0.0);
             portraitOrientation();
           },
-          controls: NoVideoControls,
+          controls: widget.controls,
         ),
         onTap: () {
           // play next video in playlist

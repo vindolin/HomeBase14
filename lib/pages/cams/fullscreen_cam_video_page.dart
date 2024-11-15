@@ -49,6 +49,22 @@ class FullscreenCamVideoState extends State<FullscreenCamVideo> {
     super.dispose();
   }
 
+  Widget makeIconButton(bool muted) {
+    return ColorFiltered(
+      colorFilter: const ColorFilter.mode(
+        Colors.transparent,
+        BlendMode.difference,
+      ),
+      child: IconButton(
+        icon: Icon(
+          muted ? Icons.volume_off : Icons.volume_up,
+          color: muted ? Colors.red : Colors.green,
+        ),
+        onPressed: toggleMuted,
+      ),
+    );
+  }
+
   // setVolume method
   void toggleMuted() {
     setState(() {
@@ -61,19 +77,18 @@ class FullscreenCamVideoState extends State<FullscreenCamVideo> {
     return Stack(
       children: [
         Video(
+          filterQuality: FilterQuality.medium,
           controller: controller,
           controls: NoVideoControls,
         ),
-        Positioned(
-          top: 5,
-          right: 5,
-          child: IconButton(
-            icon: Icon(
-              muted ? Icons.volume_off : Icons.volume_up,
-              color: muted ? Colors.red : Colors.green,
-            ),
-            onPressed: toggleMuted,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Opacity(
+              opacity: 0.5,
+              child: makeIconButton(muted),
+            )
+          ],
         ),
         if (isBuffering)
           Center(

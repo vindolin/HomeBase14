@@ -11,5 +11,6 @@
         "!dart",
         "!json",
         "!yaml"
-    ]
+    ],
+    "dart.flutterSdkPath": "C:\\src\\flutter_win"
 }

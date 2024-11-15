@@ -15,7 +15,7 @@ final mqttConnectionStateProvider = AutoDisposeNotifierProvider<MqttConnectionSt
   MqttConnectionStateX.new,
   name: r'mqttConnectionStateProvider',
 );
-typedef MqttConnectionStateRef = AutoDisposeNotifierProviderRef<mqtt.MqttConnectionState>;
+typedef MqttConnectionStateRef = Ref<mqtt.MqttConnectionState>;
 
 abstract class _$MqttConnectionState extends AutoDisposeNotifier<mqtt.MqttConnectionState> {
   @override

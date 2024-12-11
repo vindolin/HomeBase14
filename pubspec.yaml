@@ -81,9 +81,9 @@ dependencies:
       ref: master
   flutter_mjpeg: ^2.0.4
   package_info_plus: ^8.0.3
-  # ir_sensor_plugin: ^0.3.0
-  ir_sensor_plugin:
-    path: /github/ir_sensor_plugin
+  ir_sensor_plugin: ^0.3.0
+  # ir_sensor_plugin:
+  #   path: /github/ir_sensor_plugin
   flutter_spinbox: ^0.13.1
   audioplayers: ^6.1.0
   media_kit: ^1.1.11

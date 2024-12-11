@@ -92,13 +92,13 @@ class Cameras extends ConsumerWidget {
                     child: MediaKitVideoWidget(
                       videoUrls: Playlist([Media(camSettings[camId]!['videoStreamUrlLow']!)]),
                       muted: true,
-                      controls: (state) {
-                        return Icon(
-                          Icons.pause,
-                          size: 128,
-                          color: Colors.white,
-                        );
-                      },
+                      // controls: (state) {
+                      //   return Icon(
+                      //     Icons.pause,
+                      //     size: 128,
+                      //     color: Colors.white,
+                      //   );
+                      // },
                     ),
                   );
                 } else {

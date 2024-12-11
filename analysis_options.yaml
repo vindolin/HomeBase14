@@ -34,5 +34,6 @@ analyzer:
     - "lib/graveyard.dart"
     - "**/*.g.dart"
     - "dev/shaders/*.*"
+    - "bak/*.*"
   plugins:
     - custom_lint

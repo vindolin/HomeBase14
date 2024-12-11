@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:media_kit/media_kit.dart';
@@ -47,11 +49,13 @@ class MediaKitVideoWidgetState extends State<MediaKitVideoWidget> {
   );
   late final controller = VideoController(_player);
   bool isBuffering = true;
+  Timer? _reloadTimer;
 
   @override
   void initState() {
     super.initState();
     _player.open(widget.videoUrls);
+
     if (widget.muted) {
       _player.setVolume(0);
     }
@@ -63,10 +67,25 @@ class MediaKitVideoWidgetState extends State<MediaKitVideoWidget> {
       }
     });
     _player.setPlaylistMode(PlaylistMode.loop);
+    _startReloadTimer();
+  }
+
+  void _startReloadTimer() {
+    _reloadTimer?.cancel(); // Cancel any existing timer
+    _reloadTimer = Timer.periodic(Duration(minutes: 10), (timer) {
+      _reloadVideo();
+    });
+  }
+
+  void _reloadVideo() {
+    _player.stop();
+    _player.open(widget.videoUrls);
+    _player.play();
   }
 
   @override
   void dispose() {
+    _reloadTimer?.cancel();
     _player.dispose();
     super.dispose();
   }

@@ -71,12 +71,7 @@ dependencies:
   syncfusion_flutter_charts: ^27.1.52
   font_awesome_flutter: ^10.8.0
   decorated_icon: ^1.2.1
-
-  keep_screen_on:
-    git:
-      url: https://github.com/vindolin/flutter_keep_screen_on.git
-      path: keep_screen_on
-      ref: master
+  keep_screen_on: ^3.0.0
 
   # used by RefreshableImage
   focus_detector:
@@ -86,7 +81,9 @@ dependencies:
       ref: master
   flutter_mjpeg: ^2.0.4
   package_info_plus: ^8.0.3
-  ir_sensor_plugin: ^0.3.0
+  # ir_sensor_plugin: ^0.3.0
+  ir_sensor_plugin:
+    path: /github/ir_sensor_plugin
   flutter_spinbox: ^0.13.1
   audioplayers: ^6.1.0
   media_kit: ^1.1.11

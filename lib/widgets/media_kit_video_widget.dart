@@ -95,6 +95,7 @@ class MediaKitVideoWidgetState extends State<MediaKitVideoWidget> {
     return Center(
       child: GestureDetector(
         child: Video(
+          filterQuality: FilterQuality.medium,
           controller: controller,
           onEnterFullscreen: () async {
             _player.setVolume(0.5);

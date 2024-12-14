@@ -57,6 +57,7 @@ class FullscreenVideoState extends State<FullscreenVideo> {
               quarterTurns: MediaQuery.of(context).orientation == Orientation.portrait ? 1 : 0,
               child: GestureDetector(
                 child: Video(
+                  filterQuality: FilterQuality.medium,
                   controller: controller,
                   controls: NoVideoControls,
                 ),

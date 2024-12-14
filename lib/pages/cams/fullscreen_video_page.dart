@@ -49,6 +49,7 @@ class FullscreenVideoState extends State<FullscreenVideo> {
       appBar: platformIsDesktop ? AppBar() : null,
       body: platformIsDesktop
           ? Video(
+              filterQuality: FilterQuality.medium,
               controller: controller,
               controls: NoVideoControls,
               // TODO:low wrap in gesture detector to play next video

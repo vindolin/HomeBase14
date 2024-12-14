@@ -9,6 +9,8 @@ import '/configuration.dart' as config;
 import '/utils.dart';
 import '/pages/cams/fullscreen_video_page.dart';
 
+import '/util/logger.dart';
+
 void portraitOrientation() {
   if (!platformIsDesktop) {
     SystemChrome.setPreferredOrientations([
@@ -30,12 +32,14 @@ class MediaKitVideoWidget extends StatefulWidget {
   final Playlist videoUrls;
   final bool muted;
   final dynamic controls;
+  final VoidCallback? onTap;
 
   const MediaKitVideoWidget({
     super.key,
     required this.videoUrls,
     this.muted = false,
     this.controls,
+    this.onTap,
   });
   @override
   MediaKitVideoWidgetState createState() => MediaKitVideoWidgetState();
@@ -108,8 +112,13 @@ class MediaKitVideoWidgetState extends State<MediaKitVideoWidget> {
           controls: widget.controls,
         ),
         onTap: () {
-          // play next video in playlist
-          _player.next();
+          if (widget.onTap == null) {
+            logger.d('MediaKitVideoWidget onTap');
+            // play next video in playlist
+            _player.next();
+          } else {
+            widget.onTap!();
+          }
         },
         onDoubleTap: () {
           // open video in fullscreen mode

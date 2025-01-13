@@ -68,7 +68,7 @@ dependencies:
   webview_flutter: ^4.9.0
   webview_flutter_android: ^4.0.0
 
-  syncfusion_flutter_charts: ^27.1.52
+  syncfusion_flutter_charts: ^28.1.35
   font_awesome_flutter: ^10.8.0
   decorated_icon: ^1.2.1
   keep_screen_on: ^3.0.0
@@ -105,7 +105,7 @@ dependencies:
   # raw_sound: ^0.3.0+1
 
 dev_dependencies:
-  flutter_launcher_icons: "^0.13.1"
+  flutter_launcher_icons: ^0.14.2
   # flutter_launcher_icons: ^0.14.1
 
   build_runner: ^2.4.13

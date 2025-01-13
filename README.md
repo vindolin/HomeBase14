@@ -25,7 +25,7 @@ The following devices can be controlled/monitored via MQTT messages:
 #### Zigbee ([Zigbee2MQTT](https://www.zigbee2mqtt.io/))
 * Window blinds (single and dual)
 * Thermostats (underfloor heating)
-* Ikea smart bulbs (and other dump bulbs)
+* Ikea/Lidl smart bulbs (and other dump bulbs)
 * Garden zistern pump
 * Sodastream uses (vibration sensor)
 * Multi power strip
@@ -42,9 +42,9 @@ The following devices can be controlled/monitored via MQTT messages:
 * Basic IR remote controll for TV and sound bar
 * Metrics of my SMA Tripower solar controller (modbus)
 * Prusa I3 MK3s (USB Serial controller)
-* Sleep modes and output device of my main PC
+* Sleep modes and display output device of my main PC
 * Greenhouse temperature sensors (LoRa)
-* Configuration data is stored in an encrypted file which is decrypted with a user provided key
+* Configuration data is stored in an encrypted file which is decrypted with a user provided key on first use (safe on Google Play Store).
 
 It also lets me view the RTSP streams of two survailance cams ([media_kit](https://github.com/media-kit/media-kit))
 

@@ -56,7 +56,7 @@ class PrusaProgress extends ConsumerWidget {
                 width: constraints.maxWidth,
                 height: constraints.maxHeight,
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.6),
+                  color: Colors.black.withValues(alpha: 60),
                 ),
               ),
             ),

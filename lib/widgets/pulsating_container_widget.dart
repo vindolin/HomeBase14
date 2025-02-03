@@ -51,7 +51,7 @@ class PulsatingContainerState extends State<PulsatingContainer> with SingleTicke
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: widget.color.withOpacity(animation.value),
+                color: widget.color.withValues(alpha: animation.value * 100),
                 spreadRadius: 3,
                 blurRadius: 3,
               ),

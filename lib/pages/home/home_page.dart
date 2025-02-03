@@ -109,7 +109,7 @@ class HomePage extends ConsumerWidget {
                   doorMovementProvider, // flash background on object detection on front door cam
                   vibrate: true,
                   ignoreFirstBuild: true,
-                  color: Colors.pink.withValues(alpha: 10),
+                  color: Colors.pink.withValues(alpha: 26),
                 ),
                 CustomScrollView(
                   slivers: [

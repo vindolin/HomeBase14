@@ -31,7 +31,7 @@ class PulsatingContainer extends HookWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: color.withValues(alpha: animationController.value * 100),
+            color: color.withAlpha((255.0 * animationController.value).toInt()),
             spreadRadius: 4,
             blurRadius: 5,
           ),

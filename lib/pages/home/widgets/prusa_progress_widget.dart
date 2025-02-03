@@ -55,9 +55,7 @@ class PrusaProgress extends ConsumerWidget {
               child: Container(
                 width: constraints.maxWidth,
                 height: constraints.maxHeight,
-                decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 60),
-                ),
+                decoration: BoxDecoration(color: Colors.black54),
               ),
             ),
             if (prusa['percent_done'] != null)

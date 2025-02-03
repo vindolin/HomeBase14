@@ -41,7 +41,7 @@ class PulsatingIcon extends HookWidget {
 
     return Icon(
       iconData,
-      color: color.withValues(alpha: animationController.value * 100),
+      color: color.withAlpha((255.0 * animationController.value).toInt()),
       size: size,
     );
   }

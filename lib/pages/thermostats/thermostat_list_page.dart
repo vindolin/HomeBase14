@@ -7,7 +7,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 import '/shortcut_wrapper.dart';
-import '/utils.dart';
+import '/util/sorting.dart';
 import '/ui_helpers.dart';
 import '/models/mqtt_devices.dart';
 import '/widgets/connection_bar_widget.dart';

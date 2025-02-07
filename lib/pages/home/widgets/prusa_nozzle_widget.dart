@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
-import '/utils.dart';
+import '/util/color.dart';
 import '/models/mqtt_devices.dart';
 
 const onDurationMs = 2500;

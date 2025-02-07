@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
-import '/utils.dart';
+import '/util/sorting.dart';
 import '/shortcut_wrapper.dart';
 import '/ui_helpers.dart';
 

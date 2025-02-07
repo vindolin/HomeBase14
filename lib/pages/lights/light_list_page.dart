@@ -6,11 +6,14 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:home_base_14/shortcut_wrapper.dart';
 
 import '/utils.dart';
+import '/util/sorting.dart';
+
 import '/models/mqtt_devices.dart';
 import '/models/app_settings_provider.dart';
-import 'widgets/lights_off_button_widget.dart';
 import '/widgets/slider_widget.dart';
 import '/widgets/connection_bar_widget.dart';
+
+import 'widgets/lights_off_button_widget.dart';
 
 abstract class ListItem {
   /// The title line to show in a list item.

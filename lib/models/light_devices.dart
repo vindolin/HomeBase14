@@ -11,7 +11,7 @@ part 'light_devices.g.dart';
 part 'light_devices.freezed.dart';
 
 @freezed
-class LightDevice with _$LightDevice {
+abstract class LightDevice with _$LightDevice {
   const factory LightDevice({
     required String id,
     required String name,

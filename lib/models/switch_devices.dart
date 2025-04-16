@@ -7,7 +7,7 @@ part 'switch_devices.g.dart';
 part 'switch_devices.freezed.dart';
 
 @unfreezed
-class ArmedSwitchDevice with _$ArmedSwitchDevice {
+abstract class ArmedSwitchDevice with _$ArmedSwitchDevice {
   factory ArmedSwitchDevice({
     required final String topicState,
     required final String topicSet,

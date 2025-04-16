@@ -22,7 +22,7 @@ enum User {
 }
 
 @freezed
-class AppSettingsCls with _$AppSettingsCls {
+abstract class AppSettingsCls with _$AppSettingsCls {
   const factory AppSettingsCls({
     required bool isValid,
     required String encryptionKey,

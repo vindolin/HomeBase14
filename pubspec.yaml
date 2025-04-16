@@ -39,15 +39,15 @@ dependencies:
   mqtt5_client: ^4.5.3
   nanoid: ^1.0.0
   flutter_translate: ^4.1.0
-  flutter_hooks: ^0.20.5
+  flutter_hooks: ^0.21.2
   hooks_riverpod: ^2.5.2
   flutter_riverpod: ^2.4.10
   riverpod_annotation: ^2.3.5
   dio: ^5.7.0
   event: ^3.1.0
-  freezed_annotation: ^2.4.4
+  freezed_annotation: ^3.0.0
   json_annotation: ^4.9.0
-  freezed: ^2.5.7
+  freezed: ^3.0.6
   encrypt: ^5.0.3
   shared_preferences: ^2.3.2
   format: ^1.5.2
@@ -68,10 +68,10 @@ dependencies:
   webview_flutter: ^4.9.0
   webview_flutter_android: ^4.0.0
 
-  syncfusion_flutter_charts: ^28.1.35
+  syncfusion_flutter_charts: ^29.1.38
   font_awesome_flutter: ^10.8.0
   decorated_icon: ^1.2.1
-  keep_screen_on: ^3.0.0
+  keep_screen_on: ^4.0.0
 
   # used by RefreshableImage
   focus_detector:

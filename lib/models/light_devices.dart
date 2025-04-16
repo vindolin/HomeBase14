@@ -52,6 +52,13 @@ IMap<String, LightDevice> lightDevices = IMap(
       topicSet: 'zigbee2mqtt/switch/i010/set',
       state: 'OFF',
     ),
+    'mancave': LightDevice(
+      id: 'mancave',
+      name: 'Mancave Decke',
+      topicGet: 'z2mSwitch/i011/get',
+      topicSet: 'zigbee2mqtt/switch/i011/set',
+      state: 'OFF',
+    ),
   },
 );
 
